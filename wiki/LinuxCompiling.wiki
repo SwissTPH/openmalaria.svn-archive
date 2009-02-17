@@ -1,0 +1,32 @@
+#summary Compiling on Linux.
+#labels Phase-Implementation,linux,installation
+
+
+= Preparation =
+
+This page documents the effort to compile and run the simulator on a typical Ubuntu Linux box. It is an effort to help other people doing the same and a way to find problems in the building/process.
+Preparation
+
+  # Be sure to have the latest versions of autoconf and automake. Some distributions might maintain many versions simultaneously, get rid of the older versions. For some reason (which doesn't seem to be faulted on the simulator) libtool cannot be installed.
+  # The current boinc version in ubuntu doesnt support graphics, as such a more moder version is needed (compilation and installation)
+    # Install freeglut3-dev
+    # Be sure to at least have removed boinc-dev (and probably boinc-client). No ohter boinc should be running, or you will be inviting trouble.
+    # *svn co `http://boinc.berkeley.edu/svn/branches/server_stable` boinc*
+    # Follow the INSTALL file. Note the installation directory (the --prefix paramater to configure).
+    # You will need to move the installed directory to the simulator trunk. You can also set BOINCDIR (which is probably prefarable, anyway) 
+
+= The actual building =
+
+  # Checkout from Subversion: *svn co `https://svn.klippan.ch/svn/conversion/trunk`*
+  # put boinc inside the trunk directory.
+  # On the trunk directory run autoreconf. Maybe something like this: *rm -rf aclocal.m4 configure autom4te.cache/; autoreconf; automake*
+  # *./configure*
+  # *make*
+  # *make test*
+
+
+If the installation gets too much garbage and you cannot compile for some reason, you might do this on the trunk:
+
+*svn status|grep ?|cut -f7 -d\ |xargs rm -rf*
+
+Careful!!! You will delete everything not added to subversion. This will delete boinc, which was put on the trunk 
