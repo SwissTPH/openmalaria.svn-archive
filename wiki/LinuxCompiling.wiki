@@ -17,12 +17,13 @@ Preparation
 
 = The actual building =
 
-  # Checkout from Subversion: *svn co `https://svn.klippan.ch/svn/conversion/trunk`*
+  # Checkout from Subversion: (see [http://code.google.com/p/openmalaria/source/checkout here])
   # put boinc inside the trunk directory.
-  # On the trunk directory run autoreconf. Maybe something like this: *rm -rf aclocal.m4 configure autom4te.cache/; autoreconf; automake*
-  # *./configure*
-  # *make*
-  # *make test*
+  # Compile. Potentially run `./autogen.sh` before configure if any of the Makefile.am files have been updated.
+{{{
+./configure
+make -j 2 test
+}}}
 
 
 If the installation gets too much garbage and you cannot compile for some reason, you might do this on the trunk:
