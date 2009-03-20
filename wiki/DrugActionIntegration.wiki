@@ -1,0 +1,16 @@
+#summary Integration of drug action code.
+
+= Introduction =
+
+
+
+= Details =
+
+
+Exponential.
+
+How to use.
+
+Limits on medicate time.
+
+XML.
