@@ -8,13 +8,38 @@ This page documents the effort to compile and run the simulator on a typical Ubu
 
  # Checkout from Subversion: (see [http://code.google.com/p/openmalaria/source/checkout here])
  # Optionally, install BOINC into the openmalaria trunk folder:
-  `svn co http://boinc.berkeley.edu/svn/branches/server_stable boinc`
+  {{{
+  cd path-above-openmalaria-trunk
+  apt-get install pkg-config libcurl4-openssl-dev
+  svn co http://boinc.berkeley.edu/svn/branches/server_stable boinc
+  cd boinc
+  ./configure --disable-server
+  make -j 2
+  cd ..
+  }}}
   * The current BOINC version in ubuntu doesnt support graphics, as such a more moder version is needed (compilation and installation)
   * Be sure to at least have removed boinc-dev (and probably boinc-client). No other boinc should be running, or you will be inviting trouble.
   * You will need to move the installed directory to the simulator trunk. You can also set BOINCDIR (which is probably prefarable, anyway) 
- # Install code synthesis' xsd and xerces-c: {{{ apt-get install xsdcxx libxerces-c2-dev }}}
+ # Install GSL, code synthesis' xsd and xerces-c:
+  {{{
+  apt-get install libgsl0-dev xsdcxx libxerces-c2-dev
+  }}}
  # For the separate graphics app, install freeglut3-dev
- # Follow the INSTALL file. Note the installation directory (the --prefix paramater to configure).
+ # For --enable-deploy, create some libraries in trunk/lib:
+  * libgsl.a, libgslcblas.a (from a GSL build folder:)
+    {{{
+   cp .libs/libgsl.a cblas/.libs/libgslcblas.a ../openmalaria/lib
+   }}}
+  * libxerces-c.a (from a xerces-c build folder:)
+   {{{
+   cd obj/LINUX
+   ar cru libxerces-c.a `find . -name "*.o"` 
+   mv libxerces-c.a ../../../malariaModel/lib/
+   }}}
+  * (from a BOINC build folder:)
+   {{{
+   cp api/libboinc_api.a lib/libboinc.a ../openmalaria/lib
+   }}}
 
 = The actual building =
 
