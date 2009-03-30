@@ -43,7 +43,7 @@ This page documents the effort to compile and run the simulator on a typical Ubu
 
 = The actual building =
 
-Compile. Potentially run `./autogen.sh` before configure if any of the Makefile.am files have been updated. The most useful configure options:
+Compile. The most useful configure options are:
  * --prefix path
   * E.g. {{{--prefix /usr/local}}} to install in /usr/local
  * --enable-deploy
@@ -53,6 +53,11 @@ Compile. Potentially run `./autogen.sh` before configure if any of the Makefile.
 {{{
 ./configure [options]
 make -j 2 test
+}}}
+
+Potentially run `./autogen.sh` before configure if any of the Makefile.am files have been updated. You will likely need some extra packages:
+{{{
+apt-get install automake gawk libtool
 }}}
 
 = Problem solving =
