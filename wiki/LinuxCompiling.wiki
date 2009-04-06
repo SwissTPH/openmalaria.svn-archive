@@ -10,9 +10,10 @@ This page documents the effort to compile and run the simulator on a typical Ubu
  # Optionally, install BOINC into the openmalaria trunk folder:
   {{{
   cd path-above-openmalaria-trunk
-  apt-get install pkg-config libcurl4-openssl-dev
+  apt-get install pkg-config libcurl4-openssl-dev  # possibly also: libssl-dev libstdc++[56]-dev
   svn co http://boinc.berkeley.edu/svn/branches/server_stable boinc
   cd boinc
+  ./_autosetup
   ./configure --disable-server --disable-client
   make -j 2
   cd ..
