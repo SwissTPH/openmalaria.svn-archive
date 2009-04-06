@@ -13,7 +13,7 @@ This page documents the effort to compile and run the simulator on a typical Ubu
   apt-get install pkg-config libcurl4-openssl-dev
   svn co http://boinc.berkeley.edu/svn/branches/server_stable boinc
   cd boinc
-  ./configure --disable-server
+  ./configure --disable-server --disable-client
   make -j 2
   cd ..
   }}}
