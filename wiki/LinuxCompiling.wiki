@@ -26,7 +26,7 @@ This page documents the effort to compile and run the simulator on a typical Ubu
   }}}
  # For the separate graphics app, install freeglut3-dev
  # For --enable-deploy, create some libraries in trunk/lib:
-  * libgsl.a, libgslcblas.a (from a GSL build folder:)
+  * libgsl.a, libgslcblas.a (copy from /usr/lib after installing libgsl0-dev, or from a GSL build folder:)
     {{{
    cp .libs/libgsl.a cblas/.libs/libgslcblas.a ../openmalaria/lib
    }}}
