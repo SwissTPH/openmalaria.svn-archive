@@ -74,19 +74,3 @@ If the installation gets too much garbage and you cannot compile for some reason
 *svn status|grep ?|cut -f7 -d\ |xargs rm -rf*
 
 Careful!!! You will delete everything not added to subversion. This will delete boinc, which was put on the trunk 
-
-= Extras =
-
-== Static linking ==
-Configuring openmalaria with --enable-deploy will statically link most libraries.
-
-To also statically link libstdc/libstdc++:
-
-For building each library (boinc, xerces-c and gsl):
-{{{
-export LDFLAGS=-static-libgcc
-./configure # (or some variant thereof)
-make
-}}}
-
-Move the libraries into the lib folder, and also copy/link /usr/lib/gcc/x86_64-linux-gnu/VER/libgcc.a to the lib folder. Then build openmalaria as above (exporting LDFLAGS=-static-libgcc).
