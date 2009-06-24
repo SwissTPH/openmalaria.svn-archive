@@ -1,8 +1,5 @@
-#Location of Doxygen-created Html documentation
-
 = Documentation =
 
 openMalaria sources are documented using Doxygen-style comments. For convenience, we provide an up-to-date version of the generated Html at the following location:
 
 [http://www.malariacontrol.net/openmalaria/html/ http://www.malariacontrol.net/openmalaria/html/] 
-
