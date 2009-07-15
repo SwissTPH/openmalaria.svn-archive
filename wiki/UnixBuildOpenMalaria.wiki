@@ -13,8 +13,8 @@ cd malariacontrol
 
 == Dependencies ==
 
- * [UnixBuildBoinc] boinc-dev (optional; unless you want to deploy a boinc version you don't need this)
- * [UnixBuildXercesC] xerces
+ * [UnixBuildBoinc] [http://packages.debian.org/search?keywords=boinc-dev boinc-dev] (optional; unless you want to deploy a boinc version you don't need this)
+ * [UnixBuildXercesC] [http://packages.debian.org/search?keywords=libxerces-c2-dev libxerces-c2-dev]
  * xsd − Install the [http://packages.debian.org/search?keywords=xsdcxx xsdcxx] package or manually install from: http://codesynthesis.com/products/xsd/download.xhtml
  * gsl − Install the [http://packages.debian.org/search?keywords=libgsl0-dev libgsl0-dev] package or manually install
 
