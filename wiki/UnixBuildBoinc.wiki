@@ -1,0 +1,37 @@
+#Installing boinc development files to allow compiling openmalaria
+
+= Introduction =
+
+You may just be able to use the [http://packages.debian.org/search?keywords=boinc-dev boinc-dev] package. Otherwise, read on...
+
+
+= Details =
+
+Check out a copy of boinc. Normally you can use the latest stable:
+{{{
+svn co http://boinc.berkeley.edu/svn/branches/server_stable boinc
+cd boinc
+}}}
+For older systems, this may not work. For ubuntu 6.06:
+{{{
+svn co http://boinc.berkeley.edu/svn/branches/boinc_core_release_5_10 boinc
+cd boinc
+*edit configure.ac, search for curl, and change the min version required to 7.15.1 (this seems to work)*
+}}}
+
+Configure:
+{{{
+./_autosetup
+#for compiling a release version, we only want static libraries:
+./configure --enable-pkg-client --disable-shared --disable-server -C
+}}}
+
+You only need the main lib and api; to save time just build and install these:
+{{{
+cd lib
+make
+sudo make install
+cd ../api
+make
+sudo make install
+}}}
