@@ -1,4 +1,4 @@
-#Building xerces-c on ubuntu
+#summary Building xerces-c on ubuntu
 
 = Introduction =
 
