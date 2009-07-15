@@ -16,14 +16,13 @@ For older systems, this may not work. For ubuntu 6.06:
 {{{
 svn co http://boinc.berkeley.edu/svn/branches/boinc_core_release_5_10 boinc
 cd boinc
-*edit configure.ac, search for curl, and change the min version required to 7.15.1 (this seems to work)*
 }}}
 
 Configure:
 {{{
 ./_autosetup
 #for compiling a release version, we only want static libraries:
-./configure --enable-pkg-client --disable-shared --disable-server -C
+./configure --disable-client --disable-shared --disable-server -C
 }}}
 
 You only need the main lib and api; to save time just build and install these:
