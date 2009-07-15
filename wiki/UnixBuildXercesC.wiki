@@ -1,0 +1,66 @@
+#Building xerces-c on ubuntu
+
+= Introduction =
+
+Normally, you can probably just install from packages:
+{{{
+apt-get install libxerces-c2-dev
+}}}
+If you don't want to...
+
+= Details =
+Both versions 2.8.x and 3.0.x should work, but both have given me plenty of problems, either while compiling or while linking (creating the openMalaria executable) using the resultant library. I don't know if older versions would work.
+
+=== Install from mac ports ===
+Note that installing a library multiple times from different sources isn't a good idea. If you already have xerces includes available on your system, they could get used along with a library from elsewhere, causing problems if the library is built from a different version of the source code.
+
+Download and install macports from [http://www.macports.org/] or [http://darwinports.com/download/ darwinports].
+
+Start the interactive shell:
+{{{
+sudo port -d selfupdate
+sudo port
+}}}
+ * From the interactive port shell:
+{{{
+list xercesc
+install xercesc
+quit
+}}}
+
+For some reason macports seems to install into /opt/local without making libraries or includes here generally available.
+ * make the library accessible
+{{{
+cd openMalaria/lib
+ln -s /opt/local/lib/libxerces-c.a ./
+}}}
+ * make the includes accessible
+{{{
+cd ../include
+ln -s /opt/local/include/xercesc ./
+}}}
+
+=== Compile from source ===
+
+As noted above, you don't have to use version 2.8.
+{{{
+wget http://mirror.switch.ch/mirror/apache/dist/xerces/c/2/sources/xerces-c-src_2_8_0.tar.gz
+tar -xvzf xerces-c-src_2_8_0.tar.gz
+cd xerces-c-src_2_8_0/
+export XERCESCROOT=`pwd`
+cd src/xercesc
+}}}
+ * configure for linux:
+{{{
+./runConfigure -plinux -cgcc -xg++ -minmem -nsocket -tnative -rpthread -s
+}}}
+ * configure for mac:
+{{{
+ ./runConfigure -pmacosx -cgcc -xg++ -minmem -nsocket -tnative -rpthread -s
+}}}
+Then build and install (should install static libraries in /usr/local/lib):
+{{{
+make
+sudo make install
+cd ../../..
+}}}
