@@ -1,4 +1,4 @@
-#Installing boinc development files to allow compiling openmalaria
+#summary Installing boinc development files to allow compiling openmalaria
 
 = Introduction =
 
