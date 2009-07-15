@@ -1,8 +1,8 @@
-#brief instructions for building openmalaria
+#summary brief instructions for building openmalaria
 
 = Building OpenMalaria =
 
-This page gives a brief idea of how to compile OpenMalaria. We have (older) longer instructions, but I think most of the time they're not actually required.
+This page gives a brief idea of how to compile OpenMalaria. We have (older) longer instructions, but I think most of the time they're not actually required. One alternate set of instructions is [LinuxCompiling here], another is unfortunately on a server which is not publically accessible.
 
 Normally we create a parent directory and put all dependencies and code there:
 {{{
@@ -45,7 +45,7 @@ Now you should be ready to build:
 make
 }}}
 
-== Running the distributed tests ==
+== Running the included tests ==
 
 Currently these aren't properly integrated into the cmake build system. Copy the built openMalaria binary to the source folder, then run the runTests.sh script:
 {{{
