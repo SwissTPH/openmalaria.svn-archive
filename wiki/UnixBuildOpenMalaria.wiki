@@ -45,6 +45,21 @@ Now you should be ready to build:
 make
 }}}
 
+=== Other build systems ===
+
+There are some other build files included:
+ * automake/autoconf used to be the main build method; this may still work. It is not supported any longer due to the amount of time spent hacking things with it.
+  {{{
+  mkdir build && cd build
+  ../configure
+  make test
+  }}}
+ * I experimented with SCons before using CMake. This should work, but without debug/optimisation, boinc, and full static linking. It was never supported; I only produced a minimally-working SConscript file.
+  {{{
+  scons
+   }}}
+ * Visual studio 8 (2005) build files; these may get replaced with CMake generated project files in the future.
+
 == Running the included tests ==
 
 Currently these aren't properly integrated into the cmake build system. Copy the built openMalaria binary to the source folder, then run the runTests.sh script:
