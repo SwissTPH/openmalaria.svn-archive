@@ -1,0 +1,59 @@
+#brief instructions for building openmalaria
+
+= Building OpenMalaria =
+
+This page gives a brief idea of how to compile OpenMalaria. We have (older) longer instructions, but I think most of the time they're not actually required.
+
+Normally we create a parent directory and put all dependencies and code there:
+{{{
+cd ~
+mkdir malariacontrol
+cd malariacontrol
+}}}
+
+== Dependencies ==
+
+ * [UnixBuildBoinc] boinc-dev (optional; unless you want to deploy a boinc version you don't need this)
+ * [UnixBuildXercesC] xerces
+ * xsd − Install the [http://packages.debian.org/search?keywords=xsdcxx xsdcxx] package or manually install from: http://codesynthesis.com/products/xsd/download.xhtml
+ * gsl − Install the [http://packages.debian.org/search?keywords=libgsl0-dev libgsl0-dev] package or manually install
+
+== Compiling ==
+
+First, [http://code.google.com/p/openmalaria/source/checkout check out the repository] and {{{cd}}} to that directory.
+
+It's much neater to build code from a separate directory, so all the generated files are kept out of the way:
+{{{
+mkdir build
+cd build
+}}}
+
+Now run cmake, passing the path of the openMalaria directory you checked out:
+{{{
+cmake-gui ..
+# You can use ccmake or just cmake instead of cmake-gui
+}}}
+cmake-gui and ccmake are interactive; you first *configure*, then optionally change some options, then *configure* again and finally *generate*. Options you may want to change (e.g. to create a version to deploy to as a boinc binary):
+|| option || ||
+|| CMAKE_BUILD_TYPE || You probably should change this; I'd suggest using RelWithDebInfo. ||
+|| BOINC_INTEGRATION || Enables BOINC. Defaults to off. ||
+|| STATICALLY_LINK || Try linking everything statically instead of dynamically. Don't use unless you know you want it. ||
+|| CMAKE_VERBOSE_MAKEFILE || If you're having trouble building and want to tweak the linker command... ||
+
+Now you should be ready to build:
+{{{
+make
+}}}
+
+== Running the distributed tests ==
+
+Currently these aren't properly integrated into the cmake build system. Copy the built openMalaria binary to the source folder, then run the runTests.sh script:
+{{{
+cp openMalaria ..
+# note: older versions of cmake may put this in the build/model folder, instead of the build folder
+cd ..
+./runTests.sh --checkpoint 1 2 3 4 5 6 9 11 12 IPT
+./runTests.sh DummyPKPD CevCq # checkpointing is broken on these tests
+}}}
+
+Most of the tests should pass (unless you managed to get a commit I completely messed up). If some fail, it's most likely my fault, not yours; I've adjusted the above line to only run tests which should work. The Vector test is a work-in-progress and has never yet been expected to pass.
