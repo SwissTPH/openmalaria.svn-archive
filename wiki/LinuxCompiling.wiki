@@ -1,6 +1,7 @@
 #summary Compiling on Linux.
 #labels Phase-Implementation,linux,installation
 
+= More recent documentation is [UnixBuildOpenMalaria here]. =
 
 = Preparation =
 
