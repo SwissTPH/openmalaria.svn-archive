@@ -10,6 +10,7 @@ cd ~
 mkdir malariacontrol
 cd malariacontrol
 }}}
+You can also create a malariacontrol/lib dir and put dependency libraries there. But I recommend you install them (make install) in which case you won't need to do this.
 
 == Dependencies ==
 
