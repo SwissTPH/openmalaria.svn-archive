@@ -1,0 +1,57 @@
+#summary Cross-compiling openmalaria for windows from linux with mingw.
+
+= Introduction =
+
+This is a as-I-work-out how to do it documentation of my progress in cross-compiling openmalaria.
+
+
+= Details =
+
+== Set-up ==
+
+Obviously you can't use linux libraries here.. I'm not entirely clear whether MSVC-compiled libs will work (there's been some conflicting information), but I'm going for compiling most bits myself with mingw.
+
+ # Install [http://packages.debian.org/search?suite=default&section=all&arch=any&searchon=names&keywords=mingw32 mingw]
+ # Create a working dir, with a copy of openmalaria sources. Mine looks something like:
+  {{{
+  # ls -1 i586-mingw32msvc/
+  boinc/
+  download/
+  gsl-1.12/
+  include/
+  lib/
+  openmalaria/
+  openmalaria-build/
+  share/
+  Toolchain-i586-mingw32.cmake
+  xerces-c-src_2_8_0/
+  xsd -> xsd-3.2.0-i686-windows
+  xsd-3.2.0-i686-windows/
+  zlib-1.2.3/
+  }}}
+
+== Compiling openmalaria ==
+
+Create a Toolchain file, to tell cmake about the platform we're cross-compiling for (see [http://www.cmake.org/Wiki/CmakeMingw here] for more info). Mine looks like:
+{{{
+# the name of the target operating system
+SET(CMAKE_SYSTEM_NAME Windows)
+
+# which compilers to use for C and C++
+SET(CMAKE_C_COMPILER i586-mingw32msvc-gcc)
+SET(CMAKE_CXX_COMPILER i586-mingw32msvc-g++)
+
+# here is the target environment located
+SET(CMAKE_FIND_ROOT_PATH  /usr/i586-mingw32msvc /home/USERNAME/i586-mingw32msvc )
+
+# adjust the default behaviour of the FIND_XXX() commands:
+# search headers and libraries in the target environment, search 
+# programs in the host environment
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+}}}
+
+Create the openmalaria-build folder somewhere, run cmake-gui and set the source and build dirs, tell it to configure and (being a new build folder) it'll ask for setup details. You can then tell it to cross-compile with the above tool-chain file. Check the lib and include paths are OK; if not it's easiest to set them manually. Then configure & generate.
+
+Now compile with make. That should be it if everything's ready... I still get link errors.
