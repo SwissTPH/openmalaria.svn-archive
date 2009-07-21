@@ -50,7 +50,10 @@ export XERCESCROOT=`pwd`
 cd src/xercesc
 ./runConfigure -p mingw-msys -C --prefix -C /home/USERNAME/i586-mingw32msvc -C --host=i586-mingw32msvc -s
 }}}
-You should edit Makefile.incl and substitute 'dllwrap' by 'i586-mingw32msvc-dllwrap'. 
+You should edit Makefile.incl (once; it's not generated):
+ * substitute 'ar' by 'i586-mingw32msvc-ar'
+ * substitute 'ranlib' by 'i586-mingw32msvc-ranlib'
+ * substitute 'dllwrap' by 'i586-mingw32msvc-dllwrap'
 {{{
 make
 make install
