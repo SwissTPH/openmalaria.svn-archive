@@ -48,7 +48,7 @@ That may be enough, or you may need to copy the library to openmalaria/lib.
 cd xerces-c-src_2_8_0
 export XERCESCROOT=`pwd`
 cd src/xercesc
-./runConfigure -p mingw-msys -c i586-mingw32msvc-gcc -x i586-mingw32msvc-g++ -P /home/cyborg/STI/i586-mingw32msvc -C --build=i586-mingw32msvc -s
+./runConfigure -p mingw-msys -c i586-mingw32msvc-gcc -x i586-mingw32msvc-g++ -P /home/cyborg/STI/i586-mingw32msvc -C --host=i586-mingw32msvc -s
 }}}
 You should edit Makefile.incl (once; it's not generated):
  * substitute 'ar' by 'i586-mingw32msvc-ar'
