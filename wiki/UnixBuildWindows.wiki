@@ -48,7 +48,7 @@ That may be enough, or you may need to copy the library to openmalaria/lib.
 cd xerces-c-src_2_8_0
 export XERCESCROOT=`pwd`
 cd src/xercesc
-./runConfigure -p mingw-msys -C --prefix -C /home/USERNAME/i586-mingw32msvc -C --host=i586-mingw32msvc -s
+./runConfigure -p mingw-msys -c i586-mingw32msvc-gcc -x i586-mingw32msvc-g++ -P /home/cyborg/STI/i586-mingw32msvc -C --build=i586-mingw32msvc -s
 }}}
 You should edit Makefile.incl (once; it's not generated):
  * substitute 'ar' by 'i586-mingw32msvc-ar'
@@ -59,6 +59,8 @@ make
 make install
 }}}
 (Instructions ripped from the [http://clam-project.org/wiki/Devel/Windows_MinGW_cross_compile#Xerces-C clam wiki].)
+
+This should successfully install the library, however I still get some missing xerces symbols when linking openmalaria.
 
 == XSD ==
 
