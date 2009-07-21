@@ -48,7 +48,7 @@ That may be enough, or you may need to copy the library to openmalaria/lib.
 cd xerces-c-src_2_8_0
 export XERCESCROOT=`pwd`
 cd src/xercesc
-./runConfigure -p mingw-msys -C --prefix -C /home/cyborg/STI/i586-mingw32msvc/local -C --host=i586-mingw32msvc -s
+./runConfigure -p mingw-msys -C --prefix -C /home/USERNAME/i586-mingw32msvc/local -C --host=i586-mingw32msvc -s
 }}}
 You should edit Makefile.incl and substitute 'dllwrap' by 'i586-mingw32msvc-dllwrap'. 
 {{{
@@ -68,7 +68,7 @@ The nice thing is you don't have to compile this.
 After extracing sources,
 {{{
 cd gsl-1.12
-CC=/usr/bin/i586-mingw32msvc-cc AR="/usr/bin/i586-mingw32msvc-ar" RANLIB=/usr/bin/i586-mingw32msvc-ranlib ./configure --enable-static=yes --enable-shared=no --prefix=/home/cyborg/STI/i586-mingw32msvc/ --build=mingw32
+CC=/usr/bin/i586-mingw32msvc-cc AR="/usr/bin/i586-mingw32msvc-ar" RANLIB=/usr/bin/i586-mingw32msvc-ranlib ./configure --enable-static=yes --enable-shared=no --prefix=/home/USERNAME/i586-mingw32msvc/ --build=mingw32
 make -j 2
 make install
 }}}
