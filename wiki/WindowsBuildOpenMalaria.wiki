@@ -1,0 +1,22 @@
+#summary How to set up and build openmalaria on windows
+
+= Set up =
+
+Create a working directory. Checkout openmalaria into a sub-folder (see the [http://code.google.com/p/openmalaria/source/checkout Source] tab). Perhaps use TortoiseSvn for this...
+
+= Dependencies =
+
+Openmalaria requires the following; for many just run the installer:
+ * gsl - get from [ftp://sunsite.cnlab-switch.ch/mirror/gnu/gsl here] (oldest supported is 1.11); extract to your working directory above the openmalaria code and rename to "gsl". Hopefully something like this works.
+ * XSD - run the .msi installer from [http://codesynthesis.com/products/xsd/download.xhtml here].
+ * Xerces-C - versions 2.8 or 3.0 should work; 3.0 is included with the XSD installer for windows
+ * zlib - get the DLL download from [www.zlib.net here], extract to the working directory above the openmalaria sources and rename to "zlib".
+ * CMake 2.4 or 2.6 - use the installer from [http://www.cmake.org/cmake/resources/software.html here].
+
+= Build =
+
+Create a new folder to build in (normally openmalaria/build but it doesn't have to be). Start the cmake-gui, set the source and build directories, and click configure. Tell CMake what kind of build system to generate (we've only tested Visual Studio 2005). Probably sort a few things, click configure again and then generate.
+
+== Compiling with Visual Studio ==
+
+Navigate to your build directory and open "OpenMalaria.sln". Build like normal. Note: if Visual Studio tells you the project has been modified externally, you MUST reload (don't ignore), then build again.
