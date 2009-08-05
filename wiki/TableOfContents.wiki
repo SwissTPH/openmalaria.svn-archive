@@ -1,12 +1,21 @@
 #summary Content of wiki
 
-DrugActionIntegration
-EndUserHelp
-HtmlDocumentation
-LinuxCompiling
-TableOfContents
-UnixBuildBoinc
-UnixBuildOpenMalaria
-UnixBuildWindows
-UnixBuildXercesC
-WindowsBuildOpenMalaria
+  * DrugActionIntegration
+
+  * EndUserHelp
+
+  * HtmlDocumentation
+
+  * LinuxCompiling
+
+  * TableOfContents
+
+  * UnixBuildBoinc
+
+  * UnixBuildOpenMalaria
+
+  * UnixBuildWindows
+
+  * UnixBuildXercesC
+
+  * WindowsBuildOpenMalaria
