@@ -9,10 +9,13 @@ Create a working directory. Checkout openmalaria into a sub-folder (see the [htt
 Openmalaria requires the following; for many just run the installer:
  * gsl - get from [ftp://sunsite.cnlab-switch.ch/mirror/gnu/gsl here] (oldest supported is 1.11); extract to your working directory above the openmalaria code and rename to "gsl". Hopefully something like this works.
   * You then need to compile the libraries or get them from somewhere... TODO
- * XSD - run the .msi installer from [http://codesynthesis.com/products/xsd/download.xhtml here].
+ * XSD - run the .msi installer from [http://codesynthesis.com/products/xsd/download.xhtml here]. If you already have an old version, delete scenario.cxx, scenario.hxx and scenario.ixx.
  * Xerces-C - versions 2.8 or 3.0 should work; 3.0 is included with the XSD installer for windows
  * zlib - get the DLL download from [www.zlib.net here], extract to the working directory above the openmalaria sources and rename to "zlib".
  * CMake 2.4 or 2.6 - use the installer from [http://www.cmake.org/cmake/resources/software.html here].
+ * Python - download from [http://www.python.org here].
+
+NB: The unit tests have a dependency on yaml-cpp (for reading in data for the vector tests). If you disable OM_CXXTEST_ENABLE (a CMake option), you won't need to install yaml-cpp.
 
 = Build =
 
