@@ -33,5 +33,5 @@ Navigate to your build directory and open "OpenMalaria.sln". Build like normal. 
 Compile xerces statically with the following macro: XML_LIBRARY
 
 In the cmake configuration for OpenMalaria:
-  set OM_USE_LIBCMT to true
-  edit CMAKE_CXX_FLAGS_* (whichever build mode you're interested in): change "/MD" to "/MT"
+ * set OM_USE_LIBCMT to true
+ * edit {{{CMAKE_CXX_FLAGS_*}}} (whichever build mode you're interested in): change "/MD" to "/MT"
