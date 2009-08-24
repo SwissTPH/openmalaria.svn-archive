@@ -21,6 +21,17 @@ NB: The unit tests have a dependency on yaml-cpp (for reading in data for the ve
 
 Create a new folder to build in (normally openmalaria/build but it doesn't have to be). Start the cmake-gui, set the source and build directories, and click configure. Tell CMake what kind of build system to generate (we've only tested Visual Studio 2005). Probably sort a few things, click configure again and then generate.
 
+Inside the build folder, you should find a visual studio OpenMalaria.sln file. Use this to build. Due to some generated sources in the project not always getting built first, you should firstly build the "xsdcxx" target, then you can build "ALL_BUILD". If you want to run the tests, just build "RUN_TESTS".
+
 == Compiling with Visual Studio ==
 
 Navigate to your build directory and open "OpenMalaria.sln". Build like normal. Note: if Visual Studio tells you the project has been modified externally, you MUST reload (don't ignore), then build again.
+
+= Compiling without a .net dependency =
+(Ignore this section unless you *know* you want to do this. It's mostly notes to make a BOINC release version with minimal dependencies.)
+
+Compile xerces statically with the following macro: XML_LIBRARY
+
+In the cmake configuration for OpenMalaria:
+  set OM_USE_LIBCMT to true
+  edit CMAKE_CXX_FLAGS_* (whichever build mode you're interested in): change "/MD" to "/MT"
