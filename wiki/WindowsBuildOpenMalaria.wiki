@@ -27,6 +27,8 @@ Inside the build folder, you should find a visual studio OpenMalaria.sln file. U
 
 Navigate to your build directory and open "OpenMalaria.sln". Build like normal. Note: if Visual Studio tells you the project has been modified externally, you MUST reload (don't ignore), then build again.
 
+You can select the Debug/Release/... build target, but it seems you have to rebuild when changing this.
+
 = Compiling without a .net dependency =
 (Ignore this section unless you *know* you want to do this. It's mostly notes to make a BOINC release version with minimal dependencies.)
 
@@ -34,4 +36,4 @@ Compile xerces statically with the following macro: XML_LIBRARY
 
 In the cmake configuration for OpenMalaria:
  * set OM_USE_LIBCMT to true
- * edit {{{CMAKE_CXX_FLAGS_*}}} (whichever build mode you're interested in): change "/MD" to "/MT"
+ * edit {{{CMAKE_CXX_FLAGS_*}}} (whichever build mode you're interested in): change "/MD" to "/MT" (or "/MDd" to "/MTd")
