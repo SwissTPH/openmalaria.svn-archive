@@ -23,3 +23,4 @@ After checking out the sources, you have two options to build openmalaria (at le
   * First you need to build the xsdcxx target (select libxsdcxx.a as the active target; build).
   * Then you can build the rest with the ALL_BUILD target.
   * You can run the tests by building the RUN_TESTS target (currently doesn't appear to work).
+ * If cmake regenerates the project for some reason, you need to reload it in Xcode. Sometimes it will ask you, *but sometimes it won't* (and you need to manually reload the project in xcode).
