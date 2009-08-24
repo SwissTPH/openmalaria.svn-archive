@@ -1,0 +1,25 @@
+#summary Brief build instructions for the mac.
+
+= Dependencies =
+
+This is similar to [UnixBuildOpenMalaria unix].
+
+Additionally, you should install [http://python.org/download/ python 2.6] (just download and run the mac installer). Python 3.0 doesn't work at the moment.
+
+= Building =
+
+After checking out the sources, you have two options to build openmalaria (at least, two that have been tested):
+ * Use Xcode (see below)
+ * Use Makefiles (see the [UnixBuildOpenMalaria unix] page)
+
+== Xcode ==
+
+ * Run cmake-gui
+  * set the source dir, and the build dir (suggested: SOURCE_DIR/build; if this doesn't exist cmake will ask if you want to create it)
+  * Run configure. Set the build system to Xcode.
+  * You either need to disable OM_CXXTEST_ENABLE or install [http://code.google.com/p/yaml-cpp/ yaml-cpp] for now (this may change)
+  * Configure, and generate
+ * From the build dir, open openmalaria.xcodeproj
+  * First you need to build the xsdcxx target (select libxsdcxx.a as the active target; build).
+  * Then you can build the rest with the ALL_BUILD target.
+  * You can run the tests by building the RUN_TESTS target (currently doesn't appear to work).
