@@ -10,7 +10,7 @@ Openmalaria requires the following; for many just run the installer:
  * gsl - get from [ftp://sunsite.cnlab-switch.ch/mirror/gnu/gsl here] (oldest supported is 1.11); extract to your working directory above the openmalaria code and rename to "gsl". Hopefully something like this works.
   * You then need to compile the libraries or get them from somewhere... TODO
  * XSD - run the .msi installer from [http://codesynthesis.com/products/xsd/download.xhtml here]. If you already have an old version, delete scenario.cxx, scenario.hxx and scenario.ixx.
- * Xerces-C - versions 2.8 or 3.0 should work; 3.0 is included with the XSD installer for windows
+ * Xerces-C - versions 2.8 or 3.0 should work; 3.0 is included with the XSD installer for windows. Here we assume you have installed Xerces along with XSD (the default option when installing XSD. Find the xerces-all.sln file in you Xerces install directory (the default location will be something like C:\Program Files\CodeSynthesis XSD 3.2\xerces-c-3.0.1\projects\Win32\VC8\xerces-all for the VS version 8 solution file), and open it with VS. Choose the "Release" build configuration. Build the XercesLib build target. This will create a file C:\Program Files\CodeSynthesis XSD 3.2\xerces-c-3.0.1\Build\Win32\VC8\Static Release\xerces-c_3.lib (Optional: Build using the "Static Release" target to creat a xerces-c_static_3.lib library, then follow the instructions below to create openMalaria with Xerces statically linked).
  * zlib - get the DLL download from [www.zlib.net here], extract to the working directory above the openmalaria sources and rename to "zlib".
  * CMake 2.4 or 2.6 - use the installer from [http://www.cmake.org/cmake/resources/software.html here].
  * Python - download from [http://www.python.org here].
@@ -29,10 +29,10 @@ Navigate to your build directory and open "OpenMalaria.sln". Build like normal. 
 
 You can select the Debug/Release/... build target, but it seems you have to rebuild when changing this.
 
-= Compiling without a .net dependency =
+= Compiling without a .net dependency and with Xerces statically linked =
 (Ignore this section unless you *know* you want to do this. It's mostly notes to make a BOINC release version with minimal dependencies.)
 
-Compile xerces statically with the following macro: XML_LIBRARY
+TODO: Add XERCES_STATIC_LIBRARY to openMalaria compile targets.
 
 In the cmake configuration for OpenMalaria:
  * set OM_USE_LIBCMT to true
