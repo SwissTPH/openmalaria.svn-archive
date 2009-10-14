@@ -1,6 +1,8 @@
-#summary Installing boinc development files to allow compiling openmalaria
+#summary Installing boinc development files to allow compiling openmalaria for deployment.
 
 = Introduction =
+
+This is _only_ necessary for building a release for malariacontrol.net. For development of openmalaria boinc-integration can be disabled. For participating in the volunteer computing, goto [malariacontrol.net] or install boinc from your distribution's packages.
 
 You may just be able to use the [http://packages.debian.org/search?keywords=boinc-dev boinc-dev] package. Otherwise, read on...
 
@@ -21,8 +23,8 @@ cd boinc
 Configure:
 {{{
 ./_autosetup
-#for compiling a release version, we only want static libraries:
-./configure --disable-client --disable-shared --disable-server -C
+# For compiling a release version, we only want static libraries: 
+./configure --disable-client --disable-manager --disable-server --disable-shared -C
 }}}
 
 You only need the main lib and api; to save time just build and install these:
