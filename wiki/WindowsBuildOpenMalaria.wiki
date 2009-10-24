@@ -7,6 +7,10 @@ Create a working directory. Checkout openmalaria into a sub-folder (see the [htt
 = Dependencies =
 
 Openmalaria requires the following; for many just run the installer:
+ * A build system:
+  * Visual Studio (only VS 2005 (version 8.0) tested; older compilers I expect won't work)
+  * Code::Blocks, along with some compiler (recommended:  [http://www.codeblocks.org/downloads/5#windows install the version with mingw]) (not actually tested, but should work)
+  * GNU make along with some compiler (probably not so easy to set up)
  * gsl - get from [ftp://sunsite.cnlab-switch.ch/mirror/gnu/gsl here] (oldest supported is 1.11); extract to your working directory above the openmalaria code and rename to "gsl". Hopefully something like this works.
   * You then need to compile the libraries or get them from somewhere... TODO
  * XSD - run the .msi installer from [http://codesynthesis.com/products/xsd/download.xhtml here]. If you already have an old version, delete scenario.cxx, scenario.hxx and scenario.ixx.
@@ -19,15 +23,21 @@ NB: The unit tests have a dependency on yaml-cpp (for reading in data for the ve
 
 = Build =
 
-Create a new folder to build in (normally openmalaria/build but it doesn't have to be). Start the cmake-gui, set the source and build directories, and click configure. Tell CMake what kind of build system to generate (we've only tested Visual Studio 2005). Probably sort a few things, click configure again and then generate.
+Create a new folder to build in (normally openmalaria/build but it doesn't have to be). Start the cmake-gui, set the source and build directories, and click configure. Tell CMake what kind of build system to generate (probably Visual Studio or Code::Blocks). Probably sort a few things, click configure again and then generate.
 
-Inside the build folder, you should find a visual studio OpenMalaria.sln file. Use this to build. Due to some generated sources in the project not always getting built first, you should firstly build the "xsdcxx" target, then you can build "ALL_BUILD". If you want to run the tests, just build "RUN_TESTS".
+== Compiling with Code::Blocks or Visual Studio ==
 
-== Compiling with Visual Studio ==
+Navigate to your build directory and open "OpenMalaria.cbp" or "OpenMalaria.sln". Build like normal.
 
-Navigate to your build directory and open "OpenMalaria.sln". Build like normal. Note: if Visual Studio tells you the project has been modified externally, you MUST reload (don't ignore), then build again.
+Note: if you get told that the project has been modified externally, you must reload it. Any time you click build and any of the CMakeLists.txt files have changed, cmake will regenerate the project file (so any custom settings will be lost). If you want to change any cmake settings, run cmake-gui; if you just want to rebuild the project file, you could do this or you could build the "rebuild_cache" build-target (in Code::Blocks anyway).
 
-You can select the Debug/Release/... build target, but it seems you have to rebuild when changing this.
+If you want to run the tests, 
+ * Visual Studio: build the "RUN_TESTS" target
+ * Code::Blocks: change the build-target to "test" and click build. Unfortunately you can't cancel the test, and need to change the build-target back to "all" (or whichever you want) afterwards.
+ * From a command-line (should work whichever build-tool you use): navigate to the build directory, and run "ctest". You can also just run some tests like this, e.g. "ctest -I 5,6".
+(The cmake options "OM_BOXTEST_..." and "OM_CXXTEST_..." control which tests are included).
+
+You can select the Debug/Release/... build mode, but it seems you have to rebuild when changing this (in Visual Studio).
 
 = Compiling without a .net dependency and with Xerces statically linked =
 (Ignore this section unless you *know* you want to do this. It's mostly notes to make a BOINC release version with minimal dependencies.)
