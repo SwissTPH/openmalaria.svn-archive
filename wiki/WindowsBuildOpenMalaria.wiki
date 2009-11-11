@@ -25,17 +25,13 @@ NB: The unit tests have a dependency on yaml-cpp (for reading in data for the ve
 
 Create a new folder to build in (normally openmalaria/build but it doesn't have to be). Start the cmake-gui, set the source and build directories, and click configure. Tell CMake what kind of build system to generate (probably Visual Studio or Code::Blocks). Probably sort a few things, click configure again and then generate.
 
+If you plan to run the tests, the cmake options "OM_BOXTEST_..." and "OM_CXXTEST_..." control which tests are included.
+
 == Compiling with Code::Blocks or Visual Studio ==
 
 Navigate to your build directory and open "OpenMalaria.cbp" or "OpenMalaria.sln". Build like normal.
 
 Note: if you get told that the project has been modified externally, you must reload it. Any time you click build and any of the CMakeLists.txt files have changed, cmake will regenerate the project file (so any custom settings will be lost). If you want to change any cmake settings, run cmake-gui; if you just want to rebuild the project file, you could do this or you could build the "rebuild_cache" build-target (in Code::Blocks anyway).
-
-If you want to run the tests, 
- * Visual Studio: build the "RUN_TESTS" target
- * Code::Blocks: change the build-target to "test" and click build. Unfortunately you can't cancel the test, and need to change the build-target back to "all" (or whichever you want) afterwards.
- * From a command-line (should work whichever build-tool you use): navigate to the build directory, and run "ctest". You can also just run some tests like this, e.g. "ctest -I 5,6".
-(The cmake options "OM_BOXTEST_..." and "OM_CXXTEST_..." control which tests are included).
 
 You can select the Debug/Release/... build mode, but it seems you have to rebuild when changing this (in Visual Studio).
 
@@ -47,3 +43,12 @@ TODO: Add XERCES_STATIC_LIBRARY to openMalaria compile targets.
 In the cmake configuration for OpenMalaria:
  * set OM_USE_LIBCMT to true
  * edit {{{CMAKE_CXX_FLAGS_*}}} (whichever build mode you're interested in): change "/MD" to "/MT" (or "/MDd" to "/MTd")
+
+= Running Simulations =
+
+If you want to run the tests, 
+ * Visual Studio: build the "RUN_TESTS" target
+ * Code::Blocks: change the build-target to "test" and click build. Unfortunately you can't cancel the test, and need to change the build-target back to "all" (or whichever you want) afterwards.
+ * From a command-line (should work whichever build-tool you use): navigate to the build directory, and run "ctest". You can also just run some tests like this, e.g. "ctest -I 5,6".
+ 
+If you want to run individual simulations using your own scenario.xml file then use the command line from build directory or create a .bat file in the build directory.
