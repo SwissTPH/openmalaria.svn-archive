@@ -27,6 +27,7 @@ Create a new folder to build in (normally openmalaria/build but it doesn't have 
 
 If you plan to run the tests, the cmake options "OM_BOXTEST_..." and "OM_CXXTEST_..." control which tests are included.
 
+
 == Compiling with Code::Blocks or Visual Studio ==
 
 Navigate to your build directory and open "OpenMalaria.cbp" or "OpenMalaria.sln". Build like normal.
@@ -34,6 +35,9 @@ Navigate to your build directory and open "OpenMalaria.cbp" or "OpenMalaria.sln"
 Note: if you get told that the project has been modified externally, you must reload it. Any time you click build and any of the CMakeLists.txt files have changed, cmake will regenerate the project file (so any custom settings will be lost). If you want to change any cmake settings, run cmake-gui; if you just want to rebuild the project file, you could do this or you could build the "rebuild_cache" build-target (in Code::Blocks anyway).
 
 You can select the Debug/Release/... build mode, but it seems you have to rebuild when changing this (in Visual Studio).
+
+If on Visual Studio 2005 (and maybe others), when inside VS5, open the Properties of the project openMalaria, Check Configuration Properties/Linker/Input. If Ignore Specific Library has LIBCMT, replace with MSVCRT. If you don't do this change, openmalaria will compile but not run.
+
 
 = Compiling without a .net dependency and with Xerces statically linked =
 (Ignore this section unless you *know* you want to do this. It's mostly notes to make a BOINC release version with minimal dependencies.)
