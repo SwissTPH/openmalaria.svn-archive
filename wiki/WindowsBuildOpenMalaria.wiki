@@ -59,3 +59,10 @@ If you want to run the tests,
  * From a command-line (should work whichever build-tool you use): navigate to the build directory, and run "ctest". You can also just run some tests like this, e.g. "ctest -I 5,6".
  
 If you want to run individual simulations using your own scenario.xml file then use the command line from build directory or create a .bat file in the build directory.
+
+
+= Troubleshooting =
+
+== '_read_ : is not a member of 'std::basic_istream<_Elem,_Traits>' ==
+
+Update BOINC (this is caused by a wierd macro in BOINC).
