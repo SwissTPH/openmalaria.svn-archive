@@ -66,3 +66,7 @@ If you want to run individual simulations using your own scenario.xml file then 
 == '_read_ : is not a member of 'std::basic_istream<_Elem,_Traits>' ==
 
 Update BOINC (this is caused by a wierd macro in BOINC).
+
+== openssl dependency ==
+
+Checkout http://boinc.berkeley.edu/svn/trunk/boinc_depends_win_vs2005 into the same directory as boinc is in.
