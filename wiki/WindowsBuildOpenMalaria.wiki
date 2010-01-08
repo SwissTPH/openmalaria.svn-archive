@@ -18,6 +18,9 @@ Openmalaria requires the following; for many just run the installer:
  * zlib - get the DLL download from [www.zlib.net here], extract to the working directory above the openmalaria sources and rename to "zlib".
  * CMake 2.4 or 2.6 - use the installer from [http://www.cmake.org/cmake/resources/software.html here].
  * Python - download from [http://www.python.org here].
+ * [http://www.boost.org/doc/libs/1_41_0/more/getting_started/windows.html Boost].
+  * Either use the installer as suggested on that page, or download the archive and extract it to `C:\Program Files\boost` (so the config.hpp file will be at `C:\Program FIles\boost\boost_VER\boost\config.hpp`).
+  * I don't know which is the oldest compatible version; I know 1.41.0 works. Newer versions will need to have their version number added in openmalaria/CMakeLists.txt (search for Boost_ADDITIONAL_VERSIONS).
 
 NB: The unit tests have a dependency on yaml-cpp (for reading in data for the vector tests). If you disable OM_CXXTEST_ENABLE (a CMake option), you won't need to install yaml-cpp.
 
