@@ -1,0 +1,25 @@
+#summary Overview of statistics outputs
+
+= Statistical outputs =
+
+There are currently two statistical output files:
+
+  * output.txt — three-dimensional (survey, measure and often age-group) general statistics
+  * vector.txt — two-dimensional (time-step and measure) statistics from the vector transmission model
+
+Both consist of lines of tab-separated values.
+
+== output.txt ==
+
+Each line in this file specifies one record, and consists of four columns:
+
+  # Survey number (starting from one; indicates which survey specified in the [XmlScenario scenario file] this record is from)
+  # 3rd dimension (often corresponding to age group, but may mean something else or be 0)
+  # Measure as an integer code (see below)
+  # Value
+
+The value of the measure field affects how the other fields are interpreted. All but the `imr_summary` (code: 21) measure come from a survey. Most of the existing measures are reported per age-group and the 3rd dimension of the record specifies which age group specified in the scenario file the statistic comes from, while some of the newer measures use the 3rd-dimension to indicate the mosquito species/variant (as a string), and a few measures don't use this field. The value is always an integer or floating-point number, but its units depend on the measure.
+
+=== measures ===
+
+The measure indicates the meaning of statistics. It is specified by a short string identifier in the [XmlScenario scenario file] and by an integer code in the output files (a space optimization for when the results get imported into the results database). To avoid repetition and potential error of the available identifiers and their codes, please see the `SurveyMeasure` enumeration [http://code.google.com/p/openmalaria/source/browse/trunk/include/Survey.h here].
