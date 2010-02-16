@@ -23,3 +23,7 @@ The value of the measure field affects how the other fields are interpreted. All
 === measures ===
 
 The measure indicates the meaning of statistics. It is specified by a short string identifier in the [XmlScenario scenario file] and by an integer code in the output files (a space optimization for when the results get imported into the results database). To avoid repetition and potential error of the available identifiers and their codes, please see the `SurveyMeasure` enumeration [http://code.google.com/p/openmalaria/source/browse/trunk/include/Survey.h here].
+
+== vector.txt ==
+
+This is an output originally intended for temporary use in validating the vector transmission model, which proved incredibly useful but still not considered a permanent output in its current [TODO..]
