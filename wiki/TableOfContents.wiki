@@ -9,8 +9,16 @@
 
 ===Model components===
 
-  * DrugActionIntegration
+  * [ModelTransmission Transmission models]
+  * [ModelWithinHost Within-host models]
+  * [ModelPathogenesis Models of morbidity and mortality]
+  * [ModelClinical Clinical event and case management models]
+  * [ModelDrug Drug (PKPD) action & resistance models]
+
+  * [Interventions List of interventions]
+
 
 ===Model inputs and outputs===
 
-  * EndUserHelp
+  * [XmlScenario scenario.xml input file]
+  * [OutputFiles Output statistics]
