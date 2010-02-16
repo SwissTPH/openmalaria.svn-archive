@@ -1,10 +1,16 @@
 #summary Content of wiki
 
-[BuildSystem Building and Testing OpenMalaria]
+===Code===
 
-== Further documentation / help ==
-  * [HtmlDocumentation doxygen-generated documentation of the code]
+  * [http://code.google.com/p/openmalaria/source/checkout svn repository]
+  * [http://github.com/dhardy/openmalaria git repository]
+  * [BuildSystem Building and Testing OpenMalaria]
+  * [HtmlDocumentation doxygen-generated documentation]
+
+===Model components===
+
   * DrugActionIntegration
-  * EndUserHelp
 
-  * [TableOfContents This page]
+===Model inputs and outputs===
+
+  * EndUserHelp
