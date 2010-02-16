@@ -1,0 +1,3 @@
+= OpenMalaria =
+
+Welcome to the OpenMalaria wiki on google-code. Here we have some information on the project's code and a little on the mathematical models used in the code.
