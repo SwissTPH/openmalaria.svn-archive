@@ -64,7 +64,8 @@ There are some other build files included:
 == Running the included tests ==
 
 From the build directory, run ctest:
-{{{$ ctest
+{{{
+$ ctest
 Start processing tests
 Test project /home/gouigoui/workspace/OpenMalaria_readOnly/build
   1/ 13 Testing 1                                Passed
