@@ -6,8 +6,11 @@ It's now possible to download Precompiled Binaries from the openmalaria reposito
 
 = Details =
   * _*Windows:*_
-  http://openmalaria.googlecode.com/svn/download/windows_build_784/
+  http://openmalaria.googlecode.com/svn/download/win32/
   * _*MACOSX:*_
-  http://openmalaria.googlecode.com/svn/download/apple_build_784/
+  http://openmalaria.googlecode.com/svn/download/macosx/
   * _*LINUX(X86):*_
-  http://openmalaria.googlecode.com/svn/download/linux_build_784/
+  http://openmalaria.googlecode.com/svn/download/linux32/
+
+  *_*EXAMPLES:*_
+  http://openmalaria.googlecode.com/svn/download/examples/
