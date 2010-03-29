@@ -12,5 +12,6 @@ It's now possible to download Precompiled Binaries from the openmalaria reposito
   * _*LINUX(X86):*_
   http://openmalaria.googlecode.com/svn/download/linux32/
 
-  * _*EXAMPLES:*_
-  http://openmalaria.googlecode.com/svn/download/examples/
+Some example files are available at this address:
+
+http://openmalaria.googlecode.com/svn/download/examples/
