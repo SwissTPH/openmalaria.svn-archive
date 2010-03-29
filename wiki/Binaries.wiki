@@ -5,8 +5,9 @@ Precompiled Binaries for windows, macosx and linux.
 It's now possible to checkout Precompiled Binaries from the openmalaria repository.
 
 = Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * _*Windows:*_
+  svn checkout http://openmalaria.googlecode.com/svn/download/windows_build_784/
+  * _*MACOSX:*_
+  svn checkout http://openmalaria.googlecode.com/svn/download/apple_build_784/
+  * _*LINUX(X86):*_
+  svn checkout http://openmalaria.googlecode.com/svn/download/linux_build_784/
