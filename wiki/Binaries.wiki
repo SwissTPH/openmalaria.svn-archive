@@ -1,4 +1,4 @@
-#Precompiled Binaries for windows, macosx and linux.
+Precompiled Binaries for windows, macosx and linux.
 
 = Introduction =
 
