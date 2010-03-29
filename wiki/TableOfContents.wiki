@@ -7,6 +7,10 @@
   * [BuildSystem Building and Testing OpenMalaria]
   * [HtmlDocumentation doxygen-generated documentation]
 
+===Build===
+  
+  * [Precompiled Binaries]
+
 ===Model components===
 
   * [ModelTransmission Transmission models]
