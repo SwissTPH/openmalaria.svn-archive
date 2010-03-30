@@ -4,6 +4,9 @@
 
   * [http://code.google.com/p/openmalaria/source/checkout svn repository]
   * [http://github.com/dhardy/openmalaria git repository]
+
+===Installing===
+  * [SetupOverview Overview]
   * [BuildSystem Building and Testing OpenMalaria]
   * [HtmlDocumentation doxygen-generated documentation]
 
