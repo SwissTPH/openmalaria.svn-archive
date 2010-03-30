@@ -6,6 +6,8 @@ It's now possible to download Precompiled Binaries from the openmalaria reposito
 
 = Details =
   * _*Windows:*_
+  _You will need to have windows visual studio or visual express installed._
+
   http://openmalaria.googlecode.com/svn/download/win32/
   * _*MACOSX:*_
   http://openmalaria.googlecode.com/svn/download/macosx/
