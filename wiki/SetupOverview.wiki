@@ -4,4 +4,4 @@
 
 Interested in the openmalaria project? Assuming you want to do more than join the volunteer computing effort (at [http://www.malariacontrol.net]), there's two options:
   * install the [Binaries pre-compiled executables] -- recommended for users
-  * build from source -- for programmers developing openmalaria
+  * [BuildSystem build from source] -- for programmers developing openmalaria
