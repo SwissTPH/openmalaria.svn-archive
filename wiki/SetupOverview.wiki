@@ -20,22 +20,25 @@ If you open wherever you put the openmalaria binary in a file browser, in theory
   * It always uses the "scenario.xml" input file
   * Output always goes to the same file (output.txt or output.txt.gz); if this file already exists it won't run
 
-To get around this, you can run openmalaria from a command-line (if you're familiar with command-prompts), or you can use a script file (.bat on windows, .sh on mac/linux). On windows, using a bat file is definitely the easiest; on the mac, .sh files seem to work but be very difficult to create/edit, so using the command-line (iterm) may be easiest.
+To get around this, you can run openmalaria from a command-line (if you're familiar with command-prompts), or you can use a script file (.bat on windows, .sh on mac/linux). On windows, using a bat file is definitely the easiest; it also works on the mac, except that the usual text editors don't seem to want to edit the script (try installing something else?).
 
-A basic windows batch (.bat) file to run openmalaria would be:
+== Script files ==
+
+(Double) clicking on the included runOpenMalaria.sh/.bat script file should do the job. This should look like:
+
+(windows batch (.bat) version)
 {{{
 del output.txt
 openMalaria.exe --scenario scenario.xml
 pause
 }}}
-and a unix script (.sh):
+(unix shell (.sh) version)
 {{{
 #!/bin/sh
 rm -f output.txt
-./openmalaria --scenario scenario.xml
+./openMalaria --scenario scenario.xml
 read
 }}}
-Copy this to a text file named something like `runOpenMalaria.bat` (windows) or `runOpenMalaria.sh` (unix (mac & linux)) in the same folder as the openmalaria executable. On unix you also need to give the file execute permissions (properties, permissions, execute for all users). The only way I found of doing this on the mac though was from the command-line: `chmod +x FILE` (see below for using the command-line). Now you can click/double-click on it.
 
 I should also explain what those scripts do, and how you can edit them. The first line in the .sh file (`#!/bin/sh`) is required to say its a shell script (run by /bin/sh). The next line deletes the old output file using `del`/`rm` (we use the `-f` flag with `rm` to _force_ it to remove the old file, and not prompt "do you really want to delete ..."). Then we run openmalaria: note the name is different, and with unix .sh files we need to prepend it with `./`. We give it one option: `--scenario` which takes one argument, the file name of the input scenario document (you can change the name here; see below for more options). Finally, we use `pause`/`read` to make the terminal window running the script stay open until you press _return_ so that you can read any output. A summary of commands:
 
