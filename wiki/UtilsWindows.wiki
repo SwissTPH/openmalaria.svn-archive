@@ -1,0 +1,14 @@
+#summary Useful utility software on windows
+
+= Introduction =
+
+Windows comes with relatively little software, compared to macs and linux, so installing a few other programs does help. Everything listed here is totally free and should be very easy to install.
+
+
+== Text editors ==
+
+Windows comes with 2: notepad and wordpad. However neither are very good for editing code (XML or other types) and notepad cannot understand unix line-endings.
+
+The text editor I would recommend on windows is [http://notepad-plus.sourceforge.net Notepad++] (there are many more available if you want to look). Download the installer ([http://sourceforge.net/projects/notepad-plus/files/ here]) and run it.
+
+By default Notepad++ won't register itself with any files (meaning if you double-click on XML, txt, files, etc., they will open in some other program, not notepad++). Instead, you can right-click on a file and choose "open with Notepad++" (or "edit with ..."). (It may be necessary to close and re-open file browsers or restart to see this; don't remember exactly.) If you also want to make some types of file open in notepad++ when double-clicked on, you can do so by going to notepad++'s settings menu and adjusting the "associate/register with file types" item, for whichever file types you want (e.g. .txt and .xml).
