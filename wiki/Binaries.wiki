@@ -15,7 +15,7 @@ Make sure all the files (except examples) end up in the same directory: openMala
 
 Note that, for windows, you may well have to install the .net framework (if trying to run openMalaria as above gives you an error message like "reinstall the application", try this). The most straightforward way of getting this seems to be to search for .net, go to the microsoft link, and click download.
 
-If this doesn't help, please contact us (or better, open an "issue" (see issues tab at the top of this page)) with the error message. There's quite a few possible reasons it won't work and these binaries aren't well tested, so you'd help us out!
+If this doesn't help, please contact us (or better, open an [http://code.google.com/p/openmalaria/issues/list issue]) with the error message. There's quite a few possible reasons it won't work and these binaries aren't well tested, so you'd help us out!
 
 == What's what (files) ==
 
