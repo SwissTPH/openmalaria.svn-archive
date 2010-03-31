@@ -5,3 +5,8 @@
 Interested in the openmalaria project? Assuming you want to do more than join the volunteer computing effort (at [http://www.malariacontrol.net]), there's two options:
   * install the [Binaries pre-compiled executables] -- recommended for users
   * [BuildSystem build from source] -- for programmers developing openmalaria
+
+You may also want to install some extra programs, particularly on windows, to aid reading/editing input and output files.
+
+  * [UtilsWindows Windows] — a convenient text editor, and archive tool
+  * MacOSX — unfortunately I don't know the platform well enough to recommend software, however it supports gzip archives; I don't know whether it comes with a [http://www.google.com/search?q=macosx+text+editor good text editor]
