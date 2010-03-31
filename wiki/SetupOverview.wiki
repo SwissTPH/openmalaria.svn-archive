@@ -11,7 +11,7 @@ Interested in the openmalaria project? Assuming you want to do more than join th
 You may also want to install some extra programs, particularly on windows, to aid reading/editing input and output files.
 
   * [UtilsWindows Windows] — a convenient text editor, and archive tool
-  * MacOSX — unfortunately I don't know the platform well enough to recommend software, however it supports gzip archives; I don't know whether it comes with a [http://www.google.com/search?q=macosx+text+editor good text editor]
+  * MacOSX — handles archives fine but not necessarily XML files; dashcode (presumably part of [http://developer.apple.com/tools/xcode/ xcode]) can edit XML files but struggles with scripts, or you can [http://www.google.com/search?q=macosx+text+editor search for one]
 
 = Running =
 
@@ -19,4 +19,57 @@ If you open wherever you put the openmalaria binary in a file browser, in theory
   * If errors occur, you can't see the error messages can't do any more than guess at the problem
   * It always uses the "scenario.xml" input file
   * Output always goes to the same file (output.txt or output.txt.gz); if this file already exists it won't run
-To get around this, you can run openmalaria from a command-line (if you're familiar with command-prompts), or you can use a script file.
+
+To get around this, you can run openmalaria from a command-line (if you're familiar with command-prompts), or you can use a script file (.bat on windows, .sh on mac/linux). On windows, using a bat file is definitely the easiest; on the mac, .sh files seem to work but be very difficult to create/edit, so using the command-line (iterm) may be easiest.
+
+A basic windows batch (.bat) file to run openmalaria would be:
+{{{
+del output.txt
+openMalaria.exe --scenario scenario.xml
+pause
+}}}
+and a unix script (.sh):
+{{{
+#!/bin/sh
+rm -f output.txt
+./openmalaria --scenario scenario.xml
+read
+}}}
+Copy this to a text file named something like `runOpenMalaria.bat` (windows) or `runOpenMalaria.sh` (unix (mac & linux)) in the same folder as the openmalaria executable. On unix you also need to give the file execute permissions (properties, permissions, execute for all users). The only way I found of doing this on the mac though was from the command-line: `chmod +x FILE` (see below for using the command-line). Now you can click/double-click on it.
+
+I should also explain what those scripts do, and how you can edit them. The first line in the .sh file (`#!/bin/sh`) is required to say its a shell script (run by /bin/sh). The next line deletes the old output file using `del`/`rm` (we use the `-f` flag with `rm` to _force_ it to remove the old file, and not prompt "do you really want to delete ..."). Then we run openmalaria: note the name is different, and with unix .sh files we need to prepend it with `./`. We give it one option: `--scenario` which takes one argument, the file name of the input scenario document (you can change the name here; see below for more options). Finally, we use `pause`/`read` to make the terminal window running the script stay open until you press <return> so that you can read any output. A summary of commands:
+
+|| .sh || .bat || Description ||
+|| ls || dir || Prints a list of files & directories in the current directory (useful from a command-line) ||
+|| cd || cd || Change directory ||
+|| rm || del || Delete a file ||
+|| read || pause || Something to wait for user input ||
+
+You may also want to know what options you can use with openmalaria. The following is what it prints with the --help option:
+{{{
+Usage: ./openMalaria [options]
+
+Options:
+ -p --resource-path     Path to look up input resources with relative URLs (defaults to
+                        working directory). Not used for output files.
+    --scenario file.xml Uses file.xml as the scenario. If not given, scenario.xml is used.
+                        If path is relative (doesn't start '/'), --resource-path is used.
+ -m --print-model       Print all model options with a non-default value and exit.
+ -c --checkpoint        Forces checkpointing once during simulation (during initialisation
+                        period), exiting after completing each
+                        checkpoint. Doesn't require BOINC to do the checkpointing.
+    --compress-checkpoints=boolean
+                        Set checkpoint compression on or off. Default is on.
+ -h --help              Print this message.
+Printed help; exiting...
+}}}
+(Probably the --scenario option is the only one you'll want to use.)
+
+Using a command line:
+ # Open a terminal (iterm, command-prompt, konsole, etc.)
+ # Enter the ls/dir command (and press <return>) to see what's in the current directory
+ # Use `cd DIRECTORY` to change to another directory (note: the special name .. (`cd ..`) is used to go up to the parent directory)
+ # Shortcuts: you can drag files/folders from a file browser onto the command-line to enter their names. You can press <tab> to complete file names after typing the first few letters.
+ # When in the right directory, use what commands you need. E.g. `./openmalaria --help`
+
+*Note*: I'm sure this guide is a little incomplete, since it tries to cover quite a lot in a minimal fashion. If you can't get things to work, please contact one of us!
