@@ -1,0 +1,63 @@
+10
+
+dir
+0
+https://openmalaria.googlecode.com/svn/download/r784/common
+https://openmalaria.googlecode.com/svn
+add
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+aa1ca794-fd11-11dd-ac65-f74f249cfaac
+
+densities.csv
+file
+
+
+
+add
+
+scenario.xml
+file
+
+
+
+add
+
+scenario_17.xsd
+file
+
+
+
+add
+
+autoRegressionParameters.csv
+file
+
+
+
+add
+
+scenario_18.xsd
+file
+
+
+
+add
+
