@@ -37,7 +37,7 @@ read
 }}}
 Copy this to a text file named something like `runOpenMalaria.bat` (windows) or `runOpenMalaria.sh` (unix (mac & linux)) in the same folder as the openmalaria executable. On unix you also need to give the file execute permissions (properties, permissions, execute for all users). The only way I found of doing this on the mac though was from the command-line: `chmod +x FILE` (see below for using the command-line). Now you can click/double-click on it.
 
-I should also explain what those scripts do, and how you can edit them. The first line in the .sh file (`#!/bin/sh`) is required to say its a shell script (run by /bin/sh). The next line deletes the old output file using `del`/`rm` (we use the `-f` flag with `rm` to _force_ it to remove the old file, and not prompt "do you really want to delete ..."). Then we run openmalaria: note the name is different, and with unix .sh files we need to prepend it with `./`. We give it one option: `--scenario` which takes one argument, the file name of the input scenario document (you can change the name here; see below for more options). Finally, we use `pause`/`read` to make the terminal window running the script stay open until you press <return> so that you can read any output. A summary of commands:
+I should also explain what those scripts do, and how you can edit them. The first line in the .sh file (`#!/bin/sh`) is required to say its a shell script (run by /bin/sh). The next line deletes the old output file using `del`/`rm` (we use the `-f` flag with `rm` to _force_ it to remove the old file, and not prompt "do you really want to delete ..."). Then we run openmalaria: note the name is different, and with unix .sh files we need to prepend it with `./`. We give it one option: `--scenario` which takes one argument, the file name of the input scenario document (you can change the name here; see below for more options). Finally, we use `pause`/`read` to make the terminal window running the script stay open until you press _return_ so that you can read any output. A summary of commands:
 
 || .sh || .bat || Description ||
 || ls || dir || Prints a list of files & directories in the current directory (useful from a command-line) ||
@@ -67,9 +67,9 @@ Printed help; exiting...
 
 Using a command line:
  # Open a terminal (iterm, command-prompt, konsole, etc.)
- # Enter the ls/dir command (and press <return>) to see what's in the current directory
+ # Enter the ls/dir command (and press _return_) to see what's in the current directory
  # Use `cd DIRECTORY` to change to another directory (note: the special name .. (`cd ..`) is used to go up to the parent directory)
- # Shortcuts: you can drag files/folders from a file browser onto the command-line to enter their names. You can press <tab> to complete file names after typing the first few letters.
+ # Shortcuts: you can drag files/folders from a file browser onto the command-line to enter their names. You can press _tab_ to complete file names after typing the first few letters.
  # When in the right directory, use what commands you need. E.g. `./openmalaria --help`
 
 *Note*: I'm sure this guide is a little incomplete, since it tries to cover quite a lot in a minimal fashion. If you can't get things to work, please contact one of us!
