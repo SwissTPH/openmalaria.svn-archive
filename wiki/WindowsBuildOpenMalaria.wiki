@@ -52,6 +52,10 @@ If on Visual Studio 2005 (and maybe others), when inside VS5, open the Propertie
 = Compiling without a .net dependency and with Xerces statically linked =
 (Ignore this section unless you *know* you want to do this. It's mostly notes to make a BOINC release version with minimal dependencies.)
 
+Please remember that you have to use the xerces static library, which is not given precompiled in the xsd install. 
+
+Further explanations in chapter [Dependencies]. 
+
 TODO: Add XERCES_STATIC_LIBRARY to openMalaria compile targets.
 
 In the cmake configuration for OpenMalaria:
