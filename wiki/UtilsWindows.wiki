@@ -16,6 +16,9 @@ The file types you're likely to encounter with openmalaria are:
   * .xsd : XML Schema Document; describes what content is allowed in the associated XML file
   * .gz, .bz2 (or .something.gz / .bz2) : a compressed file; see "Archive tools" below
   * .zip : standard windows archive
+  * .bat : windows batch file (a very basic script format)
+  * .py : python scripts
+  * .cpp, .h, etc. : C++ code files (the project code)
 
 
 == Text editors ==
@@ -25,6 +28,8 @@ Windows comes with 2: notepad and wordpad. However neither are very good for edi
 The text editor I would recommend on windows is [http://notepad-plus.sourceforge.net Notepad++] (there are many more available if you want to look). Download the installer ([http://sourceforge.net/projects/notepad-plus/files/ here]) and run it.
 
 By default Notepad++ won't register itself with any files (meaning if you double-click on XML, txt, files, etc., they will open in some other program, not notepad++). Instead, you can right-click on a file and choose "open with Notepad++" (or "edit with ..."). (It may be necessary to close and re-open file browsers or restart to see this; don't remember exactly.) If you also want to make some types of file open in notepad++ when double-clicked on, you can do so by going to notepad++'s settings menu and adjusting the "associate/register with file types" item, for whichever file types you want (e.g. .txt and .xml).
+
+Now when editing 
 
 
 == Archives ==
