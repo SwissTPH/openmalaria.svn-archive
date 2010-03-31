@@ -1,12 +1,22 @@
 #summary Overview of building and installation methods
 
-= Options =
+= Installing =
 
 Interested in the openmalaria project? Assuming you want to do more than join the volunteer computing effort (at [http://www.malariacontrol.net]), there's two options:
   * install the [Binaries pre-compiled executables] -- recommended for users
   * [BuildSystem build from source] -- for programmers developing openmalaria
 
+= Tools =
+
 You may also want to install some extra programs, particularly on windows, to aid reading/editing input and output files.
 
   * [UtilsWindows Windows] — a convenient text editor, and archive tool
   * MacOSX — unfortunately I don't know the platform well enough to recommend software, however it supports gzip archives; I don't know whether it comes with a [http://www.google.com/search?q=macosx+text+editor good text editor]
+
+= Running =
+
+If you open wherever you put the openmalaria binary in a file browser, in theory you should be able to just (double) click on "openMalaria.exe" (or whatever variant it's called) to run it. This, however, has some problems:
+  * If errors occur, you can't see the error messages can't do any more than guess at the problem
+  * It always uses the "scenario.xml" input file
+  * Output always goes to the same file (output.txt or output.txt.gz); if this file already exists it won't run
+To get around this, you can run openmalaria from a command-line (if you're familiar with command-prompts), or you can use a script file.
