@@ -8,7 +8,7 @@
 
 ===Installing===
 
-  * [SetupOverview Overview]
+  * [SetupOverview Getting started]
   * [Binaries Precompiled Binaries]
   * [BuildSystem Building and Testing OpenMalaria]
 
