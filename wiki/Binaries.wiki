@@ -6,8 +6,8 @@ It's now possible to download Precompiled Binaries from the openmalaria reposito
 
 Start by making a folder wherever you want to use OpenMalaria. Then, you need to download, from [http://openmalaria.googlecode.com/svn/download/r784]:
 
-  * everything in common/common.zip (they contain the same files; probably downloading the zip file and extracting it is easier than downloading each file)
-  * the binary (executable & libraries) for your system (windows/mac/linux): download everything from whichever folder is relevant
+  * everything in common or common.zip (they contain the same files; probably downloading the zip file and extracting it is easier than downloading each file)
+  * the binary (executable & libraries) for your system (win32/macosx/linux32): download everything from whichever folder is relevant
 
 Make sure all the files (except examples) end up in the same directory: openMalaria, schema_17.xsd, etc. Now you should be able to (double) click on the runOpenMalaria.bat/.sh file and openmalaria should run.
 
