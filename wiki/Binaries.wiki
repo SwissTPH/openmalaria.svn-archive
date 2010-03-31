@@ -4,16 +4,19 @@ Precompiled Binaries for windows, macosx and linux.
 
 It's now possible to download Precompiled Binaries from the openmalaria repository.
 
-= Details =
-  * _*Windows:*_
-  _You will need to have windows visual studio or visual express installed._
+Start by making a folder wherever you want to use OpenMalaria. Then, you need to download, from [http://openmalaria.googlecode.com/svn/download/r784]:
 
-  http://openmalaria.googlecode.com/svn/download/win32/
-  * _*MACOSX:*_
-  http://openmalaria.googlecode.com/svn/download/macosx/
-  * _*LINUX(X86):*_
-  http://openmalaria.googlecode.com/svn/download/linux32/
+  * everything in common/common.zip (they contain the same files; probably downloading the zip file and extracting it is easier than downloading each file)
+  * the binary (executable & libraries) for your system (windows/mac/linux): download everything from whichever folder is relevant
 
-Some example files are available at this address:
+Make sure all the files (except examples) end up in the same directory: openMalaria, schema_17.xsd, etc. Now you should be able to (double) click on the runOpenMalaria.bat/.sh file and openmalaria should run.
 
-http://openmalaria.googlecode.com/svn/download/examples/
+Note that, for windows, you may well have to install the .net framework (if trying to run openMalaria as above gives you an error message like "reinstall the application", try this). The most straightforward way of getting this seems to be to search for .net, go to the microsoft link, and click download.
+
+Now it works, I should tell you what all the files are:
+
+|| openMalaria[.exe], any .dll files || binary files (executable & libraries) ||
+|| runOpenMalaria.bat/.sh || script file for running openmalaria (see [SetupOverview Getting Started]) ||
+|| scenario_VER.xsd || schema file (formally describes what the xml files may contain); currently version 17 is used while 18 is under development ||
+|| scenario.xml || An example scenario document (this one is simply a copy of examples/scenarioVecFullTestII.xml) ||
+|| autoRegressionParameters.csv, densities.csv || auxiliary data files for openmalaria ||
