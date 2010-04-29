@@ -1,19 +1,18 @@
 #summary Content of wiki
 
-===Code===
-
-  * [http://code.google.com/p/openmalaria/source/checkout svn repository]
-  * [http://github.com/dhardy/openmalaria git repository]
-  * [HtmlDocumentation doxygen-generated documentation]
+===Introduction===
 
 ===Installing===
-
   * [SetupOverview Getting started]
   * [Binaries Precompiled Binaries]
   * [BuildSystem Building and Testing OpenMalaria]
 
-===Model components===
+===Code===
+  * [http://code.google.com/p/openmalaria/source/checkout svn repository]
+  * [http://github.com/dhardy/openmalaria git repository]
+  * [HtmlDocumentation doxygen-generated documentation]
 
+===Model components===
   * [ModelTransmission Transmission models]
   * [ModelWithinHost Within-host models]
   * [ModelPathogenesis Models of morbidity and mortality]
@@ -24,6 +23,5 @@
 
 
 ===Model inputs and outputs===
-
   * [XmlScenario scenario.xml input file]
   * [OutputFiles Output statistics]
