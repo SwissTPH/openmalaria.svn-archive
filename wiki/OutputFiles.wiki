@@ -26,4 +26,5 @@ The measure indicates the meaning of statistics. It is specified by a short stri
 
 == vector.txt ==
 
-This is an output originally intended for temporary use in validating the vector transmission model, which proved incredibly useful but still not considered a permanent output in its current [TODO..]
+This is an output originally intended for temporary use in validating the vector transmission model.  The variables in this file relate to the entomological model.
+Since this file is very large the default build does not produce it.  We are still finalising the form of the entomological outputs that should probably replace this file.
