@@ -1,6 +1,6 @@
 #summary Overview of statistics outputs
 
-= Statistical outputs =
+= Output Files =
 
 There are currently two statistical output files:
 
@@ -8,6 +8,9 @@ There are currently two statistical output files:
   * vector.txt — two-dimensional (time-step and measure) statistics from the vector transmission model
 
 Both consist of lines of tab-separated values.
+
+In addition a third file, scenario.sum is produced.
+This is only used only for internal validation.
 
 == output.txt ==
 
