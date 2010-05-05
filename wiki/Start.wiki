@@ -5,7 +5,7 @@ Welcome to the OpenMalaria wiki on google-code. Here we have some information on
 
 == Applications & Usage ==
 
-<placeholder>: brief description of aims
+OpenMalaria is a general platform for comparing, fitting, and evaluating different malaria models, and for quantitative prediction of effects of different interventions and integrated control programs.   The models comprise individual-based stochastic simulations of malaria epidemiology, health systems, and malaria interventions.  The outputs from the core C++ program can be linked to cost data from endemic countries to analyse the economics of malaria interventions.
 
 There are two envisaged methods of using the simulator:
 
@@ -29,6 +29,9 @@ Instructions for compiling the code can be found [BuildSystem here].
 
 == Team ==
 
-Openmalaria is under construction by... <placeholder>
+OpenMalaria is being developed by a team from the [http://www.swisstph.ch/research/public-health-and-epidemiology/biostatistics/modelling-of-malaria.html Swiss Tropical and Public Health Institute (Swiss TPH)], the [http://ndssl.vbi.vt.edu/index.php Network Dynamics and Simulation Science Laboratory at Virginia Bioinformatics Institute] 
+and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine]
+
+
 
 For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.
