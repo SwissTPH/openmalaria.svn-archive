@@ -2,4 +2,33 @@
 
 Welcome to the OpenMalaria wiki on google-code. Here we have some information on the project's code and a little on the mathematical models used in the code.
 
-Contact via [http://groups.google.com/group/openmalaria openmalaria] google group.
+
+== Applications & Usage ==
+
+<placeholder>: brief description of aims
+
+There are two envisaged methods of using the simulator:
+
+ * [SetupOverview as a stand-alone program], capable of simulating a few hand-crafted scenarios and producing results analysable with spread-sheets or simple scripts
+ * via the [http://www.malariacontrol.net/ BOINC volunteer computing platform] and a semi-automated experiment design and analysis platform (under development), capable of handling entire experiments of 10000-100000 scenarios
+
+
+== Development ==
+=== Models ===
+
+The model as a whole consists of many components, from transmission to within-host parasite dynamics to drug action.
+
+For an overview of the model-components represented, see (TODO). For a list of papers describing some part of the model, see (TODO).
+
+=== Code ===
+
+The openmalaria project now has a [https://www.ohloh.net/p/openmalaria considerable code base]. The core program is now entirely written in C++, having Fortran roots. TODO: an overview of the code.
+
+Instructions for compiling the code can be found [BuildSystem here].
+
+
+== Team ==
+
+Openmalaria is under construction by... <placeholder>
+
+For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.
