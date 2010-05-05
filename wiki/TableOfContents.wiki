@@ -1,6 +1,6 @@
 #summary Content of wiki
 
-===Introduction===
+===[Start Introduction]===
 
 ===Installing===
   * [SetupOverview Getting started]
