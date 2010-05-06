@@ -6,6 +6,8 @@ Code is primarily versioned by the svn repository here ("Source" tab). To contri
 
 There is also a git repository, which _used to_ follow the svn repository. However, due to occaisonal git-svn interaction bugs cropping up and preventing further synchronisation of the git and svn repositories, it's been abandoned. It does, however, still contain some history detail in side branches which got compressed to a single commit in the svn repository. You can find it [http://github.com/dhardy/openmalaria here].
 
+You can find a little more information about organisation of the repository in the [http://code.google.com/p/openmalaria/source/browse/trunk/README.txt readme file].
+
 
 = Doxygen documentation =
 
