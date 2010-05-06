@@ -1,16 +1,13 @@
 #summary Content of wiki
 
-===[Start Introduction]===
-
-===Installing===
-  * [SetupOverview Getting started]
-  * [Binaries Precompiled Binaries]
-  * [BuildSystem Building and Testing OpenMalaria]
+===OpenMalaria===
+  * [Start Introduction]
+  * [SetupOverview Installing]
 
 ===Code===
-  * [http://code.google.com/p/openmalaria/source/checkout svn repository]
-  * [http://github.com/dhardy/openmalaria git repository]
-  * [HtmlDocumentation doxygen-generated documentation]
+  * [Code#Source_code Source]
+  * [Code#Doxygen_documentation doxygen-generated documentation]
+  * [BuildSystem Building and Testing]
 
 ===Model components===
   * [ModelTransmission Transmission models]
