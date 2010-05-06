@@ -1,0 +1,19 @@
+#summary Code-related documentation
+
+= Source code =
+
+Code is primarily versioned by the svn repository here ("Source" tab). To contribute patches, please open an issue or use the [http://groups.google.com/group/openmalaria mailing list].
+
+There is also a git repository, which _used to_ follow the svn repository. However, due to occaisonal git-svn interaction bugs cropping up and preventing further synchronisation of the git and svn repositories, it's been abandoned. It does, however, still contain some history detail in side branches which got compressed to a single commit in the svn repository. You can find it [http://github.com/dhardy/openmalaria here].
+
+
+= Doxygen documentation =
+
+The openmalaria code is, to a large extent, documented with [http://www.doxygen.org/ Doxygen]-style comments. (This is used to autonomously generate html documentation of various interfaces in the code, largely aimed at software developers.) The latest build of this documentation (generated daily) is at:
+
+http://www.malariacontrol.net/openmalaria/html/
+
+
+= Build instructions =
+
+See [BuildSystem].
