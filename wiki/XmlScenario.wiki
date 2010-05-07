@@ -17,3 +17,7 @@ It has the following attributes:
 || name              || string    || user-friendly name for the scenario             ||
 || wuID              || int       || BOINC workunit number (automatically set when needed) ||
 || assimMode         || 0 or 1    || removes 3 columns from output.txt for BOINC usage (use 0 for local scenarios) ||
+
+== Demography element ==
+
+Describes the population size and age structure. Most of our scenarios use the same age-structure data from Ifakara, Tanzania. Adjusting the population size is useful, since it has a major impact on run-time and stochasticity of results (1000-100000 individuals are often used in experiments; testing scenarios often use less).
