@@ -4,3 +4,16 @@
 
 The main input to the simulator is an [http://www.w3schools.com/xml/default.asp XML] file traditionally called `scenario.xml` (though it may be named something different if the `--scenario FILE` command-line option is passed to openmalaria). This has many sections, described here. Additionally the file contents are described in a more technical (and probably more complete) way by the [http://www.w3schools.com/schema/default.asp XSD] schema [http://code.google.com/p/openmalaria/source/browse/trunk/model/scenario.xsd file].
 
+
+= Scenario element =
+
+The primary element in the file is called "scenario" (this encapsulates everything else in the file, except the XML header line).
+
+It has the following attributes:
+
+|| attribute         || data type || purpose                                         ||
+|| schemaVersion     || int       || Version of XSD schema to use; should correspond to one of the `scenario_VER.xsd` files in [http://code.google.com/p/openmalaria/source/browse/#svn/trunk/test test] ||
+|| analysisNo        || int       ||                                                 ||
+|| name              || string    || user-friendly name for the scenario             ||
+|| wuID              || int       || BOINC workunit number (automatically set when needed) ||
+|| assimMode         || 0 or 1    || removes 3 columns from output.txt for BOINC usage (use 0 for local scenarios) ||
