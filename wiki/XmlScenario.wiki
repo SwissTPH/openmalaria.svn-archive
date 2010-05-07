@@ -70,7 +70,7 @@ Vector model parameters. All are point-time outputs, not averages. The Nv0, Nv, 
 || 34 || Vector_Sv  ||  Number of infectious mosquitoes ||
 || 35 || Vector_EIR_Input  ||  Input EIR (Expected EIR entered into scenario file) ||
 || 36 || Vector_EIR_Simulated  ||  Simulated EIR (EIR output by the vector model) ||
-    
+
 EventScheduler reporting (additional to above).
 
 || id || measure || description ||
