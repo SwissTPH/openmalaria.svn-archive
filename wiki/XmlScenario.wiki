@@ -24,6 +24,12 @@ Describes the population size and age structure. Most of our scenarios use the s
 
 == Monitoring element ==
 
+The `monitoring` element has three main sub-elements: `SurveyOptions`, `surveys` and `ageGroup`.
+
+The `surveys` element has a list of `surveyTime` sub-elements, each with the timestep of a survey, starting from 0, the start of the intervention period (numbers match timesteps at which interventions can be deployed).
+
+The `ageGroup` element contains a list of `group` sub-elements, each of which has an `upperbound` attribute. These (and the `lowerbound` attribute of `ageGroup`) define the age-groups which reports are divided into. The age-group specified in output data is the index within these groups, ordered by age (youngest to oldest), with the first age-group having index `1`.
+
 === Survey Options ===
 
 This element controls which survey measures are [OutputFiles#measures output]. (Omitting an option has the same effect as listing it with value "false".)
