@@ -44,7 +44,6 @@ This element controls which survey measures are [OutputFiles#measures output]. (
 || 6 || totalInfs  ||  Total infections ||
 || 7 || nTransmit || Infectiousness of human population to mosquitoes. Number of hosts transmitting to mosquitoes (i.e. sum of proportion of mosquitoes that get infected). Single value, not per age-group. ||
 || 8 || totalPatentInf  ||  Total patent infections ||
-|| 9 || contrib  ||  Contribution to immunity functions (not used) ||
 || 10 || sumPyrogenThresh  ||  Sum of the pyrogenic threshold ||
 || 11 || nTreatments1  ||  number of treatments (1st line) ||
 || 12 || nTreatments2  ||  number of treatments (2nd line) ||
@@ -123,3 +122,11 @@ Timed interventions are usually mass campaigns of some sort. The `timed` element
 || `larviciding` || Mosquito emergence-rate reduction intervention. Has an `anopheles` sub-element for each mosquito sub-species, containing the attributes: `mosquito` (name of sub-species), `effectiveness` (proportional reduction in mosquito emergence), `duration` (number of days the intervention is effective for). ||
 
 The `MDA` through to `ipti` interventions above are all mass campaigns. Each has its deployment described by the following attributes: `maxAge` and `minAge` describe the age-range applicable (optional; they default to 100 and 0 respectively), and `coverage` specifies the chance that each individual is covered by the campaign.
+
+== Health system ==
+
+== Entomological data ==
+
+== Drug parameters ==
+
+== Model parameters ==
