@@ -4,6 +4,10 @@
 
 The main input to the simulator is an [http://www.w3schools.com/xml/default.asp XML] file traditionally called `scenario.xml` (though it may be named something different if the `--scenario FILE` command-line option is passed to openmalaria). This has many sections, described here. Additionally the file contents are described in a more technical (and probably more complete) way by the [http://www.w3schools.com/schema/default.asp XSD] schema [http://code.google.com/p/openmalaria/source/browse/trunk/model/scenario.xsd file].
 
+== Scope of documentation ==
+
+This documentation is intended to aid individuals editing scenario files, either by hand or with the scenario editor currently under development, by serving as a rough reference manual. It omits several details, which may be covered by the editor, but for use by hand it is recommended to refer to existing scenarios as guides.
+
 
 = Scenario element =
 
@@ -129,4 +133,33 @@ The `MDA` through to `ipti` interventions above are all mass campaigns. Each has
 
 == Drug parameters ==
 
+This describes PK and PD parameters of drugs. In the future initial levels of resistance need to be described (in fact, these are to some extent now, but the schema for entering this data may change). For now, just copy this section from another scenario which describes the desired drugs.
+
 == Model parameters ==
+
+Finally, `scenario` contains a `model` element, grouping some of the data describing the "model" together.
+
+=== Model options ===
+
+The `ModelOptions` sub-element is a list of binary options, in the same format as `SurveyOptions` (except here, bug-fix options default to true if not specified). The available options are:
+
+<placeholder>
+
+(For now, see [http://code.google.com/p/openmalaria/source/browse/trunk/include/util/ModelOptions.hpp ModelOptions.hpp].)
+
+=== clinical ===
+
+The `clinical` element currently simply has a `healthSystemMemory` attribute, describing the number of days within which another clinical episode is considered a second-line case.
+
+=== parameters ===
+
+The `parameters` element describes a list of parameters which are fitted. Usually, one can just copy this section from an _appropriate_ scenario. Varying the length of the timestep or changing several of the model's options will affect the ideal values of these parameters. Ideally we should make a list of all fit parameter sets, together with the conditions under which they are valid, publically available somewhere.
+
+A list of which parameters may be specified can be found here: [http://code.google.com/p/openmalaria/source/browse/trunk/include/inputData.h inputData.h] (the numbers, rather than names, are used to specify each parameter in scenario files).
+
+This element also contains some attributes (here for historical reasons):
+
+ *  `interval` — number of days in a time-step
+ *  `iseed` — number to seed random-number-generator with
+ *  `delta` — unused
+ *  `latentp` — number of timesteps by which blood-stage infection is delayed in descriptive infection model (should apply to other models?)
