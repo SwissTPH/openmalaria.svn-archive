@@ -84,3 +84,42 @@ EventScheduler reporting (additional to above).
 || 40 || Clinical_DrugUsage  ||  Quantities of drugs used, per active ingredient abbreviation ||
 || 41 || Clinical_FirstDayDeaths  ||  Direct death on first day of CM (before treatment takes effect) ||
 || 42 || Clinical_HospitalFirstDayDeaths  ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
+
+== Interventions ==
+
+The `interventions` element is organized informally into three sections, first descriptions of interventions (without associating times), second continuous interventions, and third timed interventions.
+
+=== Descriptions ===
+
+Intervention descriptions are, at this time, all direct sub-elements of `interventions` and not some other element.
+
+The `MDADescription` element is only required when using _Mass Drug Administration_ interventions on a one-day timestep. It can then take a `schedule` sub-element describing a treatment dose or schedule taken by individuals covered by the administration campaign. There are currently no adherence/dose size/quality effects varying this; i.e. individuals either are not covered by the campaign and recieve nothing or are and recieve the full schedule.
+
+The `vaccineDescription` element describes vaccination campaigns.
+
+The `iptiDescription` describes _Intermittent Preventative Treatment for Infants_ campaigns.
+
+The `anopheles` element, if used, should be listed for each mosquito sub-species (using the `mosquito` attribute to associate with one of the mosquito species specified in entomological data). Each may contain descriptions for _Insecticide Treated Net_ (`ITNDescription`), _Indoor Residual Spraying_ (`IRSDescription`) and a mosquito repellant (`VADescription` — _Vector Availability_) intervention. Theses have sub-elements describing a parameter as a Weibull decay curve. All three have a `deterrency` parameter; additionally `ITNDescription` has `preprandialKillingEffect` and `postprandialKillingEffect` (chance of killing a mosquito before or after feeding) and `IRSDescription` has `killingEffect` (chance of killing mosquito while resting) parameters.
+
+=== Continuous ===
+
+Interventions with continuous deployment are described by a `continuous` element. This accepts sub-elements `vaccine`, `ITN` and `ipti` (see descriptions above); these may occur more than once. (They must be listed in order of type; that is all `vaccine` elements before any `ITN` elements, etc.)
+
+Each of these has the same type: a `targetAgeYrs` attribute and a `coverage` attribute. Every individual has a chance (equal to `coverage`) of recieving this intervention when they reach age `targetAgeYrs` (needn't be an integer).
+
+=== Timed ===
+
+Timed interventions are usually mass campaigns of some sort. The `timed` element accepts a list of `intervention` sub-elements, each of which describes interventions occuring at a time specified by its `time` attribute. The following interventions may occur (and should be listed in this order within each `intervention`):
+
+|| `changeHS` || Replaces the current health-system description with a new one. Must be a complete description of the health system. ||
+|| `changeEIR` || Replaces EIR data with new, daily, data described here. Data must be sufficient to last until the end of the simulation. ||
+|| `importedInfectionsPerThousandHosts` || Not an intervention, but deployed the same way: a floating-point number describing the chance each individual recieves an infection (hence number introduced is unlikely to be exactly the number specified) ||
+|| `MDA` || Mass drug administration (clears infections directly on 5-day timestep and administers drugs on a 1-day timestep) ||
+|| `vaccinate` || Mass vaccination campaign ||
+|| `ITN` || Mass ITN-deployment campaign ||
+|| `IRS` || Mass house-spraying campaign ||
+|| `VectorAvailability` || Mass mosquito-repellent deployment campaign ||
+|| `ipti` || Mass IPTi campaign ||
+|| `larviciding` || Mosquito emergence-rate reduction intervention. Has an `anopheles` sub-element for each mosquito sub-species, containing the attributes: `mosquito` (name of sub-species), `effectiveness` (proportional reduction in mosquito emergence), `duration` (number of days the intervention is effective for). ||
+
+The `MDA` through to `ipti` interventions above are all mass campaigns. Each has its deployment described by the following attributes: `maxAge` and `minAge` describe the age-range applicable (optional; they default to 100 and 0 respectively), and `coverage` specifies the chance that each individual is covered by the campaign.
