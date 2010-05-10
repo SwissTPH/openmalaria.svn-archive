@@ -4,7 +4,7 @@
 
 The main input to the simulator is an [http://www.w3schools.com/xml/default.asp XML] file traditionally called `scenario.xml` (though it may be named something different if the `--scenario FILE` command-line option is passed to openmalaria). This has many sections, described here. Additionally the file contents are described in a more technical (and probably more complete) way by the [http://www.w3schools.com/schema/default.asp XSD] schema [http://code.google.com/p/openmalaria/source/browse/trunk/model/scenario.xsd file].
 
-== Scope of documentation ==
+=== Scope of documentation ===
 
 This documentation is intended to aid individuals editing scenario files, either by hand or with the scenario editor currently under development, by serving as a rough reference manual. It omits several details, which may be covered by the editor, but for use by hand it is recommended to refer to existing scenarios as guides.
 
@@ -130,6 +130,18 @@ The `MDA` through to `ipti` interventions above are all mass campaigns. Each has
 == Health system ==
 
 == Entomological data ==
+
+Entomological data is described by the `entoData` element — this can have either a `vector` or a `nonVector` sub-element (which determines which transmission model to use as well as providing data).
+
+The `entoData` element also has two attributes: `name` (just a user-friendly name), and `mode`. The `mode` parameter determines which transmission mode to enter at the start of the intervention period: 2 to enforce fixed EIR or 4 to allow dynamic simulations where human infectiousness has a feed-back effect on EIR (the usual choice). (For more info on `mode`, see `enum SimulationMode` in [http://code.google.com/p/openmalaria/source/browse/trunk/include/Transmission/TransmissionModel.h TransmissionModel.h].)
+
+=== Vector parameters ===
+
+=== Non-vector parameters ===
+
+The `nonVector` element primarily consists of a list of daily EIR parameters (`EIRDaily` elements). These specify the EIR per day of the year for the pre-intervention equilibrium state. Where data for more than one year is provided, it is simply averaged for each day of the year.
+
+`nonVector` also has an `eipDuration` attribute: the extrinsic incubation period (sporozoite development time, in days), which determines the delay before changes in human infectiousness affect the EIR (in dynamic mode only).
 
 == Drug parameters ==
 
