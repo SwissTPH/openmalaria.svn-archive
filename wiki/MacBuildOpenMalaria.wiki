@@ -14,10 +14,24 @@ After checking out the sources, you have two options to build openmalaria (at le
 
 = Building static binaries =
 
-To be able to build a static binary, you need to link the openMalaria executable with the carbon Framework. For still unknown reasons it is impossible to build a working static binary with the cmake generated xcode project (although the carbon framework is added to the project and a linking step is specified for each target).
+To be able to build a static binary, you need to link the openMalaria executable with the carbon Framework. 
+For still unknown reasons it is impossible to build a working static binary with the cmake generated xcode project (although the carbon framework is added to the project and a linking step is specified for each target).
 
-It's possible to build a working static build using Makefiles (see the [UnixBuildOpenMalaria unix] page), but you will have to do a rather messy operation.
-During the make's linking phase the compiler will complain about undefined constants, because he doesn't link the binary with the 
+It's possible to build a working static build using Makefiles (see the [UnixBuildOpenMalaria unix] page) but you will have to do a rather messy operation. During the make's linking phase the compiler will complain about undefined constants, because he doesn't link the binary with the carbon framework.
+
+You should expect to see some errors like:
+
+Undefined symbols:
+`"_`CFStringCreateMutableWithExternalCharactersNoCopy`"`, referenced from: xercesc_3_1::MacOSUnicodeConverter::upperCase(unsigned short`*`)in libxerces-c.a(MacOSUnicodeConverter.o)
+xercesc_3_1::MacOSUnicodeConverter::lowerCase(unsigned short`*`)in libxerces-c.a(MacOSUnicodeConverter.o)
+
+In the terminal, under the _ Linking CXX executable openMalaria _ message you will see something like that:
+
+`/usr/bin/c++    -Wl,-search_paths_first -headerpad_max_install_names -fPIC CMakeFiles/openMalaria.dir/model/openMalaria.cpp.o  -o openMalaria  -L/Users/africa/workspace/openmalaria_r885/trunk/build/xsdcxx model/libmodel.a ...`
+
+you should Copy this and add * -framework Carbon *, paste it, and finally execute it. 
+
+You should have now a working static build. 
 
 == Xcode ==
 
