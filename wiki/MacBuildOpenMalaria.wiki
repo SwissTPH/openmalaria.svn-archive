@@ -12,6 +12,13 @@ After checking out the sources, you have two options to build openmalaria (at le
  * Use Xcode (see below)
  * Use Makefiles (see the [UnixBuildOpenMalaria unix] page)
 
+= Building static binaries =
+
+To be able to build a static binary, you need to link the openMalaria executable with the carbon Framework. For still unknown reasons it is impossible to build a working static binary with the cmake generated xcode project (although the carbon framework is added to the project and a linking step is specified for each target).
+
+It's possible to build a working static build using Makefiles (see the [UnixBuildOpenMalaria unix] page), but you will have to do a rather messy operation.
+During the make's linking phase the compiler will complain about undefined constants, because he doesn't link the binary with the 
+
 == Xcode ==
 
  * Run cmake-gui
