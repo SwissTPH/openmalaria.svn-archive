@@ -31,7 +31,7 @@ In the terminal, under the _ Linking CXX executable openMalaria _ message you wi
 
 you should Copy this and add * -framework Carbon *, paste it, and finally execute it. 
 
-You should have now a working static build. 
+Finally you should have a working static build. 
 
 == Xcode ==
 
