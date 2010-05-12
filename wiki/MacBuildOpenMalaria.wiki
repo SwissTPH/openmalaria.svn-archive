@@ -9,7 +9,7 @@ Additionally, you should install [http://python.org/download/ python 2.6] (just 
 = Building =
 
 After checking out the sources, you have two options to build openmalaria (at least, two that have been tested):
- * Use Xcode (see below)
+ * Use Xcode (see below): This is the easiest option. However we haven't worked out how to  statically link the xerces library. Therefore this doesn't work for a boinc deploy.
  * Use Makefiles (see the [UnixBuildOpenMalaria unix] page)
 
 = Building static binaries =
