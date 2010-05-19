@@ -6,6 +6,12 @@ This is similar to [UnixBuildOpenMalaria unix].
 
 Additionally, you should install [http://python.org/download/ python 2.6] (just download and run the mac installer). Python 3.0 doesn't work at the moment.
 
+= Backward compatibility =
+
+To force building against a particular macosx version (run this before all the builds):
+
+export MACOSX_DEPLOYMENT_TARGET=10.4
+
 = Building =
 
 After checking out the sources, you have two options to build openmalaria (at least, two that have been tested):
