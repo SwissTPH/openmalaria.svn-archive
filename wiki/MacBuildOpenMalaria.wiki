@@ -10,6 +10,7 @@ Additionally, you should install [http://python.org/download/ python 2.6] (just 
 
 In CMake you have to specify the older SDK version you would like to use to ensure backward compatibility.
 Please beware of the fact that boinc won't be usable with SKDs < 10.3.9.
+
 You have to use the flag CMAKE_OSX_SYSROOT to specify which SDK you would like to use.
 
 = Building =
