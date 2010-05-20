@@ -50,6 +50,19 @@ make
 
 Checking the *STATICALLY_LINK option doesn't ensure you that the gsl and xerces static libs will be used*. The system will automatically take the dynamic libraries although this option is checked. You should then ensure that the system will use the static libraries by  giving the paths (in most cases /usr/local/lib or /usr/lib) to the static libraries.
 
+To avoid problems using static Xerces libraries (mutex errors) you should use xerces sources and compile them on your own system. You will have to give the linker the *-static-libgcc* argument.
+
+The configure command would be pretty much identical to those two examples:
+
+Building Xerces-c 2.8:
+./runConfigure -plinux -cgcc -xg++ -minmem -nsocket -tnative -rpthread -s -l-static-libgcc
+
+Building Xerces-c 3.1.1:	
+./configure --disable-shared -LDFLAGS=-static-libgcc
+
+After this step you should be able to build a proper static openMalaria build. You still have to make sure that
+the openMalaria building process will use the static libstdc++. To ensure that, please pass the arguments *-static-libgcc -Wl,-Bstatic -lstdc++* to the linker. 
+
 After having compiled the binaries, you can check the dependencies with ldd.  
 
 === Other build systems ===
