@@ -7,8 +7,6 @@
 
 Additionally, there's a [UnixBuildWindows summary] of how I tried (and failed) to cross-compile Windows binaries from linux, and some old documentation of how to [LinuxCompiling build openmalaria on linux].
 
-*Note:* The unittests have a dependency on [http://code.google.com/p/yaml-cpp/ yaml-cpp]. If you *disable OM_CXXTEST_ENABLE* (a CMake option), you won't need to install yaml-cpp.
-
 === Running the tests ===
 CMake creates a build target which is never actually built, but "building" this target will run any integrated tests which are enabled. You can run this by:
  * _(Makefiles)_ `make test`
