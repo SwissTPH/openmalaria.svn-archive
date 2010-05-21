@@ -58,7 +58,7 @@ Building Xerces-c 2.8:
 ./runConfigure -plinux -cgcc -xg++ -minmem -nsocket -tnative -rpthread -s -l-static-libgcc
 
 Building Xerces-c 3.1.1:	
-./configure --disable-shared -LDFLAGS=-static-libgcc
+./configure --disable-shared --disable-network LDFLAGS=-static-libgcc
 
 After this step you should be able to build a proper static openMalaria build. You still have to make sure that
 the openMalaria building process will use the static libstdc++. To ensure that, please pass the arguments *-static-libgcc -Wl,-Bstatic -lstdc++* to the linker. 
