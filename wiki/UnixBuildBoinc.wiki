@@ -25,6 +25,8 @@ Configure:
 ./_autosetup
 # For compiling a release version, we only want static libraries: 
 ./configure --disable-client --disable-manager --disable-server --disable-shared -C
+OR
+./configure --disable-client --disable-server LDFLAGS=-static-libgcc
 }}}
 
 You only need the main lib and api; to save time just build and install these:
