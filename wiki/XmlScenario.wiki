@@ -100,7 +100,7 @@ The `MDADescription` element is only required when using _Mass Drug Administrati
 
 The `vaccineDescription` element describes vaccines.
 
-The `iptiDescription` describes _Intermittent Preventive Treatment for Infants_ .
+The `iptiDescription` describes _Intermittent Preventive Treatment for Infants_ . One important point: including this element also enables the IPT drug/within-host model, which adds a protective effect to every treatment. (This behaviour could be changed in the future to use a separate model-option switch.)
 
 The `anopheles` element, if used, should be listed for each mosquito species (using the `mosquito` attribute to associate with one of the mosquito species specified in entomological data). Each may contain descriptions for _Insecticide Treated Net_ (`ITNDescription`), _Indoor Residual Spraying_ (`IRSDescription`) and a mosquito repellant (`VADescription` — _Vector Availability_) intervention. Theses have sub-elements describing a parameter as a Weibull decay curve. All three have a `deterrency` parameter; additionally `ITNDescription` has `preprandialKillingEffect` and `postprandialKillingEffect` (chance of killing a mosquito before or after feeding) and `IRSDescription` has `killingEffect` (chance of killing mosquito while resting) parameters.
 
