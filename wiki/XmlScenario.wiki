@@ -28,15 +28,34 @@ Describes the population size and age structure. Most of our scenarios use the s
 
 == Monitoring element ==
 
-The `monitoring` element has three main sub-elements: `SurveyOptions`, `surveys` and `ageGroup`.
+The `monitoring` element is used to describe two types of output: continuous (or at least regular) reporting of single values, and survey data, which may be irregular and is usually sub-divided by age-group or another differentiator.
+
+The `continuous` and `SurveyOptions` elements describe which outputs to enable for the two outputs, using a list of sub-elements of the form `<option name="NAME" value="true"/>`; lists of valid options are below. Additionally, the `continuous` element has an attribute, `period`, which determines the number of days between each output value (it doesn't make sense for this to be less than `5` when using five-day-timesteps).
 
 The `surveys` element has a list of `surveyTime` sub-elements, each with the timestep of a survey, starting from 0, the start of the intervention period (numbers match timesteps at which interventions can be deployed).
 
 The `ageGroup` element contains a list of `group` sub-elements, each of which has an `upperbound` attribute. These (and the `lowerbound` attribute of `ageGroup`) define the age-groups which reports are divided into. The age-group specified in output data is the index within these groups, ordered by age (youngest to oldest), with the first age-group having index `1`.
 
-=== Survey Options ===
+=== Continuous options ===
 
-This element controls which survey measures are [OutputFiles#measures output]. (Omitting an option has the same effect as listing it with value "false".)
+(Available from schema version 19.)
+
+The following outputs are currently available (note: keep spaces between words as spaces in XML). All not otherwise specified are point-time outputs.
+
+|| output || description ||
+|| recent births || Number of new humans since last report ||
+|| N_v0 || The mosquito emergence rate ||
+|| N_v || The number of mosquitoes ||
+|| O_v || The number of infected mosquitoes ||
+|| S_v || The number of infectious mosquitoes ||
+|| input EIR || Total entomological infection rate input. This is a fixed periodic value, for comparison with simulated EIR. (TODO: find units) ||
+|| simulated EIR || EIR actually acting on humans, as calculated by the transmission model. ||
+|| human infectiousness || Infectiousness of humans to mosquitoes. AKA kappa. ||
+|| human availability || Mean availability of humans to mosquitoes over human population. ||
+
+=== Survey options ===
+
+This element controls which survey measures are [OutputFiles#measures output]. (Omitting an option has the same effect as listing it with value "false".) The "measure" in the table should be input into the XML to enable an output, which will appear in the `output.txt` with a numeric "id" (also below).
 
 || id || measure || description ||
 ||  0 || nHost  ||  Total number of humans ||
