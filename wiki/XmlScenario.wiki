@@ -8,6 +8,9 @@ The main input to the simulator is an [http://www.w3schools.com/xml/default.asp 
 
 This documentation is intended to aid individuals editing scenario files, either by hand or with the scenario editor currently under development, by serving as a rough reference manual. It omits several details, which may be covered by the editor, but for use by hand it is recommended to refer to existing scenarios as guides.
 
+== Contents ==
+
+<wiki:toc max_depth="3" />
 
 = Scenario element =
 
