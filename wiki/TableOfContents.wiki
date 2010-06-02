@@ -12,6 +12,7 @@
   * [BuildSystem Building and Testing]
 
 ===Model components===
+  * [ModelsOverview Overview]
   * [ModelTransmission Transmission models]
   * [ModelWithinHost Within-host models]
   * [ModelPathogenesis Models of morbidity and mortality]
