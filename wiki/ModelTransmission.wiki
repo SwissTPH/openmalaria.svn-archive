@@ -1,0 +1,21 @@
+#summary Transmission models
+
+= Transmission =
+
+The transmission models cover inter-human transmission of malaria, from measuring human infectiousness to mosquitoes to the point of describing each human's exposure (as innoculations per person per year, denoted EIR: Entomological Infection Rate), potentially taking the human's relative availability to mosquitoes into account in both cases.
+
+We currently have two transmission models: `NonVectorTransmission` and `VectorTransmission`.
+
+== Non-vector transmission ==
+
+The average human infectiousness to mosquitoes, denoted `kappa`, is measured by the function `updateKappa`, according to the formula
+{{{
+kappa = sum_{i in pop}( alpha_i * kappa_i ) / sum_i( alpha_i )
+}}}
+where `pop` is the human population, `alpha_i` is the availability of human `i` relative to the population's mean availability, and `kappa_i` is the infectiousness of human `i` (units?).
+
+The Entomological Infection Rate can be calculated in three modes: `equilibriumMode`, where the daily EIR from the scenario file is used directly, `transientEIRknown`, where, similarly, EIR data from a `changeEIR` intervention in scenario file is used directly, and `dynamicEIR`. The `equilibriumMode` is always used for the initialisation phase, during which `kappa` data per day of year is collected and stored in `initialKappa`. When commencing the intervention phase of the simulation, the mode is usually switched to `dynamicEIR`, which uses the same EIR data as in `equilibriumMode` but scales this by `kappa_d / initialKappa_d` where `d` is the day-of-year.
+
+== Vector transmission ==
+
+<placeholder>
