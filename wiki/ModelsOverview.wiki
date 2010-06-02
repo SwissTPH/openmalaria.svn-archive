@@ -4,4 +4,4 @@
 
 The diagram below is a very-much simplified view of the models within the simulator and their interactions. It misses a lot of detail, and describes and positions some components differently to the code.
 
-http://code.google.com/p/openmalaria/wiki/images/model-simple.png
+[http://code.google.com/p/openmalaria/source/browse/wiki/images/model-simple.png]
