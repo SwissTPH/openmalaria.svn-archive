@@ -22,4 +22,4 @@ The Entomological Infection Rate can be calculated in three modes: `equilibriumM
 
 == Vector transmission ==
 
-Simulations that include non-periodic changes in the vectorial capacity use a seasonally forced version of the model for vector dynamics of Chitnis et al (2008)[http://pdfserve.informaworld.com/822581__795158564.pdf]
+Simulations that include non-periodic changes in the vectorial capacity use a seasonally forced version of the model for vector dynamics of Chitnis et al (2008)Journal of Biological Dynamics Vol. 2, No. 3, July 2008, 259–285.
