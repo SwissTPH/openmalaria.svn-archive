@@ -2,12 +2,16 @@
 
 = Transmission =
 
-The transmission models cover inter-human transmission of malaria, from measuring human infectiousness to mosquitoes to the point of describing each human's exposure (as innoculations per person per year, denoted EIR: Entomological Infection Rate), potentially taking the human's relative availability to mosquitoes into account in both cases.
+The transmission models cover inter-human transmission of malaria, from measuring human infectiousness to mosquitoes to the point of describing each human's exposure (as inoculations per person per year, denoted EIR: Entomological Infection Rate), potentially taking the human's relative availability to mosquitoes into account in both cases.  The simulator is designed to simulate seasonally forced transmission, i.e. we assume that in the absence of interventions the EIR recurs annually with the same seasonal pattern.
 
 We currently have two transmission models: `NonVectorTransmission` and `VectorTransmission`.
 
 == Non-vector transmission ==
 
+The 'Non-vector transmission' sub-model can be used only when there are no interventions affecting the vectorial capacity.  
+
+This model assumes that the mosquito population acts to distribute infections at random to the human population (with human exposure proportionate to availability).  There is a fixed time lag between infection of the mosquito and transmission to humans, corresponding to the duration of the sporogonic cycle in the mosquito.  The effect on transmission of interventions on the human population is simulated by changing the infectiousness to mosquitoes. 
+ 
 The average human infectiousness to mosquitoes, denoted `kappa`, is measured by the function `updateKappa`, according to the formula
 {{{
 kappa = sum_{i in pop}( alpha_i * kappa_i ) / sum_i( alpha_i )
@@ -18,4 +22,4 @@ The Entomological Infection Rate can be calculated in three modes: `equilibriumM
 
 == Vector transmission ==
 
-<placeholder>
+Simulations that include non-periodic changes in the vectorial capacity use a seasonally forced version of the model for vector dynamics of Chitnis et al (2008)[http://pdfserve.informaworld.com/822581__795158564.pdf]
