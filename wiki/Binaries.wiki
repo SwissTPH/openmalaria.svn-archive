@@ -4,7 +4,7 @@ Precompiled Binaries for windows, macosx and linux.
 
 It's now possible to download Precompiled Binaries from the openmalaria repository.
 
-Start by making a folder wherever you want to use OpenMalaria. Then, you need to download one of the archives here: [http://openmalaria.googlecode.com/svn/download/r784]
+Start by making a folder wherever you want to use OpenMalaria. Then, you need to download one of the archives here: [http://openmalaria.googlecode.com/svn/download]
  * win32.zip
  * macosx.tar.bz2
  * linux32.tar.bz2
