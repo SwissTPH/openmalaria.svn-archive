@@ -159,6 +159,10 @@ The `entoData` element also has two attributes: `name` (just a user-friendly nam
 
 === Vector parameters ===
 
+The vector model is described by per-species interactions with hosts, where hosts may be humans or one of a few specified non-human populations (e.g. sprayed & unsprayed animals).
+
+<placeholder>
+
 === Non-vector parameters ===
 
 The `nonVector` element primarily consists of a list of daily EIR (_Entomological Inoculation Rate_) parameters (`EIRDaily` elements). These specify the EIR per day of the year for the pre-intervention equilibrium state. Where data for more than one year are provided, they are simply averaged for each day of the year.
