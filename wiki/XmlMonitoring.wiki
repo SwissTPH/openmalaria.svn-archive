@@ -75,7 +75,7 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 35 || Vector_EIR_Input  ||  Input EIR (Expected EIR entered into scenario file) ||
 || 36 || Vector_EIR_Simulated  ||  Simulated EIR (EIR output by the vector model) ||
 
-=== EventScheduler-specific reporting ===
+=== `EventScheduler`-specific reporting ===
 
 Some additional parameters output by the `EventScheduler` model.
 
