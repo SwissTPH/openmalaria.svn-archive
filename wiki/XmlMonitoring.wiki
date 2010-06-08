@@ -1,0 +1,86 @@
+#summary Tables of monitoring option codes and descriptions
+
+([XmlScenario Back to scenario file description.])
+
+<wiki:toc max_depth="3" />
+
+= Monitoring options =
+
+== Continuous measures ==
+
+(These are available from schema version 19.)
+
+The following outputs are currently available (note: keep spaces between words as spaces in XML). All not otherwise specified are point-time outputs.
+
+|| output || description ||
+|| recent births || Number of new humans since last report ||
+|| N_v0 || The mosquito emergence rate ||
+|| N_v || The number of mosquitoes ||
+|| O_v || The number of infected mosquitoes ||
+|| S_v || The number of infectious mosquitoes ||
+|| input EIR || Total entomological infection rate input. This is a fixed periodic value, for comparison with simulated EIR. (TODO: find units) ||
+|| simulated EIR || EIR actually acting on humans, as calculated by the transmission model. ||
+|| human infectiousness || Infectiousness of humans to mosquitoes. AKA kappa. ||
+|| human availability || Mean availability of humans to mosquitoes over human population. ||
+
+== Survey measures ==
+
+This element controls which survey measures are [OutputFiles#measures output]. (Omitting an option has the same effect as listing it with value "false".) The "measure" in the table should be input into the XML to enable an output, which will appear in the `output.txt` with a numeric "id" (also below).
+
+=== General ===
+
+|| id || measure || description ||
+||  0 || nHost  ||  Total number of humans ||
+||  1 || nInfect  ||  number of infected hosts  ||
+|| 2 || nExpectd  ||  expected number of infected hosts ||
+|| 3 || nPatent  ||  number of patent hosts ||
+|| 4 || sumLogPyrogenThres  ||  Sum of the log of the pyrogen threshold ||
+|| 5 || sumlogDens  ||  Sum of the logarithm of the parasite density ||
+|| 6 || totalInfs  ||  Total infections ||
+|| 7 || nTransmit || Infectiousness of human population to mosquitoes. Number of hosts transmitting to mosquitoes (i.e. sum of proportion of mosquitoes that get infected). Single value, not per age-group. ||
+|| 8 || totalPatentInf  ||  Total patent infections ||
+|| 10 || sumPyrogenThresh  ||  Sum of the pyrogenic threshold ||
+|| 11 || nTreatments1  ||  number of treatments (1st line) ||
+|| 12 || nTreatments2  ||  number of treatments (2nd line) ||
+|| 13 || nTreatments3  ||  number of treatments (inpatient) ||
+|| 14 || nUncomp  ||  number of episodes (uncomplicated) ||
+|| 15 || nSevere  ||  number of episodes (severe) ||
+|| 16 || nSeq  ||  cases with sequelae ||
+|| 17 || nHospitalDeaths  ||  deaths in hospital ||
+|| 18 || nIndDeaths  ||  number of deaths (indirect) ||
+|| 19 || nDirDeaths  ||  number of deaths (direct) ||
+|| 20 || nEPIVaccinations  ||  number of EPI vaccine doses given ||
+|| 21 || imr_summary || all cause infant mortality rate (returned as a single number over whole intervention period, instead of from a survey interval) ||
+|| 22 || nMassVaccinations  ||  number of Mass / Campaign vaccine doses given ||
+|| 23 || nHospitalRecovs  ||  recoveries in hospital ||
+|| 24 || nHospitalSeqs  ||  sequelae in hospital ||
+|| 25 || nIPTDoses  ||  number of IPT Doses ||
+|| 26 || annAvgK   || Annual Average Kappa. Calculated once a year as sum of human infectiousness divided by initial EIR summed over a year. Single value, not per age-group. ||
+|| 27 || nNMFever  ||  Number of episodes (non-malaria fever) ||
+|| 30 || innoculationsPerAgeGroup || The total number of inoculations per age group, summed over the reporting period. ||
+|| 28 || innoculationsPerDayOfYear  ||  Inoculations per human (all ages) per day of year, over the last year. ||
+|| 29 || kappaPerDayOfYear  ||  Kappa (human infectiousness) weighted by availability per day-of-year for the last year. ||
+
+=== Vector model ===
+
+These were point-time outputs, but some (just EIR?) have been converted to output averages.
+
+The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single values.
+
+|| id || measure || description ||
+|| 31 || Vector_Nv0 || Mosquito emergence rate. ||
+|| 32 || Vector_Nv  ||  Mosquito population size ||
+|| 33 || Vector_Ov  ||  Number of infected mosquitoes ||
+|| 34 || Vector_Sv  ||  Number of infectious mosquitoes ||
+|| 35 || Vector_EIR_Input  ||  Input EIR (Expected EIR entered into scenario file) ||
+|| 36 || Vector_EIR_Simulated  ||  Simulated EIR (EIR output by the vector model) ||
+
+=== EventScheduler-specific reporting ===
+
+Some additional parameters output by the `EventScheduler` model.
+
+|| id || measure || description ||
+|| 39 || Clinical_RDTs  ||  Number of Rapid Diagnostic Tests used ||
+|| 40 || Clinical_DrugUsage  ||  Quantities of drugs used, per active ingredient abbreviation ||
+|| 41 || Clinical_FirstDayDeaths  ||  Direct death on first day of CM (before treatment takes effect) ||
+|| 42 || Clinical_HospitalFirstDayDeaths  ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
