@@ -94,6 +94,20 @@ The `entoData` element also has two attributes: `name` (just a user-friendly nam
 
 The vector model is described by per-species interactions with hosts, where hosts may be humans or one of a few specified non-human populations (e.g. sprayed & unsprayed animals).
 
+The vector element consists of a list of at least one `anopheles` sub-element, followed by a list of zero or more `nonHumanHosts` sub-elements. Each has a name, which serves as an identifier for the anopheles-mosquito species or non-human-host category (for example, to match per-species vector intervention parameters specified elsewhere with the correct species).
+
+==== Mosquito parameters ====
+
+Each anopheles elements has the following sub-elements: `eir`, `mosq`, and a list of zero or more `nonHumanHosts`.
+
+The `eir` element describes the Entomological Infection Rate humans are exposed to by this mosquito species, via a [http://en.wikipedia.org/wiki/Fourier_series Fourier series] and a rotation offset. More accurately, the exposed EIR, in units of bites per day, is:
+
+<wiki:gadget url="http://mathml-gadget.googlecode.com/svn/trunk/mathml-gadget.xml" border="0" up_content="eir_t = exp ( a_0 + sum_(n=1)^2 { a_n cos(n (w t - theta)) + b_n sin(n (w t - theta)) } )"/>
+
+(Formula uses MathML. For IE, a [http://www.dessci.com/en/products/mathplayer/ plugin] is needed.)
+
+where `t` is the day of year (from 0 to 364), `w = 2π / 365`, `θ` is the `EIRRotateAngle` attribute and `a_0` - `a_2`, `b_1` - `b_2` are the corresponding attributes of the `eir` element.
+
 <placeholder>
 
 === Non-vector parameters ===
@@ -112,7 +126,7 @@ Finally, `scenario` contains a `model` element, grouping some of the data descri
 
 === Model options ===
 
-The `ModelOptions` sub-element is a list of binary options, in the same format as `SurveyOptions` (except here, bug-fix options default to true if not specified). The available options are:
+The `ModelOptions` sub-element is a list of binary options, in the same format as `SurveyOptions` (except here, bug-fix options default to true if not specified, while the rest still default to false). The available options are:
 
 <placeholder>
 
