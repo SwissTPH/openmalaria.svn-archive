@@ -1,0 +1,14 @@
+#summary Within-host models
+
+= Introduction =
+
+Models concerning the calculation of parasite densities within humans are, conceptually, referred to as within-host models. Within the openmalaria code, these reside within the `WithinHost` namespace and classes (excepting the gametocyte model).
+
+This category covers the following models:
+
+ * Liver/pre-patent stage: the start of the infection is simply delayed (see `latentp`).
+ * Blood stage (merozoite) models: these are what we usually mean by "infection" models, and include the `DescriptiveInfection`, `EmpiricalInfection` and `MolineauxInfection` classes.
+ * Sexual stage (gametocyte) model: this is based on the merozoite density between 10 and 20 days earlier.
+ * Acquired immunity: reduces the merozoite survival factor based on history of previous infections. Most code is in the `Infection` and `WithinHostModel` base classes.
+
+In some way the [ModelDrug drug models] could also be considered within-host models, though in the code they come under the "PkPd" directory and namespace.
