@@ -124,10 +124,23 @@ Other per-species mosquito parameters (except non-human-host interaction) are de
 || mosqProbFindRestSite || double || probability || Probability that the mosquito escapes host and finds a resting place after biting ||
 || mosqProbResting || double || probability || Probability of mosquito successfully resting after finding a resting site ||
 || mosqProbOvipositing || double || probability || Probability of a mosquito successfully laying eggs given that it has rested ||
-|| mosqHumanBloodIndex || double || proportion || Human blood index: the proportion of resting mosquitoes that fed on human blood at last feed ||
+|| mosqHumanBloodIndex || double || proportion || Human blood index: the proportion of resting mosquitoes which fed on human blood during the last feed  ||
 
+==== Non-human host parameters ====
 
-<placeholder>
+Non-human parameters are contianed within two sets of elements (all called `nonHumanHosts`): for vector transmission as a whole, and per species.
+
+The first is a list of sub-elements of the `vector` element (under `entoData`), each containing just the category `name` and the `number` of hosts of that type.
+
+Mosquito-host interaction parameters for these categories are then described within the `anopheles` elements, with the attributes:
+
+|| name || type || unit || description ||
+|| name || string || || Identifier for this category of non-human hosts ||
+|| mosqRelativeEntoAvailability || double || proportion || Relative availability of nonhuman hosts of type i (to other nonhuman hosts) ||
+|| mosqProbBiting || double || probability || Probability of mosquito successfully biting host ||
+|| mosqProbFindRestSite || double || probability || Probability that the mosquito escapes host and finds a resting place after biting ||
+|| mosqProbResting || double || probability || Probability of mosquito successfully resting after finding a resting site ||
+
 
 === Non-vector parameters ===
 
