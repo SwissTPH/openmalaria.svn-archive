@@ -16,7 +16,15 @@ Each anopheles elements has the following sub-elements: `eir`, `mosq`, and a lis
 
 The `eir` element describes the Entomological Infection Rate for this mosquito species, which is used as a target when fitting the emergence rate of adult mosquitoes. The EIR is given via a [http://en.wikipedia.org/wiki/Fourier_series Fourier series] and a rotation offset; more accurately, the exposed EIR, in units of bites per day, is:
 
+http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier.png
+
+<wiki:comment>
+Above image rendered as latex from:
+{{{ \Xi_t = \exp \left( a_0 + \sum_{n=1}^2 \left[ a_n \cos \left(n (w t - theta) \right) + b_n \sin \left(n (w t - theta) \right) \right] \right) }}}
+
+MathML version (not so nice and less compatible):
 <wiki:gadget url="http://mathml-gadget.googlecode.com/svn/trunk/mathml-gadget.xml" border="0" up_content="eir_t = exp ( a_0 + sum_(n=1)^2 { a_n cos(n (w t - theta)) + b_n sin(n (w t - theta)) } )"/>
+</wiki:comment>
 
 (Formula uses MathML. For IE, a [http://www.dessci.com/en/products/mathplayer/ plugin] is needed.)
 
