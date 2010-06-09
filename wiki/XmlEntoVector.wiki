@@ -24,11 +24,10 @@ Above image rendered as latex from:
 
 MathML version (not so nice and less compatible):
 <wiki:gadget url="http://mathml-gadget.googlecode.com/svn/trunk/mathml-gadget.xml" border="0" up_content="eir_t = exp ( a_0 + sum_(n=1)^2 { a_n cos(n (w t - theta)) + b_n sin(n (w t - theta)) } )"/>
-</wiki:comment>
 
-(Formula uses MathML. For IE, a [http://www.dessci.com/en/products/mathplayer/ plugin] is needed.)
+(Formula uses MathML. For IE, a [http://www.dessci.com/en/products/mathplayer/ plugin] is needed.)</wiki:comment>
 
-where `t` is the day of year (from 0 to 364), `w = 2π / 365`, `θ` is the `EIRRotateAngle` attribute and `a_0` - `a_2`, `b_1` - `b_2` are the corresponding attributes of the `eir` element.
+Here, `Ξ_t` is the number of innoculations per person per day, where `t` is the day of year (from 0 to 364), `w = 2π / 365`, `θ` is the `EIRRotateAngle` attribute and `a_0` - `a_2`, `b_1` - `b_2` are the corresponding attributes of the `eir` element.
 
 === Mosquito lifecycle and human-interaction parameters ===
 
