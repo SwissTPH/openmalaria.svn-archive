@@ -100,13 +100,32 @@ The vector element consists of a list of at least one `anopheles` sub-element, f
 
 Each anopheles elements has the following sub-elements: `eir`, `mosq`, and a list of zero or more `nonHumanHosts`.
 
-The `eir` element describes the Entomological Infection Rate humans are exposed to by this mosquito species, via a [http://en.wikipedia.org/wiki/Fourier_series Fourier series] and a rotation offset. More accurately, the exposed EIR, in units of bites per day, is:
+===== Entomological Infection Rate =====
+
+The `eir` element describes the Entomological Infection Rate for this mosquito species, which is used as a target when fitting the emergence rate of adult mosquitoes. The EIR is given via a [http://en.wikipedia.org/wiki/Fourier_series Fourier series] and a rotation offset; more accurately, the exposed EIR, in units of bites per day, is:
 
 <wiki:gadget url="http://mathml-gadget.googlecode.com/svn/trunk/mathml-gadget.xml" border="0" up_content="eir_t = exp ( a_0 + sum_(n=1)^2 { a_n cos(n (w t - theta)) + b_n sin(n (w t - theta)) } )"/>
 
 (Formula uses MathML. For IE, a [http://www.dessci.com/en/products/mathplayer/ plugin] is needed.)
 
 where `t` is the day of year (from 0 to 364), `w = 2π / 365`, `θ` is the `EIRRotateAngle` attribute and `a_0` - `a_2`, `b_1` - `b_2` are the corresponding attributes of the `eir` element.
+
+===== Mosquito lifecycle and human-interaction parameters =====
+
+Other per-species mosquito parameters (except non-human-host interaction) are described in the `mosq` element. This has the following attributes:
+
+|| name || type || unit || description ||
+|| mosqRestDuration || int || days || Duration of the resting period of the vector ||
+|| extrinsicIncubationPeriod || int || days || Extrinsic incubation period (time required for sporozoite development) ||
+|| mosqLaidEggsSameDayProportion || double || proportion || Proportion of mosquitoes host seeking on same day as ovipositing ||
+|| mosqSeekingDuration || double || days || Maximum proportion of day spent host-seeking by the vector ||
+|| mosqSurvivalFeedingCycleProbability || double || probability || Probability that the mosquito survives the feeding cycle||
+|| mosqProbBiting || double || probability || Probability that the mosquito succesfully bites chosen host ||
+|| mosqProbFindRestSite || double || probability || Probability that the mosquito escapes host and finds a resting place after biting ||
+|| mosqProbResting || double || probability || Probability of mosquito successfully resting after finding a resting site ||
+|| mosqProbOvipositing || double || probability || Probability of a mosquito successfully laying eggs given that it has rested ||
+|| mosqHumanBloodIndex || double || proportion || Human blood index: the proportion of resting mosquitoes that fed on human blood at last feed ||
+
 
 <placeholder>
 
