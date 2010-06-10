@@ -33,15 +33,23 @@ Describes the population size and age structure. Most of our scenarios use the s
 
 The `monitoring` element is used to describe two types of output: continuous (or at least regular) reporting of single values, and survey data, which may be irregular and is usually sub-divided by age-group or another differentiator.
 
-The `continuous` and `SurveyOptions` elements describe which outputs to enable for the two outputs, using a list of sub-elements of the form `<option name="NAME" value="true"/>`; lists of valid options are below. Additionally, the `continuous` element has an attribute, `period`, which determines the number of days between each output value (it doesn't make sense for this to be less than `5` when using five-day-timesteps).
+=== Measures ===
+
+The `continuous` and `SurveyOptions` elements describe which outputs to enable for the two outputs, using a list of sub-elements of the form `<option name="NAME" value="true"/>`; lists of valid options are below.
+
+[XmlMonitoring Tables of continuous and survey measures.]
+
+=== Continuous reporting ===
+
+Continuous reporting, when enabled (a `continuous` element is described and `period` is positive), outputs data every `period` days (`period` is an attribute of the `continuous` element).
+
+This output normally starts from the beginning of the intervention period, but for diagnostic purposes it can be enabled from the beginning of initialization by including a `duringInit="true"` attribute. This has two additional side effects: an extra column, `simulation time`, is output as the first column, and where `period` is greater than the length of a timestep, reporting (during intervention period) may happen on different timesteps.
+
+=== Surveys ===
 
 The `surveys` element has a list of `surveyTime` sub-elements, each with the timestep of a survey, starting from 0, the start of the intervention period (numbers match timesteps at which interventions can be deployed).
 
 The `ageGroup` element contains a list of `group` sub-elements, each of which has an `upperbound` attribute. These (and the `lowerbound` attribute of `ageGroup`) define the age-groups which reports are divided into. The age-group specified in output data is the index within these groups, ordered by age (youngest to oldest), with the first age-group having index `1`.
-
-=== Measures ===
-
-[XmlMonitoring Tables of continuous and survey measures.]
 
 == Interventions ==
 
