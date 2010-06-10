@@ -25,7 +25,7 @@ NB: The unit tests have a dependency on yaml-cpp (for reading in data for the ve
 
 === gsl ===
 
-Get it from [ftp://sunsite.cnlab-switch.ch/mirror/gnu/gsl here] (oldest supported is 1.11); extract to your working directory above the openmalaria code and rename to "gsl". This should put the sources within WORKSPACE/gsl/gsl/.
+Get it from [ftp://sunsite.cnlab-switch.ch/mirror/gnu/gsl here] (oldest supported is 1.13); extract to your working directory above the openmalaria code and rename to "gsl". This should put the sources within WORKSPACE/gsl/gsl/.
 
 Now build the libraries: open the gsl/gsl/gsl.sln file select the "Release MT"/"Debug MT" version you want to use (you'll have to stick with one), and build. Now find the libraries: they should be under gsl/gsl/win32/lib/. Copy/move the lib folder up two directories (so you have WORKSPACE/gsl/lib), go into it and rename the files: remove the "_mt" (release) or "_mtd" (debug) suffix (so you have gs.lib, cblas.lib, etc.). (If you want to change between debug and release later, replace this set of files with the other generated version.)
 
