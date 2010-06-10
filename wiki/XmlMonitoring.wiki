@@ -22,6 +22,8 @@ The following outputs are currently available (note: keep spaces between words a
 || simulated EIR || EIR actually acting on humans, as calculated by the transmission model. ||
 || human infectiousness || Infectiousness of humans to mosquitoes. AKA kappa. ||
 || human availability || Mean availability of humans to mosquitoes over human population. ||
+|| immunity h || Average of `_cumulativeh` parameter across humans, which is the cumulative number of infections recieved since birth ||
+|| immunity Y || Average of `_cumulativeY` parameter across humans, which is the cumulative parasite density since birth ||
 
 == Survey measures ==
 
