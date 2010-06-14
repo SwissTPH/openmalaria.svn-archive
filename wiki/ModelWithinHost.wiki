@@ -7,7 +7,13 @@ Models concerning the calculation of parasite densities within humans are, conce
 This category covers the following models:
 
  * Liver/pre-patent stage: the start of the infection is simply delayed (see `latentp`).
- * Blood stage (merozoite) models: these are what we usually mean by "infection" models, and include the `DescriptiveInfection`, `EmpiricalInfection` and `MolineauxInfection` classes.
+ * Blood stage (merozoite) models: these are what we usually mean by "infection" models: 
+Currently implemented models are:
+#: Maire et al (ref) (`DescriptiveInfection` class) 
+#  `EmpiricalInfection` 
+#: Molineaux et al [http://www.ncbi.nlm.nih.gov/pubmed/11315171] (implemented in the   `MolineauxInfection` class).  
+This is mass action model of Plasmodium falciparum asexual parasite densities fitted to malariatherapy data.  In incorporates (i) intra-clonal antigenic variation, (ii) large variations of the variants' baseline growth rate, depending on both variant and case, (iii) innate autoregulation of the asexual parasite density, variable among cases, (iv) acquired variant-specific immunity and (v) acquired variant-transcending immunity, variable among cases.  The published model uses a discrete time-step of 2 days.  The openMalaria implementation adapts this to a 1-day time-step by interpolating the parasite multiplication rate, and includes immune effects of previous exposure by further modifying the multiplication rates. 
+
  * Sexual stage (gametocyte) model: this is based on the merozoite density between 10 and 20 days earlier.
  * Acquired immunity: reduces the merozoite survival factor based on history of previous infections. Most code is in the `Infection` and `WithinHostModel` base classes.
 
