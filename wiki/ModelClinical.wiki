@@ -1,0 +1,21 @@
+#summary Clinical models
+
+= Clinical models =
+
+In openmalaria, the [ModelPathogenesis Pathogenesis model] determines when sickness events occur, and the clinical model determines how the sickness is treated, how long it lasts, and what outcomes (recovery, death or sequelae) occur.
+
+The clinical model considers two sub-categories of severe malaria episodes, as presented by the [ModelPathogenesis Pathogenesis model]. These comprise episodes with extremely high parasite densities in hosts with little previous exposure, and acute malaria episodes accompanied by co-morbidity or other risk factors enhancing susceptibility. In addition to direct malaria mortality from severe malaria episodes, the model also considers the enhanced risk of indirect mortality following acute episodes accompanied by co-morbidity after the parasites have been cleared.
+
+There are two implementations of the clinical model:
+
+=== 5-day timestep ===
+
+[http://www.ncbi.nlm.nih.gov/pubmed/16931817 Ross et al, 2006] (implemented by the `ClinicalImmediateOutcomes` class) describes a quantitative framework for use on a 5-day timestep to model the various apparently contradictory observations relating morbidity and mortality rates to malaria transmission. The model is fit to summaries of field data from endemic areas of Africa.
+
+In this model, sickness episodes are assumed to have concluded within a single 5-day timestep. Treatment either completely clears parasites or has no effect, and within a severe episode, mortality rate depends on effectiveness of treatment.
+
+=== 1-day timestep ===
+
+(Paper not yet published; implemented by the `ClinicalEventScheduler` class.) The model is an adaptation of the above [ModelClinical#5-day_timestep Ross et al model] to a 1-day timestep. The finer-grained simulation allows modelling of parasite response to treatment via a [ModelDrug modelling of pharmacodynamics] and thus partial drug failure due to parasite resistance, poor adherence or insufficient doses; therefore we break the model down into two components: treatment seeking and event duration/outcome.
+
+==== 
