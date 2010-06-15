@@ -11,7 +11,7 @@ This category covers the following models:
  * Acquired natural immunity: in the [http://www.ncbi.nlm.nih.gov/pubmed/16931812 Maire et al (2006)] within-host models the effect of acquired immunity is to directly reduce the parasite density.  Within the other within-host models, acquired immunity reduces the merozoite survival factor.  In either case the effect depends on the history of previous infections. Most code is in the `Infection` and `WithinHostModel` base classes.
  * Sexual stage (gametocyte) model: [http://www.ncbi.nlm.nih.gov/pubmed/16931813 Ross et al, 2006] This uses the results of a statistical model for the relationship between asexual parasite densities of _Plasmodium falciparum_ and the infectivity of the host to mosquitoes, fitted to malariatherapy data. The model takes into account the delay between asexual parasitemia and infectivity resulting from the time course of gametocytemia, by making transmission depend on the asexual parasite density between 10 and 20 days earlier. It also allows for the need for the blood meal to contain gametocytes of both sexes if infection is to take place. 
 
-In some way the [ModelDrug drug models] could also be considered within-host models, though in the code they come under the "PkPd" directory and namespace.
+In some way the [ModelDrug drug models] could also be considered within-host models, though in the code they come under the `PkPd` directory and namespace.
 
 == Asexual infection models ==
 
