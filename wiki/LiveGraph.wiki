@@ -13,7 +13,8 @@ Download the binary "Plotter application" of the latest version from [http://www
 
 Run it by executing the `LiveGraph.*.jar` file or using a script like that below. A java run-time environment must be installed.
 
-{{{#!/bin/sh
+{{{
+#!/bin/sh
 cd /home/dhardy/download/LiveGraph.2.0.beta01.Complete
 java -jar LiveGraph.2.0.beta01.Complete.jar
 }}}
