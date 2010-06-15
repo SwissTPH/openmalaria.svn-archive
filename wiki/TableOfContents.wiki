@@ -22,8 +22,8 @@
   * [ModelsOverview Overview]
   * [ModelTransmission Transmission models]
   * [ModelWithinHost Within-host models]
-  * [ModelPathogenesis Models of morbidity and mortality]
-  * [ModelClinical Clinical event and case management models]
+  * [ModelPathogenesis Morbidity models]
+  * [ModelClinical Clinical episode, case management, and mortality models]
   * [ModelDrug Drug (PKPD) action & resistance models]
 
   * [XmlScenario#Interventions List of interventions]
