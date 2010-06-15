@@ -3,7 +3,10 @@
 ===OpenMalaria===
   * [Start Introduction]
   * [SetupOverview Getting started (local simulations)]
+     * [Binaries Pre-compiled binaries]
+     * [UtilsWindows Useful utilities on Windows]
   * *[XmlScenario Inputs: creating a scenario]*
+     * [XmlMonitoring Monitoring measures]
   * *[OutputFiles Outputs: interpreting results]*
      * LiveGraph
 
@@ -11,6 +14,9 @@
   * [Code#Source_code Source]
   * [Code#Doxygen_documentation doxygen-generated documentation]
   * [BuildSystem Building and Testing]
+     * [WindowsBuildOpenMalaria Windows]
+     * [UnixBuildOpenMalaria Unix]
+     * [MacBuildOpenMalaria Mac]
 
 ===Model components===
   * [ModelsOverview Overview]
