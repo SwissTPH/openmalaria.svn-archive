@@ -5,6 +5,7 @@
   * [SetupOverview Getting started (local simulations)]
   * *[XmlScenario Inputs: creating a scenario]*
   * *[OutputFiles Outputs: interpreting results]*
+     * LiveGraph
 
 ===Code===
   * [Code#Source_code Source]
