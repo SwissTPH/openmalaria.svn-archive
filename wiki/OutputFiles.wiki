@@ -25,9 +25,12 @@ The value of the measure field affects how the other fields are interpreted. All
 
 === measures ===
 
-The measure indicates the meaning of statistics. It is specified by a short string identifier in the [XmlScenario scenario file] and by an integer code in the output files (a space optimization for when the results get imported into the results database). See [XmlScenario#Survey_Options here] for a list of measures, or look directly in the [http://code.google.com/p/openmalaria/source/browse/trunk/include/Survey.h code] (`SurveyMeasure` enum) for an authoritative list of integer identifiers assigned to each measure.
+The measure indicates the meaning of statistics. It is specified by a short string identifier in the [XmlScenario scenario file] and by an integer code in the output files (a space optimization for when the results get imported into the results database).
 
-== vector.txt ==
+[XmlMonitoring#Survey_measures List of measures.]
 
-This is an output originally intended for temporary use in validating the vector transmission model.  The variables in this file relate to the entomological model.
-Since this file is very large the default build does not produce it.  We are still finalising the form of the entomological outputs that should probably replace this file.
+== ctsout.txt ==
+
+Some data can also be output to this file, in a simpler format (often a single value per time-step). Data output capabilities have some overlap with `output.txt`, but have the advantages of simpler [XmlScenario#Continuous_reporting configuration] and a simple output format which can be easily plotted using LiveGraph or a spreadsheet program.
+
+[XmlMonitoring#Continuous_measures List of measures.]
