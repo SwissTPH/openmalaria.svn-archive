@@ -18,10 +18,6 @@ In this model, sickness episodes are assumed to have concluded within a single 5
 
 (Paper not yet published; implemented by the `ClinicalEventScheduler` class.) The model is an adaptation of the above [ModelClinical#5-day_timestep Ross et al model] to a 1-day timestep. The finer-grained simulation allows modelling of parasite response to treatment via a [ModelDrug modelling of pharmacodynamics] and thus partial drug failure due to parasite resistance, poor adherence or insufficient doses; therefore we break the model down into two components: treatment seeking and episode duration/outcome.
 
-===  Treatment seeking ===
-
-The treatment seeking component of the model (implemented in the `ESCaseManagement` class) consists of stochastic decision trees concerned with determining the treatments given (including the actual schedule followed and dose sizes taken), along with whether the patient was hospitalized, whether treatment or hospitalization delays occurred. The decision trees also provide costing data, stemming from the drugs administered, parasite diagnostics used and hospitalization.
-
 === Episode duration and outcome ===
 
 An _episode_ commences with a morbidity _event_ and concludes with a recovery or mortality _event_ (stressing terminology used). With this model, acute (but non-severe) malarial fevers and non-malarial fevers are considered equivalently, excepting parasite diagnostics; in both cases the episode duration is fixed at 3 days long, after which it is assumed parasite densities have been reduced by treatment or immunity (in the case this doesn't happen, a repeat event may occur, or the episode may escalate to severe malaria).
@@ -29,6 +25,12 @@ An _episode_ commences with a morbidity _event_ and concludes with a recovery or
 While healthy or during an uncomplicated episode, a severe episode may commence (determined, as with other sickness events, by the [ModelPathogenesis Pathogenesis model]). This is fixed at 5 days long where the patient enters hospital immediately or not at all; a 1-day delay to hospital entry is also considered possible which increases the episode length to 6 days. While in hospital, patients are assumed to be unavailable to mosquitoes and thus excluded from transmission.
 
 Mortality is possible during severe malaria episodes, and considered as a stochastic function of the proportional reduction in parasite density each day of the case (TODO: link article). Mortality events are always modelled as happening at the end of the associated severe episode.
+
+===  Treatment seeking ===
+
+The treatment seeking component of the model (implemented in the `ESCaseManagement` class) consists of stochastic decision trees concerned with determining the treatments given (including the actual schedule followed and dose sizes taken), along with whether the patient was hospitalized, and whether treatment or hospitalization delays occurred. The decision trees also provide costing data, stemming from the drugs administered, parasite diagnostics used and hospitalization.
+
+Case management in uncomplicated and severe episodes is determined using completely separate decision trees. In both cases, arbitrary decisions based on age, the outcome of a parasite density test, and decisions based on previous decisions and random sampling are allowed. In the uncomplicated case, an extra input, UC1/UC2 is provided: uncomplicated cases are considered UC2 (or second-line) when recently treated with antimalarials (but not necessarily malaria), otherwise they are UC1.
 
 === Costing ===
 
