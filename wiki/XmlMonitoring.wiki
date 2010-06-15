@@ -8,7 +8,7 @@
 
 == Continuous measures ==
 
-(These are available from schema version 19.)
+This output format was introduced in schema version 19; some outputs were added later. There's no central list of these outputs in the code; instead search for calls to `Continuous::registerCallback` -- it's first argument should correspond to the output identifier in the table below.
 
 The following outputs are currently available (note: keep spaces between words as spaces in XML). All not otherwise specified are point-time outputs.
 
