@@ -8,24 +8,32 @@ The clinical model considers two sub-categories of severe malaria episodes, as p
 
 There are two implementations of the clinical model:
 
-=== 5-day timestep ===
+== 5-day timestep ==
 
 [http://www.ncbi.nlm.nih.gov/pubmed/16931817 Ross et al, 2006] (implemented by the `ClinicalImmediateOutcomes` class) describes a quantitative framework for use on a 5-day timestep to model the various apparently contradictory observations relating morbidity and mortality rates to malaria transmission. The model is fit to summaries of field data from endemic areas of Africa.
 
 In this model, sickness episodes are assumed to have concluded within a single 5-day timestep. Treatment either completely clears parasites or has no effect, and within a severe episode, mortality rate depends on effectiveness of treatment.
 
-=== 1-day timestep ===
+== 1-day timestep ==
 
 (Paper not yet published; implemented by the `ClinicalEventScheduler` class.) The model is an adaptation of the above [ModelClinical#5-day_timestep Ross et al model] to a 1-day timestep. The finer-grained simulation allows modelling of parasite response to treatment via a [ModelDrug modelling of pharmacodynamics] and thus partial drug failure due to parasite resistance, poor adherence or insufficient doses; therefore we break the model down into two components: treatment seeking and episode duration/outcome.
 
-====  Treatment seeking ====
+===  Treatment seeking ===
 
 The treatment seeking component of the model (implemented in the `ESCaseManagement` class) consists of stochastic decision trees concerned with determining the treatments given (including the actual schedule followed and dose sizes taken), along with whether the patient was hospitalized, whether treatment or hospitalization delays occurred. The decision trees also provide costing data, stemming from the drugs administered, parasite diagnostics used and hospitalization.
 
-==== Episode duration and outcome ====
+=== Episode duration and outcome ===
 
 An _episode_ commences with a morbidity _event_ and concludes with a recovery or mortality _event_ (stressing terminology used). With this model, acute (but non-severe) malarial fevers and non-malarial fevers are considered equivalently, excepting parasite diagnostics; in both cases the episode duration is fixed at 3 days long, after which it is assumed parasite densities have been reduced by treatment or immunity (in the case this doesn't happen, a repeat event may occur, or the episode may escalate to severe malaria).
 
 While healthy or during an uncomplicated episode, a severe episode may commence (determined, as with other sickness events, by the [ModelPathogenesis Pathogenesis model]). This is fixed at 5 days long where the patient enters hospital immediately or not at all; a 1-day delay to hospital entry is also considered possible which increases the episode length to 6 days. While in hospital, patients are assumed to be unavailable to mosquitoes and thus excluded from transmission.
 
 Mortality is possible during severe malaria episodes, and considered as a stochastic function of the proportional reduction in parasite density each day of the case (TODO: link article). Mortality events are always modelled as happening at the end of the associated severe episode.
+
+=== Costing ===
+
+The following costs to the health system are considered:
+
+ * drugs medicated, including vomited doses but not doses skipped due to poor adherence
+ * parasite (RDT and microscopy) diagnostics used
+ * patient hospital days, using fixed average lengths for stays resulting in recovery and stays ending with mortality
