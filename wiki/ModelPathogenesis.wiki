@@ -1,0 +1,9 @@
+#summary Morbidity models
+
+= Pathogenesis model =
+
+Openmalaria's pathogenesis model determines the commencement of sickness episodes (termed sickness events) based on parasite density. Models implemented include:
+
+ * [http://www.ncbi.nlm.nih.gov/pubmed/16931816 Smith et al, 2006] (implemented in the `PyrogenPathogenesis` class): A stochastic model for simulating malaria tolerance. The model relates the probability of a clinical attack of malaria to the peripheral parasite densities via a pyrogenic threshold that itself responds dynamically to the parasite load. The parameters of the model have been estimated by fitting it to the relationship between incidence of clinical episodes and the entomologic inoculation rate, using age-specific incidence data from two villages in Senegal and one village in Tanzania.
+ * Mueller presentation model (implemented in the `MuellerPathogenesis` class).
+ * Predetermined episodes presentation model (`PredetPathogenesis` class).
