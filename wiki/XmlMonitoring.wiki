@@ -29,6 +29,8 @@ The following outputs are currently available (note: keep spaces between words a
 
 This element controls which survey measures are [OutputFiles#measures output]. (Omitting an option has the same effect as listing it with value "false".) The "measure" in the table should be input into the XML to enable an output, which will appear in the `output.txt` with a numeric "id" (also below).
 
+These tables come from [http://code.google.com/p/openmalaria/source/browse/trunk/include/Monitoring/Survey.h this file] in the code.
+
 === General ===
 
 || id || measure || description ||
