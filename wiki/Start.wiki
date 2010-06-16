@@ -30,7 +30,7 @@ Instructions for compiling the code can be found [BuildSystem here].
 == Team ==
 
 OpenMalaria is being developed by a team from the [http://www.swisstph.ch/research/public-health-and-epidemiology/biostatistics/modelling-of-malaria.html Swiss Tropical and Public Health Institute (Swiss TPH)], the [http://ndssl.vbi.vt.edu/index.php Network Dynamics and Simulation Science Laboratory at Virginia Bioinformatics Institute] 
-and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine]
+and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine] with financial support from the [http://www.gatesfoundation.org/Pages/home.aspx Bill & Melinda Gates Foundation]
 
 
 
