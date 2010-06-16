@@ -126,7 +126,7 @@ The `ModelOptions` sub-element is a list of binary options, in the same format a
 
 === clinical ===
 
-The `clinical` element currently simply has a `healthSystemMemory` attribute, describing the number of days within which another clinical episode is considered a second-line case.
+The `clinical` element currently simply has a `healthSystemMemory` attribute: if, when a sickness event occurs, the previous episode was less than this many time-steps ago, the new episode is considered a second case (second-line treatment may be used and the two episodes will likely be reported as a single episode).
 
 === parameters ===
 
