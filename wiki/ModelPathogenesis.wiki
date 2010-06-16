@@ -2,8 +2,8 @@
 
 = Pathogenesis model =
 
-Openmalaria's pathogenesis model determines the commencement of sickness episodes (termed sickness events) based on parasite density. Models implemented include:
+Openmalaria's pathogenesis models determines the onset of sickness episodes (termed sickness events) based on parasite density. Different models are implemented including:
 
- * [http://www.ncbi.nlm.nih.gov/pubmed/16931816 Smith et al, 2006] (implemented in the `PyrogenPathogenesis` class): A stochastic model for simulating malaria tolerance. The model relates the probability of a clinical attack of malaria to the peripheral parasite densities via a pyrogenic threshold that itself responds dynamically to the parasite load. The parameters of the model have been estimated by fitting it to the relationship between incidence of clinical episodes and the entomologic inoculation rate, using age-specific incidence data from two villages in Senegal and one village in Tanzania.
- * Mueller presentation model (implemented in the `MuellerPathogenesis` class).
+ * *Base pathogenesis model* This is a stochastic model that relates the probability of a clinical attack of malaria to the peripheral parasite densities via a pyrogenic threshold that itself responds dynamically to the parasite load. [http://www.ncbi.nlm.nih.gov/pubmed/16931816 Smith et al, 2006] (this is implemented in the `PyrogenPathogenesis` class): The parameters of the model have been estimated by fitting it to the relationship between incidence of clinical episodes and the entomologic inoculation rate, using age-specific incidence data from two villages in Senegal and one village in Tanzania.
+ * *Mueller pathogenesis model* This is a stochastic model that uses a log-linear function of parasite densities to determine the probability of a clinical episode, based on equations fitted by [http://www.ncbi.nlm.nih.gov/pubmed/19602275 Mueller et al, 2009] to data from Papua New Guinea (this is implemented in the `MuellerPathogenesis` class).
  * Predetermined episodes presentation model (`PredetPathogenesis` class).
