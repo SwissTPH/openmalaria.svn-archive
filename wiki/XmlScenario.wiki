@@ -108,7 +108,53 @@ Additionally, the following (fairly self-explanetory) elements must be described
 
 === 1-day timestep: `EventScheduler` ==
 
+The event-scheduler model encapsulates a case-management model and schedules sickness events (fever start/end, recovery/death outcomes).
+
+==== Case management: `uncomplicated` and `complicated` ====
+
+The case-management part consists of decision trees and treatment schedules, split into two cases: `uncomplicated` for non-malarial and malarial fevers not requiring hospitalisation, and `complicated` for severe malarial fevers or those worsened through a further insult. Apart from a few decision rules, the `uncomplicated` and `complicated` elements have the same format: a `decisions` element and a `treatments` element.
+
+===== `decisions` =====
+
+The `decisions` element describes a model of treatment-seeking and health-system decisions, using a list of `decision` sub-elements.
+
+A decision is described by:
+ * a name (an identifier of alpha-numeric characters plus `.` and `_`)
+ * a list of possible outcomes (decision outcomes are often referred to using the format `NAME(OUTCOME)`)
+ * a list of other decisions this decision depends upon in order to be determined
+ * some description of how an outcome is derived
+
+A few built-in decisions exist, and a few particular decisions must be provided, but otherwise the number of decisions used and potential names are not fixed. The built-in and required decisions are:
+
+| name | outcomes | | description |
+| `case` | `UC1`, `UC2` | built-in, `uncomplicated` only | Case is second-line (`UC2`) if, within the [XmlScenario#clinical health-system memory], a fever occurred where anti-malarials were prescribed, otherwise the case is `UC1`. |
+| `result` | `none`, `negative`, `positive` | built-in | If the `test` decision has an outcome other than `none`, a parasite-density test is performed using the current density of the simulated case; otherwise the outcome is `none`. The number of RDT tests used is reported for costing purposes. |
+| `test` | `none`, `microscopy`, `RDT` | required | Determines whether and which type of malarial diagnostic is used |
+| `treatment` | | required | Selects which treatment to medicate. Outcomes are not restricted, but must match exactly the treatments available (so probably a treatment called "none" will need to be added). |
+| `hospitalisation` | `none`,`immediate`,`delayed` | required for `complicated` | Determines whether the individual goes to hospital or not, and whether a 1-day delay to hospital entry occurs. Hospitalisation affects fatality rate, reporting, and protects patient from mosquito bites. A delay causes the afore-mentioned effects to be delayed as expected, but does not delay treatments — this means that immediate suppositories may be given, but hospital-administered drugs should be delayed by a day. | 
+
+Regarding costing, sometimes in severe cases 2 tests would be used (by a referring health centre, and by the hospital accepting the patient). One method of dealing with this, assuming the in-hospital test result has no impact on treatment decisions, is to assume all patients get an RDT test in hospital (by adding the number of hospital recoveries+deaths+sequelae to the number of RDTs reported), and use the `test` decision to describe whether an out-of-hospital test occurs.
+
+Decisions described in the XML are all given as a `decision` element who's content is some form of tree; there are currently two varieties as in the table below. The syntax for a tree is:
+
 <placeholder>
+
+| age-dependent | The tree must have exactly one dependency: `age`. Branches should be identified with the syntax `age(a-b)` where a and b are in the range `[0,inf]` (allowing the special value `inf`). In a branch-set these ranges must not overlap and must cover the entire range `[0,inf]` (i.e. lowest bound must be `0` and highest `inf` with matching boundaries). Age ranges are considered half-open, open at the top (i.e. an age on a boundary matches the higher age-group). |
+| stochastic | A generic decision whose outcomes are determined by input decisions and/or random samples. Unless purely deterministic, `p` must be used as in input dependency and then probability branches may be specified using `p(x)` where `x` is the probability of the branch being chosen. All probabilities in a branch-set must add up to 1. |
+
+===== `treatments` =====
+
+==== Severe-fever outcomes: `ClinicalOutcomes` ====
+
+The `EventScheduler` element also has a `ClinicalOutcomes` element, describing:
+
+| name | type | description |
+| maxUCSeekingMemory | int | Maximum number of timesteps (including first of case) an individual will remember they are sick before resetting. |
+| uncomplicatedCaseDuration | int | Fixed length of an uncomplicated case of malarial/non-malarial sickness (from treatment seeking until return to life-as-usual). Usually 3. |
+|| complicatedCaseDuration | int | Fixed length of a complicated/severe case of malaria (from treatment seeking until return to life-as-usual). |
+| complicatedRiskDuration | int | Number of days for which humans are at risk of death during a severe or complicated case of malaria. Cannot be greater than the duration of a complicated case or less than 1 day. |
+| pImmediateUC | double | Probability that UC treatment seeking will be done immediately when sick, on second day given that it wasn't done on first, etc. |
+
 
 === Case-fatality per age: `CFR` ===
 
