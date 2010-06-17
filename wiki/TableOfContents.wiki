@@ -7,6 +7,7 @@
      * [UtilsWindows Useful utilities on Windows]
   * *[XmlScenario Inputs: creating a scenario]*
      * [XmlMonitoring Monitoring measures]
+     * [XmlEntoVector Vector-transmission parameters]
   * *[OutputFiles Outputs: interpreting results]*
      * LiveGraph
 
