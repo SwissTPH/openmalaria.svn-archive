@@ -94,6 +94,8 @@ The `MDA` through to `ipti` interventions above are all mass deployment. Each ha
 
 Two independent health-system models have been implemented (see ModelClinical). The name "health system" may be a little misleading: the model also describes death and sequelae rates, even for patients not entering the formal health-system.
 
+An element describing the appropriate one of these must be present, and an element describing case-fatality rate (CFR) data must be present.
+
 === 5-day timestep: `ImmediateOutcomes` ===
 
 When the simulation uses a granularity of 5-day timesteps, fevers can be considered too occur entirely within one timestep, and thus it is reasonable to decide parasitological, clinical and cost outcomes within a single timestep — hence this model was named the clinical immediate outcome model.
@@ -107,6 +109,14 @@ Additionally, the following (fairly self-explanetory) elements must be described
 === 1-day timestep: `EventScheduler` ==
 
 <placeholder>
+
+=== Case-fatality per age: `CFR` ===
+
+The data here describes the case-fatality rates of hospitalised cases receiving successful treatment per age-group (or rather, a CFR-per-age function is constructed using step-wise linear interpolation of the (lowerbound, cfr) pairs).
+
+Since collecting fatality-rate data for cases outside of hospital, the "community death rate" (used for cases not receiving hospital care, or, in the `ImmediateOutcomes` model, ineffective treatment) is constructed from the hospital CFR data by multiplying the odds by a parameter (exp of the LOG_ODDS_RATIO_CF_COMMUNITY parameter).
+
+In practice, we always use the same data-set here.
 
 == Entomological data: `entoData` ==
 
