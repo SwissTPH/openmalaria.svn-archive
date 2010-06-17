@@ -126,12 +126,12 @@ A decision is described by:
 
 A few built-in decisions exist, and a few particular decisions must be provided, but otherwise the number of decisions used and potential names are not fixed. The built-in and required decisions are:
 
-| name | outcomes | | description |
-| `case` | `UC1`, `UC2` | built-in, `uncomplicated` only | Case is second-line (`UC2`) if, within the [XmlScenario#clinical health-system memory], a fever occurred where anti-malarials were prescribed, otherwise the case is `UC1`. |
-| `result` | `none`, `negative`, `positive` | built-in | If the `test` decision has an outcome other than `none`, a parasite-density test is performed using the current density of the simulated case; otherwise the outcome is `none`. The number of RDT tests used is reported for costing purposes. |
-| `test` | `none`, `microscopy`, `RDT` | required | Determines whether and which type of malarial diagnostic is used |
-| `treatment` | | required | Selects which treatment to medicate. Outcomes are not restricted, but must match exactly the treatments available (so probably a treatment called "none" will need to be added). |
-| `hospitalisation` | `none`,`immediate`,`delayed` | required for `complicated` | Determines whether the individual goes to hospital or not, and whether a 1-day delay to hospital entry occurs. Hospitalisation affects fatality rate, reporting, and protects patient from mosquito bites. A delay causes the afore-mentioned effects to be delayed as expected, but does not delay treatments — this means that immediate suppositories may be given, but hospital-administered drugs should be delayed by a day. | 
+|| name || outcomes || || description ||
+|| `case` || `UC1`, `UC2` || built-in, `uncomplicated` only || Case is second-line (`UC2`) if, within the [XmlScenario#clinical health-system memory], a fever occurred where anti-malarials were prescribed, otherwise the case is `UC1`. ||
+|| `result` || `none`, `negative`, `positive` || built-in || If the `test` decision has an outcome other than `none`, a parasite-density test is performed using the current density of the simulated case; otherwise the outcome is `none`. The number of RDT tests used is reported for costing purposes. ||
+|| `test` || `none`, `microscopy`, `RDT` || required || Determines whether and which type of malarial diagnostic is used ||
+|| `treatment` || || required || Selects which treatment to medicate. Outcomes are not restricted, but must match exactly the treatments available (so probably a treatment called "none" will need to be added). ||
+|| `hospitalisation` || `none`,`immediate`,`delayed` || required for `complicated` || Determines whether the individual goes to hospital or not, and whether a 1-day delay to hospital entry occurs. Hospitalisation affects fatality rate, reporting, and protects patient from mosquito bites. A delay causes the afore-mentioned effects to be delayed as expected, but does not delay treatments — this means that immediate suppositories may be given, but hospital-administered drugs should be delayed by a day. || 
 
 Regarding costing, sometimes in severe cases 2 tests would be used (by a referring health centre, and by the hospital accepting the patient). One method of dealing with this, assuming the in-hospital test result has no impact on treatment decisions, is to assume all patients get an RDT test in hospital (by adding the number of hospital recoveries+deaths+sequelae to the number of RDTs reported), and use the `test` decision to describe whether an out-of-hospital test occurs.
 
@@ -173,8 +173,8 @@ tree = branch_set | symbol
 
 Besides the special "age" and "p" cases (see table below), this allows us to determine an outcome based on another decision (this decision must, then, be listed under `depends`). Note that a decision used as a branch point (or "p" or "age") may be used again in a sub-tree (in particular, using multiple random trees may simplify writing decisions).
 
-| age-dependent | The tree must have exactly one dependency: `age`. Branches should be identified with the syntax `age(a-b)` where a and b are in the range `[0,inf]` (allowing the special value `inf`). In a branch-set these ranges must not overlap and must cover the entire range `[0,inf]` (i.e. lowest bound must be `0` and highest `inf` with matching boundaries). Age ranges are considered half-open, open at the top (i.e. an age on a boundary matches the higher age-group). |
-| stochastic | A generic decision whose outcomes are determined by input decisions and/or random samples. Unless purely deterministic, `p` must be used as in input dependency and then probability branches may be specified using `p(x)` where `x` is the probability of the branch being chosen. All probabilities in a branch-set must add up to 1. |
+|| age-dependent || The tree must have exactly one dependency: `age`. Branches should be identified with the syntax `age(a-b)` where a and b are in the range `[0,inf]` (allowing the special value `inf`). In a branch-set these ranges must not overlap and must cover the entire range `[0,inf]` (i.e. lowest bound must be `0` and highest `inf` with matching boundaries). Age ranges are considered half-open, open at the top (i.e. an age on a boundary matches the higher age-group). ||
+|| stochastic || A generic decision whose outcomes are determined by input decisions and/or random samples. Unless purely deterministic, `p` must be used as in input dependency and then probability branches may be specified using `p(x)` where `x` is the probability of the branch being chosen. All probabilities in a branch-set must add up to 1. ||
 
 ===== `treatments` =====
 
@@ -184,21 +184,21 @@ The `schedule` element describes the base schedule of medications taken: a list 
 
 Since one base schedule may be well or poorly adhered to in several variations, we have `modifier` elements. Each modifier corresponds to one `decision` and has one of three types (see table below). Each of these consists of a list of sub-elements, each of which have attributes `value` (the decision's outcome), `effect` (effect of the modifier per drug-code prescribed; of the form `DRUG1(x),DRUG2(y)` where x and y are effects as described below), and optionally the boolean attribute `affectsCost` (whether costs are modified in the same way as the doses administered; defaults to one if not present; can be used to simulate low-quality drugs at standard cost and vomited doses).
 
-| sub-element name | description |
-| `multiplyQty` | multiplies dose size; useful for age-specific dosing and poor-quality drugs |
-| `delay` | delays each dose by the given number of hours; can be used for delayed arrival to a health facility but this won't affect the start/end time of the bout of illness |
-| `selectTimeRange` | Causes doses outside the time range given to be missed (also not costed unless `affectsCost` is set false). The range `x-y` is interpreted as a half-open interval; for dose at time `t` to be taken we must have `x <= t < y`. |
+|| sub-element name || description ||
+|| `multiplyQty` || multiplies dose size; useful for age-specific dosing and poor-quality drugs ||
+|| `delay` || delays each dose by the given number of hours; can be used for delayed arrival to a health facility but this won't affect the start/end time of the bout of illness ||
+|| `selectTimeRange` || Causes doses outside the time range given to be missed (also not costed unless `affectsCost` is set false). The range `x-y` is interpreted as a half-open interval; for dose at time `t` to be taken we must have `x <= t < y`. ||
 
 ==== Severe-fever outcomes: `ClinicalOutcomes` ====
 
 The `EventScheduler` element also has a `ClinicalOutcomes` element, describing:
 
-| name | type | description |
-| maxUCSeekingMemory | int | Maximum number of timesteps (including first of case) an individual will remember they are sick before resetting. |
-| uncomplicatedCaseDuration | int | Fixed length of an uncomplicated case of malarial/non-malarial sickness (from treatment seeking until return to life-as-usual). Usually 3. |
-|| complicatedCaseDuration | int | Fixed length of a complicated/severe case of malaria (from treatment seeking until return to life-as-usual). |
-| complicatedRiskDuration | int | Number of days for which humans are at risk of death during a severe or complicated case of malaria. Cannot be greater than the duration of a complicated case or less than 1 day. |
-| pImmediateUC | double | Probability that UC treatment seeking will be done immediately when sick, on second day given that it wasn't done on first, etc. |
+|| name || type || description ||
+|| maxUCSeekingMemory || int || Maximum number of timesteps (including first of case) an individual will remember they are sick before resetting. ||
+|| uncomplicatedCaseDuration || int || Fixed length of an uncomplicated case of malarial/non-malarial sickness (from treatment seeking until return to life-as-usual). Usually 3. ||
+|| complicatedCaseDuration || int || Fixed length of a complicated/severe case of malaria (from treatment seeking until return to life-as-usual). ||
+|| complicatedRiskDuration || int || Number of days for which humans are at risk of death during a severe or complicated case of malaria. Cannot be greater than the duration of a complicated case or less than 1 day. ||
+|| pImmediateUC || double || Probability that UC treatment seeking will be done immediately when sick, on second day given that it wasn't done on first, etc. ||
 
 
 === Case-fatality per age: `CFR` ===
