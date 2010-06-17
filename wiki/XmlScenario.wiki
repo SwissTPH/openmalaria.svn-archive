@@ -92,6 +92,22 @@ The `MDA` through to `ipti` interventions above are all mass deployment. Each ha
 
 == Health system ==
 
+Two independent health-system models have been implemented (see ModelClinical). The name "health system" may be a little misleading: the model also describes death and sequelae rates, even for patients not entering the formal health-system.
+
+=== 5-day timestep: `ImmediateOutcomes` ===
+
+When the simulation uses a granularity of 5-day timesteps, fevers can be considered too occur entirely within one timestep, and thus it is reasonable to decide parasitological, clinical and cost outcomes within a single timestep — hence this model was named the clinical immediate outcome model.
+
+First, the drugs used for `firstLine`, `secondLine` and `inpatient` treatment are defined in the `drugRegimen` element. Drug codes may be one of `CQ`, `SP`, `AQ`, `SPAQ`, `ACT`, `QN`, or `selfTreatment`.
+
+Then, `compliance` (adherence rate), `initialACR` (initial cure-rate for compliers) and `nonCompliersEffective` (effective cure-rate for non-compliers) are specified per drug (must be described for self-treatment but optional for other drugs; values default to 0).
+
+Additionally, the following (fairly self-explanetory) elements must be described: `pSeekOfficialCareUncomplicated1`, `pSelfTreatUncomplicated`, `pSeekOfficialCareUncomplicated2`, `pSeekOfficialCareSevere`, and `pSequelaeInpatient`.
+
+=== 1-day timestep: `EventScheduler` ==
+
+<placeholder>
+
 == Entomological data ==
 
 Entomological data are described by the `entoData` element — this can have either a `vector` or a `nonVector` sub-element (which determines which transmission model to use as well as providing data).
@@ -127,6 +143,8 @@ The `ModelOptions` sub-element is a list of binary options, in the same format a
 === clinical ===
 
 The `clinical` element currently simply has a `healthSystemMemory` attribute: if, when a sickness event occurs, the previous episode was less than this many time-steps ago, the new episode is considered a second case (second-line treatment may be used and the two episodes will likely be reported as a single episode).
+
+(The main health-system description is [XmlScenario#Health_system above].)
 
 === parameters ===
 
