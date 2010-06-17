@@ -12,7 +12,7 @@ This documentation is intended to aid individuals editing scenario files, either
 
 <wiki:toc max_depth="3" />
 
-= Scenario element =
+= Scenario element: `scenario` =
 
 The primary element in the file is called "scenario" (this encapsulates everything else in the file, except the XML header line).
 
@@ -25,33 +25,33 @@ It has the following attributes:
 || wuID              || int       || BOINC workunit number (automatically set when needed) ||
 || assimMode         || 0 or 1    || removes 3 columns from output.txt for BOINC usage (use 0 for local scenarios) ||
 
-== Demography element ==
+== Demography element: `demography` ==
 
 Describes the population size and age structure. Most of our scenarios use the same age-structure data from Ifakara, Tanzania. Adjusting the population size is useful, since it has a major impact on run-time and stochasticity of results (1000-100000 individuals are often used in experiments; testing scenarios often use less).
 
-== Monitoring element ==
+== Monitoring element: `monitoring` ==
 
 The `monitoring` element is used to describe two types of output: continuous (or at least regular) reporting of single values, and survey data, which may be irregular and is usually sub-divided by age-group or another differentiator.
 
-=== Measures ===
+=== Measures: `continuous`, `SurveyOptions` ===
 
 The `continuous` and `SurveyOptions` elements describe which outputs to enable for the two outputs, using a list of sub-elements of the form `<option name="NAME" value="true"/>`; lists of valid options are below.
 
 [XmlMonitoring Tables of continuous and survey measures.]
 
-=== Continuous reporting ===
+=== Continuous reporting: `continuous` ===
 
 Continuous reporting, when enabled (a `continuous` element is described and `period` is positive), outputs data every `period` days (`period` is an attribute of the `continuous` element).
 
 This output normally starts from the beginning of the intervention period, but for diagnostic purposes it can be enabled from the beginning of initialization by including a `duringInit="true"` attribute. This has two additional side effects: an extra column, `simulation time`, is output as the first column, and where `period` is greater than the length of a timestep, reporting (during intervention period) may happen on different timesteps.
 
-=== Surveys ===
+=== Surveys: `surveys`, `ageGroup` ===
 
 The `surveys` element has a list of `surveyTime` sub-elements, each with the timestep of a survey, starting from 0, the start of the intervention period (numbers match timesteps at which interventions can be deployed).
 
 The `ageGroup` element contains a list of `group` sub-elements, each of which has an `upperbound` attribute. These (and the `lowerbound` attribute of `ageGroup`) define the age-groups which reports are divided into. The age-group specified in output data is the index within these groups, ordered by age (youngest to oldest), with the first age-group having index `1`.
 
-== Interventions ==
+== Interventions: `interventions` ==
 
 The `interventions` element is organized informally into three sections, first descriptions of interventions (without associating times), second continuous interventions, and third timed interventions.
 
@@ -67,17 +67,17 @@ The `iptiDescription` describes _Intermittent Preventive Treatment for Infants_ 
 
 The `anopheles` element, if used, should be listed for each mosquito species (using the `mosquito` attribute to associate with one of the mosquito species specified in entomological data). Each may contain descriptions for _Insecticide Treated Net_ (`ITNDescription`), _Indoor Residual Spraying_ (`IRSDescription`) and a mosquito repellant (`VADescription` — _Vector Availability_) intervention. Theses have sub-elements describing a parameter as a Weibull decay curve. All three have a `deterrency` parameter; additionally `ITNDescription` has `preprandialKillingEffect` and `postprandialKillingEffect` (chance of killing a mosquito before or after feeding) and `IRSDescription` has `killingEffect` (chance of killing mosquito while resting) parameters.
 
-=== Continuous ===
+=== Continuous: `continuous` ===
 
 Interventions with continuous deployment are described by a `continuous` element. This accepts sub-elements `vaccine`, `ITN` and `ipti` (see descriptions above); these may occur more than once. (They must be listed in order of type; that is all `vaccine` elements before any `ITN` elements, etc.)
 
 Each of these has the same type: a `targetAgeYrs` attribute and a `coverage` attribute. Every individual has a probability (equal to `coverage`) of receiving this intervention when they reach age `targetAgeYrs` in years (need not be an integer).   
 
-=== Timed ===
+=== Timed: `timed` ===
 
 Timed interventions correspond to mass deployment at a specific time point. The `timed` element accepts a list of `intervention` sub-elements, each of which describes interventions occuring at a time specified by its `time` attribute. The following interventions may occur (and should be listed in this order within each `intervention`):
 
-|| `changeHS` || Replaces the current health-system description with a new one. Must be a complete description of the health system. ||
+|| `changeHS` || Replaces the current health-system description with a new one. Must be a complete description of the health system (contain an `ImmediateOutcomes` or `EventScheduler` element, and a `CFR` element, as with the usual `healthSystem` element) ||
 || `changeEIR` || Replaces EIR data with new, daily, data described here. Data must be sufficient to last until the end of the simulation. ||
 || `importedInfectionsPerThousandHosts` || Not an intervention, but deployed the same way: a floating-point number describing the chance each individual recieves an infection (hence number introduced is unlikely to be exactly the number specified) ||
 || `MDA` || Mass drug administration (clears infections directly for models with a 5-day timestep and administers drugs for models with a 1-day timestep) ||
@@ -90,7 +90,7 @@ Timed interventions correspond to mass deployment at a specific time point. The 
 
 The `MDA` through to `ipti` interventions above are all mass deployment. Each has its deployment described by the following attributes: `maxAge` and `minAge` describe the age-range applicable in years (optional; they default to 100 and 0 respectively), and `coverage` specifies the chance that each individual receives the intervention.
 
-== Health system ==
+== Health system: `healthSystem` ==
 
 Two independent health-system models have been implemented (see ModelClinical). The name "health system" may be a little misleading: the model also describes death and sequelae rates, even for patients not entering the formal health-system.
 
@@ -108,31 +108,31 @@ Additionally, the following (fairly self-explanetory) elements must be described
 
 <placeholder>
 
-== Entomological data ==
+== Entomological data: `entoData` ==
 
 Entomological data are described by the `entoData` element — this can have either a `vector` or a `nonVector` sub-element (which determines which transmission model to use as well as providing data).
 
 The `entoData` element also has two attributes: `name` (just a user-friendly name), and `mode`. The `mode` parameter determines which transmission mode to enter at the start of the intervention period: 2 to enforce fixed EIR or 4 to allow dynamic simulations where human infectiousness has a feed-back effect on EIR (the usual choice). (For more info on `mode`, see `enum SimulationMode` in [http://code.google.com/p/openmalaria/source/browse/trunk/include/Transmission/TransmissionModel.h TransmissionModel.h].)
 
-=== Vector parameters ===
+=== Vector parameters: `vector` ===
 
 [XmlEntoVector Vector-model parameter description.]
 
-=== Non-vector parameters ===
+=== Non-vector parameters: `nonVector` ===
 
 The `nonVector` element primarily consists of a list of daily EIR (_Entomological Inoculation Rate_) parameters (`EIRDaily` elements). These specify the EIR per day of the year for the pre-intervention equilibrium state. Where data for more than one year are provided, they are simply averaged for each day of the year.
 
 `nonVector` also has an `eipDuration` attribute: the _extrinsic incubation period_ (sporozoite development time, in days), which determines the delay before changes in human infectiousness affect the EIR (in dynamic mode only).
 
-== Drug parameters ==
+== Drug parameters: `drug` ==
 
 This describes PK and PD parameters of drugs. In the future initial levels of resistance need to be described (in fact, these are to some extent now, but the schema for entering this data may change). For now, just copy this section from another scenario which describes the desired drugs.
 
-== Model parameters ==
+== Model parameters: `model` ==
 
 Finally, `scenario` contains a `model` element, grouping some of the data describing the "model" together.
 
-=== Model options ===
+=== `ModelOptions` ===
 
 The `ModelOptions` sub-element is a list of binary options, in the same format as `SurveyOptions` (except here, bug-fix options default to true if not specified, while the rest still default to false). The available options are:
 
@@ -140,13 +140,13 @@ The `ModelOptions` sub-element is a list of binary options, in the same format a
 
 (For now, see [http://code.google.com/p/openmalaria/source/browse/trunk/include/util/ModelOptions.hpp ModelOptions.hpp].)
 
-=== clinical ===
+=== `clinical` ===
 
 The `clinical` element currently simply has a `healthSystemMemory` attribute: if, when a sickness event occurs, the previous episode was less than this many time-steps ago, the new episode is considered a second case (second-line treatment may be used and the two episodes will likely be reported as a single episode).
 
 (The main health-system description is [XmlScenario#Health_system above].)
 
-=== parameters ===
+=== `parameters` ===
 
 The `parameters` element describes a list of parameters which are fitted. Usually, one can just copy this section from an _appropriate_ scenario. Varying the length of the timestep or changing several of the model's options will affect the ideal values of these parameters. Ideally we should make a list of all fit parameter sets, together with the conditions under which they are valid, publically available somewhere.
 
