@@ -165,7 +165,7 @@ branch_decision = symbol '(' value_symbol ')' outcome
 // add up to 1 or all outcomes of some decision be represented.
 branch_set = ( branch_p | branch_age | branch_decision ) +
 
-// A tree is either a branch set, or simply be an outcome.
+// A tree is either a branch set, or simply an outcome.
 // This is the "entry point" -- describing the whole decision --
 // but can also occur as a sub-tree.
 tree = branch_set | symbol
