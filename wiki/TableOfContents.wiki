@@ -26,4 +26,5 @@
   * [ModelPathogenesis Morbidity (pathogenesis) models]
   * [ModelClinical Clinical (sickness) models]
   * [ModelDrug Drug (PKPD) action & resistance models]
+  * [ModelNeonatal Neonatal mortality]
   * [ModelInterventions Intervention deployment and descriptions]
