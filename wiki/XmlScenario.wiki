@@ -51,7 +51,7 @@ The `surveys` element has a list of `surveyTime` sub-elements, each with the tim
 
 The `ageGroup` element contains a list of `group` sub-elements, each of which has an `upperbound` attribute. These (and the `lowerbound` attribute of `ageGroup`) define the age-groups which reports are divided into. The age-group specified in output data is the index within these groups, ordered by age (youngest to oldest), with the first age-group having index `1`.
 
-== Interventions: `interventions` ==
+== Deployment of interventions: `interventions` ==
 
 The `interventions` element is organized informally into three sections, first descriptions of interventions (without associating times), second continuous interventions, and third timed interventions.
 
