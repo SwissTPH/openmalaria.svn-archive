@@ -4,9 +4,28 @@
 
 There are two generic methods of intervention deployment in openmalaria:
 
- * Mass-deployment campaigns. These may be targeted at the whole population or at a restricted age-range. They also have a coverage parameter. ([http://code.google.com/p/openmalaria/wiki/XmlScenario?ts=1277108255&updated=XmlScenario#Timed:_timed Configuration])
- * Age-based continuous deployment. This deploys interventions to individuals reaching a target age, given that they are determined to be within the coverage. ([XmlScenario#Continuous:_continuous Configuration])
+ * Mass-deployment campaigns. At a particular time point, this deployment method targets either the whole population or at a restricted age-range. They also have a coverage parameter. ([http://code.google.com/p/openmalaria/wiki/XmlScenario?ts=1277108255&updated=XmlScenario#Timed:_timed Configuration])
+ * Age-based continuous deployment. Within the simulation's intervention period, these deploy interventions to individuals reaching a target age, given that they are determined to be within the coverage. ([XmlScenario#Continuous:_continuous Configuration])
 
 In both cases, the coverage parameter describes the probability of each individual with the required age receiving the intervention, independently of interventions received previously by that individual.
 
 Deployment of vaccines uses these basic methods, but is a special case. Each human "remembers" how many vaccine doses they have received (through continuous and campaign deployment combined). Given a continuous vaccination schedule for vaccinating at ages `a_0`, `a_1`, ..., each individual, at age `a_n` is vaccinated (through the continuous vaccination program) if and only if they are included within the vaccine coverage, and they have had `n - 1` previous vaccinations. This is intended to account for individuals dropping out of the vaccination program and not returning, and those vaccinated through a mass campaign not also getting an age-based vaccination at (roughly) the same time.
+
+
+= Intervention descriptions =
+
+List of available interventions (TODO: document). Configuration instructions can be found [XmlScenario#Deployment_of_interventions:_interventions here].
+
+ * vaccines
+ * ITNs
+ * ipti
+ * change HS
+ * change EIR
+ * MDA
+ * IRS
+ * VectorAvailability
+ * ImmuneSuppression
+ * Larviciding
+ * InsertR_0Case
+ * ImportedInfectionsPerThousandHosts
+ * UninfectVectors
