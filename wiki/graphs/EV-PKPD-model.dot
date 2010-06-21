@@ -1,0 +1,47 @@
+// graphviz description diagram.
+// Copyright 2010 Swiss Tropical Institute
+// Licence: GPL 2.1 or later
+// Author: Diggory Hardy
+
+digraph {
+    edge[ fontcolor="#666666" ]
+    
+    merozoites[ label="parasite density", shape=hexagon ]
+    subgraph cluster_drug{
+	label="drug model"
+	medication
+    }
+    
+    subgraph cluster_pathogenesis {
+	label="pathogenesis model"
+	pathogenesis
+	path_event[label="event|<n> none|<UC> uncomplicated|<s> severe|<i> indirect death", shape=record, color="#222288"]
+    }
+    subgraph cluster_clinical {
+	label="clinical model"
+	state[label="state|<h>healthy|<UC> uncomplicated|<s> severe", shape=record, color="#222288"]
+	treat_seeking[label="treatment\nseeking"]
+	treat_desc[label="treatment\ndescription"]
+	sev_outcomes[label="severe\noutcomes"]
+	outcome[label="<o>outcome|<r>recover|<s>sequelae|<d>death", shape=record, color="#222288"]
+    }
+    
+    merozoites -> pathogenesis
+    pathogenesis -> path_event:n [color="#222288"]
+    pathogenesis -> path_event:UC [color="#222288"]
+    pathogenesis -> path_event:s [color="#222288"]
+    pathogenesis -> path_event:i [color="#222288"]
+    path_event:UC -> state:UC
+    path_event:s -> state:s
+    state:UC -> treat_seeking
+    state:s -> treat_seeking
+    outcome:r -> state:h
+    outcome:s -> state:h
+    treat_seeking -> treat_desc -> medication
+    medication -> merozoites
+    treat_seeking -> sev_outcomes
+    merozoites -> sev_outcomes
+    sev_outcomes -> outcome:s [color="#222288"]
+    sev_outcomes -> outcome:d [color="#222288"]
+    sev_outcomes -> outcome:r [color="#222288"]
+}

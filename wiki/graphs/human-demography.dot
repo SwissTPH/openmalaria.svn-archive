@@ -9,7 +9,7 @@ digraph {
     subgraph cluster_demography {
 	label="demography model"
 	population[ shape=hexagon ]
-	out_migration[ label="out-migration" ]
+	out_migration[ label="out-\nmigration" ]
 	
 	birth -> population[ color="#228822" ]
 	out_migration -> population[ color="#882222" ]

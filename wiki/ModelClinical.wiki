@@ -18,6 +18,12 @@ In this model, sickness episodes are assumed to have concluded within a single 5
 
 (Paper not yet published; implemented by the `ClinicalEventScheduler` class.) The model is an adaptation of the above [ModelClinical#5-day_timestep Ross et al model] to a 1-day timestep. The finer-grained simulation allows modelling of parasite response to treatment via a [ModelDrug modelling of pharmacodynamics] and thus partial drug failure due to parasite resistance, poor adherence or insufficient doses; therefore we break the model down into two components: treatment seeking and episode duration/outcome.
 
+A rough diagram of the model processes is below (states and state choices in blue). The diagram
+ignores the time component (most notably: change in parasite density over a severe bout is
+what input the parasite density has on chance of death).
+
+http://openmalaria.googlecode.com/svn/wiki/graphs/EV-PKPD-model.png
+
 === Episode duration and outcome ===
 
 An _episode_ commences with a morbidity _event_ and concludes with a recovery or mortality _event_ (stressing terminology used). With this model, acute (but non-severe) malarial fevers and non-malarial fevers are considered equivalently, excepting parasite diagnostics; in both cases the episode duration is fixed at 3 days long, after which it is assumed parasite densities have been reduced by treatment or immunity (in the case this doesn't happen, a repeat event may occur, or the episode may escalate to severe malaria).
