@@ -1,0 +1,10 @@
+#summary PK & PD models
+
+= Drug models =
+
+<placeholder>
+
+
+= Weight model =
+
+Simulation of PK and PD dynamics requires knowledge of an individual's body mass. For that, we use a simple model: a function mapping age to mass as in a piece-wise linear manner ([http://code.google.com/p/openmalaria/source/browse/trunk/model/AgeGroupData.cpp code]).
