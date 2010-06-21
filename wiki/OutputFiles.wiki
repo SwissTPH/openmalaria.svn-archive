@@ -31,6 +31,6 @@ The measure indicates the meaning of statistics. It is specified by a short stri
 
 == ctsout.txt ==
 
-Some data can also be output to this file, in a simpler format (often a single value per time-step). Data output capabilities have some overlap with `output.txt`, but have the advantages of simpler [XmlScenario#Continuous_reporting configuration] and a simple output format which can be easily plotted using LiveGraph or a spreadsheet program.
+Some data can also be output to this file, in a simpler format (often a single value per time-step). Data output capabilities have some overlap with `output.txt`, but have the advantages of simpler [XmlScenario#Continuous:_continuous configuration] and a simple output format which can be easily plotted using LiveGraph or a spreadsheet program.
 
 [XmlMonitoring#Continuous_measures List of measures.]
