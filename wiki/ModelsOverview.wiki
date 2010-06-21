@@ -4,4 +4,4 @@
 
 The diagram below is a very-much simplified view of the models within the simulator and their interactions. It misses a lot of detail, and time delays, and many components don't have the same name as in the code.
 
-http://openmalaria.googlecode.com/svn/wiki/images/model-simple.png
+http://openmalaria.googlecode.com/svn/wiki/graphs/model-phases.png
