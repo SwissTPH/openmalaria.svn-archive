@@ -1,0 +1,24 @@
+// graphviz description of human-demography diagram.
+// Copyright 2010 Swiss Tropical Institute
+// Licence: GPL 2.1 or later
+// Author: Diggory Hardy
+
+digraph {
+    edge[ fontcolor="#777777" ]
+    
+    subgraph cluster_demography {
+	label="demography model"
+	population[ shape=hexagon ]
+	out_migration[ label="out-migration" ]
+	
+	birth -> population[ color="#228822" ]
+	out_migration -> population[ color="#882222" ]
+    }
+    
+    too_old[ label="death\n(old age)" ]
+    cf[ label="malarial\ndeath" ]
+    neonatal[ label="neo-natal\ndeath" ]
+    
+    { too_old; cf; neonatal } -> population[ color="#882222" ]
+    
+}

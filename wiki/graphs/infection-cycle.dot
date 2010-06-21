@@ -1,0 +1,55 @@
+// graphviz description of infection-cycle diagram.
+// Copyright 2010 Swiss Tropical Institute
+// Licence: GPL 2.1 or later
+// Author: Diggory Hardy
+
+// dot -Tpng infection-cycle.dot -oinfection-cycle.png -Kdot
+// Or, instead of -Kdot, -Kfdp or -Kcirco
+digraph {
+    edge[ fontcolor="#777777" ]
+    
+    subgraph cluster_transmission {
+	label="transmission model"
+	infected_mosq[label="infected\nmosquitoes"]
+	infectious_mosq[label="infectious\nmosquitoes"]
+    }
+    
+    subgraph cluster_inf_inc {
+	label="infection incidence model"
+	new_inf[label="new infection"]
+    }
+    
+    subgraph cluster_human_cycle {
+	label="within-host model"
+	
+	subgraph cluster_infection {
+	    label="infection model"
+	    sporozoites [label="liver stage"]
+	    merozoites[ label="blood stage" ]
+	}
+	
+	gametocytes;
+	immunity[ label="natural\nimmunity" ]
+    }
+    
+    subgraph cluster_pathogenesis {
+	label="pathogenesis"
+	path_event[label="sickness"]
+    }
+    subgraph cluster_clinical {
+	label="clinical model"
+	seeking[label="diagnosis &\ntreatment"]
+    }
+    
+    sporozoites -> merozoites[ color="#228822" ]
+    merozoites -> immunity
+    immunity -> merozoites[ color="#882222" ]
+    merozoites -> gametocytes //[ label="gametocyte formation" ]
+    gametocytes -> infected_mosq[label="human\ninfectiousness"];
+    infected_mosq -> infectious_mosq[label="sporozoite\ndevelopment"]
+    infectious_mosq -> new_inf[label="EIR"]
+    new_inf -> sporozoites 
+    
+    merozoites -> path_event -> seeking
+    seeking -> merozoites[ color="#882222", label="antimalarial\ndrug" ]
+}

@@ -2,6 +2,24 @@
 
 = Overview =
 
-The diagram below is a very-much simplified view of the models within the simulator and their interactions. It misses a lot of detail, and time delays, and many components don't have the same name as in the code.
+The diagrams here are overviews of models' processes. They don't go into much detail,
+and all model-specific behaviour is abstracted under one block. More detailed graphs restricted to
+the components of interest are available on some of the sub-model pages.
 
-http://openmalaria.googlecode.com/svn/wiki/graphs/model-phases.png
+Color key: green arrows increase a quantity, red arrows decrease a quantity. Shape key: oval
+nodes are processes affecting something, boxes surround models, and hexagonal nodes are
+quantities without a process in view of the diagram.
+
+== Infection cycle ==
+
+This graph shows the infection cycle assumed by the model. Blood-stage parasite densities are
+one of the most important aspects here. Intervention effects are not shown.
+
+http://openmalaria.googlecode.com/svn/wiki/graphs/infection-cycle.png
+
+== Human population ==
+
+The human population is regulated by the demography model (uses out-migrations to enforce
+age-structure and births to keep population size constant).
+
+http://openmalaria.googlecode.com/svn/wiki/graphs/human-demography.png
