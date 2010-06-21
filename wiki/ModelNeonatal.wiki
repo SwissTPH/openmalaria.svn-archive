@@ -1,0 +1,6 @@
+#summary Neonatal mortality model
+
+= Neonatal mortality =
+
+Paper: [http://www.ajtmh.org/cgi/content/abstract/75/2_suppl/74 Ross, Smith; 2006], code: NeonatalMortality class.
+A mathematical model for the association between P. falciparum transmission and neonatal death. The excess risk of neonatal mortality in malaria-endemic areas appears to be insensitive to the intensity of P. falciparum transmission over a wide range of endemicity. Moderate reductions in the overall level of malaria transmission in endemic areas are therefore unlikely to significantly reduce neonatal mortality. The magnitude of the excess risk is very uncertain because existing estimates are heavily dependent on the questionable assumption that the effects are mediated by birth weight. Accurate prediction of the impact of malaria control measures targeted at pregnant women requires direct estimates of malaria-attributable neonatal mortality rates.
