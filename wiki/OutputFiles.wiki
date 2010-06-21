@@ -4,8 +4,8 @@
 
 There are currently two statistical output files:
 
-  * output.txt — three-dimensional (survey, measure and often age-group) general statistics
-  * vector.txt — two-dimensional (time-step and measure) statistics from the vector transmission model
+  * [OutputFiles#output.txt output.txt] — three-dimensional (survey, measure and often age-group) general statistics
+  * [OutputFiles#ctsout.txt ctsout.txt] — two-dimensional (time-step and measure) statistics from the vector transmission model
 
 Both consist of lines of tab-separated values.
 
