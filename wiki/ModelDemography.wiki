@@ -1,0 +1,8 @@
+#summary Demography model
+
+= Human population demographics =
+
+The human population is regulated by the demography model (uses out-migrations to enforce
+age-structure and births to keep population size constant).
+
+http://openmalaria.googlecode.com/svn/wiki/graphs/human-demography.png
