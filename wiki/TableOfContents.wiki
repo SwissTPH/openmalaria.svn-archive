@@ -21,6 +21,7 @@
 
 ===Model components===
   * [ModelsOverview Overview]
+  * [ModelDemography Human demography]
   * [ModelTransmission Transmission models]
   * [ModelWithinHost Within-host models]
   * [ModelPathogenesis Morbidity (pathogenesis) models]
