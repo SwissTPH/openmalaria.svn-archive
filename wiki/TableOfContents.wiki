@@ -27,4 +27,4 @@
   * [ModelClinical Clinical episode, case management, and mortality models]
   * [ModelDrug Drug (PKPD) action & resistance models]
 
-  * [XmlScenario#Interventions List of interventions]
+  * [XmlScenario#Interventions:_interventions List of interventions]
