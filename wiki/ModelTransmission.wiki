@@ -8,6 +8,7 @@ We currently have two transmission models: `NonVectorTransmission` and `VectorTr
 
 == Non-vector transmission ==
 
+[http://www.ajtmh.org/cgi/content/abstract/75/2_suppl/11 Smith et al, 2005.]
 The 'Non-vector transmission' sub-model can be used only when there are no interventions affecting the vectorial capacity.  
 
 This model assumes that the mosquito population acts to distribute infections at random to the human population (with human exposure proportionate to availability).  There is a fixed time lag between infection of the mosquito and transmission to humans, corresponding to the duration of the sporogonic cycle in the mosquito.  The effect on transmission of interventions on the human population is simulated by changing the infectiousness to mosquitoes. 
