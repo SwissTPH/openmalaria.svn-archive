@@ -17,9 +17,6 @@ one of the most important aspects here. Intervention effects are not shown.
 
 http://openmalaria.googlecode.com/svn/wiki/graphs/infection-cycle.png
 
-== Human population ==
+== Population-oriented views ==
 
-The human population is regulated by the demography model (uses out-migrations to enforce
-age-structure and births to keep population size constant).
-
-http://openmalaria.googlecode.com/svn/wiki/graphs/human-demography.png
+Other perspectives for looking at model processes are from the perspectives of the [ModelDemography human population] or the [ModelTransmission#Vector_transmission mosquito population].
