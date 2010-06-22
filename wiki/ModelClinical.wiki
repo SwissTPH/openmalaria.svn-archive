@@ -2,21 +2,29 @@
 
 = Clinical models =
 
-In openmalaria, the [ModelPathogenesis Pathogenesis model] determines when sickness events occur, and the clinical model determines how the sickness is treated, how long it lasts, and what outcomes (recovery, death or sequelae) occur.
+In openmalaria, the [ModelPathogenesis Pathogenesis model] determines when sickness events occur, and the clinical model determines how the bout of sickness is treated, how long it lasts, which outcomes (recovery, death or sequelae) occur, and whether the bout is reported as part of the latest episode or a new episode.
 
-The clinical model considers two sub-categories of severe malaria episodes, as presented by the [ModelPathogenesis Pathogenesis model]. These comprise episodes with extremely high parasite densities in hosts with little previous exposure, and acute malaria episodes accompanied by co-morbidity or other risk factors enhancing susceptibility. In addition to direct malaria mortality from severe malaria episodes, the model also considers the enhanced risk of indirect mortality following acute episodes accompanied by co-morbidity after the parasites have been cleared.
+The clinical model considers two sub-categories of severe malaria bouts, as presented by the [ModelPathogenesis Pathogenesis model]. These comprise bouts with extremely high parasite densities in hosts with little previous exposure, and acute malaria bouts accompanied by co-morbidity or other risk factors enhancing susceptibility. In addition to direct malaria mortality from severe malaria bouts, the model also considers the enhanced risk of indirect mortality following acute bouts accompanied by co-morbidity after the parasites have been cleared.
 
-There are two implementations of the clinical model:
+There are two implementations of the clinical model, described below.
+
+== Notation ==
+
+Due to confusion of terms while adapting the clinical model for a 1-day timestep, we have developed the following notation.
+
+  * event -- an occurrence without measurable duration (can be a bout in the 5-day timestep model since the whole bout occurs on a single timestep, but in the 1-day timestep model is strictly a state-change)
+  * bout -- a "bout of sickness" describes a fever or similar sickness, malarial or otherwise, and usually no more than 5 days long
+  * episode -- the health-system's reporting unit; each bout is either considered the start of a new episode, or, if occurring within `healthSystemMemory` (30 days in old model) of the start of the last episode, considered part of that episode. Thus, at least with low transmission, an episode should roughly correspond to bouts caused by one malaria infection.
 
 == 5-day timestep ==
 
 [http://www.ncbi.nlm.nih.gov/pubmed/16931817 Ross et al, 2006] (implemented by the `ClinicalImmediateOutcomes` class) describes a quantitative framework for use on a 5-day timestep to model the various apparently contradictory observations relating morbidity and mortality rates to malaria transmission. The model is fit to summaries of field data from endemic areas of Africa.
 
-In this model, sickness episodes are assumed to have concluded within a single 5-day timestep. Treatment either completely clears parasites or has no effect, and within a severe episode, mortality rate depends on effectiveness of treatment.
+In this model, bouts of sickness are assumed to have concluded within a single 5-day timestep. Treatment either completely clears parasites or has no effect, and within a severe bout, mortality rate depends on effectiveness of treatment.
 
 == 1-day timestep ==
 
-(Paper not yet published; implemented by the `ClinicalEventScheduler` class.) The model is an adaptation of the above [ModelClinical#5-day_timestep Ross et al model] to a 1-day timestep. The finer-grained simulation allows modelling of parasite response to treatment via a [ModelDrug modelling of pharmacodynamics] and thus partial drug failure due to parasite resistance, poor adherence or insufficient doses; therefore we break the model down into two components: treatment seeking and episode duration/outcome.
+(Paper not yet published; implemented by the `ClinicalEventScheduler` class.) The model is an adaptation of the above [ModelClinical#5-day_timestep Ross et al model] to a 1-day timestep. The finer-grained simulation allows modelling of parasite response to treatment via a [ModelDrug modelling of pharmacodynamics] and thus partial drug failure due to parasite resistance, poor adherence or insufficient doses; therefore we break the model down into two components: treatment seeking and bout duration/outcome.
 
 A rough diagram of the model processes is below (states and state choices in blue). The diagram
 ignores the time component (most notably: change in parasite density over a severe bout is
@@ -24,19 +32,19 @@ what input the parasite density has on chance of death).
 
 http://openmalaria.googlecode.com/svn/wiki/graphs/EV-PKPD-model.png
 
-=== Episode duration and outcome ===
+=== Bout duration and outcome ===
 
-An _episode_ commences with a morbidity _event_ and concludes with a recovery or mortality _event_ (stressing terminology used). With this model, acute (but non-severe) malarial fevers and non-malarial fevers are considered equivalently, excepting parasite diagnostics; in both cases the episode duration is fixed at 3 days long, after which it is assumed parasite densities have been reduced by treatment or immunity (in the case this doesn't happen, a repeat event may occur, or the episode may escalate to severe malaria).
+A _bout_ commences with a morbidity _event_ and concludes with a recovery or mortality _event_ (stressing terminology used). With this model, acute (but non-severe) malarial fevers and non-malarial fevers are considered equivalently, excepting parasite diagnostics; in both cases the bout duration is fixed at 3 days long, after which it is assumed parasite densities have been reduced by treatment or immunity (in the case this doesn't happen, a repeat bout may occur, or the bout may escalate to severe malaria).
 
-While healthy or during an uncomplicated episode, a severe episode may commence (determined, as with other sickness events, by the [ModelPathogenesis Pathogenesis model]). This is fixed at 5 days long where the patient enters hospital immediately or not at all; a 1-day delay to hospital entry is also considered possible which increases the episode length to 6 days. While in hospital, patients are assumed to be unavailable to mosquitoes and thus excluded from transmission.
+While healthy or during an uncomplicated bout, a severe bout may commence (determined, as with other sickness events, by the [ModelPathogenesis Pathogenesis model]). This is fixed at 5 days long where the patient enters hospital immediately or not at all; a 1-day delay to hospital entry is also considered possible which increases the bout length to 6 days. While in hospital, patients are assumed to be unavailable to mosquitoes and thus excluded from transmission.
 
-Mortality is possible during severe malaria episodes, and considered as a stochastic function of the proportional reduction in parasite density each day of the case (TODO: link article). Mortality events are always modelled as happening at the end of the associated severe episode.
+Mortality is possible during severe malaria bouts, and considered as a stochastic function of the proportional reduction in parasite density each day of the case (TODO: link article). Mortality events are always modelled as happening at the end of the associated severe .
 
 ===  Treatment seeking ===
 
 The treatment seeking component of the model (implemented in the `ESCaseManagement` class) consists of stochastic decision trees concerned with determining the treatments given (including the actual schedule followed and dose sizes taken), along with whether the patient was hospitalized, and whether treatment or hospitalization delays occurred. The decision trees also provide costing data, stemming from the drugs administered, parasite diagnostics used and hospitalization.
 
-Case management in uncomplicated and severe episodes is determined using completely separate decision trees. In both cases, arbitrary decisions based on age, the outcome of a parasite density test, and decisions based on previous decisions and random sampling are allowed. In the uncomplicated case, an extra input, UC1/UC2 is provided: uncomplicated cases are considered UC2 (or second-line) when recently treated with antimalarials (but not necessarily malaria), otherwise they are UC1.
+Case management in bouts of uncomplicated and severe sickness is determined using completely separate decision trees. In both cases, arbitrary decisions based on age, the outcome of a parasite density test, and decisions based on previous decisions and random sampling are allowed. In the uncomplicated case, an extra input, UC1/UC2 is provided: uncomplicated cases are considered UC2 (or second-line) when recently treated with antimalarials (but not necessarily malaria), otherwise they are UC1.
 
 === Costing ===
 
