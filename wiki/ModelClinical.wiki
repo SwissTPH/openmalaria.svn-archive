@@ -8,7 +8,7 @@ The clinical model considers two sub-categories of severe malaria bouts, as pres
 
 There are two implementations of the clinical model, described below.
 
-== Notation ==
+=== Notation ===
 
 Due to confusion of terms while adapting the clinical model for a 1-day timestep, we have developed the following notation.
 
