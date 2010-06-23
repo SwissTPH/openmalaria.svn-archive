@@ -16,7 +16,16 @@ Deployment of vaccines uses these basic methods, but is a special case. Each hum
 
 List of available interventions (TODO: document). Configuration instructions can be found [XmlScenario#Deployment_of_interventions:_interventions here].
 
- * vaccines
+== vaccines ==
+
+Three vaccines that are deployed simultaneously.
+
+ * Blood-stage vaccine: acts as a killing factor on blood-stage parasites
+ * Pre-erythrocytic vaccine: prevents a proportion of infections from commencing.
+ * Transmission-blocking vaccine: one minus this scales the probability of transmission to mosquitoes
+
+== Others ==
+
  * ITNs
  * ipti
  * change HS
