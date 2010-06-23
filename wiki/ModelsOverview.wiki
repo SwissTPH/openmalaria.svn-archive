@@ -2,6 +2,14 @@
 
 = Overview =
 
+== Simulation phases ==
+
+Prior to simulating the outcomes of an intervention or steady-state scenario in what we term the *intervention phase*, our code runs at least one initialisation phase. In all cases, a warm-up phase one human lifespan long (according to maximum age allowed by demography model) is run before the intervention phase to ensure that each simulated individual has acquired the expected natural immunity for their age (this phase takes the majority of the computation time).
+
+Additionally, when the vector model is used, a vector-fitting phase is added _before_ the one-lifespan phase. This vector phase is run several times in order to fit mosquito emergence rates to EIR data: once for initialisation, and then as many times as necessary to fit emergence rate parameters.
+
+== Diagrams ==
+
 The diagrams here are overviews of models' processes. They don't go into much detail,
 and all model-specific behaviour is abstracted under one block. More detailed graphs restricted to
 the components of interest are available on some of the sub-model pages.
@@ -10,13 +18,13 @@ Color key: green arrows increase a quantity, red arrows decrease a quantity. Sha
 nodes are processes affecting something, boxes surround models, and hexagonal nodes are
 quantities without a process in view of the diagram.
 
-== Infection cycle ==
+=== Population-oriented views ===
 
-This graph shows the infection cycle assumed by the model. Blood-stage parasite densities are
+Some perspectives for looking at model processes are those of [ModelDemography human population] processes or of [ModelTransmission#Vector_transmission mosquito population] processes.
+
+=== Infection cycle ===
+
+A common perspective is that of the malarial infection cycle. The following graph shows the cycle assumed by the model. Blood-stage parasite densities are
 one of the most important aspects here. Intervention effects are not shown.
 
 http://openmalaria.googlecode.com/svn/wiki/graphs/infection-cycle.png
-
-== Population-oriented views ==
-
-Other perspectives for looking at model processes are from the perspectives of the [ModelDemography human population] or the [ModelTransmission#Vector_transmission mosquito population].
