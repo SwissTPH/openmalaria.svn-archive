@@ -74,7 +74,7 @@ Simulation::~Simulation(){
 
 int Simulation::start(){
     totalSimDuration = Global::maxAgeIntervals	// ONE_LIFE_SPAN
-	+ _population->_transmissionModel->vectorInitDuration()	// initial run of VECTOR_FITTING
+	+ _population->_transmissionModel->transmissionInitDuration()	// initial run of TRANSMISSION_INIT
 	+ Surveys.getFinalTimestep() + 1;	// MAIN_PHASE: surveys; +1 to let final survey run
     
     if (isCheckpoint()) {
@@ -124,9 +124,9 @@ int Simulation::start(){
 	} else if (phase == ONE_LIFE_SPAN) {
 	    // Start vector-initialisation:
 	    ++phase;
-	    simPeriodEnd += _population->_transmissionModel->vectorInitDuration();
-	} else if (phase == VECTOR_INITIALISATION) {
-	    int extend = _population->_transmissionModel->vectorInitIterate ();
+	    simPeriodEnd += _population->_transmissionModel->transmissionInitDuration();
+	} else if (phase == TRANSMISSION_INIT) {
+	    int extend = _population->_transmissionModel->transmissionInitIterate();
 	    if (extend > 0) {	// repeat phase
 		simPeriodEnd += extend;
 		totalSimDuration += extend;

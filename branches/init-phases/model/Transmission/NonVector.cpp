@@ -82,6 +82,10 @@ void NonVectorTransmission::initMainSimulation (){
       throw util::xml_scenario_error("mode attribute has invalid value (expected: 2 or 4)");
 }
 
+int NonVectorTransmission::transmissionInitDuration (){
+    return 0;
+    // 0 maintains old behaviour; Global::intervalsPerYear would make more sense.
+}
 
 void NonVectorTransmission::setTransientEIR (const scnXml::NonVector& nonVectorData) {
     // Note: requires Global::timeStep >= 0, but this can only be called in intervention period anyway.

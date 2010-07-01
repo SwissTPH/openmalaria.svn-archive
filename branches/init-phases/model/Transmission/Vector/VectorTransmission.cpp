@@ -121,13 +121,16 @@ void VectorTransmission::setupNv0 (const std::list<Host::Human>& population, int
   Continuous::registerCallback( "S_v", ctsSv.str(), MakeDelegate( this, &VectorTransmission::ctsCbS_v ) );
 }
 
-int VectorTransmission::vectorInitIterate () {
+int VectorTransmission::transmissionInitDuration () {
+    return Global::intervalsPerYear;	// Data is summed over one year.
+}
+int VectorTransmission::transmissionInitIterate () {
   bool iterate = false;
   for (size_t i = 0; i < numSpecies; ++i)
     iterate |= species[i].vectorInitIterate ();
   if (iterate) {
     simulationMode = equilibriumMode;
-    return Global::intervalsPerYear*2;	//TODO: how long?
+    return Global::intervalsPerYear*3;	// Data is summed over one year, so allow extra time for some stabilisation first.
   } else {
     simulationMode = dynamicEIR;
     return 0;

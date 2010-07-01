@@ -66,9 +66,8 @@ private:
 	    lifespan (maxAgeIntervals) to reach immunological equilibrium in all age
 	    classes. Don't report any events */
 	ONE_LIFE_SPAN,
-	/** Initialisation phase for Vector model: in old model, measures
-	 * initialKappa and in new model fits N_v0. */
-	VECTOR_INITIALISATION,
+	/** Initialisation/fitting phase for transmission models. */
+	TRANSMISSION_INIT,
 	//!  This procedure starts with the current state of the simulation 
 	/*! It continues updating    assuming:
 	    (i)		the default (exponential) demographic model
