@@ -57,18 +57,19 @@ struct ESDecisionValue {
     inline bool operator< (const ESDecisionValue that) const {
 	return id < that.id;
     }
-    private:
-      typedef boost::uint64_t id_type;
-	
-	// private constructor, only for use by internal operations
-	ESDecisionValue (id_type new_id) : id(new_id) {}
-	
-	id_type id;
-	
-	friend std::size_t hash_value(ESDecisionValue const& b);
-	friend ostream& operator<< (ostream& stream, const ESDecisionValue v);
-	friend struct ESDecisionValueMap;
-	friend class ::ESDecisionTreeSuite;
+    
+private:
+    typedef boost::uint64_t id_type;
+    
+    // private constructor, only for use by internal operations
+    ESDecisionValue (id_type new_id) : id(new_id) {}
+    
+    id_type id;
+    
+    friend std::size_t hash_value(ESDecisionValue const& b);
+    friend ostream& operator<< (ostream& stream, const ESDecisionValue v);
+    friend struct ESDecisionValueMap;
+    friend class ::ESDecisionTreeSuite;
 };
 std::size_t hash_value(ESDecisionValue const& b);
 inline ostream& operator<< (ostream& stream, const ESDecisionValue v){
