@@ -83,9 +83,8 @@ void NonVectorTransmission::initMainSimulation (){
 }
 
 int NonVectorTransmission::transmissionInitDuration (){
-    // 0 maintains old behaviour; Global::intervalsPerYear separates
-    // transmission init from human init.
-    return Global::intervalsPerYear;
+    return 0;
+    // 0 maintains old behaviour; Global::intervalsPerYear would make more sense.
 }
 
 void NonVectorTransmission::setTransientEIR (const scnXml::NonVector& nonVectorData) {
@@ -168,7 +167,6 @@ double NonVectorTransmission::calculateEIR(int simulationTime, PerHostTransmissi
     throw overflow_error(msg.str());
   }
 #endif
-    //FIXME: shouldn't this be multiplied by ageCorrectionFactor?
   return eir * perHost.relativeAvailabilityHetAge (ageGroupData);
 }
 
