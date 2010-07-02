@@ -122,7 +122,8 @@ void VectorTransmission::setupNv0 (const std::list<Host::Human>& population, int
 }
 
 int VectorTransmission::transmissionInitDuration () {
-    return Global::intervalsPerYear;	// Data is summed over one year.
+    // Data is summed over the last year of human initialisation.
+    return 0;
 }
 int VectorTransmission::transmissionInitIterate () {
   bool iterate = false;
@@ -130,7 +131,7 @@ int VectorTransmission::transmissionInitIterate () {
     iterate |= species[i].vectorInitIterate ();
   if (iterate) {
     simulationMode = equilibriumMode;
-    return Global::intervalsPerYear*3;	// Data is summed over one year, so allow extra time for some stabilisation first.
+    return Global::intervalsPerYear*2;	// Data is summed over one year, so allow extra time for some stabilisation first.
   } else {
     simulationMode = dynamicEIR;
     return 0;

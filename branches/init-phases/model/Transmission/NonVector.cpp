@@ -83,8 +83,9 @@ void NonVectorTransmission::initMainSimulation (){
 }
 
 int NonVectorTransmission::transmissionInitDuration (){
+    // 0 maintains old behaviour; human infectiousness over the last year of
+    // human initialisation is used.
     return 0;
-    // 0 maintains old behaviour; Global::intervalsPerYear would make more sense.
 }
 
 void NonVectorTransmission::setTransientEIR (const scnXml::NonVector& nonVectorData) {
