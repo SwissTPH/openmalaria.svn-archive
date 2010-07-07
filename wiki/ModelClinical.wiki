@@ -5,7 +5,8 @@
 In openmalaria, the [ModelPathogenesis Pathogenesis models] determine if an individual becomes sick, and whether the sickness is uncomplicated or severe. The clinical models determine whether and how the sickness is treated and how long it lasts. There are two implementations of the clinical models, described below. The first model uses a 5-day time step, the second a 1-day time step. In the former, clinical and parasitological outcomes are predicted within the model, whereas the latter works together with the models for [ModelDrug Drug Action], severe outcomes, and [ModelWithinHost Within-Host Dynamics] to predict these outcomes.
 
 === Notation ===
-Due to confusion of terms while adapting the clinical model for a 1-day timestep, we have developed the following notation. 
+Due to confusion of terms while adapting the clinical model for a 1-day timestep, we have developed the following notation:
+
 * event -- an occurrence without measurable duration (can be a bout in the 5-day time step model since the whole bout occurs on a single time step, but in the 1-day time step model an event is strictly a state-change) 
 * bout -- a "bout of sickness" describes a fever or similar sickness, malarial or otherwise, and usually no more than 5 days long 
 * episode -- the health-system's reporting unit; each bout is either considered the start of a new episode, or, if occurring within healthSystemMemory (30 days in old model) of the start of the last episode, considered part of that episode. Thus, at least with low transmission, an episode should roughly correspond to bouts caused by one malaria infection. An episode's severity (non-malarial, malarial or severe) is considered equal to that of its worst bout. 
