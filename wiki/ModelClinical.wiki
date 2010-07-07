@@ -2,43 +2,71 @@
 
 = Clinical models =
 
-In openmalaria, the [ModelPathogenesis Pathogenesis model] determine if an individual becomes sick, and whether the sickness is uncomplicated or severe. The clinical models determine whether and how the sickness is treated and how long it lasts. There are two implementations of the clinical model, described below. The first model uses a 5-day time step, the second a 1-day time step. In the former, clinical and parasitological outcomes are predicted within the model, whereas the latter works together with the models for [ModelDrug Drug Action], severe outcomes, and within-host dynamics to predict these outcomes.
+In openmalaria, the [ModelPathogenesis Pathogenesis models] determine if an individual becomes sick, and whether the sickness is uncomplicated or severe. The clinical models determine whether and how the sickness is treated and how long it lasts. There are two implementations of the clinical model, described below. The first model uses a 5-day time step, the second a 1-day time step. In the former, clinical and parasitological outcomes are predicted within the model, whereas the latter works together with the models for [ModelDrug Drug Action], severe outcomes, and [ModelWithinHost Within-Host Dynamics]to predict these outcomes.
 
 === Notation ===
 Due to confusion of terms while adapting the clinical model for a 1-day timestep, we have developed the following notation. 
 •	event -- an occurrence without measurable duration (can be a bout in the 5-day time step model since the whole bout occurs on a single time step, but in the 1-day time step model an event is strictly a state-change) 
 •	bout -- a "bout of sickness" describes a fever or similar sickness, malarial or otherwise, and usually no more than 5 days long 
 •	episode -- the health-system's reporting unit; each bout is either considered the start of a new episode, or, if occurring within healthSystemMemory (30 days in old model) of the start of the last episode, considered part of that episode. Thus, at least with low transmission, an episode should roughly correspond to bouts caused by one malaria infection. An episode's severity (non-malarial, malarial or severe) is considered equal to that of its worst bout. 
-5-day timestep
-Tediosi et al, 2006 (implemented by the ClinicalImmediateOutcomes class) presented a clinical model for the case management of malaria. In this decision tree model there are three entry points: uncomplicated clinical malaria with no recent history of treatment, uncomplicated clinical malaria with recent history of treatment, and severe malaria. “Recent history” is defined as within the last 30 days.
+
+== 5-day timestep ==
+
+[http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al, 2006] (implemented by the ClinicalImmediateOutcomes class) presented a clinical model for the case management of malaria. In this decision tree model there are three entry points: uncomplicated clinical malaria with no recent history of treatment, uncomplicated clinical malaria with recent history of treatment, and severe malaria. “Recent history” is defined as within the last 30 days.
+
 This model uses a five-day time step, and bouts of sickness are assumed to have concluded within this time period (either the individual recovers or dies). Following recovery, the individual can experience another bout at the next time step, but bouts of illness occurring within 30 days of a previous bout are considered to be a recurrence of the same episode. The severity assigned to the episode (for reporting purposes) is that of the most severe bout within the 30-day period. 
+
 An initial bout of uncomplicated clinical malaria may either be treated at home or in peripheral health facilities, or go untreated, with the probability of a parasitological cure dependent on drug efficacy and patient compliance. In this model, treatment either completely clears parasites or has no effect. An uncomplicated malaria case that was treated in the last 30 days is assumed to either seek care or not. If care is sought, it is assumed to take place in the formal health system, with treatment being based on the second-line drug. Severe malaria cases can either be treated as an inpatient, or not be treated at all, each with a corresponding age-specific case fatality rate. Parasites are cleared in all hospitalized cases who survive. The epidemiologic effect depends stochastically on the values of the joint probabilities of the clinical and parasitologic outcomes, conditional on the clinical event.
+
 Predictions are made across a range of different transmission intensities, by varying the entomological inoculation rate, and across case management scenarios with different coverage rates, by varying the decision tree probabilities.
-1-day timestep
-The Crowell et al model (paper not yet published; implemented by the ClinicalEventScheduler class) is an adaptation of the above Tediosi et al model to a 1-day time step. We break the model down into two components: clinical scheduler and clinical decisions. 
-Moving to a one-day time step implied the need for a clinical scheduler to mediate between the pathogenesis, clinical decisions and severe outcomes models. The clinical scheduler decides and tracks the actual clinical state of the individual, based on the state as determined by the pathogenesis model and recent treatment history, allocates individuals to the clinical decisions and severe outcomes models as necessary, and determines final clinical outcomes.
+
+== 1-day timestep ==
+
+The Crowell et al model (paper not yet published; implemented by the ClinicalEventScheduler class) is an adaptation of the above [http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al model] to a 1-day time step. We break the model down into two components: clinical scheduler and clinical decisions. 
+
+Moving to a one-day time step implied the need for a clinical scheduler to mediate between the [ModelPathogenesis Pathogenesis], clinical decisions and severe outcomes models. The clinical scheduler decides and tracks the actual clinical state of the individual, based on the state as determined by the pathogenesis model and recent treatment history, allocates individuals to the clinical decisions and severe outcomes models as necessary, and determines final clinical outcomes.
+
 The clinical decisions component of the model (implemented in the ESCaseManagement class) consists of stochastic decision trees concerned with determining the treatments given (including the actual schedule followed and dose sizes taken), along with whether the patient was hospitalized and whether treatment or hospitalization delays occurred. The decision trees also provide costing data, derived from the drugs administered, diagnostic tests used and time in hospital.
-Clinical scheduler
+
+===Clinical scheduler===
+
 In this model, each individual is assigned a state which lasts until the next event. The states are healthy, uncomplicated malarial fever, uncomplicated non-malarial fever, severe malaria, and dead. The corresponding events are start of an uncomplicated fever, start of severe malaria (from healthy or uncomplicated fever states), direct death, and recovery. Transitions from severe malaria to uncomplicated fever are not allowed.
 
-A bout commences with a morbidity event and concludes with a recovery or mortality event (stressing terminology used). When the bout first occurs, the clinical scheduler calls the case management model. At the start of an uncomplicated fever, we model a potential treatment-seeking delay. In this model, the bout duration of uncomplicated malarial fevers and non-malarial fevers is fixed at 3 days from the time of seeking treatment, or from the start of illness (if treatment is not sought). If an individual delays seeking treatment for one or two days, bout duration becomes 4 or 5 days, respectively. During this time, the clinical scheduler maintains the individual in the same state, unless the pathogenesis model indicates that the illness has progressed to severe. After this time period, it is assumed that parasite densities have been reduced by treatment or immunity. 
+A _bout_ commences with a morbidity _event_ and concludes with a recovery or mortality _event_ (stressing terminology used). When the bout first occurs, the clinical scheduler calls the case management model. At the start of an uncomplicated fever, we model a potential treatment-seeking delay. In this model, the bout duration of uncomplicated malarial fevers and non-malarial fevers is fixed at 3 days from the time of seeking treatment, or from the start of illness (if treatment is not sought). If an individual delays seeking treatment for one or two days, bout duration becomes 4 or 5 days, respectively. During this time, the clinical scheduler maintains the individual in the same state, unless the [ModelPathogenesis Pathogenesis models] indicate that the illness has progressed to severe. After this time period, it is assumed that parasite densities have been reduced by treatment or immunity. 
+
 While healthy or during an uncomplicated bout, a severe bout may commence. In this case, the clinical scheduler calls the case management model and cancels any recent drug treatment. The severe bout is fixed at 5 days long when the patient enters hospital immediately or not at all; a 1-day delay to hospital entry is also considered possible which increases the bout length to 6 days. 
+
 Mortality is possible during severe malaria bouts, and considered as a stochastic function of the proportional reduction in parasite density each day of the case (TODO: link article). Each day during the severe illness, the clinical scheduler calls the severe outcomes model, which applies the appropriate case fatality rate to determine whether or not the individual died that day. For delayed hospital entry, the community death rate takes effect on the first day. To simplify costing of hospital stays, mortality events are always modeled as happening at the end of the associated severe episode.
-Clinical decisions
+
+===Clinical decisions===
+
 Case management in bouts of uncomplicated and severe sickness is determined using separate decision trees, with the following three entry points: uncomplicated fever with no recent history of treatment, uncomplicated fever with recent history of treatment, and severe malaria. In both cases, arbitrary decisions based on age, the outcome of a parasite density test, and decisions based on previous decisions and random sampling are allowed.
-The Tediosi et al. decision tree model was revised to describe more realistically the patient and provider decisions affecting case management coverage and to be more generally applicable for case management in areas of any level of P.falciparum risk. Also, the finer-grained simulation, when linked with models of pharmacokinetics and pharmacodynamics, allows modelling of parasite response to treatment and thus partial drug failure due to parasite resistance or inadequate dosing. 
-Uncomplicated fever
+
+The [http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al model] was revised to describe more realistically the patient and provider decisions affecting case management coverage and to be more generally applicable for case management in areas of any level of P.falciparum risk. Also, the finer-grained simulation, when linked with models of pharmacokinetics and pharmacodynamics, allows modelling of parasite response to treatment and thus partial drug failure due to parasite resistance or inadequate dosing. 
+
+====Uncomplicated fever====
+
 At the start of an uncomplicated fever, we model a potential treatment-seeking delay. The simulated individual has a fixed chance of seeking treatment immediately, or, if yet to do so, on the following two days. If treatment is not sought on all three occasions, the individual reverts to the healthy state. When the individual does seek treatment, the uncomplicated case management tree determines any treatments taken, and the individual is deemed to recover 3 days from the time of treatment-seeking.
+
 The decision tree provides a more detailed description of treatment-seeking than the previous model, including from the informal sector. It accounts for sub-optimal provider compliance to treatment guidelines and varying quality of drugs and describes patient adherence more precisely by modeling vomiting, stopping treatment early, and selective adherence.
+
 The uncomplicated case management model allows for simulation of diagnostic testing. Uncomplicated fevers may or may not be caused by malaria and, if they are non-malarial, may or may not be accompanied by parasitaemia. However, initially they present identically to the case management system and are thus included in the same entry point. Non-malarial fevers are generated by an age-dependent function in the pathogenesis model; diagnostic testing, an innovation of this model, permits the case management system to distinguish between non-malarial and malarial fevers and target antimalarial drugs more effectively. 
+
 If a bout of uncomplicated fever (whether malarial or not) occurs within 14 days of being treated with antimalarials, it is considered a result of treatment failure which should be treated with the second-line drug.
-Severe malaria
+
+====Severe malaria====
+
 In the case of severe malaria, the path through the case management decision tree is determined at the start of the episode. The tree may determine that a one-day travel-time delay occurs, in which case in-hospital decisions are not determined until the next day. However, since the current trees do not depend on parasite densities, determining these decisions on the day of entry to a severe state has the same result, ignoring the one-day difference in age. 
+
 Individuals can initially either seek treatment from a lower-level source, in hospital, or not at all. There is a possibility of pre-referral treatment with referral to hospital on the same or next day; pre-referral treatment reduces parasite densities on the first day of illness. Diagnostic testing is considered for costing purposes but is assumed not to affect treatment received. Treatment schedule is found and applied in the same way as with an uncomplicated case. Entry to hospital temporarily removes the individual from the transmission cycle.
-Medications
+
+====Medications====
+
 In both severe and uncomplicated cases, the relevant case management decision tree determines treatments given. For each drug and age group, the standard regimen is specified– dose size (in milligrams), and times given (in hours), and then modified, based on the decision tree outputs, by reduced quality, adherence and delays to taking treatment.
+
 The treatment schedule is applied to the individual as a list of pending medications that are given over the next time points. Any previously pending medications are cancelled when new treatments are prescribed, and drugs are only costed when taken, so that should an individual progress to severe after receiving treatments for an uncomplicated case, remained unconsumed medications are not costed.
-Costing
+
+===Costing===
 The following costs are considered: 
 •	drugs medicated, including vomited doses but not doses skipped due to poor adherence 
 •	parasite (RDT and microscopy) diagnostics used 
@@ -48,54 +76,4 @@ The following costs are considered:
 
 A rough diagram of the model processes is below (states and state choices in blue). The diagram ignores the time component (most notably: change in parasite density over a severe bout is what input the parasite density has on chance of death). 
 
-
-
-
-
-There are two implementations of the clinical model, described below.
-
-=== Notation ===
-
-Due to confusion of terms while adapting the clinical model for a 1-day timestep, we have developed the following notation.
-
-  * event -- an occurrence without measurable duration (can be a bout in the 5-day timestep model since the whole bout occurs on a single timestep, but in the 1-day timestep model is strictly a state-change)
-  * bout -- a "bout of sickness" describes a fever or similar sickness, malarial or otherwise, and usually no more than 5 days long
-  * episode -- the health-system's reporting unit; each bout is either considered the start of a new episode, or, if occurring within `healthSystemMemory` (30 days in old model) of the start of the last episode, considered part of that episode. Thus, at least with low transmission, an episode should roughly correspond to bouts caused by one malaria infection. An episode's severity (non-malarial, malarial or severe) is considered equal to that of its worst bout.
-
-== 5-day timestep ==
-
-[http://www.ncbi.nlm.nih.gov/pubmed/16931817 Ross et al, 2006] (implemented by the `ClinicalImmediateOutcomes` class) describes a quantitative framework for use on a 5-day timestep to model the relationship between malaria transmission and the age-specific patterns of morbidity and mortality. The model is fit to summaries of field data from endemic areas of Africa. 
-
-In this model, bouts of sickness are assumed to have concluded within a single 5-day timestep. Treatment either completely clears parasites or has no effect, and within a severe bout, mortality rate depends on effectiveness of treatment.
-
-== 1-day timestep ==
-
-(Paper not yet published; implemented by the `ClinicalEventScheduler` class.) The model is an adaptation of the above [ModelClinical#5-day_timestep Ross et al model] to a 1-day timestep. The finer-grained simulation allows modelling of parasite response to treatment via a [ModelDrug modelling of pharmacodynamics] and thus partial drug failure due to parasite resistance, poor adherence or insufficient doses; therefore we break the model down into two components: treatment seeking and bout duration/outcome.
-
-A rough diagram of the model processes is below (states and state choices in blue). The diagram
-ignores the time component (most notably: change in parasite density over a severe bout is
-what input the parasite density has on chance of death).
-
 http://openmalaria.googlecode.com/svn/wiki/graphs/EV-PKPD-model.png
-
-=== Bout duration and outcome ===
-
-A _bout_ commences with a morbidity _event_ and concludes with a recovery or mortality _event_ (stressing terminology used). With this model, acute (but non-severe) malarial fevers and non-malarial fevers are considered equivalently, excepting parasite diagnostics; in both cases the bout duration is fixed at 3 days long, after which it is assumed parasite densities have been reduced by treatment or immunity (in the case this doesn't happen, a repeat bout may occur, or the bout may escalate to severe malaria).
-
-While healthy or during an uncomplicated bout, a severe bout may commence (determined, as with other sickness events, by the [ModelPathogenesis Pathogenesis model]). This is fixed at 5 days long where the patient enters hospital immediately or not at all; a 1-day delay to hospital entry is also considered possible which increases the bout length to 6 days. While in hospital, patients are assumed to be unavailable to mosquitoes and thus excluded from transmission.
-
-Mortality is possible during severe malaria bouts, and considered as a stochastic function of the proportional reduction in parasite density each day of the case (TODO: link article). Mortality events are always modelled as happening at the end of the associated severe .
-
-===  Treatment seeking ===
-
-The treatment seeking component of the model (implemented in the `ESCaseManagement` class) consists of stochastic decision trees concerned with determining the treatments given (including the actual schedule followed and dose sizes taken), along with whether the patient was hospitalized, and whether treatment or hospitalization delays occurred. The decision trees also provide costing data, stemming from the drugs administered, parasite diagnostics used and hospitalization.
-
-Case management in bouts of uncomplicated and severe sickness is determined using completely separate decision trees. In both cases, arbitrary decisions based on age, the outcome of a parasite density test, and decisions based on previous decisions and random sampling are allowed. In the uncomplicated case, an extra input, UC1/UC2 is provided: uncomplicated cases are considered UC2 (or second-line) when recently treated with antimalarials (but not necessarily malaria), otherwise they are UC1.
-
-=== Costing ===
-
-The following costs to the health system are considered:
-
- * drugs medicated, including vomited doses but not doses skipped due to poor adherence
- * parasite (RDT and microscopy) diagnostics used
- * patient hospital days, using fixed average lengths for stays resulting in recovery and stays ending with mortality
