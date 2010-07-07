@@ -2,7 +2,6 @@
 
 = Human population demographics =
 
-The human population is regulated by the demography model (uses out-migrations to enforce
-age-structure and births to keep population size constant).
+The human population is regulated by the demography model. After individuals who die from malaria (direct or indirect) are removed from the population, the demography model uses out-migrations to enforce the specified age-structure and births to keep population size constant. 
 
 http://openmalaria.googlecode.com/svn/wiki/graphs/human-demography.png
