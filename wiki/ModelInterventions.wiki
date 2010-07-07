@@ -27,7 +27,7 @@ Three vaccines that are deployed simultaneously.
 == Others ==
 
  * ITNs
- * ipti
+ * IPTi and IPTc
  * change HS
  * change EIR
  * MDA
