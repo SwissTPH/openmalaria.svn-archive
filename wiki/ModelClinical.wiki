@@ -71,10 +71,14 @@ The treatment schedule is applied to the individual as a list of pending medicat
 
 ===Costing===
 The following costs are considered: 
- • drugs medicated, including vomited doses but not doses skipped due to poor adherence 
- • parasite (RDT and microscopy) diagnostics used 
+ • drugs medicated, including vomited doses but not doses skipped due to poor adherence
+ 
+ • parasite (RDT and microscopy) diagnostics used
+ 
  • outpatient health center visits
+
  • patient hospital days, using fixed average lengths for stays resulting in recovery and stays ending with mortality 
+
  • patient direct costs, including travel, medical and non-medical supplies
 
 A rough diagram of the model processes is below (states and state choices in blue). The diagram ignores the time component (most notably: change in parasite density over a severe bout is what input the parasite density has on chance of death). 
