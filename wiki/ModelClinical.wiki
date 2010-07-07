@@ -18,7 +18,7 @@ Due to confusion of terms while adapting the clinical model for a 1-day timestep
 
 == 5-day timestep ==
 
-[http://www.ncbi.nlm.nih.gov/pubmed/16931817 Ross et al, 2006] (implemented by the `ClinicalImmediateOutcomes` class) describes a quantitative framework for use on a 5-day timestep to model the various apparently contradictory observations relating morbidity and mortality rates to malaria transmission. The model is fit to summaries of field data from endemic areas of Africa.
+[http://www.ncbi.nlm.nih.gov/pubmed/16931817 Ross et al, 2006] (implemented by the `ClinicalImmediateOutcomes` class) describes a quantitative framework for use on a 5-day timestep to model the relationship between malaria transmission and the age-specific patterns of morbidity and mortality. The model is fit to summaries of field data from endemic areas of Africa. 
 
 In this model, bouts of sickness are assumed to have concluded within a single 5-day timestep. Treatment either completely clears parasites or has no effect, and within a severe bout, mortality rate depends on effectiveness of treatment.
 
