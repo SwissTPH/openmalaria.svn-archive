@@ -2,7 +2,7 @@
 
 = Clinical models =
 
-In openmalaria, the [ModelPathogenesis Pathogenesis models] determine if an individual becomes sick, and whether the sickness is uncomplicated or severe. The clinical models determine whether and how the sickness is treated and how long it lasts. There are two implementations of the clinical model, described below. The first model uses a 5-day time step, the second a 1-day time step. In the former, clinical and parasitological outcomes are predicted within the model, whereas the latter works together with the models for [ModelDrug Drug Action], severe outcomes, and [ModelWithinHost Within-Host Dynamics] to predict these outcomes.
+In openmalaria, the [ModelPathogenesis Pathogenesis models] determine if an individual becomes sick, and whether the sickness is uncomplicated or severe. The clinical models determine whether and how the sickness is treated and how long it lasts. There are two implementations of the clinical models, described below. The first model uses a 5-day time step, the second a 1-day time step. In the former, clinical and parasitological outcomes are predicted within the model, whereas the latter works together with the models for [ModelDrug Drug Action], severe outcomes, and [ModelWithinHost Within-Host Dynamics] to predict these outcomes.
 
 === Notation ===
 Due to confusion of terms while adapting the clinical model for a 1-day timestep, we have developed the following notation. 
