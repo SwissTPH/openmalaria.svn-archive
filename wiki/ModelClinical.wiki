@@ -7,15 +7,15 @@ In openmalaria, the [ModelPathogenesis Pathogenesis models] determine if an indi
 === Notation ===
 Due to confusion of terms while adapting the clinical model for a one-day timestep, we have developed the following notation:
 
- * event -- an occurrence without measurable duration (can be a bout in the five-day time step model since the whole bout occurs on a single time step, but in the one-day time step model an event is strictly a state-change). 
+ * event -- an occurrence without measurable duration. This can be a bout in the five-day time step model since the whole bout occurs on a single time step, but in the one-day time step model an event is strictly a state-change.
 
- * bout -- a "bout of sickness" describes a fever or similar sickness, malarial or otherwise, and usually no more than five days long.
+ * bout -- a "bout of sickness" describes a fever, malarial or otherwise, or period of severe illness, usually lasting no more than five days.
 
- * episode -- the health-system's reporting unit; each bout is either considered the start of a new episode, or, if occurring within healthSystemMemory (30 days in the old model) of the start of the last episode, considered part of that episode. Thus, at least with low transmission, an episode should roughly correspond to bouts caused by one malaria infection. An episode's severity (non-malarial, malarial or severe) is considered equal to that of its worst bout. 
+ * episode -- the health-system's reporting unit; each bout is either considered the start of a new episode, or, if occurring within the health system memory (currently 30 days) of the start of the last episode, considered part of that episode. Thus, at least in low transmission settings, an episode should roughly correspond to one malaria infection (which can cause multiple bouts). An episode's severity (non-malarial, malarial or severe) is considered to be that of its worst bout. 
 
 == Five-day timestep ==
 
-[http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al, 2006] (implemented by the ClinicalImmediateOutcomes class) presented a clinical model for the case management of malaria. In this decision tree model there are three entry points: uncomplicated clinical malaria with no recent history of treatment, uncomplicated clinical malaria with recent history of treatment, and severe malaria. “Recent history” is defined as within the last 30 days.
+[http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al, 2006] (implemented by the ClinicalImmediateOutcomes class) presented a clinical model for the case management of malaria. In this model there are three entry points to the decision trees: uncomplicated clinical malaria with no recent history of treatment, uncomplicated clinical malaria with recent history of treatment, and severe malaria. “Recent history” is defined as within the last 30 days.
 
 This model uses a five-day time step, and bouts of sickness are assumed to have concluded within this time period (either the individual recovers or dies). Following recovery, the individual can experience another bout at the next time step, but bouts of illness occurring within 30 days of a previous bout are considered to be a recurrence of the same episode. The severity assigned to the episode (for reporting purposes) is that of the most severe bout within the 30-day period. 
 
@@ -45,7 +45,7 @@ Mortality is possible during severe malaria bouts, and considered as a stochasti
 
 Case management in bouts of uncomplicated and severe sickness is determined using separate decision trees, with the following three entry points: uncomplicated fever with no recent history of treatment, uncomplicated fever with recent history of treatment, and severe malaria. In both cases, arbitrary decisions based on age, the outcome of a parasite density test, and decisions based on previous decisions and random sampling are allowed.
 
-The [http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al model] was revised to describe more realistically the patient and provider decisions affecting case management coverage and to be more generally applicable for case management in areas of any level of P.falciparum risk. Also, the finer-grained simulation, when linked with models of pharmacokinetics and pharmacodynamics, allows modelling of parasite response to treatment and thus partial drug failure due to parasite resistance or inadequate dosing. 
+The decision trees in the [http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al model] were revised to describe more realistically the patient and provider decisions affecting case management coverage and to be more generally applicable for case management in areas of any level of P.falciparum risk. Also, the finer-grained simulation, when linked with models of pharmacokinetics and pharmacodynamics, allows modelling of parasite response to treatment and thus partial drug failure due to parasite resistance or inadequate dosing. 
 
 ====Uncomplicated fever====
 
@@ -53,21 +53,21 @@ At the start of an uncomplicated fever, we model a potential treatment-seeking d
 
 The decision tree provides a more detailed description of treatment-seeking than the previous model, including from the informal sector. It accounts for sub-optimal provider compliance to treatment guidelines and varying quality of drugs and describes patient adherence more precisely by modeling vomiting, stopping treatment early, and selective adherence.
 
-The uncomplicated case management model allows for simulation of diagnostic testing. Uncomplicated fevers may or may not be caused by malaria and, if they are non-malarial, may or may not be accompanied by parasitaemia. However, initially they present identically to the case management system and are thus included in the same entry point. Non-malarial fevers are generated by an age-dependent function in the pathogenesis model; diagnostic testing, an innovation of this model, permits the case management system to distinguish between non-malarial and malarial fevers and target antimalarial drugs more effectively. 
+The uncomplicated case management decision tree allows for simulation of diagnostic testing. Uncomplicated fevers may or may not be caused by malaria and, if they are non-malarial, may or may not be accompanied by parasitaemia. However, initially they appear identical to patients and health care providers and are thus included in the same entry point. Non-malarial fevers are generated by an age-dependent function in the pathogenesis model; diagnostic testing permits health care providers to distinguish between non-malarial and malarial fevers and target antimalarial drugs more effectively. 
 
-If a bout of uncomplicated fever (whether malarial or not) occurs within 14 days of being treated with antimalarials, it is considered a result of treatment failure which should be treated with the second-line drug.
+If a bout of uncomplicated fever (whether malarial or not) occurs in an individual who has been treated with antimalarials within the last 14 days, it is considered a result of treatment failure which should be treated with the second-line drug. The decision tree is identical but the values of treatment-seeking, quality of care and compliance parameters are modified accordingly.
 
 ====Severe malaria====
 
-In the case of severe malaria, the path through the case management decision tree is determined at the start of the episode. The tree may determine that a one-day travel-time delay occurs, in which case in-hospital decisions are not determined until the next day. However, since the current trees do not depend on parasite densities, determining these decisions on the day of entry to a severe state has the same result, ignoring the one-day difference in age. 
+In the case of severe malaria, the path through the case management decision tree is determined at the start of the episode. The tree may determine that a one-day travel-time delay occurs, in which case in-hospital decisions are not determined until the next day. However, since currently, decisions do not depend on parasite densities, determining these decisions on the day of entry to a severe state has the same result, ignoring the one-day difference in age. 
 
 Individuals can initially either seek treatment from a lower-level source, in hospital, or not at all. There is a possibility of pre-referral treatment with referral to hospital on the same or next day; pre-referral treatment reduces parasite densities on the first day of illness. Diagnostic testing is considered for costing purposes but is assumed not to affect treatment received. Treatment schedule is found and applied in the same way as with an uncomplicated case. Entry to hospital temporarily removes the individual from the transmission cycle.
 
 ====Medications====
 
-In both severe and uncomplicated cases, the relevant case management decision tree determines treatments given. For each drug and age group, the standard regimen is specified– dose size (in milligrams), and times given (in hours), and then modified, based on the decision tree outputs, by reduced quality, adherence and delays to taking treatment.
+In both severe and uncomplicated cases, the relevant case management decision tree determines treatments given. For each drug and age group, the standard regimen is specified– dose size (in milligrams), and times given (in hours), and then modified, based on the decision tree outputs, by reduced drug quality, adherence and delays to taking treatment.
 
-The treatment schedule is applied to the individual as a list of pending medications that are given over the next time points. Any previously pending medications are cancelled when new treatments are prescribed, and drugs are only costed when taken, so that should an individual progress to severe after receiving treatments for an uncomplicated case, remained unconsumed medications are not costed.
+The treatment schedule is applied to the individual as a list of pending medications that are given over the next time points. Any previously pending medications are cancelled when new treatments are prescribed, and drugs are only costed when taken, so that if an individual progresses to severe after receiving treatments for an uncomplicated case, remained unconsumed medications are not costed.
 
 ===Costing===
 The following costs are considered: 
