@@ -1,37 +1,44 @@
-= OpenMalaria =
+Welcome to the OpenMalaria wiki on google-code.
 
-Welcome to the OpenMalaria wiki on google-code. Here we have some information on the project's code and a little on the mathematical models used in the code.
+= Applications & Usage =
 
+The applications of OpenMalaria are:
 
-== Applications & Usage ==
+==Optimizing models of malaria epidemiology and control==
 
-OpenMalaria is a general platform for comparing, fitting, and evaluating different malaria models, and for quantitative prediction of effects of different interventions and integrated control programs.   The models comprise individual-based stochastic simulations of malaria epidemiology, health systems, and malaria interventions.  The outputs from the core C++ program can be linked to cost data from endemic countries to analyse the economics of malaria interventions.
+The software implements models of individual-based stochastic simulations of malaria epidemiology, health systems, and malaria interventions.  The project makes use of a general platform for comparing, fitting, and evaluating different models.
 
-There are two envisaged methods of using the simulator:
+==Prediction of the effects of different interventions and control programs==
 
- * [SetupOverview as a stand-alone program], capable of simulating a few hand-crafted scenarios and producing results analysable with spread-sheets or simple scripts
+There are several envisaged methods of carrying out predictive simulations:
+
+ * [SetupOverview as a stand-alone program], capable of simulating a few hand-crafted scenarios and producing results analyzable with spread-sheets or simple scripts
  * via the [http://www.malariacontrol.net/ BOINC volunteer computing platform] and a semi-automated experiment design and analysis platform (under development), capable of handling entire experiments of 10000-100000 scenarios
+ * via a GUI-driven job submission system (under development), capable of deploying simulations on different computer resources.
 
+The outputs from these simulations can be linked to cost data from endemic countries to analyse the economics of malaria interventions.  
 
-== Development ==
-=== [Models] ===
+== Uncertainty analysis ==
+
+The project also analyzes the uncertainty associated with sets of model predictions. 
+
+= Development =
+== [Models] ==
 
 The model as a whole consists of many components, from transmission to within-host parasite dynamics to drug action.
 
 For an overview of the model-components represented, see (TODO). For a list of papers describing some part of the model, see (TODO).
 
-=== [Code] ===
+== [Code] ==
 
 The openmalaria project now has a [https://www.ohloh.net/p/openmalaria considerable code base]. The core program is now entirely written in C++, having Fortran roots. TODO: an overview of the code.
 
 Instructions for compiling the code can be found [BuildSystem here].
 
 
-== Team ==
+= Team =
 
 OpenMalaria is being developed by a team from the [http://www.swisstph.ch/research/public-health-and-epidemiology/biostatistics/modelling-of-malaria.html Swiss Tropical and Public Health Institute (Swiss TPH)], the [http://ndssl.vbi.vt.edu/index.php Network Dynamics and Simulation Science Laboratory at Virginia Bioinformatics Institute] 
 and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine] with financial support from the [http://www.gatesfoundation.org/Pages/home.aspx Bill & Melinda Gates Foundation]
-
-
 
 For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.
