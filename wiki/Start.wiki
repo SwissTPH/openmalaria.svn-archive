@@ -25,7 +25,7 @@ The project also analyzes the uncertainty associated with sets of model predicti
 = Development =
 == [Models] ==
 
-The model as a whole consists of many components, from transmission to within-host parasite dynamics to drug action.
+Each simulation requires implementation of various components, from transmission to within-host parasite dynamics to drug action.
 
 For an overview of the model-components represented, see (TODO). For a list of papers describing some part of the model, see (TODO).
 
