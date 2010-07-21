@@ -2,7 +2,7 @@ automatic schema translator
 
 = Automatic schema version update =
 
-If you use some scenarii using an older schema version, you can update those with the schema translator. The translation may not work for some scenarios (The program will output the parameters you have to change or/and add manually and exit). 
+If you use some scenarii working with an older schema version, you can update those with the schema translator. The translation may not work for some scenarii (The program will output the parameters you have to change or/and add manually and exit). 
 
 
 == The schema translator binaries ==
