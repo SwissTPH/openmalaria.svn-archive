@@ -1,4 +1,4 @@
-#automatic schema translator
+automatic schema translator
 
 = Automatic schema version update =
 
