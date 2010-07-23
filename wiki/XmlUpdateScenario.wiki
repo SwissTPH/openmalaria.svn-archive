@@ -18,7 +18,7 @@ If you use some scenarii working with an older schema version, you can update th
 
 == Usage ==
 
-You need to put the scenarios to be converted in the scenarios folder and then start the program from terminal or command line with the command {{{java SchemaTranslator}}} or if you want to start the SchemaTranslator from another location then you have to use {{{java -classpath path_to_schematranslator_folder SchemaTranslator}}}. If everything is working fine, then you should find the updated scenarios in the folder translatedScenarios.
+You need to put the scenarios to be converted in the scenarios folder and then start the program from terminal or command line with the command {{{java SchemaTranslator}}} or if you want to start the Schema Translator from another location then you have to use {{{java -classpath path_to_schematranslator_folder SchemaTranslator}}}. If everything is working fine, then you should find the updated scenarios in the folder translatedScenarios.
 
 If you don't add any options, then the scenarios will be converted to the latest schema version.
 
