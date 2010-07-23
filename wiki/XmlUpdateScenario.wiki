@@ -5,7 +5,11 @@ automatic schema translator
 If you use some scenarii working with an older schema version, you can update those with the schema translator. The translation may not work for some scenarii (The program will output the parameters you have to change or/and add manually and exit). 
 
 
-== The schema translator binaries ==
+== Build and Install ==
+  
+  * Building the schema translator from sources:
+    If you are already working with the openmalaria sources, then you can find the schema translator java files in util/SchemaTranslator/
+    You could also directly download the sources from this location
 
 
-== Install and Usage ==
+== Usage ==
