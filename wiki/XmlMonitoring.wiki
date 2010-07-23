@@ -61,10 +61,9 @@ These tables come from [http://code.google.com/p/openmalaria/source/browse/trunk
 || 25 || nIPTDoses  ||  number of IPT Doses ||
 || 26 || annAvgK   || Annual Average Kappa. Calculated once a year as sum of human infectiousness divided by initial EIR summed over a year. Single value, not per age-group. ||
 || 27 || nNMFever  ||  Number of episodes (non-malaria fever) ||
-|| 30 || innoculationsPerAgeGroup || The total number of inoculations per age group, summed over the reporting period. ||
 || 28 || innoculationsPerDayOfYear  ||  Inoculations per human (all ages) per day of year, over the last year. ||
 || 29 || kappaPerDayOfYear  ||  Kappa (human infectiousness) weighted by availability per day-of-year for the last year. ||
-
+|| 30 || innoculationsPerAgeGroup || The total number of inoculations per age group, summed over the reporting period. ||
 === Vector model ===
 
 These were point-time outputs, but some (just EIR?) have been converted to output averages.
