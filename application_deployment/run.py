@@ -47,6 +47,9 @@ testCommonDir = base_folder + "/application/common"
 testSrcDir = base_folder + "/run_scenarios/scenarios_to_run"
 testBuildDir = base_folder + "/application"
 testOutputsDir = base_folder + "/run_scenarios/outputs"
+testTranslationDir = base_folder + "/translate_scenarios"
+testTranslationDirIn = testTranslationDir + "/scenarios_to_translate"
+testTranslationDirOut = testTranslationDir + "/translated_scenarios"
 
 if not os.path.isdir(testSrcDir) or not os.path.isdir(testBuildDir):
     print "Don't run this script directly; configure CMake then use the version in the CMake build dir."
@@ -279,7 +282,7 @@ You can pass options to openMalaria by first specifying -- (to end options passe
     return options,omOptions,toRun
 
 def startSchemaTranslator():
-	return subprocess.call ("java -classpath "+testBuildDir+"/schemaTranslator SchemaTranslator --schema_folder "+testCommonDir+"/", shell=True)
+	return subprocess.call ("java -jar "+testBuildDir+"/schemaTranslator/SchemaTranslator.jar --schema_folder "+testCommonDir+"/ --input_folder "+testTranslationDirIn+" --output_folder "+testTranslationDirOut, shell=True)
 
 def startLiveGraph(ctsoutpath, simPath):
 	settings_path = testCommonDir + "/settings.lgdfs"
