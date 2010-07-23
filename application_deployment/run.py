@@ -97,8 +97,8 @@ def runScenario(options,omOptions,name):
     
     dest= open(scenarioSrc, 'w')
     dest.write(scen_string)
-    dest.close()	
-    		
+    dest.close()
+    
     if options.xmlValidate:
         # alternative: ["xmlstarlet","val","-s",SCHEMA,scenarioSrc]
         return subprocess.call (["xmllint","--noout","--schema " + testCommonDir + "/scenario.xsd",scenarioSrc],cwd=testBuildDir)
@@ -127,14 +127,22 @@ def runScenario(options,omOptions,name):
     if options.logging:
         print time.strftime("\033[0;33m%a, %d %b %Y %H:%M:%S")+"\t\033[1;33mscenario%s.xml" % name
     
+    runLiveGraph = options.livegraph  # i.e. true if we should start it
     startTime=lastTime=time.time()
     # While no output.txt file and cmd exits successfully:	
 
     while (not os.path.isfile(outputFile)):
         if options.logging:
             print "\033[0;32m  "+(" ".join(cmd))+"\033[0;00m"
-        #ret=subprocess.Popen(cmd, shell=False, cwd=simDir).pid
-	ret=subprocess.call(cmd, shell=False, cwd=simDir)
+        
+        OMP=subprocess.Popen(cmd, shell=False, cwd=simDir)
+        while OMP.poll() is None: # still running
+            if runLiveGraph:
+                if(os.path.isfile(ctsoutFile)): 
+                    startLiveGraph(ctsoutFile, simDir)
+                    runLiveGraph = False  # done it, don't do it again
+        
+        ret=OMP.returncode
         if ret != 0:
             print "\033[1;31mNon-zero exit status: " + str(ret)
             break
@@ -164,15 +172,7 @@ def runScenario(options,omOptions,name):
         if not checkTime > lastTime:
             break
         lastTime=checkTime	
-
     
-    if options.livegraph:
-	start = False
-	while not(start):
-		if(os.path.isfile(ctsoutFile)):	
-			startLiveGraph(ctsoutFile, simDir)
-			start = True 
-
     if ret == 0 and options.logging:
         print "\033[0;33mDone in " + str(time.time()-startTime) + " seconds"
     
@@ -249,25 +249,25 @@ def setWrapArgs(option, opt_str, value, parser, *args, **kwargs):
 # Test for options
 def evalOptions (args):
     parser = OptionParser(usage="Usage: %prog [options] [-- openMalaria options] [scenarios]",
-			description="""Scenarios to be run must be of the form scenarioXX.xml; if any are passed on the command line, XX is substituted for each given; if not then all files of the form scenario*.xml are run as test scenarios.
+        description="""Scenarios to be run must be of the form scenarioXX.xml; if any are passed on the command line, XX is substituted for each given; if not then all files of the form scenario*.xml are run as test scenarios.
 You can pass options to openMalaria by first specifying -- (to end options passed from the script); for example: %prog 5 -- --print-model""")
     
     parser.add_option("-q","--quiet",
-		    action="store_false", dest="logging", default=True,
-		    help="Turn off console output from this script")
+        action="store_false", dest="logging", default=True,
+        help="Turn off console output from this script")
     parser.add_option("-n","--dry-run", action="store_false", dest="run", default=True,
-		    help="Don't actually run openMalaria, just output the commandline.")
+        help="Don't actually run openMalaria, just output the commandline.")
     parser.add_option("-c","--dont-cleanup", action="store_false", dest="cleanup", default=True,
-		    help="Don't clean up expected files from the temparary dir (checkpoint files, schema, etc.)")
+        help="Don't clean up expected files from the temparary dir (checkpoint files, schema, etc.)")
     parser.add_option("-d","--diff", action="store_true", dest="diff", default=False,
             help="Launch a diff program (kdiff3) on the output if validation fails")
     parser.add_option("--valid","--validate",
-		    action="store_true", dest="xmlValidate", default=False,
-		    help="Validate the XML file(s) using xmllint and the latest schema.")
+        action="store_true", dest="xmlValidate", default=False,
+        help="Validate the XML file(s) using xmllint and the latest schema.")
     parser.add_option("-t", "--translateSchema", "--translate", action="store_true", dest="translator", default=False,
-    		    help="Use the Schema Translating tool in application/schemaTranslator/schemaTranslator/.")
+        help="Use the Schema Translating tool in application/schemaTranslator/schemaTranslator/.")
     parser.add_option("-l","--liveGraph","--graph", action="store_true", dest="livegraph", default=False, 
-		    help="Use the Live Graph application to output the simulation (a ctsout file is needed, otherwise you will see nothing).") 		
+        help="Use the Live Graph application to output the simulation (a ctsout file is needed, otherwise you will see nothing).") 		
     (options, others) = parser.parse_args(args=args)
     options.ensure_value("wrapArgs", [])
     
@@ -282,43 +282,42 @@ You can pass options to openMalaria by first specifying -- (to end options passe
     return options,omOptions,toRun
 
 def startSchemaTranslator():
-	return subprocess.call ("java -jar "+testBuildDir+"/schemaTranslator/SchemaTranslator.jar --schema_folder "+testCommonDir+"/ --input_folder "+testTranslationDirIn+" --output_folder "+testTranslationDirOut, shell=True)
+    return subprocess.call ("java -jar "+testBuildDir+"/schemaTranslator/SchemaTranslator.jar --schema_folder "+testCommonDir+"/ --input_folder "+testTranslationDirIn+" --output_folder "+testTranslationDirOut, shell=True)
 
 def startLiveGraph(ctsoutpath, simPath):
-	settings_path = testCommonDir + "/settings.lgdfs"
-	src=open(settings_path)
-    	settings_string=src.read()
-    	src.close()
-
-    	settingsRE = re.compile('changeEntry')
-    	settings_string = settingsRE.sub(ctsoutpath, settings_string)
+    settings_path = testCommonDir + "/settings.lgdfs"
+    src=open(settings_path)
+    settings_string=src.read()
+    src.close()
     
-    	dest= open(simPath+"/settings.lgdfs", 'w')
-    	dest.write(settings_string)
-    	dest.close()
-	
-	return subprocess.Popen ("java -jar "+testBuildDir+"/LiveGraph.1.14.Complete/LiveGraph.1.14.Complete.jar -dfs "+simPath+"/settings.lgdfs", shell=True).pid	
+    settingsRE = re.compile('changeEntry')
+    settings_string = settingsRE.sub(ctsoutpath, settings_string)
+    
+    dest= open(simPath+"/settings.lgdfs", 'w')
+    dest.write(settings_string)
+    dest.close()
+    
+    return subprocess.Popen ("java -jar "+testBuildDir+"/LiveGraph.1.14.Complete/LiveGraph.1.14.Complete.jar -dfs "+simPath+"/settings.lgdfs", shell=True).pid	
 
 
 def main(args):
     (options,omOptions,toRun) = evalOptions (args[1:])
     retVal = 0
-	 
-
-    if not(options.translator):	
-	if not toRun:
-		for p in glob.iglob(os.path.join(testSrcDir,"scenario*.xml")):
-	    		f = os.path.basename(p)
-	    		n=f[8:-4]
-	    		assert ("scenario%s.xml" % n) == f
-	    		toRun.add(n)
-
-	for name in toRun:
-		r=runScenario(options,omOptions,name)
-		retVal = r if retVal == 0 else retVal
+    
+    if options.translator:
+        retVal = startSchemaTranslator()
     else:
-	retVal = startSchemaTranslator()
-
+        if not toRun:
+            for p in glob.iglob(os.path.join(testSrcDir,"scenario*.xml")):
+                f = os.path.basename(p)
+                n=f[8:-4]
+                assert ("scenario%s.xml" % n) == f
+                toRun.add(n)
+        
+        for name in toRun:
+            r=runScenario(options,omOptions,name)
+            retVal = r if retVal == 0 else retVal
+    
     return retVal
 
 if __name__ == "__main__":
