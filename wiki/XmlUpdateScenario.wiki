@@ -8,8 +8,25 @@ If you use some scenarii working with an older schema version, you can update th
 == Build and Install ==
   
   * Building the schema translator from sources:
-    If you are already working with the openmalaria sources, then you can find the schema translator java files in util/SchemaTranslator/
-    You could also directly download the sources from this location
-
+      # Check if JDK and at least version 5 is installed. 
+          * If it's not the case, then you can download the installer [http://java.sun.com/javase/downloads/widget/jdk6.jsp, here]. 
+          * On ubuntu linux you can install de JDK with apt-get. Execute the command {{{sudo apt-get install sun-java6-jdk}}}. 
+      # Find the sources. 
+          * If you are already working with the openmalaria sources, then you can find the schema translator source files in util
+      # Build the sources.
+          * in the sources folder do {{{javac SchemaTranslator.java}}}
 
 == Usage ==
+
+You need to put the scenarios to be converted in the scenarios folder and then start the program from terminal/command line with the command {{{java SchemaTranslator}}} or if you want to start the SchemaTranslator from another location then you have to use {{{java -classpath path_to_schematranslator_folder SchemaTranslator}}}. If everything is working fine, then you should find the updated scenarios in the folder translatedScenarios.
+
+If you don't add any options, then the scenarios will be converted to the latest schema version.
+
+== Options ==
+   * --required_version XX: The version number to update the scenarios to. By default, the latest schema version will be used.
+   * --no-validation: The scenarios are converted and written without any validation against the schema
+   * --no-translation: The scenarios are not written, but still converted for validation
+   * --maxDensCorrection BOOL: Update 12->13 requires this sometimes: set true to include bug fix, false to explicitly exclude it.
+   * --iptiSpOptionWithoutInterventions: For scenarios with iptiDescription but without interventions, assume usage of the IPTI model was (t) intended or (f) a mistake.
+
+ 
