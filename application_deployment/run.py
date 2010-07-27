@@ -52,7 +52,7 @@ testTranslationDirIn = testTranslationDir + "/scenarios_to_translate"
 testTranslationDirOut = testTranslationDir + "/translated_scenarios"
 
 if not os.path.isdir(testSrcDir) or not os.path.isdir(testBuildDir):
-    print "Don't run this script directly; configure CMake then use the version in the CMake build dir."
+    print testSrcDir + " not found."
     sys.exit(-1)
 if not os.path.isfile (testCommonDir+"/scenario.xsd"):
     print "File not found (wrong CMake var?): " + testCommonDir +"/scenario.xsd"
