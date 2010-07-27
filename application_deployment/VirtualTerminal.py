@@ -24,12 +24,14 @@ import os
 import vte
 import gtk
 import time
+import signal
 
 class VirtualTerminal(vte.Terminal):
     def __init__(self, log_file = None, history_length = 5, prompt_watch = {}, prompt_auto_reply = True, icon = None):
         # Set up terminal
         vte.Terminal.__init__(self)
-
+        
+        self.pid = ''
         self.history = []
         self.history_length = history_length
         self.icon = icon
@@ -141,19 +143,37 @@ class VirtualTerminal(vte.Terminal):
         '''run_command runs the command_string in the terminal. This
         function will only return when self.thred_running is set to
         True, this is done by run_command_done_callback'''
+        
+        if not (self.pid == ''):
+            try:
+                os.kill(self.pid, signal.SIGKILL)
+            except OSError:
+                self.pid = ''
+        
         self.thread_running = True
-        spaces = ''
-        for ii in range(80 - len(command_string) - 2):
+        '''spaces = ''
+        for ii in range(250 - len(command_string) - 2):
             spaces = spaces + ' '
         self.feed('$ ' + str(command_string) + spaces)
-        self.log('$ ' + str(command_string) + spaces)
+        self.log('$ ' + str(command_string) + spaces)'''
 
         command = command_string.split(' ')
-        pid =  self.fork_command(command=command[0], argv=command, directory=os.getcwd())
+        self.pid =  self.fork_command(command=command[0], argv=command, directory=os.getcwd())
 
         while self.thread_running:
             #time.sleep(.01)
             gtk.main_iteration()
+    
+    def run_reset_callback(self, terminal):
+        if not (self.pid == ''):
+            try:
+                os.kill(self.pid, signal.SIGKILL)
+                self.feed('\r\n\033[0;32m\n The simulation has been stopped...\033[0;00m\r\n\n')
+            except OSError:
+                self.pid = ''
+        
+    def run_pause_callback(self, terminal):
+        os.waitpid(pid, options)
 
     def run_command_done_callback(self, terminal):
         '''When called this function sets the thread as done allowing

@@ -26,6 +26,7 @@ import os
 import fnmatch
 import string
 import re
+import sys
 
 from VirtualTerminal import VirtualTerminal
 
@@ -52,7 +53,7 @@ class OMFrontend:
         
         popSizeRE = re.compile('popSize="\d*"')
         popSizeString = popSizeRE.findall(pop_string)[0]
-        popSizeString = popSizeString[len('popSize="'):len(popSizeString)-2]
+        popSizeString = popSizeString[len('popSize="'):len(popSizeString)-1]
         
         sim_option_popsize.set_text(popSizeString)
         return sim_option_popsize
@@ -94,6 +95,7 @@ class OMFrontend:
     
     def destroy(self, widget, data=None):
         gtk.main_quit()
+        sys.exit()
         
     def importScenario(self, widget, data=None):
         imported_path = self.sim_import_button.get_filename()
@@ -148,6 +150,7 @@ class OMFrontend:
         self.window.connect("delete_event", self.delete_event)
         self.window.connect("destroy", self.destroy)
         self.window.set_border_width(10)
+        self.window.set_title("openMalaria Tools")
         
         #notebook
         notebook = gtk.Notebook()
@@ -232,12 +235,24 @@ class OMFrontend:
         
         #terminal output
         self.terminal = VirtualTerminal()
+        terminal_option_box = gtk.HBox(False, 2)
+        terminal_option_box.pack_start(self.terminal, True, True, 0)
+        v_sim_box.pack_start(terminal_option_box, True, True,0)
+        
+        
+        last_line_box = gtk.HBox(False, 5)
         terminal_start_button = gtk.Button("Start simulation")
         terminal_start_button.connect('clicked', self.openMalariaCommand) 
-        terminal_option_box = gtk.VBox(False, 2)
-        terminal_option_box.pack_start(self.terminal, True, True, 0)
-        terminal_option_box.pack_start(terminal_start_button, False, False, 0)
-        h_sim_box.pack_start(terminal_option_box, True, True,0)
+        terminal_stop_button = gtk.Button("Stop")
+        terminal_stop_button.connect('clicked', self.terminal.run_reset_callback)
+        terminal_pause_button = gtk.ToggleButton("Pause")
+        
+        last_line_box.pack_start(terminal_start_button, False, False, 2)
+        last_line_box.pack_start(terminal_pause_button, False, False, 2)
+        last_line_box.pack_start(terminal_stop_button, False, False, 2)
+        
+        
+        v_sim_box.pack_start(last_line_box, False, False, 0)
         
         
         #create import scenario button
@@ -280,7 +295,10 @@ class OMFrontend:
         sim_option_vbox3.show()
         sim_option_vbox4.show()
         self.terminal.show()
+        last_line_box.show()
         terminal_start_button.show()
+        terminal_stop_button.show()
+        #terminal_pause_button.show()
         terminal_option_box.show()
         v_sim_box.show()
         h_sim_box.show()
