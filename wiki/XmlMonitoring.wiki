@@ -54,7 +54,7 @@ These tables come from [http://code.google.com/p/openmalaria/source/browse/trunk
 || 18 || nIndDeaths  ||  number of deaths (indirect) ||
 || 19 || nDirDeaths  ||  number of deaths (direct) ||
 || 20 || nEPIVaccinations  ||  number of EPI vaccine doses given ||
-|| 21 || imr_summary || all cause infant mortality rate (returned as a single number over whole intervention period, instead of from a survey interval) ||
+|| 21 || allCauseIMR || all cause infant mortality rate (returned as a single number over whole intervention period, instead of from a survey interval) ||
 || 22 || nMassVaccinations  ||  number of Mass / Campaign vaccine doses given ||
 || 23 || nHospitalRecovs  ||  recoveries in hospital ||
 || 24 || nHospitalSeqs  ||  sequelae in hospital ||
