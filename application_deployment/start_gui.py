@@ -30,73 +30,68 @@ import sys
 
 from VirtualTerminal import VirtualTerminal
 
-
-class OMFrontend:
-    
-    base_folder = os.getcwd()
-    testSrcDir = base_folder + "/run_scenarios/scenarios_to_run"
+class NotebookFrame(gtk.Frame):
+    def __init__(self, frame_name, isSimulatorFrame = True):
+        gtk.Frame.__init__(self, frame_name)
+        
+        self.vertical_box = gtk.VBox(False, 10)
+        self.vertical_box.show()
+        self.lines_boxes = list()
+        
+        for i in range(3):
+            self.lines_boxes.append(gtk.HBox(False, 5))
+            self.lines_boxes[i].show() 
+        
+        self.vertical_box.pack_start(self.lines_boxes[0], False, False, 0)
+        self.vertical_box.pack_start(self.lines_boxes[1], True, True, 0)
+        self.vertical_box.pack_start(self.lines_boxes[2], False, False, 0)
+        
+        self.add(self.vertical_box)
+        
+        self.first_option = True
+        self.first_start_button = True
+        self.first_stop_button = True
+        self.first_terminal = True
+        self.first_popSize_entry = True
+        
+        self.sim_option_popsize = gtk.Entry()
+        
+        base_folder = os.getcwd()
+        
+        if(isSimulatorFrame):
+            self.run_scenarios_base = base_folder + "/run_scenarios/scenarios_to_run"
+        else:
+            self.run_scenarios_base = base_folder +"/translate_scenarios/scenarios_to_translate"
+        
+        self.isSimulatorFrame = isSimulatorFrame
     
     def get_scenarios_combobox(self):
         sim_cbox = gtk.combo_box_new_text()
-        for filename in os.listdir(self.testSrcDir):
+        for filename in os.listdir(self.run_scenarios_base):
                 if fnmatch.fnmatch(filename, "*.xml"):
                   sim_cbox.append_text(string.split(filename,"scenario")[1])
         return sim_cbox
     
-    def get_popSize_entry(self):
-        sim_option_popsize = gtk.Entry()
-        filename = 'scenario' + self.sim_cbox.get_active_text()
+    def openMalariaCommand(self, widget, data=None):
         
-        src=open(self.testSrcDir +'/'+ filename)
-        pop_string=src.read()
-        src.close()
+        self.update_popSize_scenario()
         
-        popSizeRE = re.compile('popSize="\d*"')
-        popSizeString = popSizeRE.findall(pop_string)[0]
-        popSizeString = popSizeString[len('popSize="'):len(popSizeString)-1]
+        command = './run.py '
         
-        sim_option_popsize.set_text(popSizeString)
-        return sim_option_popsize
+        command = command + string.split(self.sim_cbox.get_active_text(), '.')[0]
+        
+        for i in range(len(self.options)):
+            option = self.options[i]
+            if(option[0].get_active()):
+                command = command +' '+option[1]
+        
+            
+        self.terminal.run_command(command)
     
-    def update_popSize_entry(self, widget, data=None):
-        filename = 'scenario' + self.sim_cbox.get_active_text()
-        
-        src=open(self.testSrcDir +'/'+ filename)
-        pop_string=src.read()
-        src.close()
-        
-        popSizeRE = re.compile('popSize="\d*"')
-        popSizeString = popSizeRE.findall(pop_string)[0]
-        popSizeString = popSizeString[len('popSize="'):len(popSizeString)-1]
-        
-        self.sim_option_popsize.set_text(popSizeString)
+    def schemaTranslatorCommand(self, widget, data=None):
+        command = './run.py -t'
+        self.terminal.run_command(command)
     
-    def update_popSize_scenario(self, data=None):
-        filename = 'scenario' + self.sim_cbox.get_active_text()
-        
-        src=open(self.testSrcDir +'/'+ filename)
-        pop_string=src.read()
-        src.close()
-        
-        popSizeRE = re.compile('popSize="\d*"')
-        popSizeString = popSizeRE.findall(pop_string)[0]
-        popSizeString = popSizeString[len('popSize="'):len(popSizeString)-1]
-        
-        if not(popSizeString == self.sim_option_popsize.get_text()):
-            pop_string = popSizeRE.sub('popSize="'+self.sim_option_popsize.get_text()+'"', pop_string)
-            dest= open(self.testSrcDir +'/'+ filename, 'w')
-            dest.write(pop_string)
-            dest.close()
-        
-        
-    
-    def delete_event(self, widget, event, data=None):
-        return False
-    
-    def destroy(self, widget, data=None):
-        gtk.main_quit()
-        sys.exit()
-        
     def importScenario(self, widget, data=None):
         imported_path = self.sim_import_button.get_filename()
         imported_split = string.split(imported_path, "/")
@@ -108,7 +103,7 @@ class OMFrontend:
         
         filenames = list()
         
-        for filename in os.listdir(self.testSrcDir):
+        for filename in os.listdir(self.run_scenarios_base):
             filenames.append(filename)
             
         test_filename = imported_name
@@ -121,28 +116,170 @@ class OMFrontend:
             
         imported_name = test_filename      
     
-        dest= open(self.testSrcDir+'/'+imported_name, 'w')
+        dest= open(self.run_scenarios_base+'/'+imported_name, 'w')
         dest.write(scen_string)
         dest.close()
         
-        self.sim_cbox.append_text(string.split(imported_name, "scenario")[1])
+        if(self.isSimulatorFrame):
+            self.sim_cbox.append_text(string.split(imported_name, "scenario")[1])
+    
+    def update_popSize_scenario(self, data=None):
+        filename = 'scenario' + self.sim_cbox.get_active_text()
         
-    def openMalariaCommand(self, widget, data=None):
+        src=open(self.run_scenarios_base +'/'+ filename)
+        pop_string=src.read()
+        src.close()
         
-        self.update_popSize_scenario()
+        popSizeRE = re.compile('popSize="\d*"')
+        popSizeString = popSizeRE.findall(pop_string)[0]
+        popSizeString = popSizeString[len('popSize="'):len(popSizeString)-1]
         
-        command = './run.py '
-        
-        command = command + string.split(self.sim_cbox.get_active_text(), '.')[0]
-        
-        if(self.sim_option_livegraph.get_active()):
-            command = command + ' -l'
-        if(self.sim_option_nocleanup.get_active()):
-            command = command + ' -c'
-        if(self.sim_option_checkpoint.get_active()):
-            command = command + ' -- --checkpoint'
+        if not(popSizeString == self.sim_option_popsize.get_text()):
+            pop_string = popSizeRE.sub('popSize="'+self.sim_option_popsize.get_text()+'"', pop_string)
+            dest= open(self.run_scenarios_base +'/'+ filename, 'w')
+            dest.write(pop_string)
+            dest.close()
+    
+    def add_object(self, line_number, window_object, at_start_h=True, resize=False):
             
-        self.terminal.run_command(command)
+        if(at_start_h):
+            self.lines_boxes[line_number].pack_start(window_object, resize, resize)
+        else:
+            self.lines_boxes[line_number].pack_end(window_object, resize, resize)
+        
+        window_object.show()
+    
+    def add_terminal(self, line_number=1, at_start_h=True, resize=True):
+        if(self.first_terminal):
+            terminal_hbox = gtk.HBox(False, 2)
+            
+            self.terminal = VirtualTerminal()
+            terminal_hbox.pack_start(self.terminal, True, True, 0)
+            self.terminal.show()
+            
+            self.first_terminal = False
+            
+            self.add_object(line_number, terminal_hbox, at_start_h, resize)
+    
+    def add_option_button(self, title, option_code, at_start_h=True, line_number=0):
+        sim_option_vbox = gtk.VBox(False, 2)
+        
+        if(self.first_option):
+            sim_option_label = gtk.Label("Options")
+            self.first_option = False
+            self.options = list()
+        else:
+            sim_option_label = gtk.Label("")    
+        sim_option_label.set_alignment(0,0)
+        sim_option_label.show()
+        
+        sim_option = gtk.CheckButton(title, False)
+        sim_option.show()
+        actual_option = [sim_option, option_code]
+        self.options.append(actual_option)
+        
+        sim_option_vbox.pack_start(sim_option_label, False, False, 2)
+        sim_option_vbox.pack_start(sim_option, False, False, 2)
+        self.add_object(line_number, sim_option_vbox, at_start_h)
+    
+    def add_import_button(self, at_start_h = True, line_number=0, descr="Import scenario" , title="Import..."):
+        sim_import_vbox = gtk.VBox(False,2)
+        
+        sim_import_label = gtk.Label(descr)
+        sim_import_label.show()
+        
+        self.sim_import_button = gtk.FileChooserButton(title)
+        self.sim_import_button.connect('file-set', self.importScenario)
+        self.sim_import_button.show()
+        
+        sim_import_vbox.pack_start(sim_import_label, False, False, 2)
+        sim_import_vbox.pack_start(self.sim_import_button, False, False, 2)
+        
+        self.add_object(line_number, sim_import_vbox, at_start_h)
+    
+    def add_scenario_cbox(self, at_start_h = True, line_number=0):
+        sim_cbox_vbox = gtk.VBox(False, 2)
+        
+        sim_cbox_label = gtk.Label('Scenario')
+        sim_cbox_label.set_alignment(0,0) 
+        sim_cbox_label.show()
+        
+        self.sim_cbox = self.get_scenarios_combobox()
+        self.sim_cbox.connect('changed', self.update_popSize_entry)
+        self.sim_cbox.set_active(0)
+        self.sim_cbox.show()
+        
+        sim_cbox_vbox.pack_start(sim_cbox_label, False, False, 2)
+        sim_cbox_vbox.pack_start(self.sim_cbox, False, False, 2)
+        
+        self.add_object(line_number, sim_cbox_vbox, at_start_h)
+        
+    def update_popSize_entry(self, widget, data=None):
+        filename = 'scenario' + self.sim_cbox.get_active_text()
+            
+        src=open(self.run_scenarios_base +'/'+ filename)
+        pop_string=src.read()
+        src.close()
+        
+        popSizeRE = re.compile('popSize="\d*"')
+        popSizeString = popSizeRE.findall(pop_string)[0]
+        popSizeString = popSizeString[len('popSize="'):len(popSizeString)-1]
+        
+        self.sim_option_popsize.set_text(popSizeString)
+        
+    def add_popSize_entry(self, at_start_h = True, line_number=0):
+        if(self.first_popSize_entry):
+            
+            sim_entry_vbox = gtk.VBox(False, 2)
+
+            sim_entry_label = gtk.Label('Population Size')
+            self.update_popSize_entry
+            sim_entry_label.set_alignment(0,0)
+            sim_entry_label.show()
+            self.sim_option_popsize.show()
+            
+            sim_entry_vbox.pack_start(sim_entry_label, False, False, 2)
+            sim_entry_vbox.pack_start(self.sim_option_popsize, False, False, 2)
+            
+            self.first_popSize_entry = False
+            
+            self.add_object(line_number, sim_entry_vbox, at_start_h)     
+    
+    def add_start_button(self, at_start_h=True, cbox_line_number=0, button_line_number=2, title="Start", simulator=True):
+        if(self.first_start_button):
+            if(simulator):
+                start_button = gtk.Button(title)
+                self.start_cbox = self.add_scenario_cbox(at_start_h, cbox_line_number)
+                start_button.connect('clicked', self.openMalariaCommand)
+                self.add_object(button_line_number, start_button, at_start_h)
+            else:
+                start_button = gtk.Button(title)
+                start_button.connect('clicked', self.schemaTranslatorCommand)
+                self.add_object(button_line_number, start_button, at_start_h)
+                
+            self.first_start_button = False
+        else:
+            print("There is already an existing start button for this frame")
+            
+    
+    def add_stop_button(self, at_start_h=True, line_number=2, tite="Stop"):
+        if(self.first_stop_button):
+            terminal_stop_button = gtk.Button("Stop")
+            terminal_stop_button.connect('clicked', self.terminal.run_reset_callback)
+            self.add_object(line_number, terminal_stop_button,at_start_h)
+            self.first_stop_button = False
+        else:
+            print("There is already an existing stop button for this frame")
+
+
+class OMFrontend:
+    
+    def delete_event(self, widget, event, data=None):
+        return False
+    
+    def destroy(self, widget, data=None):
+        gtk.main_quit()
+        sys.exit()
         
         
     def __init__(self):
@@ -156,156 +293,37 @@ class OMFrontend:
         notebook = gtk.Notebook()
         notebook.set_tab_pos(gtk.POS_TOP)
         
-        openmalaria_label = gtk.Label('openMalaria')
-        openmalaria_frame = gtk.Frame('')
+        openmalaria = NotebookFrame('')
+        schemaTranslator = NotebookFrame('', False)
+        notebook.append_page(openmalaria, gtk.Label('openMalaria'))
+        notebook.append_page(schemaTranslator, gtk.Label('schemaTranslator'))
         
-        schematranslator_label = gtk.Label('schemaTranslator')
-        schematranslator_frame = gtk.Frame('')
+        openmalaria.add_import_button()
+        openmalaria.add_terminal()
+        openmalaria.add_start_button()
+        openmalaria.add_popSize_entry()
+        openmalaria.add_stop_button()
         
-        notebook.append_page(openmalaria_frame, openmalaria_label)
-        notebook.append_page(schematranslator_frame, schematranslator_label)
+        openmalaria.add_option_button('Use Livegraph', '--liveGraph')
+        openmalaria.add_option_button('Checkpointing', '-- --checkpoint')
+        openmalaria.add_option_button("Don't cleanup", '-c')
         
-        #boxes for simulator
-        v_sim_box = gtk.VBox(False, 10)
-        h_sim_box = gtk.HBox(False, 20)
-        
-        ''' 
-            first part: openMalaria simulator
-        '''
-        
-        #Scenario
-        first_line_box = gtk.HBox(False, 5)
-        
-        sim_cbox_vbox = gtk.VBox(False, 2)
-        sim_cbox_label = gtk.Label('Scenario')
-        sim_cbox_label.set_alignment(0,0) 
-        self.sim_cbox = self.get_scenarios_combobox()
-        self.sim_cbox.set_active(0)
-        sim_cbox_vbox.pack_start(sim_cbox_label, False, False, 2)
-        sim_cbox_vbox.pack_start(self.sim_cbox, False, False, 2)
-        
-        sim_import_vbox = gtk.VBox(False,2)
-        sim_import_label = gtk.Label('Import scenario')
-        self.sim_import_button = gtk.FileChooserButton('Import...')
-        self.sim_import_button.connect('file-set', self.importScenario)
-        sim_import_vbox.pack_start(sim_import_label, False, False, 2)
-        sim_import_vbox.pack_start(self.sim_import_button, False, False, 2)
-        
-        first_line_box.pack_start(sim_import_vbox, False, False, 10)
-        first_line_box.pack_start(sim_cbox_vbox, False, False, 2)
-        
-        #Options
-        
-        sim_option_vbox4 = gtk.VBox(False, 2)
-        sim_option_label4 = gtk.Label("Population Size")
-        sim_option_label4.set_alignment(0,0)
-        self.sim_option_popsize = self.get_popSize_entry()
-        self.sim_cbox.connect('changed',self.update_popSize_entry)
-        sim_option_vbox4.pack_start(sim_option_label4, False, False, 2)
-        sim_option_vbox4.pack_start(self.sim_option_popsize, False, False, 2)
-        
-        sim_option_vbox1 = gtk.VBox(False, 2)
-        sim_option_label = gtk.Label("Options")
-        sim_option_label.set_alignment(0,0)
-        self.sim_option_livegraph = gtk.CheckButton("Use Livegraph", False)
-        sim_option_vbox1.pack_start(sim_option_label, False, False, 2)
-        sim_option_vbox1.pack_start(self.sim_option_livegraph, False, False, 2)
-        
-        sim_option_vbox2 = gtk.VBox(False, 2)
-        sim_option_label2 = gtk.Label("")
-        sim_option_label2.set_alignment(0,0)
-        self.sim_option_checkpoint = gtk.CheckButton("Checkpointing", False)
-        sim_option_vbox2.pack_start(sim_option_label2, False, False, 2)
-        sim_option_vbox2.pack_start(self.sim_option_checkpoint, False, False, 2)
-        
-        sim_option_vbox3 = gtk.VBox(False, 2)
-        sim_option_label3 = gtk.Label("")
-        sim_option_label3.set_alignment(0,0)
-        self.sim_option_nocleanup = gtk.CheckButton("Don't cleanup", False)
-        sim_option_vbox3.pack_start(sim_option_label3, False, False, 2)
-        sim_option_vbox3.pack_start(self.sim_option_nocleanup, False, False, 2)
-        
-        first_line_box.pack_start(sim_option_vbox4, False, False, 2)
-        first_line_box.pack_start(sim_option_vbox1, False, False, 2)
-        first_line_box.pack_start(sim_option_vbox2, False, False, 2)
-        first_line_box.pack_start(sim_option_vbox3, False, False, 2)
-        
-        
-        v_sim_box.pack_start(first_line_box, False, False, 0)
-        
-        #terminal output
-        self.terminal = VirtualTerminal()
-        terminal_option_box = gtk.HBox(False, 2)
-        terminal_option_box.pack_start(self.terminal, True, True, 0)
-        v_sim_box.pack_start(terminal_option_box, True, True,0)
-        
-        
-        last_line_box = gtk.HBox(False, 5)
-        terminal_start_button = gtk.Button("Start simulation")
-        terminal_start_button.connect('clicked', self.openMalariaCommand) 
-        terminal_stop_button = gtk.Button("Stop")
-        terminal_stop_button.connect('clicked', self.terminal.run_reset_callback)
-        terminal_pause_button = gtk.ToggleButton("Pause")
-        
-        last_line_box.pack_start(terminal_start_button, False, False, 2)
-        last_line_box.pack_start(terminal_pause_button, False, False, 2)
-        last_line_box.pack_start(terminal_stop_button, False, False, 2)
-        
-        
-        v_sim_box.pack_start(last_line_box, False, False, 0)
-        
-        
-        #create import scenario button
-        #self.button_import = gtk.Button("Import...")
-        #import_scenario button actions
-        #self.button_import.connect("clicked", self.importScenario, None)
-        #self.button_import.connect_object("clicked", gtk.Widget.destroy, self.window)
-        v_sim_box.pack_start(h_sim_box, False, False,0)
-        
-        #add the objetcts to the frames
-        openmalaria_frame.add(v_sim_box)
         
         '''
             second part: schemaTranslator
         '''
         
+        schemaTranslator.add_import_button()
+        schemaTranslator.add_terminal()
+        schemaTranslator.add_start_button(True,0,2,"Start translation", False)
         
         #add the objects to the window
         self.window.add(notebook)
         
         #show the objects
         #sim_label.show()
-        first_line_box.show()
-        self.sim_cbox.show()
-        sim_cbox_label.show()
-        sim_cbox_vbox.show()
-        self.sim_import_button.show()
-        sim_import_label.show()
-        sim_import_vbox.show()
-        sim_option_label.show()
-        sim_option_label2.show()
-        sim_option_label3.show()
-        sim_option_label4.show()
-        self.sim_option_livegraph.show()
-        self.sim_option_checkpoint.show()
-        self.sim_option_nocleanup.show()
-        self.sim_option_popsize.show()
-        sim_option_vbox1.show()
-        sim_option_vbox2.show()
-        sim_option_vbox3.show()
-        sim_option_vbox4.show()
-        self.terminal.show()
-        last_line_box.show()
-        terminal_start_button.show()
-        terminal_stop_button.show()
-        #terminal_pause_button.show()
-        terminal_option_box.show()
-        v_sim_box.show()
-        h_sim_box.show()
-        openmalaria_label.show()
-        openmalaria_frame.show()
-        schematranslator_label.show()
-        schematranslator_frame.show()
+        openmalaria.show()
+        schemaTranslator.show()
         notebook.show()
         
         #show the window
