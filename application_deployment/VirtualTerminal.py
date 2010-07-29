@@ -26,6 +26,8 @@ import gtk
 import time
 import signal
 
+from JavaAppsRun import LiveGraphRun
+
 class VirtualTerminal(vte.Terminal):
     def __init__(self, log_file = None, history_length = 5, prompt_watch = {}, prompt_auto_reply = True, icon = None):
         # Set up terminal
@@ -139,7 +141,7 @@ class VirtualTerminal(vte.Terminal):
             else:
                 self.feed_child('Yes\n')
 
-    def run_command(self, command_string):
+    def run_command(self, command_string, simDir=os.getcwd()):
         '''run_command runs the command_string in the terminal. This
         function will only return when self.thred_running is set to
         True, this is done by run_command_done_callback'''
@@ -151,16 +153,32 @@ class VirtualTerminal(vte.Terminal):
                 self.pid = ''
         
         self.thread_running = True
-        '''spaces = ''
-        for ii in range(250 - len(command_string) - 2):
-            spaces = spaces + ' '
-        self.feed('$ ' + str(command_string) + spaces)
-        self.log('$ ' + str(command_string) + spaces)'''
-
+        
         command = command_string.split(' ')
-        self.pid =  self.fork_command(command=command[0], argv=command, directory=os.getcwd())
+        self.pid =  self.fork_command(command=command[0], argv=command, directory=simDir)
 
         while self.thread_running:
+            #time.sleep(.01)
+            gtk.main_iteration()
+    
+    def run_openmalaria_command(self, command_string, simDir, livegraph, ctsoutFile, runLiveGraph=False):
+        
+        if not (self.pid == ''):
+            try:
+                os.kill(self.pid, signal.SIGKILL)
+            except OSError:
+                self.pid = ''
+        
+        self.thread_running = True
+        
+        command = command_string.split(' ')
+        self.pid =  self.fork_command(command=command[0], argv=command, directory=simDir)
+
+        while self.thread_running:
+            if runLiveGraph:
+                    if(os.path.isfile(ctsoutFile)): 
+                        livegraph.start_liveGraph(simDir, ctsoutFile)
+                        runLiveGraph = False
             #time.sleep(.01)
             gtk.main_iteration()
     
@@ -171,6 +189,9 @@ class VirtualTerminal(vte.Terminal):
                 self.feed('\r\n\033[0;32m\n The simulation has been stopped...\033[0;00m\r\n\n')
             except OSError:
                 self.pid = ''
+    
+    def feed_command(self, info_string):
+        self.feed('\r\n'+info_string+'\r\n')
         
     def run_pause_callback(self, terminal):
         os.waitpid(pid, options)

@@ -27,8 +27,48 @@ import fnmatch
 import string
 import re
 import sys
+import tempfile
 
 from VirtualTerminal import VirtualTerminal
+from OpenMalariaRun import OpenMalariaRun
+from JavaAppsRun import SchemaTranslatorRun
+from JavaAppsRun import LiveGraphRun
+
+class ScenariosChoice(gtk.Window):
+    def __init__(self):
+        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
+        self.set_border_width(10)
+        self.scenarios_widget = gtk.FileChooserWidget()
+        
+        
+        #self.scenarios_widget.set_default_response(gtk.RESPONSE_OK)
+        base_folder = os.getcwd()
+        run_scenarios_base = base_folder + "/run_scenarios/scenarios_to_run"
+        self.scenarios_widget.set_select_multiple(True)
+        self.scenarios_widget.set_current_folder(run_scenarios_base)
+        '''list = self.scenarios_widget.get_children()
+        list = list[0].get_children()
+        list = list[0].get_children()
+        
+        for item in list:
+            print(item)'''
+        
+        '''filter = gtk.FileFilter()
+        filter.set_name("All files")
+        filter.add_pattern("*")
+        self.scenarios_widget.add_filter(filter)'''
+        
+        filter = gtk.FileFilter()
+        filter.set_name("Xml files")
+        filter.add_pattern("*.xml")
+        self.scenarios_widget.add_filter(filter)
+        
+        self.scenarios_widget.show()
+        self.set_title("Scenarios to run...")
+        self.add(self.scenarios_widget)
+    
+    def get_actual_selection(self):
+        return self.scenarios_widget.get_filenames()
 
 class NotebookFrame(gtk.Frame):
     def __init__(self, frame_name, isSimulatorFrame = True):
@@ -55,13 +95,19 @@ class NotebookFrame(gtk.Frame):
         self.first_popSize_entry = True
         
         self.sim_option_popsize = gtk.Entry()
+        self.options = list()
         
         base_folder = os.getcwd()
         
         if(isSimulatorFrame):
             self.run_scenarios_base = base_folder + "/run_scenarios/scenarios_to_run"
+            self.run_scenarios_outputs = base_folder + "/run_scenarios/outputs"
+            self.liveGraphRun = LiveGraphRun()
+            self.openMalariaRun = OpenMalariaRun()
         else:
             self.run_scenarios_base = base_folder +"/translate_scenarios/scenarios_to_translate"
+            self.schemaTranslatorRun = SchemaTranslatorRun()
+            
         
         self.isSimulatorFrame = isSimulatorFrame
     
@@ -75,21 +121,35 @@ class NotebookFrame(gtk.Frame):
     def openMalariaCommand(self, widget, data=None):
         
         self.update_popSize_scenario()
+        scenario_string = string.split(self.sim_cbox.get_active_text(), '.')[0]
         
-        command = './run.py '
         
-        command = command + string.split(self.sim_cbox.get_active_text(), '.')[0]
+        checkpointing = False
+        nocleanup = False
+        use_livegraph = False
+        
+        for i in range(len(self.options)):
+            option = self.options[i]
+            if(option[0].get_active()):
+                if(option[1]=='--liveGraph'):
+                    use_livegraph = True
+                elif(option[1]=='-- --checkpoint'):
+                    checkpointing = True
+                elif(option[1]=='-c'):
+                    nocleanup = True
+        
+        self.openMalariaRun.runScenario(self.terminal, self.liveGraphRun, scenario_string, checkpointing, nocleanup, use_livegraph)
+    
+    
+    def schemaTranslatorCommand(self, widget, data=None):
+        #command = './run.py -t'
+        command = self.schemaTranslatorRun.get_schemaTranslator_command()
         
         for i in range(len(self.options)):
             option = self.options[i]
             if(option[0].get_active()):
                 command = command +' '+option[1]
-        
-            
-        self.terminal.run_command(command)
-    
-    def schemaTranslatorCommand(self, widget, data=None):
-        command = './run.py -t'
+                  
         self.terminal.run_command(command)
     
     def importScenario(self, widget, data=None):
@@ -161,13 +221,44 @@ class NotebookFrame(gtk.Frame):
             
             self.add_object(line_number, terminal_hbox, at_start_h, resize)
     
+    def open_multiple_scenarios_dialog(self, widget, data=None):
+        dialog = gtk.FileChooserdialog("Use..",None,gtk.FILE_CHOOSER_ACTION_OPEN,(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+        dialog.set_default_response(gtk.RESPONSE_OK)
+        dialog.set_select_multiple(True)
+        
+        filter = gtk.FileFilter()
+        filter.set_name("All files")
+        filter.add_pattern("*")
+        dialog.add_filter(filter)
+        
+        filter = gtk.FileFilter()
+        filter.set_name("Xml files")
+        filter.add_pattern("*.xml")
+        dialog.add_filter(filter)
+        
+        dialog.show()        
+    
+    def add_multiple_scenarios_button(self, at_start_h = True, line_number=0, descr="Use scenarios..." , title="Use..."):
+        sim_import_vbox = gtk.VBox(False,2)
+        
+        sim_import_label = gtk.Label(descr)
+        sim_import_label.show()
+        
+        self.sim_import_button = gtk.Button(title)
+        self.sim_import_button.connect('clicked', self.open_multiple_scenarios_dialog)
+        self.sim_import_button.show()
+        
+        sim_import_vbox.pack_start(sim_import_label, False, False, 2)
+        sim_import_vbox.pack_start(self.sim_import_button, False, False, 2)
+        
+        self.add_object(line_number, sim_import_vbox, at_start_h)
+    
     def add_option_button(self, title, option_code, at_start_h=True, line_number=0):
         sim_option_vbox = gtk.VBox(False, 2)
         
         if(self.first_option):
             sim_option_label = gtk.Label("Options")
             self.first_option = False
-            self.options = list()
         else:
             sim_option_label = gtk.Label("")    
         sim_option_label.set_alignment(0,0)
@@ -299,6 +390,7 @@ class OMFrontend:
         notebook.append_page(schemaTranslator, gtk.Label('schemaTranslator'))
         
         openmalaria.add_import_button()
+        #openmalaria.add_multiple_scenarios_button()
         openmalaria.add_terminal()
         openmalaria.add_start_button()
         openmalaria.add_popSize_entry()
@@ -308,6 +400,9 @@ class OMFrontend:
         openmalaria.add_option_button('Checkpointing', '-- --checkpoint')
         openmalaria.add_option_button("Don't cleanup", '-c')
         
+        #window2 = ScenariosChoice()
+        #window2.show()
+        
         
         '''
             second part: schemaTranslator
@@ -316,6 +411,8 @@ class OMFrontend:
         schemaTranslator.add_import_button()
         schemaTranslator.add_terminal()
         schemaTranslator.add_start_button(True,0,2,"Start translation", False)
+        
+        #schemaTranslator.add_option_button('')
         
         #add the objects to the window
         self.window.add(notebook)
