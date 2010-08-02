@@ -28,11 +28,111 @@ import string
 import re
 import sys
 import tempfile
+import xml.dom
+from xml.dom.minidom import parse
+from xml.dom.minidom import Node
 
 from VirtualTerminal import VirtualTerminal
 from OpenMalariaRun import OpenMalariaRun
 from JavaAppsRun import SchemaTranslatorRun
 from JavaAppsRun import LiveGraphRun
+
+class FileViewer(gtk.Window):
+    
+    COL_NODE_NAME = 0
+    COL_NODE_VALUE = 1
+    COL_NODE_TYPE = 2
+    
+    ELEMENT_NODE = 0
+    ATTRIBUTE_NODE = 1
+    
+    def __init__(self):
+        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
+        self.set_border_width(10)
+        self.treestore = gtk.TreeStore(str, str, int)
+        
+        self.tree = gtk.TreeView(self.treestore)
+        self.scrolledWindow = gtk.ScrolledWindow()
+        self.scrolledWindow.add_with_viewport(self.tree)
+        self.scrolledWindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        
+        self.tcolumn = gtk.TreeViewColumn()
+        self.tcolumn.set_title("Scenario structure...")
+        
+        self.cell = gtk.CellRendererText()
+        self.tcolumn.pack_start(self.cell, True)
+        self.tcolumn.add_attribute(self.cell, "text", self.COL_NODE_NAME)
+        
+        self.cell_value = gtk.CellRendererText()
+        self.tcolumn.pack_start(self.cell_value, True)
+        self.tcolumn.add_attribute(self.cell_value,"text", self.COL_NODE_VALUE)
+        
+        self.tcolumn.set_cell_data_func(self.cell, self.nameCellDataFunc, None)
+        self.tcolumn.set_cell_data_func(self.cell_value, self.valuesCellDataFunc, None)
+        
+        self.tree.append_column(self.tcolumn)
+        self.add(self.scrolledWindow)
+        self.show_all()
+
+    def valuesCellDataFunc(self, column, renderer, model , iter, data):
+        node_value = model.get_value(iter, self.COL_NODE_VALUE)
+        if(node_value == None):
+            self.cell_value.set_property('editable', False)
+        else:
+            self.cell_value.set_property('editable', True)
+            self.cell_value.set_property("foreground", "blue")
+    
+    def nameCellDataFunc(self, column, renderer, model, iter, data):
+        node_type = model.get_value(iter, self.COL_NODE_TYPE)
+        self.cell.set_property('editable', False)
+        if (node_type == self.ELEMENT_NODE):   
+            self.cell.set_property('foreground',gtk.gdk.Color(red=26985, green=35723, blue=26985))
+        else:
+            self.cell.set_property('foreground', gtk.gdk.Color(red=53739, green=26985, blue=51657))
+        
+        
+    def parseFile(self, file_path):
+        self.dom = parse(file_path)
+        root = self.dom.getElementsByTagName("scenario")[0]
+        if(root.hasChildNodes()):
+            children = root.childNodes
+            self.parseFileRec(children, None)
+                
+    def parseFileRec(self, children, tree_node):
+        allchildren = list()
+        for child in children:
+            if(child.nodeType == Node.ELEMENT_NODE):
+                nodeValue = None
+                if(child.hasChildNodes() and child.childNodes[0].nodeType == Node.TEXT_NODE):
+                    nodeValue = child.childNodes[0].nodeValue
+                new_node = self.treestore.append(tree_node)
+                self.treestore.set(new_node, 
+                         self.COL_NODE_NAME, '< '+child.nodeName,
+                         self.COL_NODE_VALUE, nodeValue,
+                         self.COL_NODE_TYPE, self.ELEMENT_NODE) 
+                
+                if child.hasAttributes():
+                    attributes = child.attributes
+                    for i in range(len(attributes)):
+                        attr_node = self.treestore.append(new_node)
+                        self.treestore.set(attr_node, 
+                         self.COL_NODE_NAME, attributes.item(i).nodeName, 
+                         self.COL_NODE_VALUE, attributes.item(i).nodeValue,
+                         self.COL_NODE_TYPE, self.ATTRIBUTE_NODE)
+                    ending_node = self.treestore.append(new_node)
+                    self.treestore.set(ending_node,
+                                       self.COL_NODE_NAME, '>',
+                                       self.COL_NODE_VALUE, None,
+                                       self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                if child.hasChildNodes():
+                    self.parseFileRec(child.childNodes, new_node)
+                    
+                element_ending = self.treestore.append(new_node)
+                self.treestore.set(element_ending,
+                                   self.COL_NODE_NAME, '</ '+child.nodeName+' >',
+                                   self.COL_NODE_VALUE, None,
+                                   self.COL_NODE_TYPE, self.ELEMENT_NODE)
+             
 
 class ScenariosChoice(gtk.Window):
     def __init__(self):
@@ -40,23 +140,10 @@ class ScenariosChoice(gtk.Window):
         self.set_border_width(10)
         self.scenarios_widget = gtk.FileChooserWidget()
         
-        
-        #self.scenarios_widget.set_default_response(gtk.RESPONSE_OK)
         base_folder = os.getcwd()
         run_scenarios_base = base_folder + "/run_scenarios/scenarios_to_run"
         self.scenarios_widget.set_select_multiple(True)
         self.scenarios_widget.set_current_folder(run_scenarios_base)
-        '''list = self.scenarios_widget.get_children()
-        list = list[0].get_children()
-        list = list[0].get_children()
-        
-        for item in list:
-            print(item)'''
-        
-        '''filter = gtk.FileFilter()
-        filter.set_name("All files")
-        filter.add_pattern("*")
-        self.scenarios_widget.add_filter(filter)'''
         
         filter = gtk.FileFilter()
         filter.set_name("Xml files")
@@ -200,6 +287,14 @@ class NotebookFrame(gtk.Frame):
             dest.write(pop_string)
             dest.close()
     
+    def update_fileviewer(self, widget, data=None):
+        filename = 'scenario' + self.sim_cbox.get_active_text()
+        self.fileviewer.parseFile(self.run_scenarios_base +'/'+ filename)
+        
+            
+    def add_fileviewer(self, fileviewer):
+        self.fileviewer = fileviewer
+    
     def add_object(self, line_number, window_object, at_start_h=True, resize=False):
             
         if(at_start_h):
@@ -297,6 +392,7 @@ class NotebookFrame(gtk.Frame):
         
         self.sim_cbox = self.get_scenarios_combobox()
         self.sim_cbox.connect('changed', self.update_popSize_entry)
+        self.sim_cbox.connect('changed', self.update_fileviewer)
         self.sim_cbox.set_active(0)
         self.sim_cbox.show()
         
@@ -390,19 +486,17 @@ class OMFrontend:
         notebook.append_page(schemaTranslator, gtk.Label('schemaTranslator'))
         
         openmalaria.add_import_button()
-        #openmalaria.add_multiple_scenarios_button()
         openmalaria.add_terminal()
+        fileviewer = FileViewer()
+        openmalaria.add_fileviewer(fileviewer)
         openmalaria.add_start_button()
+        
         openmalaria.add_popSize_entry()
         openmalaria.add_stop_button()
         
         openmalaria.add_option_button('Use Livegraph', '--liveGraph')
         openmalaria.add_option_button('Checkpointing', '-- --checkpoint')
         openmalaria.add_option_button("Don't cleanup", '-c')
-        
-        #window2 = ScenariosChoice()
-        #window2.show()
-        
         
         '''
             second part: schemaTranslator
@@ -412,18 +506,12 @@ class OMFrontend:
         schemaTranslator.add_terminal()
         schemaTranslator.add_start_button(True,0,2,"Start translation", False)
         
-        #schemaTranslator.add_option_button('')
-        
-        #add the objects to the window
         self.window.add(notebook)
         
-        #show the objects
-        #sim_label.show()
         openmalaria.show()
         schemaTranslator.show()
         notebook.show()
-        
-        #show the window
+        fileviewer.show()
         self.window.show()
         
     def main(self):
