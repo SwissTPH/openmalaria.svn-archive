@@ -47,9 +47,11 @@ class FileViewer(gtk.Window):
     ATTRIBUTE_NODE = 1
     
     def __init__(self):
-        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
+        gtk.Window.__init__(self)
         self.set_border_width(10)
         self.treestore = gtk.TreeStore(str, str, int)
+        self.connect('delete-event', self.nothing)
+        self.set_title('Scenario structure ')
         
         self.tree = gtk.TreeView(self.treestore)
         self.scrolledWindow = gtk.ScrolledWindow()
@@ -57,7 +59,6 @@ class FileViewer(gtk.Window):
         self.scrolledWindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         
         self.tcolumn = gtk.TreeViewColumn()
-        self.tcolumn.set_title("Scenario structure...")
         
         self.cell = gtk.CellRendererText()
         self.tcolumn.pack_start(self.cell, True)
@@ -91,12 +92,45 @@ class FileViewer(gtk.Window):
             self.cell.set_property('foreground', gtk.gdk.Color(red=53739, green=26985, blue=51657))
         
         
-    def parseFile(self, file_path):
+    def parseFile(self, file_path, scenario_name):
+        self.tcolumn.set_title(scenario_name)
+        self.treestore.clear()
         self.dom = parse(file_path)
         root = self.dom.getElementsByTagName("scenario")[0]
-        if(root.hasChildNodes()):
-            children = root.childNodes
-            self.parseFileRec(children, None)
+        root_tree = self.treestore.append(None)
+        if(root.hasAttributes()):
+            self.treestore.set(root_tree, 
+                         self.COL_NODE_NAME, '< '+root.nodeName,
+                         self.COL_NODE_VALUE, None,
+                         self.COL_NODE_TYPE, self.ELEMENT_NODE)
+        else:
+            self.treestore.set(root_tree, 
+                         self.COL_NODE_NAME, '< '+root.nodeName + ' >',
+                         self.COL_NODE_VALUE, None,
+                         self.COL_NODE_TYPE, self.ELEMENT_NODE)
+            
+        if root.hasAttributes():
+                attributes = root.attributes
+                for i in range(len(attributes)):
+                    attr_node = self.treestore.append(root_tree)
+                    self.treestore.set(attr_node, 
+                     self.COL_NODE_NAME, attributes.item(i).nodeName, 
+                     self.COL_NODE_VALUE, attributes.item(i).nodeValue,
+                     self.COL_NODE_TYPE, self.ATTRIBUTE_NODE)
+                ending_node = self.treestore.append(root_tree)
+                self.treestore.set(ending_node,
+                                   self.COL_NODE_NAME, '>',
+                                   self.COL_NODE_VALUE, None,
+                                   self.COL_NODE_TYPE, self.ELEMENT_NODE)
+        
+        children = root.childNodes
+        self.parseFileRec(children, root_tree)
+        
+        element_ending = self.treestore.append(root_tree)
+        self.treestore.set(element_ending,
+                           self.COL_NODE_NAME, '</ '+root.nodeName+' >',
+                           self.COL_NODE_VALUE, None,
+                           self.COL_NODE_TYPE, self.ELEMENT_NODE)
                 
     def parseFileRec(self, children, tree_node):
         allchildren = list()
@@ -106,10 +140,22 @@ class FileViewer(gtk.Window):
                 if(child.hasChildNodes() and child.childNodes[0].nodeType == Node.TEXT_NODE):
                     nodeValue = child.childNodes[0].nodeValue
                 new_node = self.treestore.append(tree_node)
-                self.treestore.set(new_node, 
-                         self.COL_NODE_NAME, '< '+child.nodeName,
-                         self.COL_NODE_VALUE, nodeValue,
-                         self.COL_NODE_TYPE, self.ELEMENT_NODE) 
+                
+                if(child.hasAttributes()):
+                    self.treestore.set(new_node, 
+                             self.COL_NODE_NAME, '< '+child.nodeName,
+                             self.COL_NODE_VALUE, nodeValue,
+                             self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                elif(child.hasChildNodes()):
+                   self.treestore.set(new_node, 
+                             self.COL_NODE_NAME, '< '+child.nodeName + ' >',
+                             self.COL_NODE_VALUE, nodeValue,
+                             self.COL_NODE_TYPE, self.ELEMENT_NODE) 
+                else:
+                    self.treestore.set(new_node, 
+                             self.COL_NODE_NAME, '< '+child.nodeName + ' />',
+                             self.COL_NODE_VALUE, nodeValue,
+                             self.COL_NODE_TYPE, self.ELEMENT_NODE)  
                 
                 if child.hasAttributes():
                     attributes = child.attributes
@@ -120,18 +166,29 @@ class FileViewer(gtk.Window):
                          self.COL_NODE_VALUE, attributes.item(i).nodeValue,
                          self.COL_NODE_TYPE, self.ATTRIBUTE_NODE)
                     ending_node = self.treestore.append(new_node)
-                    self.treestore.set(ending_node,
-                                       self.COL_NODE_NAME, '>',
+                    
+                    if(child.hasChildNodes()):
+                        self.treestore.set(ending_node,
+                                           self.COL_NODE_NAME, '>',
+                                           self.COL_NODE_VALUE, None,
+                                           self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                    else:
+                        self.treestore.set(ending_node,
+                                           self.COL_NODE_NAME, '/>',
+                                           self.COL_NODE_VALUE, None,
+                                           self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                        
+                    
+                if child.hasChildNodes():
+                    self.parseFileRec(child.childNodes, new_node)  
+                    element_ending = self.treestore.append(new_node)
+                    self.treestore.set(element_ending,
+                                       self.COL_NODE_NAME, '</ '+child.nodeName+' >',
                                        self.COL_NODE_VALUE, None,
                                        self.COL_NODE_TYPE, self.ELEMENT_NODE)
-                if child.hasChildNodes():
-                    self.parseFileRec(child.childNodes, new_node)
-                    
-                element_ending = self.treestore.append(new_node)
-                self.treestore.set(element_ending,
-                                   self.COL_NODE_NAME, '</ '+child.nodeName+' >',
-                                   self.COL_NODE_VALUE, None,
-                                   self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                
+    def nothing(self, widget, data=None):
+        return True
              
 
 class ScenariosChoice(gtk.Window):
@@ -288,8 +345,10 @@ class NotebookFrame(gtk.Frame):
             dest.close()
     
     def update_fileviewer(self, widget, data=None):
-        filename = 'scenario' + self.sim_cbox.get_active_text()
-        self.fileviewer.parseFile(self.run_scenarios_base +'/'+ filename)
+        scenario_name = self.sim_cbox.get_active_text()
+        filename = 'scenario' + scenario_name
+        scenario_name = string.split(scenario_name, '.')[0]
+        self.fileviewer.parseFile(self.run_scenarios_base +'/'+ filename, scenario_name)
         
             
     def add_fileviewer(self, fileviewer):
@@ -511,6 +570,9 @@ class OMFrontend:
         openmalaria.show()
         schemaTranslator.show()
         notebook.show()
+        self.window.move(0,0)
+        fileviewer.resize(self.window.get_size()[0]/2, self.window.get_size()[1])
+        fileviewer.move(self.window.get_size()[0]+5, self.window.get_position()[1])
         fileviewer.show()
         self.window.show()
         
