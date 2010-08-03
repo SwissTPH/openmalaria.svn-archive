@@ -79,11 +79,9 @@ class OpenMalariaRun():
             shutil.copy2(src, dest)
     
     # Run, with file "scenario"+name+".xml"
-    def runScenario(self, terminal, livegraph, name, checkpointing=False, nocleanup=False, runLiveGraph=False):
+    def runScenario(self, terminal, livegraph, path, name, checkpointing=False, nocleanup=False, runLiveGraph=False):
         
-        
-        
-        scenarioSrc=os.path.join(self.testSrcDir,"scenario%s.xml" % name)
+        scenarioSrc = path
         simDir= self.testOutputsDir+"/"+name+"_"+time.strftime("%d_%b_%Y_%H%M%S")
         openMalariaExec=os.path.abspath(self.findFile (*["openMalaria","openMalaria.exe"]))
         
@@ -91,12 +89,8 @@ class OpenMalariaRun():
         if(checkpointing):
             cmd = cmd+' --checkpoint'
         
-        
-        
         os.mkdir(simDir)
-        print simDir
-        
-        #shutil.copy2(scenarioSrc, scenarioDest)
+        shutil.copy2(scenarioSrc, simDir)
         
         outputFile=os.path.join(simDir,"output.txt")
         outputGzFile=os.path.join(simDir,"output.txt.gz")
@@ -111,20 +105,13 @@ class OpenMalariaRun():
         scenario_xsd=os.path.join(simDir,"scenario.xsd")
         self.linkOrCopy (self.testCommonDir + "/scenario.xsd", scenario_xsd)
         
-        terminal.feed_command(time.strftime("\033[0;33m%a, %d %b %Y %H:%M:%S")+"\t\033[1;33mscenario%s.xml" % name)
+        terminal.feed_command(time.strftime("\033[0;33m%a, %d %b %Y %H:%M:%S")+"\t\033[1;33m%s.xml" % name)
         startTime=lastTime=time.time()
     
         while (not os.path.isfile(outputFile)):
             terminal.feed_command("\033[0;32m  "+cmd+"\033[0;00m")
             terminal.run_openmalaria_command(cmd, simDir, livegraph, ctsoutFile, runLiveGraph)
-            print cmd
             
-            
-            #if ret != 0:
-            #    print "\033[1;31mNon-zero exit status: " + str(ret)
-            #    break
-            
-            # check for output.txt.gz in place of output.txt and uncompress:
             if (os.path.isfile(outputGzFile)) and (not os.path.isfile(outputFile)):
                 f_in = gzip.open(outputGzFile, 'rb')
                 f_out = open(outputFile, 'wb')
@@ -195,11 +182,6 @@ class OpenMalariaRun():
                         os.remove(newOutput)
                 else:
                     shutil.copy2(outputFile, newOutput)'''
-                    #if options.diff:
-                    #    subprocess.call (["kdiff3",origOutput,outputFile])
-            
-            #ret=max(ret,ctsret)
-            #ident=ident and ctsident
         
         try:
             os.rmdir(simDir)

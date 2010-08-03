@@ -37,21 +37,79 @@ from OpenMalariaRun import OpenMalariaRun
 from JavaAppsRun import SchemaTranslatorRun
 from JavaAppsRun import LiveGraphRun
 
-class FileViewer(gtk.Window):
+'''
+FileViewersContainers(gtk.Window):
+Window containing all the loaded scenarios.
+Every scenario will be added in a notebook.
+'''
+class FileViewersContainer(gtk.Window):
+    
+    
+    def __init__(self):
+        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
+        self.set_border_width(10)
+        self.set_title("Scenarios")
+        self.notebook = gtk.Notebook()
+        self.notebook.set_tab_pos(gtk.POS_TOP)
+        self.connect('delete-event', self.nothing)
+        self.add(self.notebook)
+        self.show_all()
+        self.filenames = list()
+        self.names = list()
+    
+    '''
+    Add new scenarios in the container and set the filenames
+    '''    
+    def addScenarios(self, filenames):
+        only_files = list()
+        only_files_names = list()
+        for i in range(len(filenames)):
+            actual_filename = filenames[i]
+            if not(os.path.isdir(actual_filename)):
+                only_files.append(actual_filename)
+                split_filename = string.split(actual_filename, '/')
+                actual_name = split_filename[len(split_filename)-1]
+                only_files_names.append(string.split(actual_name, '.')[0])
+                actual_fileViewer = FileViewer('')
+                actual_fileViewer.parseFile(actual_filename, '')
+                self.notebook.append_page(actual_fileViewer, gtk.Label(actual_name))
+        self.filenames = only_files
+        self.names = only_files_names
+    
+    '''
+    Before a new load, the actual "fileviewers" are removed from the notebook
+    '''    
+    def removeScenarios(self):
+        for i in range(self.notebook.get_n_pages()):
+            self.notebook.remove_page(0)
+            
+    def nothing(self, widget, data=None):
+        return True
+    
+    def getActualFilenames(self):
+        return self.filenames
+    
+    def getActualNames(self):
+        return self.names
+        
+'''
+The FileViewer allows the user to see the scenarios
+as a tree representation.
+'''
+class FileViewer(gtk.Frame):
     
     COL_NODE_NAME = 0
     COL_NODE_VALUE = 1
     COL_NODE_TYPE = 2
+    COL_NODE_OBJECT = 3
     
     ELEMENT_NODE = 0
     ATTRIBUTE_NODE = 1
     
-    def __init__(self):
-        gtk.Window.__init__(self)
+    def __init__(self, frame_name):
+        gtk.Frame.__init__(self, frame_name)
         self.set_border_width(10)
-        self.treestore = gtk.TreeStore(str, str, int)
-        self.connect('delete-event', self.nothing)
-        self.set_title('Scenario structure ')
+        self.treestore = gtk.TreeStore(str, str, int, object)
         
         self.tree = gtk.TreeView(self.treestore)
         self.scrolledWindow = gtk.ScrolledWindow()
@@ -71,18 +129,47 @@ class FileViewer(gtk.Window):
         self.tcolumn.set_cell_data_func(self.cell, self.nameCellDataFunc, None)
         self.tcolumn.set_cell_data_func(self.cell_value, self.valuesCellDataFunc, None)
         
+        self.cell_value.connect('edited', self.updateCell)
+        
         self.tree.append_column(self.tcolumn)
         self.add(self.scrolledWindow)
-        self.show_all()
+        
+        self.tree.show()
+        self.scrolledWindow.show()
+        self.show()
 
+    '''
+    valuesCellDataFunc: set cell_value renderer's properties.
+    If a node hasn't got any value, then the associated cell isn't editable.
+    Otherwise the cell is editable.
+    '''
     def valuesCellDataFunc(self, column, renderer, model , iter, data):
         node_value = model.get_value(iter, self.COL_NODE_VALUE)
         if(node_value == None):
             self.cell_value.set_property('editable', False)
         else:
             self.cell_value.set_property('editable', True)
-            self.cell_value.set_property("foreground", "blue")
+            self.cell_value.set_property('foreground', 'blue')
     
+    '''
+    updateCell:
+    write the changes in the scenario file. If you edit a cell, then it'
+    s written in the corresponding scenario file.
+    '''
+    def updateCell(self, cell_renderer, path, new_value, data=None):
+        if not(path == None):
+            iter = self.treestore.get_iter(path)
+            self.treestore.set(iter, self.COL_NODE_VALUE, new_value)
+            dom_node = self.treestore.get(iter, self.COL_NODE_OBJECT)[0]
+            dom_node.nodeValue = self.treestore.get(iter, self.COL_NODE_VALUE)[0]
+            
+            dest= open(self.actual_path, 'w')
+            self.dom.writexml(dest)
+    
+    '''
+    nameCellDataFunc:
+    set node type specific foreground colors
+    '''
     def nameCellDataFunc(self, column, renderer, model, iter, data):
         node_type = model.get_value(iter, self.COL_NODE_TYPE)
         self.cell.set_property('editable', False)
@@ -91,8 +178,13 @@ class FileViewer(gtk.Window):
         else:
             self.cell.set_property('foreground', gtk.gdk.Color(red=53739, green=26985, blue=51657))
         
-        
+    '''
+    The scenario file is parsed to create the tree representation.
+    ParseFile is the initialization function. This function is followed
+    by parseFileRec which does a depth-first recursion on every nodes
+    '''    
     def parseFile(self, file_path, scenario_name):
+        self.actual_path = file_path
         self.tcolumn.set_title(scenario_name)
         self.treestore.clear()
         self.dom = parse(file_path)
@@ -102,12 +194,14 @@ class FileViewer(gtk.Window):
             self.treestore.set(root_tree, 
                          self.COL_NODE_NAME, '< '+root.nodeName,
                          self.COL_NODE_VALUE, None,
-                         self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                         self.COL_NODE_TYPE, self.ELEMENT_NODE,
+                         self.COL_NODE_OBJECT, root)
         else:
             self.treestore.set(root_tree, 
                          self.COL_NODE_NAME, '< '+root.nodeName + ' >',
                          self.COL_NODE_VALUE, None,
-                         self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                         self.COL_NODE_TYPE, self.ELEMENT_NODE,
+                         self.COL_NODE_OBJECT, root)
             
         if root.hasAttributes():
                 attributes = root.attributes
@@ -116,12 +210,14 @@ class FileViewer(gtk.Window):
                     self.treestore.set(attr_node, 
                      self.COL_NODE_NAME, attributes.item(i).nodeName, 
                      self.COL_NODE_VALUE, attributes.item(i).nodeValue,
-                     self.COL_NODE_TYPE, self.ATTRIBUTE_NODE)
+                     self.COL_NODE_TYPE, self.ATTRIBUTE_NODE,
+                     self.COL_NODE_OBJECT, attributes.item(i))
                 ending_node = self.treestore.append(root_tree)
                 self.treestore.set(ending_node,
                                    self.COL_NODE_NAME, '>',
                                    self.COL_NODE_VALUE, None,
-                                   self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                                   self.COL_NODE_TYPE, self.ELEMENT_NODE,
+                                   self.COL_NODE_OBJECT, None)
         
         children = root.childNodes
         self.parseFileRec(children, root_tree)
@@ -130,7 +226,8 @@ class FileViewer(gtk.Window):
         self.treestore.set(element_ending,
                            self.COL_NODE_NAME, '</ '+root.nodeName+' >',
                            self.COL_NODE_VALUE, None,
-                           self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                           self.COL_NODE_TYPE, self.ELEMENT_NODE,
+                           self.COL_NODE_OBJECT, None)
                 
     def parseFileRec(self, children, tree_node):
         allchildren = list()
@@ -145,17 +242,20 @@ class FileViewer(gtk.Window):
                     self.treestore.set(new_node, 
                              self.COL_NODE_NAME, '< '+child.nodeName,
                              self.COL_NODE_VALUE, nodeValue,
-                             self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                             self.COL_NODE_TYPE, self.ELEMENT_NODE,
+                             self.COL_NODE_OBJECT, child)
                 elif(child.hasChildNodes()):
                    self.treestore.set(new_node, 
                              self.COL_NODE_NAME, '< '+child.nodeName + ' >',
                              self.COL_NODE_VALUE, nodeValue,
-                             self.COL_NODE_TYPE, self.ELEMENT_NODE) 
+                             self.COL_NODE_TYPE, self.ELEMENT_NODE,
+                             self.COL_NODE_OBJECT, child) 
                 else:
                     self.treestore.set(new_node, 
                              self.COL_NODE_NAME, '< '+child.nodeName + ' />',
                              self.COL_NODE_VALUE, nodeValue,
-                             self.COL_NODE_TYPE, self.ELEMENT_NODE)  
+                             self.COL_NODE_TYPE, self.ELEMENT_NODE,
+                             self.COL_NODE_OBJECT, child)  
                 
                 if child.hasAttributes():
                     attributes = child.attributes
@@ -164,19 +264,22 @@ class FileViewer(gtk.Window):
                         self.treestore.set(attr_node, 
                          self.COL_NODE_NAME, attributes.item(i).nodeName, 
                          self.COL_NODE_VALUE, attributes.item(i).nodeValue,
-                         self.COL_NODE_TYPE, self.ATTRIBUTE_NODE)
+                         self.COL_NODE_TYPE, self.ATTRIBUTE_NODE,
+                         self.COL_NODE_OBJECT, attributes.item(i))
                     ending_node = self.treestore.append(new_node)
                     
                     if(child.hasChildNodes()):
                         self.treestore.set(ending_node,
                                            self.COL_NODE_NAME, '>',
                                            self.COL_NODE_VALUE, None,
-                                           self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                                           self.COL_NODE_TYPE, self.ELEMENT_NODE,
+                                           self.COL_NODE_OBJECT, None)
                     else:
                         self.treestore.set(ending_node,
                                            self.COL_NODE_NAME, '/>',
                                            self.COL_NODE_VALUE, None,
-                                           self.COL_NODE_TYPE, self.ELEMENT_NODE)
+                                           self.COL_NODE_TYPE, self.ELEMENT_NODE,
+                                           self.COL_NODE_OBJECT, None)
                         
                     
                 if child.hasChildNodes():
@@ -185,119 +288,66 @@ class FileViewer(gtk.Window):
                     self.treestore.set(element_ending,
                                        self.COL_NODE_NAME, '</ '+child.nodeName+' >',
                                        self.COL_NODE_VALUE, None,
-                                       self.COL_NODE_TYPE, self.ELEMENT_NODE)
-                
-    def nothing(self, widget, data=None):
-        return True
+                                       self.COL_NODE_TYPE, self.ELEMENT_NODE,
+                                       self.COL_NODE_OBJECT, None)
              
-
-class ScenariosChoice(gtk.Window):
-    def __init__(self):
-        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
+'''
+A specific FileChooserDialog:
+One or more scenario files are selected, then those are loaded in the fileviewer container as trees
+The FileChooserDialog is then closed.
+'''
+class ScenariosChoice(gtk.FileChooserDialog):
+    def __init__(self, fileviewersContainer):
+        gtk.FileChooserDialog.__init__(self, 'Scenarios to run...', None, gtk.FILE_CHOOSER_ACTION_OPEN, ('load',gtk.RESPONSE_OK))
+        
         self.set_border_width(10)
-        self.scenarios_widget = gtk.FileChooserWidget()
+        self.set_select_multiple(True)
         
         base_folder = os.getcwd()
-        run_scenarios_base = base_folder + "/run_scenarios/scenarios_to_run"
-        self.scenarios_widget.set_select_multiple(True)
-        self.scenarios_widget.set_current_folder(run_scenarios_base)
+        self.run_scenarios_base = base_folder + "/run_scenarios/scenarios_to_run"
+        self.set_current_folder(self.run_scenarios_base)
+        
+        self.fileviewersContainer = fileviewersContainer
+        self.connect('response', self.updateFileViewerContainer)
         
         filter = gtk.FileFilter()
         filter.set_name("Xml files")
         filter.add_pattern("*.xml")
-        self.scenarios_widget.add_filter(filter)
+        self.add_filter(filter)
         
-        self.scenarios_widget.show()
-        self.set_title("Scenarios to run...")
-        self.add(self.scenarios_widget)
+        self.show()
+    '''
+    updateFileViewerContainer:
+    update the FileViewerContainer when new scenarios are selected
+    and the load button has been clicked.
+    '''
+    def updateFileViewerContainer(self, widget, data=None):
+        self.fileviewersContainer.removeScenarios()
+        scenarios = self.importScenarios()
+        self.fileviewersContainer.addScenarios(scenarios)
+        self.destroy()
     
-    def get_actual_selection(self):
-        return self.scenarios_widget.get_filenames()
-
-class NotebookFrame(gtk.Frame):
-    def __init__(self, frame_name, isSimulatorFrame = True):
-        gtk.Frame.__init__(self, frame_name)
-        
-        self.vertical_box = gtk.VBox(False, 10)
-        self.vertical_box.show()
-        self.lines_boxes = list()
-        
-        for i in range(3):
-            self.lines_boxes.append(gtk.HBox(False, 5))
-            self.lines_boxes[i].show() 
-        
-        self.vertical_box.pack_start(self.lines_boxes[0], False, False, 0)
-        self.vertical_box.pack_start(self.lines_boxes[1], True, True, 0)
-        self.vertical_box.pack_start(self.lines_boxes[2], False, False, 0)
-        
-        self.add(self.vertical_box)
-        
-        self.first_option = True
-        self.first_start_button = True
-        self.first_stop_button = True
-        self.first_terminal = True
-        self.first_popSize_entry = True
-        
-        self.sim_option_popsize = gtk.Entry()
-        self.options = list()
-        
-        base_folder = os.getcwd()
-        
-        if(isSimulatorFrame):
-            self.run_scenarios_base = base_folder + "/run_scenarios/scenarios_to_run"
-            self.run_scenarios_outputs = base_folder + "/run_scenarios/outputs"
-            self.liveGraphRun = LiveGraphRun()
-            self.openMalariaRun = OpenMalariaRun()
-        else:
-            self.run_scenarios_base = base_folder +"/translate_scenarios/scenarios_to_translate"
-            self.schemaTranslatorRun = SchemaTranslatorRun()
-            
-        
-        self.isSimulatorFrame = isSimulatorFrame
+    '''
+    importScenarios:
+    if the scenarios aren't in the working directory yet, they
+    are imported in the working directory
+    '''
+    def importScenarios(self,data=None):
+        selectedFiles = self.get_filenames()
+        selectedFolder = self.get_current_folder()
+        if not (selectedFolder == self.run_scenarios_base):
+            for i in range(len(selectedFiles)):
+                selectedFiles[i] = self.importScenario(selectedFiles[i])
+                print selectedFiles[i]
+        return selectedFiles
     
-    def get_scenarios_combobox(self):
-        sim_cbox = gtk.combo_box_new_text()
-        for filename in os.listdir(self.run_scenarios_base):
-                if fnmatch.fnmatch(filename, "*.xml"):
-                  sim_cbox.append_text(string.split(filename,"scenario")[1])
-        return sim_cbox
-    
-    def openMalariaCommand(self, widget, data=None):
-        
-        self.update_popSize_scenario()
-        scenario_string = string.split(self.sim_cbox.get_active_text(), '.')[0]
-        
-        
-        checkpointing = False
-        nocleanup = False
-        use_livegraph = False
-        
-        for i in range(len(self.options)):
-            option = self.options[i]
-            if(option[0].get_active()):
-                if(option[1]=='--liveGraph'):
-                    use_livegraph = True
-                elif(option[1]=='-- --checkpoint'):
-                    checkpointing = True
-                elif(option[1]=='-c'):
-                    nocleanup = True
-        
-        self.openMalariaRun.runScenario(self.terminal, self.liveGraphRun, scenario_string, checkpointing, nocleanup, use_livegraph)
-    
-    
-    def schemaTranslatorCommand(self, widget, data=None):
-        #command = './run.py -t'
-        command = self.schemaTranslatorRun.get_schemaTranslator_command()
-        
-        for i in range(len(self.options)):
-            option = self.options[i]
-            if(option[0].get_active()):
-                command = command +' '+option[1]
-                  
-        self.terminal.run_command(command)
-    
-    def importScenario(self, widget, data=None):
-        imported_path = self.sim_import_button.get_filename()
+    '''
+    importScenario:
+    if the scenario isn't in the working directory yet, he
+    is imported in the working directory
+    '''        
+    def importScenario(self, path=None):
+        imported_path = path
         imported_split = string.split(imported_path, "/")
         imported_name = imported_split[len(imported_split)-1]
         
@@ -324,35 +374,101 @@ class NotebookFrame(gtk.Frame):
         dest.write(scen_string)
         dest.close()
         
-        if(self.isSimulatorFrame):
-            self.sim_cbox.append_text(string.split(imported_name, "scenario")[1])
-    
-    def update_popSize_scenario(self, data=None):
-        filename = 'scenario' + self.sim_cbox.get_active_text()
+        return self.run_scenarios_base + '/' + imported_name
+
+'''
+This class helps to build
+for this application standardized frames (main window)
+using three lines (top, middle, bottom).
+top line: Load buttons, option buttons
+middle line: Terminal
+bottom line: Start/Stop buttons
+'''
+class NotebookFrame(gtk.Frame):
+    def __init__(self, frame_name, isSimulatorFrame = True, fileViewerContainer = None):
+        gtk.Frame.__init__(self, frame_name)
         
-        src=open(self.run_scenarios_base +'/'+ filename)
-        pop_string=src.read()
-        src.close()
+        self.vertical_box = gtk.VBox(False, 10)
+        self.vertical_box.show()
+        self.lines_boxes = list()
         
-        popSizeRE = re.compile('popSize="\d*"')
-        popSizeString = popSizeRE.findall(pop_string)[0]
-        popSizeString = popSizeString[len('popSize="'):len(popSizeString)-1]
+        for i in range(3):
+            self.lines_boxes.append(gtk.HBox(False, 5))
+            self.lines_boxes[i].show() 
         
-        if not(popSizeString == self.sim_option_popsize.get_text()):
-            pop_string = popSizeRE.sub('popSize="'+self.sim_option_popsize.get_text()+'"', pop_string)
-            dest= open(self.run_scenarios_base +'/'+ filename, 'w')
-            dest.write(pop_string)
-            dest.close()
-    
-    def update_fileviewer(self, widget, data=None):
-        scenario_name = self.sim_cbox.get_active_text()
-        filename = 'scenario' + scenario_name
-        scenario_name = string.split(scenario_name, '.')[0]
-        self.fileviewer.parseFile(self.run_scenarios_base +'/'+ filename, scenario_name)
+        self.vertical_box.pack_start(self.lines_boxes[0], False, False, 0)
+        self.vertical_box.pack_start(self.lines_boxes[1], True, True, 0)
+        self.vertical_box.pack_start(self.lines_boxes[2], False, False, 0)
         
+        self.add(self.vertical_box)
+        
+        self.first_option = True
+        self.first_start_button = True
+        self.first_stop_button = True
+        self.first_terminal = True
+        self.first_popSize_entry = True
+        
+        self.sim_option_popsize = gtk.Entry()
+        self.options = list()
+        
+        self.fileviewerContainer = fileViewerContainer
+        
+        base_folder = os.getcwd()
+        
+        if(isSimulatorFrame):
+            self.run_scenarios_base = base_folder + "/run_scenarios/scenarios_to_run"
+            self.run_scenarios_outputs = base_folder + "/run_scenarios/outputs"
+            self.liveGraphRun = LiveGraphRun()
+            self.openMalariaRun = OpenMalariaRun()
+        else:
+            self.run_scenarios_base = base_folder +"/translate_scenarios/scenarios_to_translate"
+            self.schemaTranslatorRun = SchemaTranslatorRun()
             
-    def add_fileviewer(self, fileviewer):
-        self.fileviewer = fileviewer
+        
+        self.isSimulatorFrame = isSimulatorFrame
+    
+    def get_scenarios_combobox(self):
+        sim_cbox = gtk.combo_box_new_text()
+        for filename in os.listdir(self.run_scenarios_base):
+                if fnmatch.fnmatch(filename, "*.xml"):
+                  sim_cbox.append_text(string.split(filename,"scenario")[1])
+        return sim_cbox
+    
+    def openMalariaCommand(self, widget, data=None):
+        
+        filenames = self.fileviewerContainer.getActualFilenames()
+        names = self.fileviewerContainer.getActualNames()
+        
+        checkpointing = False
+        nocleanup = False
+        use_livegraph = False
+        
+        for i in range(len(self.options)):
+            option = self.options[i]
+            if(option[0].get_active()):
+                if(option[1]=='--liveGraph'):
+                    use_livegraph = True
+                elif(option[1]=='-- --checkpoint'):
+                    checkpointing = True
+                elif(option[1]=='-c'):
+                    nocleanup = True
+            
+        
+        for i in range(len(filenames)):
+            self.openMalariaRun.runScenario(self.terminal, self.liveGraphRun, filenames[i], names[i], checkpointing, nocleanup, use_livegraph)  
+    
+    def schemaTranslatorCommand(self, widget, data=None):
+        command = self.schemaTranslatorRun.get_schemaTranslator_command()
+        
+        for i in range(len(self.options)):
+            option = self.options[i]
+            if(option[0].get_active()):
+                command = command +' '+option[1]
+                  
+        self.terminal.run_command(command)
+    
+    def openNewDialog(self, widget, data=None):
+        self.scenarioChoice = ScenariosChoice(self.fileviewerContainer)
     
     def add_object(self, line_number, window_object, at_start_h=True, resize=False):
             
@@ -375,38 +491,6 @@ class NotebookFrame(gtk.Frame):
             
             self.add_object(line_number, terminal_hbox, at_start_h, resize)
     
-    def open_multiple_scenarios_dialog(self, widget, data=None):
-        dialog = gtk.FileChooserdialog("Use..",None,gtk.FILE_CHOOSER_ACTION_OPEN,(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-        dialog.set_default_response(gtk.RESPONSE_OK)
-        dialog.set_select_multiple(True)
-        
-        filter = gtk.FileFilter()
-        filter.set_name("All files")
-        filter.add_pattern("*")
-        dialog.add_filter(filter)
-        
-        filter = gtk.FileFilter()
-        filter.set_name("Xml files")
-        filter.add_pattern("*.xml")
-        dialog.add_filter(filter)
-        
-        dialog.show()        
-    
-    def add_multiple_scenarios_button(self, at_start_h = True, line_number=0, descr="Use scenarios..." , title="Use..."):
-        sim_import_vbox = gtk.VBox(False,2)
-        
-        sim_import_label = gtk.Label(descr)
-        sim_import_label.show()
-        
-        self.sim_import_button = gtk.Button(title)
-        self.sim_import_button.connect('clicked', self.open_multiple_scenarios_dialog)
-        self.sim_import_button.show()
-        
-        sim_import_vbox.pack_start(sim_import_label, False, False, 2)
-        sim_import_vbox.pack_start(self.sim_import_button, False, False, 2)
-        
-        self.add_object(line_number, sim_import_vbox, at_start_h)
-    
     def add_option_button(self, title, option_code, at_start_h=True, line_number=0):
         sim_option_vbox = gtk.VBox(False, 2)
         
@@ -427,14 +511,14 @@ class NotebookFrame(gtk.Frame):
         sim_option_vbox.pack_start(sim_option, False, False, 2)
         self.add_object(line_number, sim_option_vbox, at_start_h)
     
-    def add_import_button(self, at_start_h = True, line_number=0, descr="Import scenario" , title="Import..."):
+    def add_import_button(self, at_start_h = True, line_number=0, descr="Load scenarios" , title="Load..."):
         sim_import_vbox = gtk.VBox(False,2)
         
         sim_import_label = gtk.Label(descr)
         sim_import_label.show()
         
-        self.sim_import_button = gtk.FileChooserButton(title)
-        self.sim_import_button.connect('file-set', self.importScenario)
+        self.sim_import_button = gtk.Button(title)
+        self.sim_import_button.connect('clicked', self.openNewDialog)
         self.sim_import_button.show()
         
         sim_import_vbox.pack_start(sim_import_label, False, False, 2)
@@ -442,60 +526,11 @@ class NotebookFrame(gtk.Frame):
         
         self.add_object(line_number, sim_import_vbox, at_start_h)
     
-    def add_scenario_cbox(self, at_start_h = True, line_number=0):
-        sim_cbox_vbox = gtk.VBox(False, 2)
-        
-        sim_cbox_label = gtk.Label('Scenario')
-        sim_cbox_label.set_alignment(0,0) 
-        sim_cbox_label.show()
-        
-        self.sim_cbox = self.get_scenarios_combobox()
-        self.sim_cbox.connect('changed', self.update_popSize_entry)
-        self.sim_cbox.connect('changed', self.update_fileviewer)
-        self.sim_cbox.set_active(0)
-        self.sim_cbox.show()
-        
-        sim_cbox_vbox.pack_start(sim_cbox_label, False, False, 2)
-        sim_cbox_vbox.pack_start(self.sim_cbox, False, False, 2)
-        
-        self.add_object(line_number, sim_cbox_vbox, at_start_h)
-        
-    def update_popSize_entry(self, widget, data=None):
-        filename = 'scenario' + self.sim_cbox.get_active_text()
-            
-        src=open(self.run_scenarios_base +'/'+ filename)
-        pop_string=src.read()
-        src.close()
-        
-        popSizeRE = re.compile('popSize="\d*"')
-        popSizeString = popSizeRE.findall(pop_string)[0]
-        popSizeString = popSizeString[len('popSize="'):len(popSizeString)-1]
-        
-        self.sim_option_popsize.set_text(popSizeString)
-        
-    def add_popSize_entry(self, at_start_h = True, line_number=0):
-        if(self.first_popSize_entry):
-            
-            sim_entry_vbox = gtk.VBox(False, 2)
-
-            sim_entry_label = gtk.Label('Population Size')
-            self.update_popSize_entry
-            sim_entry_label.set_alignment(0,0)
-            sim_entry_label.show()
-            self.sim_option_popsize.show()
-            
-            sim_entry_vbox.pack_start(sim_entry_label, False, False, 2)
-            sim_entry_vbox.pack_start(self.sim_option_popsize, False, False, 2)
-            
-            self.first_popSize_entry = False
-            
-            self.add_object(line_number, sim_entry_vbox, at_start_h)     
-    
     def add_start_button(self, at_start_h=True, cbox_line_number=0, button_line_number=2, title="Start", simulator=True):
         if(self.first_start_button):
             if(simulator):
                 start_button = gtk.Button(title)
-                self.start_cbox = self.add_scenario_cbox(at_start_h, cbox_line_number)
+                #self.start_cbox = self.add_scenario_cbox(at_start_h, cbox_line_number)
                 start_button.connect('clicked', self.openMalariaCommand)
                 self.add_object(button_line_number, start_button, at_start_h)
             else:
@@ -517,7 +552,9 @@ class NotebookFrame(gtk.Frame):
         else:
             print("There is already an existing stop button for this frame")
 
-
+'''
+class creating the openMalaria Tools UI
+'''
 class OMFrontend:
     
     def delete_event(self, widget, event, data=None):
@@ -539,18 +576,15 @@ class OMFrontend:
         notebook = gtk.Notebook()
         notebook.set_tab_pos(gtk.POS_TOP)
         
-        openmalaria = NotebookFrame('')
+        self.fileviewersContainer = FileViewersContainer()
+        openmalaria = NotebookFrame('', True, self.fileviewersContainer)
         schemaTranslator = NotebookFrame('', False)
         notebook.append_page(openmalaria, gtk.Label('openMalaria'))
         notebook.append_page(schemaTranslator, gtk.Label('schemaTranslator'))
         
         openmalaria.add_import_button()
         openmalaria.add_terminal()
-        fileviewer = FileViewer()
-        openmalaria.add_fileviewer(fileviewer)
         openmalaria.add_start_button()
-        
-        openmalaria.add_popSize_entry()
         openmalaria.add_stop_button()
         
         openmalaria.add_option_button('Use Livegraph', '--liveGraph')
@@ -571,9 +605,9 @@ class OMFrontend:
         schemaTranslator.show()
         notebook.show()
         self.window.move(0,0)
-        fileviewer.resize(self.window.get_size()[0]/2, self.window.get_size()[1])
-        fileviewer.move(self.window.get_size()[0]+5, self.window.get_position()[1])
-        fileviewer.show()
+        self.fileviewersContainer.resize(self.window.get_size()[0]/2, self.window.get_size()[1])
+        self.fileviewersContainer.move(self.window.get_size()[0]+5, self.window.get_position()[1])
+        self.fileviewersContainer.show()
         self.window.show()
         
     def main(self):
