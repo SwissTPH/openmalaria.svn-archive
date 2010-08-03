@@ -530,7 +530,6 @@ class NotebookFrame(gtk.Frame):
         if(self.first_start_button):
             if(simulator):
                 start_button = gtk.Button(title)
-                #self.start_cbox = self.add_scenario_cbox(at_start_h, cbox_line_number)
                 start_button.connect('clicked', self.openMalariaCommand)
                 self.add_object(button_line_number, start_button, at_start_h)
             else:
@@ -572,7 +571,6 @@ class OMFrontend:
         self.window.set_border_width(10)
         self.window.set_title("openMalaria Tools")
         
-        #notebook
         notebook = gtk.Notebook()
         notebook.set_tab_pos(gtk.POS_TOP)
         
