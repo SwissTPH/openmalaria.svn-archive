@@ -34,11 +34,11 @@ The following table shows which deployment methods are available to which interv
 || Uninfect Vectors || y || n ||
 
 
-== change <something> ==
+== Change "something" ==
 
 The `changeHS` and `changeEIR` interventions replace the original description of these items.
 
-== vaccines ==
+== Vaccines ==
 
 Three vaccines; all those active are deployed simultaneously.
 
