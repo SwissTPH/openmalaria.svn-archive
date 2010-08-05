@@ -31,8 +31,6 @@ This element controls which survey measures are [OutputFiles#measures output]. (
 
 These tables come from [http://code.google.com/p/openmalaria/source/browse/trunk/include/Monitoring/Survey.h this file] in the code.
 
-=== General ===
-
 || id || measure || description ||
 ||  0 || nHost  ||  Total number of humans ||
 ||  1 || nInfect  ||  number of infected hosts  ||
@@ -64,9 +62,8 @@ These tables come from [http://code.google.com/p/openmalaria/source/browse/trunk
 || 28 || innoculationsPerDayOfYear  ||  Inoculations per human (all ages) per day of year, over the last year. ||
 || 29 || kappaPerDayOfYear  ||  Kappa (human infectiousness) weighted by availability per day-of-year for the last year. ||
 || 30 || innoculationsPerAgeGroup || The total number of inoculations per age group, summed over the reporting period. ||
-=== Vector model ===
 
-These were point-time outputs, but some (just EIR?) have been converted to output averages.
+Vector model outputs. These were point-time outputs, but some (just EIR?) have been converted to output averages.
 
 The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single values.
 
@@ -78,12 +75,11 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 35 || Vector_EIR_Input  ||  Input EIR (Expected EIR entered into scenario file) ||
 || 36 || Vector_EIR_Simulated  ||  Simulated EIR (EIR output by the vector model) ||
 
-=== `EventScheduler`-specific reporting ===
-
-Some additional parameters output by the `EventScheduler` model.
+Measures 37 and 38 were removed.
 
 || id || measure || description ||
 || 39 || Clinical_RDTs  ||  Number of Rapid Diagnostic Tests used ||
 || 40 || Clinical_DrugUsage  ||  Quantities of drugs used, per active ingredient abbreviation ||
 || 41 || Clinical_FirstDayDeaths  ||  Direct death on first day of CM (before treatment takes effect) ||
 || 42 || Clinical_HospitalFirstDayDeaths  ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
+|| 43 || nNewInfections || The number of actual infections since the last survey, per age group. ||
