@@ -4,8 +4,8 @@
 
 There are two generic methods of intervention deployment in openmalaria:
 
- * Mass-deployment campaigns. At a particular time point, this deployment method targets either the whole population or at a restricted age-range. They also have a coverage parameter. ([http://code.google.com/p/openmalaria/wiki/XmlScenario?ts=1277108255&updated=XmlScenario#Timed:_timed Configuration])
- * Age-based continuous deployment. Within the simulation's intervention period, these deploy interventions to individuals reaching a target age, given that they are determined to be within the coverage. ([XmlScenario#Continuous:_continuous Configuration])
+ * *Timed* mass-deployment campaigns. At a particular time point, this deployment method targets either the whole population or at a restricted age-range. They also have a coverage parameter. ([http://code.google.com/p/openmalaria/wiki/XmlScenario?ts=1277108255&updated=XmlScenario#Timed:_timed Configuration])
+ * Age-based *continuous* deployment. Within the simulation's intervention period, these deploy interventions to individuals reaching a target age, given that they are determined to be within the coverage. ([XmlScenario#Continuous:_continuous Configuration])
 
 In both cases, the coverage parameter describes the probability of each individual with the required age receiving the intervention, independently of interventions received previously by that individual.
 
@@ -16,25 +16,53 @@ Deployment of vaccines uses these basic methods, but is a special case. Each hum
 
 List of available interventions (TODO: document). Configuration instructions can be found [XmlScenario#Deployment_of_interventions:_interventions here].
 
+The following table shows which deployment methods are available to which interventions.
+
+|| intervention || timed || continuous || notes ||
+|| change health system || y || n ||
+|| change EIR || y || n ||
+|| vaccines || y || y || age-specific doses are not taken if already taken through a (timed) mass campaign ||
+|| Mass Drug Administration || y || n ||
+|| Intermittend Preventative Treatment (for Infants) || y || y ||
+|| Insecticide Treated Nets || y || y ||
+|| Indoor Residual Spraying || y || n ||
+|| Vector Availability || y || n ||
+|| Immune Suppression || y || n ||
+|| Larviciding || y || n ||
+|| Insert R,,0,, case || y || n ||
+|| Import Infections || y || n ||
+|| Uninfect Vectors || y || n ||
+
+
+== change <something> ==
+
+The `changeHS` and `changeEIR` interventions replace the original description of these items.
+
 == vaccines ==
 
-Three vaccines that are deployed simultaneously.
+Three vaccines; all those active are deployed simultaneously.
 
  * Blood-stage vaccine: acts as a killing factor on blood-stage parasites
  * Pre-erythrocytic vaccine: prevents a proportion of infections from commencing.
  * Transmission-blocking vaccine: one minus this scales the probability of transmission to mosquitoes
 
-== Others ==
+== Drug administration ==
 
- * ITNs
- * IPTi and IPTc
- * change HS
- * change EIR
- * MDA
- * IRS
- * VectorAvailability
- * ImmuneSuppression
- * Larviciding
- * InsertR_0Case
- * ImportedInfectionsPerThousandHosts
- * UninfectVectors
+ * MDA simply gives humans drugs. In the 5-day timestep models, these drugs are simply modelled, in that they cause full immediate clearance of parasites but have no lasting effect.
+ * IPTi and IPTc. Somewhat similar to mass drug administration, but allows drugs to have a lasting effect (5-day timestep). (There is currently no equivalent for 1-day timestep models, although it only really needs drugs correctly parameterised for the new model.)
+
+== Vector interventions ==
+
+`ITN`s, `IRS` and a theoretical `VectorAvailability` intervention may be deployed to individuals, to reduce availability of humans to mosquitoes and the chance of a mosquito surviving feeding or resting. There is currently no notion of houses or sharing interventions in the model.
+
+A larviciding intervention is currently also available, but very simple in that there is no feedback effect of reduction in the number of adult mosquitoes on the number of larvae, nor any concept of saturation. The implementation will likely be improved in the future.
+
+== Pseudo interventions ==
+
+An "intervention" importing infections allows some modelling of the stability of elimination and near-elimination scenarios: `ImportedInfectionsPerThousandHosts`.
+
+Also:
+
+ * UninfectVectors — Instantly and completely remove all infections from mosquitoes. If combining with mass drug administration to eliminate malaria from a scenario, note that humans can harbour gametocytes up to 20 days following "parasite clearance", hence vectors will need to be uninfected multiple times.
+ * ImmuneSuppression — Reset all natural immunity gained by humans to zero.
+ * InsertR_0Case — In order to estimate R,,0,,, it is desirable to eliminate malaria, suppress immunity, and prevent tertiary infections through a transmission-blocking vaccine. This intervention then chooses and infects exactly 1 host, and removes its transmission-blocking vaccine effect.
