@@ -187,8 +187,11 @@ class VirtualTerminal(vte.Terminal):
             try:
                 os.kill(self.pid, signal.SIGKILL)
                 self.feed('\r\n\033[0;32m\n The simulation has been stopped...\033[0;00m\r\n\n')
+                return True
             except OSError:
                 self.pid = ''
+                return False
+        return False
     
     def feed_command(self, info_string):
         self.feed('\r\n'+info_string+'\r\n')

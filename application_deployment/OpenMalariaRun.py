@@ -189,3 +189,4 @@ class OpenMalariaRun():
             terminal.feed_command("\033[0;31m files are in Directory %s " % simDir)
         
         terminal.feed_command("\033[0;00m")
+        return simDir
