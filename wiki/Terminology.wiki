@@ -18,10 +18,12 @@ Syntax:
 </wiki:comment>
 
 <dl>
+  <dt>Bout</dt>
+  <dd>In our 1 day time-step clinical model, we consider a *bout* of (malarial) sickness as becoming sick and recovering again.</dd>
   <dt>Component</dt>
   <dd>The simulator is divided up into several *components*: e.g. within-host, transmission, health-system. From a computing perspective these may be called _interfaces_.</dd>
   <dt>Implementation</dt>
-  <dd>Each _component_ needs at least one *implementation*, describing how the relevent processes are simulated. Logically, these can also be called _models_; unfortunately this can lead to confusion, so _implementation_ is sometimes a better term to use.</dd>
+  <dd>Each _component_ needs at least one *implementation*, describing how the relevent processes are simulated. Logically, these can also be called _models_.</dd>
   <dt>Intervention</dt>
   <dd>During the a simulation of a _scenario_, some type of *intervention* may be used, usually with the aim of reducing malaria prevelence or its costs. These _interventions_ may be deployed at a point in time (*timed* mode) or whenever humans reach a certain age (*continuous* mode).</dd>
   <dd>The deployment methods for deploying interventions in _OpenMalaria_ have also been effective to cause some other effects, leading to these effectors being named *pseudo interventions* (see [ModelInterventions#Pseudo_interventions examples]).</dd>
