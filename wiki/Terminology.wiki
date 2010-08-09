@@ -1,0 +1,39 @@
+#summary Terminology used within the project
+
+= Introduction =
+
+We provide here a glossary of terms used in the project, sometimes with special meanings.
+
+
+= Glossary =
+
+<wiki:comment>
+We define items within a <dl>...</dl> list, in alphabetical order.
+<dt>...</dt> tags introduce new items.
+<dd>...</dd> tags hold a description of the last item.
+
+Syntax:
+  Use *bold* to highlight the definition of a term.
+  Make other terms (listed here) in a description _italic_.
+</wiki:comment>
+
+<dl>
+  <dt>Component</dt>
+  <dd>The simulator is divided up into several *components*: e.g. within-host, transmission, health-system. From a computing perspective these may be called _interfaces_.</dd>
+  <dt>Implementation</dt>
+  <dd>Each _component_ needs at least one *implementation*, describing how the relevent processes are simulated. Logically, these can also be called _models_; unfortunately this can lead to confusion, so _implementation_ is sometimes a better term to use.</dd>
+  <dt>Intervention</dt>
+  <dd>During the a simulation of a _scenario_, some type of *intervention* may be used, usually with the aim of reducing malaria prevelence or its costs. These _interventions_ may be deployed at a point in time (*timed* mode) or whenever humans reach a certain age (*continuous* mode).</dd>
+  <dd>The deployment methods for deploying interventions in _OpenMalaria_ have also been effective to cause some other effects, leading to these effectors being named *pseudo interventions* (see [ModelInterventions#Pseudo_interventions examples]).</dd>
+  <dt>Model</dt>
+  <dd>The openmalaria simulator platform supports several *models*: each is a selection of options (including a choice of _implementations_) defining how _scenarios_ are simulated.</dd>
+  <dd>In the past, both _components_ and _implementations_ have been referred to as *models*.</dd>
+  <dt>OpenMalaria</dt>
+  <dd>*OpenMalaria* is the name of the C++ project and is the implementation of our simulator; i.e. the source code on this website.</dd>
+  <dt>Parameterization</dt>
+  <dd>Each _model_ has several parameters. A choice of values for each of these parameters leads to a *parameterization* of a _model_. We usually use a fitting process involving several _scenarios_ modelling field trials in order to find optimal parameterizations.</dd>
+  <dt>Scenario</dt>
+  <dd>_OpenMalaria_ takes as its input a *scenario* file describing what it should simulate. This includes a description of the _model_ and _parameterization_ to use, as well as the setting, _interventions_ to use, and other parameters relevent to the _study_.</dd>
+  <dt>Study</dt>
+  <dd><placeholder/></dd>
+</dl>
