@@ -65,4 +65,4 @@ Also:
 
  * UninfectVectors — Instantly and completely remove all infections from mosquitoes. If combining with mass drug administration to eliminate malaria from a scenario, note that humans can harbour gametocytes up to 20 days following "parasite clearance", hence vectors will need to be uninfected multiple times.
  * ImmuneSuppression — Reset all natural immunity gained by humans to zero.
- * InsertR_0Case — In order to estimate R,,0,,, it is desirable to eliminate malaria, suppress immunity, and prevent tertiary infections through a transmission-blocking vaccine. This intervention then chooses and infects exactly 1 host, and removes its transmission-blocking vaccine effect.
+ * InsertR_0Case — In order to estimate R,,0,,, it is desirable to eliminate malaria, suppress immunity, and prevent tertiary infections through a transmission-blocking vaccine. This intervention then chooses and infects exactly 1 host, gives the host an effective pre-erythrocytic vaccine to prevent self-reinfection and removes the transmission-blocking vaccine effect.
