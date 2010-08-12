@@ -37,5 +37,5 @@ Syntax:
   <dt>Scenario</dt>
   <dd>_OpenMalaria_ takes as its input a *scenario* file describing what it should simulate. This includes a description of the _model_ and _parameterization_ to use, as well as the setting, _interventions_ to use, and other parameters relevent to the _study_.</dd>
   <dt>Study</dt>
-  <dd><placeholder/></dd>
+  <dd>A simulation _study_ comprises a set of scenarios used to make a specific set of comparisons between settings or interventions.  The word _study_ is also used to refer to field studies used for parameterizing models.</dd>
 </dl>
