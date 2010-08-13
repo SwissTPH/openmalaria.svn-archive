@@ -30,34 +30,33 @@ import gzip
 import re
 
 
-from VirtualTerminal import VirtualTerminal
+#from VirtualTerminal import VirtualTerminal
+from VirtualTerminal_win import VirtualTerminal_win
 from JavaAppsRun import LiveGraphRun
 from datetime import date
+from VirtualTerminal_win import VirtualTerminal_win
 
 class OpenMalariaRun():
     
     base_folder = os.getcwd()
-    sys.path[0] = base_folder + "/application/common"
+    sys.path[0] = os.path.join(base_folder, 'application', 'common')
     import compareOutput
     import compareCtsout
     
-    testCommonDir = base_folder + "/application/common"
-    testSrcDir = base_folder + "/run_scenarios/scenarios_to_run"
-    testBuildDir = base_folder + "/application"
-    testOutputsDir = base_folder + "/run_scenarios/outputs"
-    testTranslationDir = base_folder + "/translate_scenarios"
-    testTranslationDirIn = testTranslationDir + "/scenarios_to_translate"
-    testTranslationDirOut = testTranslationDir + "/translated_scenarios"
-    
-    
-    
+    testCommonDir = os.path.join(base_folder, 'application', 'common')
+    testSrcDir = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run')
+    testBuildDir = os.path.join(base_folder,  'application')
+    testOutputsDir = os.path.join(base_folder,  'run_scenarios', 'outputs')
+    testTranslationDir = os.path.join(base_folder,  'translate_scenarios')
+    testTranslationDirIn = os.path.join(testTranslationDir,  'scenarios_to_translate')
+    testTranslationDirOut = os.path.join(testTranslationDir,  'translated_scenarios')
     
     # executable
     def findFile (self, *names):
         
         execs=set()
         for name in names:
-            path=os.path.join(os.getcwd()+"/application",name)
+            path=os.path.join(self.testBuildDir,name)
             if os.path.isfile (path):
                 execs.add (path)
         
@@ -82,7 +81,7 @@ class OpenMalariaRun():
     def runScenario(self, terminal, livegraph, path, name, checkpointing=False, nocleanup=False, runLiveGraph=False):
         
         scenarioSrc = path
-        simDir= self.testOutputsDir+"/"+name+"_"+time.strftime("%d_%b_%Y_%H%M%S")
+        simDir= os.path.join(self.testOutputsDir,name+"_"+time.strftime("%d_%b_%Y_%H%M%S"))
         openMalariaExec=os.path.abspath(self.findFile (*["openMalaria","openMalaria.exe"]))
         
         cmd= openMalariaExec+" --resource-path "+self.testCommonDir+" --scenario "+scenarioSrc
@@ -102,10 +101,11 @@ class OpenMalariaRun():
         # The schema file only needs to be copied in BOINC mode, since otherwise the
         # scenario is opened with a path and the schema can be found in the same
         # directory. We copy it anyway.
-        scenario_xsd=os.path.join(simDir,"scenario.xsd")
-        self.linkOrCopy (self.testCommonDir + "/scenario.xsd", scenario_xsd)
+        scenario_xsd=os.path.join(simDir,'scenario.xsd')
+        self.linkOrCopy (os.path.join(self.testCommonDir ,'scenario.xsd'), scenario_xsd)
         
         terminal.feed_command(time.strftime("\033[0;33m%a, %d %b %Y %H:%M:%S")+"\t\033[1;33m%s.xml" % name)
+            
         startTime=lastTime=time.time()
     
         while (not os.path.isfile(outputFile)):

@@ -32,7 +32,8 @@ import xml.dom
 from xml.dom.minidom import parse
 from xml.dom.minidom import Node
 
-from VirtualTerminal import VirtualTerminal
+#from VirtualTerminal import VirtualTerminal
+from VirtualTerminal_win import VirtualTerminal_win
 from OpenMalariaRun import OpenMalariaRun
 from JavaAppsRun import SchemaTranslatorRun
 from JavaAppsRun import LiveGraphRun
@@ -81,9 +82,9 @@ class ActualScenariosFolders(gtk.Window):
             path = self.treeview.get_path_at_pos(event.x, event.y)
             iter = self.liststore.get_iter(path[0])
             folder_path = self.liststore.get(iter, 0)[0]
-            #os.startfile(folder_path)
+            os.startfile(folder_path)
             #os.system('open "%s"' % folder_path)
-            os.system('xdg-open "%s"' % folder_path)
+            #os.system('xdg-open "%s"' % folder_path)
             
             
         
@@ -134,8 +135,8 @@ class FileViewersContainer(gtk.Window):
             actual_filename = filenames[i]
             if not(os.path.isdir(actual_filename)):
                 self.filenames.append(actual_filename)
-                split_filename = string.split(actual_filename, '/')
-                actual_name = split_filename[len(split_filename)-1]
+                head, tail = os.path.split(actual_filename)
+                actual_name = tail
                 actual_name = string.split(actual_name, '.')[0]
                 self.names.append(actual_name)
                 actual_fileViewer = FileViewer('')
@@ -395,7 +396,7 @@ class ScenariosChoice(gtk.FileChooserDialog):
         self.set_select_multiple(True)
         
         base_folder = os.getcwd()
-        self.run_scenarios_base = base_folder + "/run_scenarios/scenarios_to_run"
+        self.run_scenarios_base = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run')
         self.set_current_folder(self.run_scenarios_base)
         
         self.fileviewersContainer = fileviewersContainer
@@ -439,8 +440,8 @@ class ScenariosChoice(gtk.FileChooserDialog):
     '''        
     def importScenario(self, path=None):
         imported_path = path
-        imported_split = string.split(imported_path, "/")
-        imported_name = imported_split[len(imported_split)-1]
+        head, tail = os.path.split(path)
+        imported_name = tail
         
         src=open(imported_path)
         scen_string=src.read()
@@ -461,11 +462,11 @@ class ScenariosChoice(gtk.FileChooserDialog):
             
         imported_name = test_filename      
     
-        dest= open(self.run_scenarios_base+'/'+imported_name, 'w')
+        dest= open(os.path.join(self.run_scenarios_base,imported_name), 'w')
         dest.write(scen_string)
         dest.close()
         
-        return self.run_scenarios_base + '/' + imported_name
+        return os.path.join(self.run_scenarios_base, imported_name)
 
 '''
 This class helps to build
@@ -476,7 +477,7 @@ middle line: Terminal
 bottom line: Start/Stop buttons
 '''
 class NotebookFrame(gtk.Frame):
-    def __init__(self, frame_name, isSimulatorFrame = True, fileViewerContainer = None, actualScenariosFolders=None):
+    def __init__(self, frame_name, isWindows = False, isSimulatorFrame = True, fileViewerContainer = None, actualScenariosFolders=None):
         gtk.Frame.__init__(self, frame_name)
         
         self.vertical_box = gtk.VBox(False, 10)
@@ -498,6 +499,7 @@ class NotebookFrame(gtk.Frame):
         self.first_stop_button = True
         self.first_terminal = True
         self.first_popSize_entry = True
+        self.isWindows = isWindows
         
         self.sim_option_popsize = gtk.Entry()
         self.options = list()
@@ -508,12 +510,12 @@ class NotebookFrame(gtk.Frame):
         base_folder = os.getcwd()
         
         if(isSimulatorFrame):
-            self.run_scenarios_base = base_folder + "/run_scenarios/scenarios_to_run"
-            self.run_scenarios_outputs = base_folder + "/run_scenarios/outputs"
+            self.run_scenarios_base = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run')
+            self.run_scenarios_outputs = os.path.join(base_folder, 'run_scenarios', 'outputs')
             self.liveGraphRun = LiveGraphRun()
             self.openMalariaRun = OpenMalariaRun()
         else:
-            self.run_scenarios_base = base_folder +"/translate_scenarios/scenarios_to_translate"
+            self.run_scenarios_base = os.path.join(base_folder,'translate_scenarios', 'scenarios_to_translate')
             self.schemaTranslatorRun = SchemaTranslatorRun()
             
         
@@ -580,7 +582,11 @@ class NotebookFrame(gtk.Frame):
         if(self.first_terminal):
             terminal_hbox = gtk.HBox(False, 2)
             
-            self.terminal = VirtualTerminal()
+            if self.isWindows:
+                self.terminal = VirtualTerminal_win()
+            else:
+                self.terminal = VirtualTerminal()
+                
             terminal_hbox.pack_start(self.terminal, True, True, 0)
             self.terminal.show()
             
@@ -676,8 +682,8 @@ class OMFrontend:
         
         self.fileviewersContainer = FileViewersContainer()
         self.actualScenariosFolders = ActualScenariosFolders()
-        openmalaria = NotebookFrame('', True, self.fileviewersContainer, self.actualScenariosFolders)
-        schemaTranslator = NotebookFrame('', False)
+        openmalaria = NotebookFrame('', True, True, self.fileviewersContainer, self.actualScenariosFolders)
+        schemaTranslator = NotebookFrame('', True, False)
         notebook.append_page(openmalaria, gtk.Label('openMalaria'))
         notebook.append_page(schemaTranslator, gtk.Label('schemaTranslator'))
         
