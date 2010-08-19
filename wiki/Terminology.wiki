@@ -19,13 +19,13 @@ Syntax:
 
 <dl>
   <dt>Bout</dt>
-  <dd>In our 1 day time-step clinical model, a bout of sickness is considered to be a fever or severe illness that usually lasts no more than 5 days. When an individual recovers (or dies), that bout is considered over. </dd>
+  <dd>In our 1 day time-step clinical model, a *bout* of sickness is considered to be a fever or severe illness that usually lasts no more than 5 days. When an individual recovers (or dies), that bout is considered over. </dd>
   <dt>Event</dt> 
   <dd>In the clinical models, an occurrence without measurable duration.</dd>
   <dt>Episode</dt>
-  <dd>The health-system's reporting unit; only one malaria episode is possible in a 30-day period. Therefore, each bout is either considered the start of a new episode, or, if it occurs within 30 days of a previous bout, part of the same episode. Thus, at least in low transmission settings, an episode should roughly correspond to one malaria infection (which can cause multiple bouts). An episode's severity (non-malarial, malarial or severe) is considered to be that of its worst bout.</dd>
+  <dd>The health-system's reporting unit; only one malaria *episode* is possible in a 30-day period. Therefore, each bout is either considered the start of a new episode, or, if it occurs within 30 days of a previous bout, part of the same episode. Thus, at least in low transmission settings, an episode should roughly correspond to one malaria infection (which can cause multiple bouts). An episode's severity (non-malarial, malarial or severe) is considered to be that of its worst bout.</dd>
   <dt>Health system memory</dt>
-  <dd>The pre-determined, fixed period of time, currently set at 30 days, during which all bouts of illness are considered to be related to the same infection. The health system memory has implications for reporting and for treatment practices.</dd>
+  <dd>The pre-determined, fixed period of time, currently set at 30 days, during which all bouts of illness are considered to be related to the same infection. The *health system memory* has implications for reporting and for treatment practices.</dd>
   <dt>Severe malaria</dt>
   <dd>Clinical malaria illness that is life-threatening if left untreated.</dd>
   <dt>Non-malarial fever</dt>
