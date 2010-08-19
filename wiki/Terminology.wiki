@@ -18,9 +18,8 @@ Syntax:
 </wiki:comment>
 
 <dl>
-  <dd>In our 1 day time-step clinical model, we consider a *bout* of sickness to be a fever or severe illness that usually lasts no more than 5 days. When an individual recovers (or dies), that bout is considered over. </dd>
   <dt>Bout</dt>
-  <dd>In our 1 day time-step clinical model, a *bout* of sickness is considered to be a fever or severe illness that usually lasts no more than 5 days. When an individual recovers (or dies), that bout is considered over. </dd>
+  <dd>In our 1 day time-step clinical model, a bout of sickness is considered to be a fever or severe illness that usually lasts no more than 5 days. When an individual recovers (or dies), that bout is considered over. </dd>
   <dt>Event</dt> 
   <dd>In the clinical models, an occurrence without measurable duration.</dd>
   <dt>Episode</dt>
