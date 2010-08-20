@@ -118,7 +118,7 @@ public class SchemaTranslator {
             Element parameters = forValidation.createElement("parameters");
 
             parameters.setAttribute("latentp", "0");
-            parameters.setAttribute("delta", "0");
+//             parameters.setAttribute("delta", "0");
             parameters.setAttribute("interval", "0");
             parameters.setAttribute("iseed", "0");
             Element parameter = forValidation.createElement("parameter");
@@ -963,7 +963,7 @@ public class SchemaTranslator {
 	if (monitoring.getElementsByTagName("continuous").getLength() > 0 ){
 	    //We don't update automatically because (a) very few scenarios should
 	    //require this and (b) people may have thought it was originally timesteps anyway.
-	    System.err.println("Warning: monitoring->continuous->period changed unit from timesteps to days. Please update accordingly.");
+	    System.err.println("Warning: monitoring->continuous->period changed unit from days to timesteps. Please update accordingly.");
 	}
 	
         Element interventions = (Element) scenarioElement.getElementsByTagName(
