@@ -23,14 +23,21 @@ import os
 import re
 import subprocess
 import signal
+import threading
 
 class LiveGraphRun():
     base_folder = os.getcwd()
-    live_graph_path= base_folder+"/application/LiveGraph.1.14.Complete/LiveGraph.1.14.Complete.jar"
-    settings_file_path = base_folder +"/application/common/settings.lgdfs"
+    live_graph_path= os.path.join(base_folder,'application', 'LiveGraph.2.0.beta01.Complete', 'LiveGraph.2.0.beta01.Complete.jar')
+    settings_file_path = os.path.join(base_folder, 'application', 'common', 'settings.lgdfs')
     pid = ''
     
     def start_liveGraph(self, simPath, ctsoutPath):
+        thread = threading.Thread(group=None,target=self.start, args=(simPath, ctsoutPath))
+        thread.start()
+    
+    def start(self, simPath, ctsoutPath):
+        
+        print simPath
         
         self.quit_livegraph()
         
@@ -39,22 +46,32 @@ class LiveGraphRun():
         src.close()
         
         settingsRE = re.compile('changeEntry')
-        settings_string = settingsRE.sub(ctsoutPath, settings_string)
+        print settings_string
+        print ctsoutPath
         
-        dest= open(simPath+"/settings.lgdfs", 'w')
+        settings_string = settingsRE.sub('ctsout.txt', settings_string)
+        print settings_string
+        
+        dest= open(os.path.join(simPath,'settings.lgdfs'), 'w')
         dest.write(settings_string)
         dest.close()
         
-        self.pid = subprocess.Popen ("java -jar "+self.live_graph_path +" -dfs "+simPath+"/settings.lgdfs", shell=True).pid
+        self.pid = subprocess.Popen ("java -jar "+self.live_graph_path +" -dfs "+os.path.join(simPath, 'settings.lgdfs'), shell=True, cwd=simPath).pid
         
         print self.pid
     
     def quit_livegraph(self):
         if not (self.pid == ''):
             try:
-                os.kill(self.pid, signal.SIGKILL)
+                #os.kill(self.pid, signal.SIGKILL)
+                self.kill_win(self.pid)
             except OSError:
-                self.pid = ''    
+                self.pid = ''
+                
+    def kill_win(self,pid):
+        import win32api
+        handle = win32api.OpenProcess(1,0,pid)
+        return (0 != win32api.TerminateProcess(handle, 0))    
 
 class SchemaTranslatorRun():
     base_folder = os.getcwd()

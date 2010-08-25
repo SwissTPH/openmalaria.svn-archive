@@ -19,16 +19,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-import pygtk
-pygtk.require('2.0')
-import gtk
+import sys
 import os
+import pygtk
+if not sys.platform == 'win32':
+    pygtk.require('2.0')
+import gtk
 import fnmatch
 import string
 import re
-import sys
 import tempfile
-import xml.dom
 from xml.dom.minidom import parse
 from xml.dom.minidom import Node
 
@@ -38,12 +38,14 @@ from OpenMalariaRun import OpenMalariaRun
 from JavaAppsRun import SchemaTranslatorRun
 from JavaAppsRun import LiveGraphRun
 
+
+
 class ActualScenariosFolders(gtk.Window):
     
     def __init__(self):
         gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
         self.set_border_width(10)
-        self.set_title('Runs')
+        self.set_title('Outputs folders')
         self.connect('delete_event', self.nothing)
         self.liststore = gtk.ListStore(str, str, str)
         self.treeview = gtk.TreeView(self.liststore)
@@ -72,9 +74,11 @@ class ActualScenariosFolders(gtk.Window):
         if(self.First):
             self.show()
             self.First = False
+            NotebookFrame.enable_output_button()
                 
     
     def nothing(self, widget, data=None):
+        self.hide()
         return True
     
     def double_click(self, widget, event, data=None):
@@ -82,15 +86,17 @@ class ActualScenariosFolders(gtk.Window):
             path = self.treeview.get_path_at_pos(event.x, event.y)
             iter = self.liststore.get_iter(path[0])
             folder_path = self.liststore.get(iter, 0)[0]
-            os.startfile(folder_path)
-            #os.system('open "%s"' % folder_path)
-            #os.system('xdg-open "%s"' % folder_path)
             
-            
-        
-        
+            if sys.platform == 'win32':
+                os.startfile(folder_path)
+            elif sys.platform == 'darwin':
+                os.system('open "%s"' % folder_path)
+            else:
+                os.system('xdg-open "%s"' % folder_path)
+               
     def add_folder(self, path, name):
         self.liststore.append([path, gtk.STOCK_DIRECTORY, name])
+        self.show()
         
 
 '''
@@ -104,32 +110,51 @@ class FileViewersContainer(gtk.Window):
     def __init__(self):
         gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
         self.set_border_width(10)
-        self.set_title("Scenarios")
+        self.set_title("Editor")
         self.vbox = gtk.VBox(False, 10)
         self.notebook = gtk.Notebook()
         self.notebook.set_tab_pos(gtk.POS_TOP)
         self.connect('delete-event', self.nothing)
-        self.hbox = gtk.HBox(False,2)
-        self.button_load = gtk.Button('Load...')
-        self.button_load.connect('clicked', self.openNewDialog)
-        self.button_close = gtk.Button('close scenario')
-        self.button_close.connect('clicked', self.removeScenario)
-        self.hbox.pack_start(self.button_load, False, False, 2)
-        self.hbox.pack_start(self.button_close, False, False, 2)
         self.vbox.pack_start(self.notebook, True, True, 2)
-        self.vbox.pack_start(self.hbox, False, False, 2)
         self.add(self.vbox)
         self.show_all()
-        self.button_close.hide()
         self.filenames = list()
         self.names = list()
+        self.hide()
+        
+    def create_tab_label(self, title):
+        box = gtk.HBox(False, 0)
+        label = gtk.Label(title)
+        box.pack_start(label)
+        
+        close_image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
+        image_w, image_h = gtk.icon_size_lookup(gtk.ICON_SIZE_MENU)
+
+        close = gtk.Button()
+        close.set_relief(gtk.RELIEF_NONE)
+        close.set_focus_on_click(False)
+        close.add(close_image)
+        box.pack_start(close, False, False)
+        
+        style = gtk.RcStyle()
+        style.xthickness = 0
+        style.ythickness = 0
+        close.modify_style(style)
+
+        box.show_all()
+        
+        close.connect('clicked', self.removeScenario, label)
+        
+        return box
     
     '''
     Add new scenarios in the container and set the filenames
     '''    
     def addScenarios(self, filenames):
+        
         if(len(filenames)>0):
-            self.button_close.show()
+            self.show()
+            NotebookFrame.enable_preview_button()
             
         for i in range(len(filenames)):
             actual_filename = filenames[i]
@@ -141,7 +166,9 @@ class FileViewersContainer(gtk.Window):
                 self.names.append(actual_name)
                 actual_fileViewer = FileViewer('')
                 actual_fileViewer.parseFile(actual_filename, actual_name)
-                self.notebook.append_page(actual_fileViewer, gtk.Label(actual_name))
+                label = self.create_tab_label(actual_name)
+                self.notebook.insert_page(actual_fileViewer, label)
+                
     
     '''
     Before a new load, the actual "fileviewers" are removed from the notebook
@@ -149,16 +176,20 @@ class FileViewersContainer(gtk.Window):
     def removeScenarios(self):
         for i in range(self.notebook.get_n_pages()):
             self.notebook.remove_page(0)
+        if(self.notebook.get_n_pages()==0):
+            self.hide()
+            NotebookFrame.disable_preview_button()
     
-    def removeScenario(self, widget, data=None):
-        page = self.notebook.get_current_page()
+    def removeScenario(self, sender, widget, data=None):
+        page = self.notebook.page_num(widget)
         self.notebook.remove_page(page)
         # Need to refresh the widget -- 
         # This forces the widget to redraw itself.
         self.notebook.queue_draw_area(0,0,-1,-1)
-        if(self.notebook.get_n_pages()==0):
-            self.button_close.hide()
         self.updateFilenames()
+        if(self.notebook.get_n_pages()==0):
+            self.hide()
+            NotebookFrame.disable_preview_button()
             
     def updateFilenames(self):
         only_files = list()
@@ -169,11 +200,15 @@ class FileViewersContainer(gtk.Window):
             only_files_names.append(fileViewer.actual_name)
         self.filenames = only_files
         self.names = only_files_names
+    
+    def hasContent(self):
+        return len(self.names)>0
         
     def openNewDialog(self, widget, data=None):
         self.scenarioChoice = ScenariosChoice(self)        
             
     def nothing(self, widget, data=None):
+        self.hide()
         return True
     
     def getActualFilenames(self):
@@ -202,6 +237,7 @@ class FileViewer(gtk.Frame):
         self.treestore = gtk.TreeStore(str, str, int, object)
         
         self.tree = gtk.TreeView(self.treestore)
+        self.tree.set_headers_visible(False)
         self.scrolledWindow = gtk.ScrolledWindow()
         self.scrolledWindow.add_with_viewport(self.tree)
         self.scrolledWindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -277,9 +313,11 @@ class FileViewer(gtk.Frame):
     def parseFile(self, file_path, scenario_name):
         self.actual_path = file_path
         self.actual_name = scenario_name
+        self.actual_name = 'test'
         self.tcolumn.set_title('')
         self.treestore.clear()
-        self.dom = parse(file_path)
+        self.dom = parse("C:\\devel\\workspace\\deployment_package\\dist\\run_scenarios\\scenarios_to_run\\scenario12.xml")
+        NotebookFrame.enable_output_button()
         root = self.dom.getElementsByTagName("scenario")[0]
         root_tree = self.treestore.append(None)
         if(root.hasAttributes()):
@@ -298,13 +336,13 @@ class FileViewer(gtk.Frame):
         if root.hasAttributes():
                 attributes = root.attributes
                 for i in range(len(attributes)):
-                    attr_node = self.treestore.append(root_tree)
+                    attr_node = self.treestore.append(None)
                     self.treestore.set(attr_node, 
                      self.COL_NODE_NAME, attributes.item(i).nodeName, 
                      self.COL_NODE_VALUE, attributes.item(i).nodeValue,
                      self.COL_NODE_TYPE, self.ATTRIBUTE_NODE,
                      self.COL_NODE_OBJECT, attributes.item(i))
-                ending_node = self.treestore.append(root_tree)
+                ending_node = self.treestore.append(None)
                 self.treestore.set(ending_node,
                                    self.COL_NODE_NAME, '>',
                                    self.COL_NODE_VALUE, None,
@@ -312,9 +350,9 @@ class FileViewer(gtk.Frame):
                                    self.COL_NODE_OBJECT, None)
         
         children = root.childNodes
-        self.parseFileRec(children, root_tree)
+        self.parseFileRec(children, None)
         
-        element_ending = self.treestore.append(root_tree)
+        element_ending = self.treestore.append(None)
         self.treestore.set(element_ending,
                            self.COL_NODE_NAME, '</ '+root.nodeName+' >',
                            self.COL_NODE_VALUE, None,
@@ -477,15 +515,15 @@ middle line: Terminal
 bottom line: Start/Stop buttons
 '''
 class NotebookFrame(gtk.Frame):
+    
     def __init__(self, frame_name, isWindows = False, isSimulatorFrame = True, fileViewerContainer = None, actualScenariosFolders=None):
         gtk.Frame.__init__(self, frame_name)
-        
         self.vertical_box = gtk.VBox(False, 10)
         self.vertical_box.show()
         self.lines_boxes = list()
         
         for i in range(3):
-            self.lines_boxes.append(gtk.HBox(False, 5))
+            self.lines_boxes.append(gtk.HBox(False, 7))
             self.lines_boxes[i].show() 
         
         self.vertical_box.pack_start(self.lines_boxes[0], False, False, 0)
@@ -518,7 +556,6 @@ class NotebookFrame(gtk.Frame):
             self.run_scenarios_base = os.path.join(base_folder,'translate_scenarios', 'scenarios_to_translate')
             self.schemaTranslatorRun = SchemaTranslatorRun()
             
-        
         self.isSimulatorFrame = isSimulatorFrame
         self.stop_run = False
     
@@ -533,6 +570,8 @@ class NotebookFrame(gtk.Frame):
         
         filenames = self.fileviewerContainer.getActualFilenames()
         names = self.fileviewerContainer.getActualNames()
+        
+        self.enable_stop_button()
         
         checkpointing = False
         nocleanup = False
@@ -554,7 +593,9 @@ class NotebookFrame(gtk.Frame):
             if(self.stop_run):
                 self.stop_run = False
             else:
-                self.actualScenariosFolders.add_folder(simdir, names[i])  
+                self.actualScenariosFolders.add_folder(simdir, names[i])
+        
+        self.disable_stop_button()  
     
     def schemaTranslatorCommand(self, widget, data=None):
         command = self.schemaTranslatorRun.get_schemaTranslator_command()
@@ -594,6 +635,64 @@ class NotebookFrame(gtk.Frame):
             
             self.add_object(line_number, terminal_hbox, at_start_h, resize)
     
+    def show_fileviewercontainer(self, widget, data=None):
+        self.fileviewerContainer.show()
+    
+    def show_actualscenarios(self, widget, data=None):
+        self.actualScenariosFolders.show()
+        
+    def add_outputs_folders_button(self, at_start_h=True, line_number=0):
+        sim_output_vbox = gtk.VBox(False, 2)
+        
+        sim_output_label = gtk.Label('Outputs')
+        
+        NotebookFrame.sim_output = gtk.Button()
+        NotebookFrame.sim_output.set_image(gtk.image_new_from_stock(gtk.STOCK_DIRECTORY, gtk.ICON_SIZE_MENU))
+        
+        sim_output_vbox.pack_start(sim_output_label, False, False, 2)
+        sim_output_vbox.pack_start(NotebookFrame.sim_output, False, False, 2)
+        NotebookFrame.sim_output.set_sensitive(False)
+        sim_output_vbox.show_all()
+        
+        NotebookFrame.sim_output.connect('clicked', self.show_actualscenarios)
+        self.add_object(line_number, sim_output_vbox, at_start_h)
+        
+    @staticmethod
+    def disable_preview_button():
+        NotebookFrame.sim_preview.set_sensitive(False)
+        NotebookFrame.start_button.set_sensitive(False)
+        
+    @staticmethod    
+    def enable_preview_button():
+        NotebookFrame.sim_preview.set_sensitive(True)
+        NotebookFrame.start_button.set_sensitive(True)
+    
+    @staticmethod    
+    def enable_output_button():
+        NotebookFrame.sim_output.set_sensitive(True)
+         
+    def disable_stop_button(self):
+        self.terminal_stop_button.set_sensitive(False)
+    
+    def enable_stop_button(self):
+        self.terminal_stop_button.set_sensitive(True)
+    
+    def add_preview_button(self, at_start_h=True, line_number=0):
+        sim_preview_vbox = gtk.VBox(False, 2)
+        
+        sim_preview_label = gtk.Label('Preview & edit')
+        
+        NotebookFrame.sim_preview = gtk.Button()
+        NotebookFrame.sim_preview.set_image(gtk.image_new_from_stock(gtk.STOCK_EDIT, gtk.ICON_SIZE_MENU))
+        NotebookFrame.sim_preview.set_sensitive(False)
+        
+        sim_preview_vbox.pack_start(sim_preview_label, False, False, 2)
+        sim_preview_vbox.pack_start(NotebookFrame.sim_preview, False, False, 2)
+        sim_preview_vbox.show_all()
+        
+        NotebookFrame.sim_preview.connect('clicked', self.show_fileviewercontainer)
+        self.add_object(line_number, sim_preview_vbox, at_start_h)
+    
     def add_option_button(self, title, option_code, at_start_h=True, line_number=0):
         sim_option_vbox = gtk.VBox(False, 2)
         
@@ -632,9 +731,16 @@ class NotebookFrame(gtk.Frame):
     def add_start_button(self, at_start_h=True, cbox_line_number=0, button_line_number=2, title="Start", simulator=True):
         if(self.first_start_button):
             if(simulator):
-                start_button = gtk.Button(title)
-                start_button.connect('clicked', self.openMalariaCommand)
-                self.add_object(button_line_number, start_button, at_start_h)
+                hbox = gtk.HBox(False,2)
+                NotebookFrame.start_button = gtk.Button()
+                NotebookFrame.start_button.set_image(gtk.image_new_from_stock(gtk.STOCK_EXECUTE, gtk.ICON_SIZE_MENU))
+                hbox.pack_start(gtk.Label(title))
+                hbox.pack_start(NotebookFrame.start_button)
+                hbox.show_all()
+                NotebookFrame.start_button.set_sensitive(False)
+                NotebookFrame.start_button.connect('clicked', self.openMalariaCommand)
+                self.add_object(button_line_number, hbox, at_start_h)
+                
             else:
                 start_button = gtk.Button(title)
                 start_button.connect('clicked', self.schemaTranslatorCommand)
@@ -647,15 +753,21 @@ class NotebookFrame(gtk.Frame):
     
     def add_stop_button(self, at_start_h=True, line_number=2, tite="Stop"):
         if(self.first_stop_button):
-            terminal_stop_button = gtk.Button("Stop")
-            terminal_stop_button.connect('clicked', self.reset_callback)
-            self.add_object(line_number, terminal_stop_button,at_start_h)
+            hbox = gtk.HBox(False,2)
+            self.terminal_stop_button = gtk.Button()
+            self.terminal_stop_button.set_image(gtk.image_new_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_MENU))
+            hbox.pack_start(gtk.Label('Stop'))
+            hbox.pack_start(self.terminal_stop_button)
+            hbox.show_all()
+            self.terminal_stop_button.connect('clicked', self.reset_callback)
+            self.terminal_stop_button.set_sensitive(False)
+            self.add_object(line_number, hbox,at_start_h)
             self.first_stop_button = False
         else:
             print("There is already an existing stop button for this frame")
     
     def reset_callback(self, widget, data=None):
-        self.stop_run = self.terminal.run_reset_callback
+        self.terminal.run_reset_callback()
 
 '''
 class creating the openMalaria Tools UI
@@ -669,6 +781,14 @@ class OMFrontend:
         gtk.main_quit()
         sys.exit()
         
+    def move_window_wdeco(self, widget, event):
+        
+        if(event.x > widget.get_size()[0]-20 and event.y > widget.get_size()[1]-20):
+            #widget.begin_resize_drag(gtk.gdk.WINDOW_EDGE_SOUTH_EAST, event.button, event.x_root, event.y_root, event.time)
+            print 'bla'
+        else:
+            widget.begin_move_drag(event.button, event.x_root, event.y_root, event.time)    
+        
         
     def __init__(self):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -676,43 +796,54 @@ class OMFrontend:
         self.window.connect("destroy", self.destroy)
         self.window.set_border_width(10)
         self.window.set_title("openMalaria Tools")
+        #self.window.set_icon_from_file(os.path.join(os.getcwd(), 'application', 'common', 'stph.jpg'))
         
-        notebook = gtk.Notebook()
-        notebook.set_tab_pos(gtk.POS_TOP)
+        #notebook = gtk.Notebook()
+        #notebook.set_tab_pos(gtk.POS_TOP)
         
         self.fileviewersContainer = FileViewersContainer()
-        self.actualScenariosFolders = ActualScenariosFolders()
-        openmalaria = NotebookFrame('', True, True, self.fileviewersContainer, self.actualScenariosFolders)
-        schemaTranslator = NotebookFrame('', True, False)
-        notebook.append_page(openmalaria, gtk.Label('openMalaria'))
-        notebook.append_page(schemaTranslator, gtk.Label('schemaTranslator'))
+        #self.fileviewersContainer.add_events(gtk.gdk.BUTTON_PRESS_MASK)
+        #self.fileviewersContainer.connect("button_press_event", self.move_window_wdeco)
         
-        #openmalaria.add_import_button()
+        self.actualScenariosFolders = ActualScenariosFolders()
+        #self.actualScenariosFolders.add_events(gtk.gdk.BUTTON_PRESS_MASK)
+        #self.actualScenariosFolders.connect("button_press_event", self.move_window_wdeco)
+        openmalaria = NotebookFrame('', True, True, self.fileviewersContainer, self.actualScenariosFolders)
+       
+        #schemaTranslator = NotebookFrame('', True, False)
+        #notebook.append_page(openmalaria, gtk.Label('openMalaria'))
+        #notebook.append_page(schemaTranslator, gtk.Label('schemaTranslator'))
+        
+        openmalaria.add_import_button()
         openmalaria.add_terminal()
         openmalaria.add_start_button()
         openmalaria.add_stop_button()
+        openmalaria.add_preview_button()
+        openmalaria.add_outputs_folders_button()
         
         openmalaria.add_option_button('Use Livegraph', '--liveGraph')
         openmalaria.add_option_button('Checkpointing', '-- --checkpoint')
         openmalaria.add_option_button("Don't cleanup", '-c')
+           
         
         '''
             second part: schemaTranslator
         '''
         
-        schemaTranslator.add_import_button()
-        schemaTranslator.add_terminal()
-        schemaTranslator.add_start_button(True,0,2,"Start translation", False)
+        #schemaTranslator.add_import_button()
+        #schemaTranslator.add_terminal()
+        #schemaTranslator.add_start_button(True,0,2,"Start translation", False)
         
-        self.window.add(notebook)
+        #self.window.add(notebook)
+        self.window.add(openmalaria)
         
         openmalaria.show()
-        schemaTranslator.show()
-        notebook.show()
+        #schemaTranslator.show()
+        #notebook.show()
         self.window.move(0,0)
         self.fileviewersContainer.resize(self.window.get_size()[0]/2, self.window.get_size()[1])
         self.fileviewersContainer.move(self.window.get_size()[0]+5, self.window.get_position()[1])
-        self.fileviewersContainer.show()
+        #self.fileviewersContainer.show()
         self.actualScenariosFolders.resize(200, self.window.get_size()[1])
         self.actualScenariosFolders.move(self.window.get_size()[0]+self.fileviewersContainer.get_size()[0]+10, self.window.get_position()[1])
         self.actualScenariosFolders.hide()

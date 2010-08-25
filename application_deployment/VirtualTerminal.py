@@ -21,7 +21,7 @@
 
 # Imports
 import os
-import vte
+#import vte
 import gtk
 import time
 import signal

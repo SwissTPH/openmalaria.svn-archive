@@ -40,8 +40,8 @@ class OpenMalariaRun():
     
     base_folder = os.getcwd()
     sys.path[0] = os.path.join(base_folder, 'application', 'common')
-    import compareOutput
-    import compareCtsout
+    #import compareOutput
+    #import compareCtsout
     
     testCommonDir = os.path.join(base_folder, 'application', 'common')
     testSrcDir = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run')
@@ -84,7 +84,7 @@ class OpenMalariaRun():
         simDir= os.path.join(self.testOutputsDir,name+"_"+time.strftime("%d_%b_%Y_%H%M%S"))
         openMalariaExec=os.path.abspath(self.findFile (*["openMalaria","openMalaria.exe"]))
         
-        cmd= openMalariaExec+" --resource-path "+self.testCommonDir+" --scenario "+scenarioSrc
+        cmd= openMalariaExec+" --resource-path "+simDir+" --scenario "+scenarioSrc
         if(checkpointing):
             cmd = cmd+' --checkpoint'
         
@@ -102,14 +102,17 @@ class OpenMalariaRun():
         # scenario is opened with a path and the schema can be found in the same
         # directory. We copy it anyway.
         scenario_xsd=os.path.join(simDir,'scenario.xsd')
-        self.linkOrCopy (os.path.join(self.testCommonDir ,'scenario.xsd'), scenario_xsd)
+        shutil.copy2(os.path.join(self.testCommonDir ,'scenario.xsd'), scenario_xsd)
+        densities_csv=os.path.join(simDir, 'densities.csv')
+        shutil.copy2(os.path.join(self.testCommonDir, 'densities.csv'), densities_csv)
         
-        terminal.feed_command(time.strftime("\033[0;33m%a, %d %b %Y %H:%M:%S")+"\t\033[1;33m%s.xml" % name)
+        terminal.feed_command(time.strftime("%a, %d %b %Y %H:%M:%S")+"   %s.xml" % name, terminal.GOLD)
             
         startTime=lastTime=time.time()
     
         while (not os.path.isfile(outputFile)):
-            terminal.feed_command("\033[0;32m  "+cmd+"\033[0;00m")
+            #terminal.feed_command("\033[0;32m  "+cmd+"\033[0;00m")
+            terminal.feed_command(cmd)
             terminal.run_openmalaria_command(cmd, simDir, livegraph, ctsoutFile, runLiveGraph)
             
             if (os.path.isfile(outputGzFile)) and (not os.path.isfile(outputFile)):
@@ -136,11 +139,11 @@ class OpenMalariaRun():
             if not checkTime > lastTime:
                 break
             lastTime=checkTime	
-    
-        terminal.feed_command("\033[0;33mDone in " + str(time.time()-startTime) + " seconds")
+            
+        terminal.feed_command("Done in " + str(time.time()-startTime) + " seconds", terminal.GOLD)
         
         if not nocleanup:
-            os.remove(scenario_xsd)
+            #os.remove(scenario_xsd)
             for f in (glob.glob(os.path.join(simDir,"checkpoint*")) + glob.glob(os.path.join(simDir,"seed?")) + [os.path.join(simDir,"init_data.xml"),os.path.join(simDir,"boinc_finish_called"),os.path.join(simDir,"scenario.sum")]):
                 if os.path.isfile(f):
                     os.remove(f)
@@ -186,7 +189,7 @@ class OpenMalariaRun():
         try:
             os.rmdir(simDir)
         except OSError:
-            terminal.feed_command("\033[0;31m files are in Directory %s " % simDir)
+            terminal.feed_command("files are in Directory %s " % simDir +'\n\n')
         
-        terminal.feed_command("\033[0;00m")
+        #terminal.feed_command("\033[0;00m")
         return simDir
