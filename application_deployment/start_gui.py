@@ -316,7 +316,7 @@ class FileViewer(gtk.Frame):
         self.actual_name = 'test'
         self.tcolumn.set_title('')
         self.treestore.clear()
-        self.dom = parse("C:\\devel\\workspace\\deployment_package\\dist\\run_scenarios\\scenarios_to_run\\scenario12.xml")
+        self.dom = parse(file_path)
         NotebookFrame.enable_output_button()
         root = self.dom.getElementsByTagName("scenario")[0]
         root_tree = self.treestore.append(None)
