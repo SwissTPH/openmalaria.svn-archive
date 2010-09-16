@@ -59,7 +59,7 @@ A larviciding intervention is currently also available, but very simple in that 
 
 == Pseudo interventions ==
 
-An "intervention" importing infections allows some modelling of the stability of elimination and near-elimination scenarios: `ImportedInfectionsPerThousandHosts`.
+An "intervention" importing infections allows some modelling of the stability of elimination and near-elimination scenarios: `ImportedInfectionsPerThousandHosts`. At each time point where this "intervention" is implemented, each individual in the population has some probability of becoming infected with an imported infection. As this is a stochastic process, the actual number of imported infections at each time point varies. 
 
 Also:
 
