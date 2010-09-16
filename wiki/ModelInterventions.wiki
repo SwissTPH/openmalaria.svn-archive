@@ -42,9 +42,9 @@ The `changeHS` and `changeEIR` interventions replace the original description of
 
 Three vaccines; all those active are deployed simultaneously.
 
- * Blood-stage vaccine: acts as a killing factor on blood-stage parasites
- * Pre-erythrocytic vaccine: prevents a proportion of infections from commencing.
- * Transmission-blocking vaccine: one minus this scales the probability of transmission to mosquitoes
+ * Pre-erythrocytic vaccine (vaccineType 1): prevents a proportion of infections from commencing.
+ * Blood-stage vaccine (vaccineType 2): acts as a killing factor on blood-stage parasites
+ * Transmission-blocking vaccine (vaccineType 3): one minus this scales the probability of transmission to mosquitoes
 
 == Drug administration ==
 
