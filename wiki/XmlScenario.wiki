@@ -69,9 +69,14 @@ The `anopheles` element, if used, should be listed for each mosquito species (us
 
 === Continuous: `continuous` ===
 
-Interventions with continuous deployment are described by a `continuous` element. This accepts sub-elements `vaccine`, `ITN` and `ipti` (see descriptions above); these may occur more than once. (They must be listed in order of type; that is all `vaccine` elements before any `ITN` elements, etc.)
+Interventions with continuous deployment are described by a `continuous` element. This accepts sub-elements `vaccine`, `ITN` and `ipti` (see descriptions above); these may occur more than once. (They must be listed in order of type; that is all `vaccine` elements before any `ITN` elements, etc.) Each has the same type with the following attributes:
 
-Each of these has the same type: a `targetAgeYrs` attribute and a `coverage` attribute. Every individual has a probability (equal to `coverage`) of receiving this intervention when they reach age `targetAgeYrs` in years (need not be an integer).   
+|| `targetAgeYrs` || Intervention has a chance of being given to the human at this exact point of age. ||
+|| `coverage` || Chance of human recieving intervention at given point of age. ||
+|| `begin` || First timestep at which this item becomes active (defaults to 0, the start of the intervention period). ||
+|| `end` || First timestep at which this item becomes deactive (defaults to the maximum value for an int, 2^31^-1). ||
+
+Multiple elements may be used for each intervention, e.g. to administer at several time points or make the intervention active for multiple independant time periods (if end-time = begin-time for two items, they meet with no overlap).
 
 === Timed: `timed` ===
 
