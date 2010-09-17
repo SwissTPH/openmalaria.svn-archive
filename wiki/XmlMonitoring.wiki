@@ -87,8 +87,6 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 34 || Vector_Sv  || n ||  Number of infectious mosquitoes ||
 || 35 || Vector_EIR_Input  || n ||  Input EIR (Expected EIR entered into scenario file) ||
 || 36 || Vector_EIR_Simulated  || n ||  Simulated EIR (EIR output by the vector model) ||
-
-|| id || measure || cohort || description ||
 || 37 || || || (removed) ||
 || 38 || || || (removed) ||
 || 39 || Clinical_RDTs  || n ||  Number of Rapid Diagnostic Tests used ||
@@ -96,3 +94,8 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 41 || Clinical_FirstDayDeaths  || n ||  Direct death on first day of CM (before treatment takes effect) ||
 || 42 || Clinical_HospitalFirstDayDeaths  || n ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
 || 43 || nNewInfections || y || The number of actual infections since the last survey, per age group. ||
+|| 44 || nMassITNs || n || The number of ITNs delivered by mass distribution since last survey. ||
+|| 45 || nEPI_ITNs || n || The number of ITNs delivered through EPI since last survey. ||
+|| 46 || nMassIRS || n || The number of people newly protected by IRS since last survey. ||
+|| 47 || nMassVA || n || The number of people newly protected by a vector-availability intervention since the last survey. ||
+|| 48 || Clinical_Microscopy  || n ||  Number of microscopy tests used ||
