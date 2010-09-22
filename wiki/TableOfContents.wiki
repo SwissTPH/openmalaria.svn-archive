@@ -6,10 +6,10 @@
      * [Binaries Pre-compiled binaries]
      * [UtilsWindows Useful utilities on Windows]
   * *[XmlScenario Inputs: creating a scenario]*
-     * [XmlMonitoring Monitoring measures]
      * [XmlEntoVector Vector-transmission parameters]
      * [XmlUpdateScenario Updating schema version]
   * *[OutputFiles Outputs: interpreting results]*
+     * [XmlMonitoring Monitoring measures]
      * LiveGraph
   * [Terminology]
 
