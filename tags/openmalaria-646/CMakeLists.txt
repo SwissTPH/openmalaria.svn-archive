@@ -180,8 +180,6 @@ target_link_libraries (openMalaria
   ${Z_LIBRARIES}
   ${PTHREAD_LIBRARIES}
   ${BOINC_LIBRARIES}
-  Empirical
-  Cohort
 )
 
 if (MSVC)
