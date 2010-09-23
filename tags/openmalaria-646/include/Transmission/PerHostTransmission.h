@@ -118,8 +118,8 @@ public:
     return _relativeAvailabilityHet;
   }
   
-  /** Set true to remove human from transmission. Must set true again to restore
-   * transmission. */
+  /** Set true to remove human from transmission. Must set back to false
+   * to restore transmission. */
   inline void removeFromTransmission (bool s){
       outsideTransmission = s;
   }
@@ -142,6 +142,7 @@ public:
   void operator& (S& stream) {
       species & stream;
       _relativeAvailabilityHet & stream;
+      outsideTransmission & stream;
       timestepITN & stream;
       timestepIRS & stream;
       timestepVA & stream;
