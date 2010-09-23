@@ -20,14 +20,35 @@ http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier.png
 
 <wiki:comment>
 Above image rendered as latex from:
-{{{ \Xi_t = \exp \left( a_0 + \sum_{n=1}^2 \left[ a_n \cos \left(n (w t - theta) \right) + b_n \sin \left(n (w t - theta) \right) \right] \right) }}}
+{{{ \Xi_t = \exp \left( a_0 + \sum_{n=1}^2 \left[ a_n \cos \left(n (w t - \theta) \right) + b_n \sin \left(n (w t - \theta) \right) \right] \right) }}}
+(Use, for example, [http://sciencesoft.at/latex/?lang=en] with the AMS maths formula template.)
 
 MathML version (not so nice and less compatible):
 <wiki:gadget url="http://mathml-gadget.googlecode.com/svn/trunk/mathml-gadget.xml" border="0" up_content="eir_t = exp ( a_0 + sum_(n=1)^2 { a_n cos(n (w t - theta)) + b_n sin(n (w t - theta)) } )"/>
 
 (Formula uses MathML. For IE, a [http://www.dessci.com/en/products/mathplayer/ plugin] is needed.)</wiki:comment>
 
-Here, `Ξ_t` is the number of innoculations per person per day, where `t` is the day of year (from 0 to 364), `w = 2π / 365`, `θ` is the `EIRRotateAngle` attribute and `a_0` - `a_2`, `b_1` - `b_2` are the corresponding attributes of the `eir` element.
+Here, Ξ,,t,, is the number of innoculations per person per day, where `t` is the day of year (from 0 to 364), `w = 2π / 365`, `θ` is the `EIRRotateAngle` attribute and a,,0,, to a,,2,,, b,,1,, and b,,2,, are the corresponding attributes of the `eir` element.
+
+If we introduce the function `f(t)` dependent on a,,n,, and b,,n,, for n≥1, we can reformulate Ξ,,t,, as
+
+http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier_f.png
+<wiki:comment>
+\begin{align*}
+\Xi_t &= e^{a_0 + f(t)} \\
+      &= e^{a_0} + e^{f(t)}
+\end{align*}
+</wiki:comment>
+
+and thus show that the annual EIR is scaled by a,,0,,:
+
+http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier_annual.png
+<wiki:comment>
+\begin{align*}
+\Xi &= \int_{t=0}^{365} e^{a_0} e^{f(t)} dt \\
+    &= e^{a_0} \int_{t=0}^{365} e^{f(t)} dt
+\end{align*}
+</wiki:comment>
 
 === Mosquito lifecycle and human-interaction parameters ===
 
