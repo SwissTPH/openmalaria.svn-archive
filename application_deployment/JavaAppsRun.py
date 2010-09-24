@@ -24,21 +24,78 @@ import re
 import subprocess
 import signal
 import threading
+import ctypes
 
+class ExperimentCreatorRun():
+    base_folder = os.getcwd()
+    experiment_creator_path = os.path.join(base_folder, 'application', 'experiment_creator', 'experiment_creator.jar')
+    pid = ''
+    
+    def start_experimentCreator(self, input_path, output_path, seeds_nr = 0):
+        thread = threading.Thread(group=None, target=self.start, args=(input_path, output_path, seeds_nr))
+        thread.start()
+        
+    def start(self, input_path, output_path, seeds_nr):
+        arglist = list()
+        arglist.append('java')
+        arglist.append('-jar')
+        arglist.append(self.experiment_creator_path)
+        
+        if seeds_nr > 0:
+            arglist.append('--seeds')
+            arglist.append(seeds_nr)
+            
+        arglist.append('--no-validation')
+            
+        arglist.append(input_path)
+        arglist.append(output_path)
+        
+        print "c'est parti!"
+        
+        self.pid = subprocess.Popen (arglist).pid
+        
+        print "c'est fini"
+    
+    '''quit_experimentCreator:
+    Close the experimentCreator subprocess'''
+    def quit_experimentCreator(self):
+        if not (self.pid == ''):
+            try:
+                #os.kill(self.pid, signal.SIGKILL)
+                self.kill_win(self.pid)
+            except OSError:
+                self.pid = ''
+    
+    '''kill_win: 
+    Windows specific subprocess killing method'''
+    def kill_win(self,pid):
+        kernel32 = ctypes.windll.kernel32
+        handle = kernel32.OpenProcess(1, 0, pid)
+        return (0 != kernel32.TerminateProcess(handle, 0)) 
+        
+
+'''
+LiveGraphRun:
+Helper class for starting a third party program
+called LiveGraph. This program allows the user to
+monitor the evolution of openmalaria's parameters''' 
 class LiveGraphRun():
     base_folder = os.getcwd()
     live_graph_path= os.path.join(base_folder,'application', 'LiveGraph.2.0.beta01.Complete', 'LiveGraph.2.0.beta01.Complete.jar')
     settings_file_path = os.path.join(base_folder, 'application', 'common', 'settings.lgdfs')
     pid = ''
     
+    '''
+    start_livegraph:
+    Starts the liveGraph Thread.'''
     def start_liveGraph(self, simPath, ctsoutPath):
         thread = threading.Thread(group=None,target=self.start, args=(simPath, ctsoutPath))
         thread.start()
     
+    '''start: 
+    creates the subprocess livegraph, modifies settings and starts the subprocess'''
     def start(self, simPath, ctsoutPath):
-        
-        print simPath
-        
+            
         self.quit_livegraph()
         
         src=open(self.settings_file_path)
@@ -46,20 +103,22 @@ class LiveGraphRun():
         src.close()
         
         settingsRE = re.compile('changeEntry')
-        print settings_string
-        print ctsoutPath
-        
         settings_string = settingsRE.sub('ctsout.txt', settings_string)
-        print settings_string
         
         dest= open(os.path.join(simPath,'settings.lgdfs'), 'w')
         dest.write(settings_string)
         dest.close()
+        arglist = list()
+        arglist.append('java')
+        arglist.append('-jar')
+        arglist.append(self.live_graph_path)
+        arglist.append('-dfs')
+        arglist.append(os.path.join(simPath, 'settings.lgdfs'))
         
-        self.pid = subprocess.Popen ("java -jar "+self.live_graph_path +" -dfs "+os.path.join(simPath, 'settings.lgdfs'), shell=True, cwd=simPath).pid
-        
-        print self.pid
+        self.pid = subprocess.Popen (arglist, cwd=simPath).pid
     
+    '''quit_livegraph:
+    Close the livegraph subprocess'''
     def quit_livegraph(self):
         if not (self.pid == ''):
             try:
@@ -67,12 +126,17 @@ class LiveGraphRun():
                 self.kill_win(self.pid)
             except OSError:
                 self.pid = ''
-                
+    
+    '''kill_win: 
+    Windows specific subprocess killing method'''
     def kill_win(self,pid):
-        import win32api
-        handle = win32api.OpenProcess(1,0,pid)
-        return (0 != win32api.TerminateProcess(handle, 0))    
+        kernel32 = ctypes.windll.kernel32
+        handle = kernel32.OpenProcess(1, 0, pid)
+        return (0 != kernel32.TerminateProcess(handle, 0))  
 
+'''SchemaTranslatorRun:
+Deprecated, this object should allow the user 
+to use the SchemaTranslator. This will be implemented later'''
 class SchemaTranslatorRun():
     base_folder = os.getcwd()
     input_folder_path = base_folder + "/translate_scenarios/scenarios_to_translate"

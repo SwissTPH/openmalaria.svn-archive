@@ -36,6 +36,10 @@ from JavaAppsRun import LiveGraphRun
 from datetime import date
 from VirtualTerminal_win import VirtualTerminal_win
 
+'''
+OpenMalariaRun:
+This object provides all the arguments, inputs and outputs
+for the openmalaria executable'''
 class OpenMalariaRun():
     
     base_folder = os.getcwd()
@@ -46,12 +50,12 @@ class OpenMalariaRun():
     testCommonDir = os.path.join(base_folder, 'application', 'common')
     testSrcDir = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run')
     testBuildDir = os.path.join(base_folder,  'application')
-    testOutputsDir = os.path.join(base_folder,  'run_scenarios', 'outputs')
+    
     testTranslationDir = os.path.join(base_folder,  'translate_scenarios')
     testTranslationDirIn = os.path.join(testTranslationDir,  'scenarios_to_translate')
     testTranslationDirOut = os.path.join(testTranslationDir,  'translated_scenarios')
     
-    # executable
+    
     def findFile (self, *names):
         
         execs=set()
@@ -77,34 +81,66 @@ class OpenMalariaRun():
         else:
             shutil.copy2(src, dest)
     
-    # Run, with file "scenario"+name+".xml"
-    def runScenario(self, terminal, livegraph, path, name, checkpointing=False, nocleanup=False, runLiveGraph=False):
+    '''
+    runScenario:
+    runs a Scenario using the openmalaria executable.
+    TODO: Add comparison to existing outputs'''
+    def runScenario(self, terminal, livegraph, path, name, simDir, only_one_folder, custom_pop_size=0, use_custom_pop_size=False, checkpointing=False, nocleanup=False, runLiveGraph=False):
         
         scenarioSrc = path
-        simDir= os.path.join(self.testOutputsDir,name+"_"+time.strftime("%d_%b_%Y_%H%M%S"))
+        
         openMalariaExec=os.path.abspath(self.findFile (*["openMalaria","openMalaria.exe"]))
         
-        cmd= openMalariaExec+" --resource-path "+simDir+" --scenario "+scenarioSrc
-        if(checkpointing):
-            cmd = cmd+' --checkpoint'
+        success = False
         
-        os.mkdir(simDir)
+        arglist = list()
+        arglist.append(openMalariaExec)
+        arglist.append('--resource-path')
+        arglist.append(simDir)
+        arglist.append('--scenario')
+        
         shutil.copy2(scenarioSrc, simDir)
+        head, tail = os.path.split(scenarioSrc)
+        scenarioDest = os.path.join(simDir, tail)
+        
+        if(use_custom_pop_size):
+            if custom_pop_size > 0:
+                src=open(scenarioDest)
+                scen_string=src.read()
+                src.close()
+                
+                scen_string = re.sub('popSize="\d*"', 'popSize="'+str(custom_pop_size)+'"', scen_string)
+                
+                dest= open(scenarioDest, 'w')
+                dest.write(scen_string)
+                dest.close()
+            else:
+                terminal.feed_command('WARNING: Invalid custom population size, the simulation will be run without any population size changes', terminal.RED)
+        
+        arglist.append(scenarioDest)
+        
+        cmd_string = openMalariaExec+" --resource-path "+simDir+" --scenario "+scenarioDest
+        
+        '''if(checkpointing):
+            cmd = cmd+ --checkpoint'''
         
         outputFile=os.path.join(simDir,"output.txt")
         outputGzFile=os.path.join(simDir,"output.txt.gz")
         ctsoutFile=os.path.join(simDir,"ctsout.txt")
         ctsoutGzFile=os.path.join(simDir,"ctsout.txt.gz")
-        checkFile=os.path.join(simDir,"checkpoint")	
+        checkFile=os.path.join(simDir,"checkpoint")
+            
         
         # Link or copy required files.
         # The schema file only needs to be copied in BOINC mode, since otherwise the
         # scenario is opened with a path and the schema can be found in the same
         # directory. We copy it anyway.
         scenario_xsd=os.path.join(simDir,'scenario.xsd')
-        shutil.copy2(os.path.join(self.testCommonDir ,'scenario.xsd'), scenario_xsd)
         densities_csv=os.path.join(simDir, 'densities.csv')
-        shutil.copy2(os.path.join(self.testCommonDir, 'densities.csv'), densities_csv)
+        if not os.path.exists(scenario_xsd):
+            shutil.copy2(os.path.join(self.testCommonDir ,'scenario.xsd'), scenario_xsd)
+        if not os.path.exists(densities_csv):
+            shutil.copy2(os.path.join(self.testCommonDir, 'densities.csv'), densities_csv)
         
         terminal.feed_command(time.strftime("%a, %d %b %Y %H:%M:%S")+"   %s.xml" % name, terminal.GOLD)
             
@@ -112,8 +148,8 @@ class OpenMalariaRun():
     
         while (not os.path.isfile(outputFile)):
             #terminal.feed_command("\033[0;32m  "+cmd+"\033[0;00m")
-            terminal.feed_command(cmd)
-            terminal.run_openmalaria_command(cmd, simDir, livegraph, ctsoutFile, runLiveGraph)
+            terminal.feed_command(cmd_string)
+            success = terminal.run_openmalaria_command(arglist, simDir, livegraph, ctsoutFile, runLiveGraph)
             
             if (os.path.isfile(outputGzFile)) and (not os.path.isfile(outputFile)):
                 f_in = gzip.open(outputGzFile, 'rb')
@@ -143,10 +179,15 @@ class OpenMalariaRun():
         terminal.feed_command("Done in " + str(time.time()-startTime) + " seconds", terminal.GOLD)
         
         if not nocleanup:
-            #os.remove(scenario_xsd)
             for f in (glob.glob(os.path.join(simDir,"checkpoint*")) + glob.glob(os.path.join(simDir,"seed?")) + [os.path.join(simDir,"init_data.xml"),os.path.join(simDir,"boinc_finish_called"),os.path.join(simDir,"scenario.sum")]):
                 if os.path.isfile(f):
                     os.remove(f)
+        
+        if only_one_folder:
+            if os.path.exists(outputFile):
+                os.rename(outputFile, os.path.join(simDir, name + '.txt'))
+            if os.path.exists(ctsoutFile):
+                os.rename(ctsoutFile, os.path.join(simDir, 'ct_'+name+'.txt'))
         
         # Compare outputs:
         #if ret == 0:
@@ -192,4 +233,4 @@ class OpenMalariaRun():
             terminal.feed_command("files are in Directory %s " % simDir +'\n\n')
         
         #terminal.feed_command("\033[0;00m")
-        return simDir
+        return success

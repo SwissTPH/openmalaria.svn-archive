@@ -32,10 +32,12 @@ import locale
 import time
 import subprocess
 import re
+import ctypes
 
 from JavaAppsRun import LiveGraphRun
 
-#Class (Thread) for handling the stdout, stderr streams and check the application status 
+'''StreamHelper:
+Class (Thread) for handling the stdout, stderr streams and check the application status''' 
 class StreamHelper():   
     def __init__(self, file_stream):
         self.file_stream = file_stream
@@ -45,12 +47,15 @@ class StreamHelper():
         self.openMalariaFinished = False
         self.is_percentage = False
         self.alive = True
+        self.sim_end = False
         self.thread = threading.Thread(None, self.start)
         self.thread.start()
         
         self.tics = 0;
-        self.parsing = re.compile('[\d%]')
-    
+        
+    '''start:
+    Starts the streamhelper's Thread. While the thread is alive, it updates and monitors
+    the streams status.'''
     def start(self):
         while(self.alive):
             total_string = ''
@@ -65,8 +70,10 @@ class StreamHelper():
                     self.tics = 0
                     
                 if(char == '\r' or char == '\n' or char == '\r\n'):
+                    if(total_string == 'sim end'):
+                        self.sim_end = True
                     self.line_output = total_string
-                    percent = self.parsing.search(total_string)
+                    percent = re.search('[\d%]', total_string)
                     if(percent != None):
                         self.is_percentage = True
                     else:
@@ -75,25 +82,57 @@ class StreamHelper():
                     self.is_ready = True
                 else:
                     total_string += char
-                    
+    
+    '''
+    setOpenMalariaFinished:
+    Sets that the openmalaria simulation is finished'''                
     def setOpenMalariaFinished(self):
         self.openMalariaFinished = True
-        
+    
+    '''
+    isPercentage:
+    Every lines red from stderr and stdout are checked, and
+    if a string containing the template [\d%] is found, then
+    is_percentage is set to True. This function is useful for
+    the progressbar used in the object VirtualTerminal_win'''     
     def isPercentage(self):
         return self.is_percentage
     
+    '''
+    isAlive:
+    Returns the thread current status'''
     def isAlive(self):
         return self.alive
     
+    '''
+    isReady:
+    If the thread has content to returns to the terminal, then
+    it is set to is_ready.'''
     def isReady(self):
         return self.is_ready
     
+    '''
+    isSimEnd:
+    Returns True if the stdout has returned the sim end string'''
+    def isSimEnd(self):
+        return self.sim_end
+    
+    '''
+    setNotReady:
+    Sets is_ready to false. This happens when the terminal has red
+    the actual content and allows the thread to seek for new content'''
     def setNotReady(self):
         self.is_ready = False
     
+    '''
+    getOutput:
+    Returns the stderr or stdout actual content'''
     def getOutput(self):
         return self.line_output
     
+    '''
+    reset_callback:
+    kills the thread'''
     def reset_callback(self):
         self.alive = False
 
@@ -118,6 +157,7 @@ class VirtualTerminal_win(gtk.ScrolledWindow):
         self.add(self.textView)
         self.textView.show()
         self.userStop = False
+        self.isRunning = False
         self.livegraph = None
         
         
@@ -135,15 +175,16 @@ class VirtualTerminal_win(gtk.ScrolledWindow):
         self.green_tag = buffer.create_tag('green-tag')
         self.green_tag.set_property("foreground-gdk", green_color)
         self.white_tag = buffer.create_tag('white-tag')
-        self.white_tag.set_property("foreground-gdk", white_color)
+        self.white_tag.set_property("foreground-gdk", white_color)   
  
     ''' read_output:
-	Create the subprocess openmalaria, the two threads waiting output from stdout and stderr
-        and manage the outputs incoming from openmalaria'''
+	Creates the subprocess openmalaria, the two threads waiting output from stdout and stderr
+    and manages the outputs incoming from openmalaria'''
     def read_output(self, argv, directory, ctsoutFile, runLiveGraph):
+        self.isRunning = True
         
-        advance = 0
-        sub = subprocess.Popen(argv, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=directory)
+        advance = 0.0
+        sub = subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=directory)
         
         buf = self.textView.get_buffer()
         self.livegraph = LiveGraphRun()
@@ -168,7 +209,7 @@ class VirtualTerminal_win(gtk.ScrolledWindow):
             if(self.userStop):
                 stderr_helper.reset_callback()
                 stdout_helper.reset_callback()
-                sub.kill()
+                self.kill_win(sub.pid)
             
             if(sub.poll()!=None):
                 stderr_helper.setOpenMalariaFinished()
@@ -183,33 +224,53 @@ class VirtualTerminal_win(gtk.ScrolledWindow):
                         anchor = buf.create_child_anchor(buf.get_iter_at_mark(mark))
                         self.textView.add_child_at_anchor(progressbar, anchor)
                         progressbar.show()
-                    advance = progressbar.get_fraction()+0.01    
-                    progressbar.set_fraction(advance)
+                    if(stderr_helper.isSimEnd()):
+                        progressbar.set_fraction(1)
+                        advance = 1.0
+                        stdout_helper.reset_callback()
+                    else:
+                        advance = progressbar.get_fraction()+0.01
+                        progressbar.set_fraction(advance)
+                    
                 else:
-                    buf.insert_with_tags_by_name(buf.get_end_iter(), self.utf8conv(stdout_helper.getOutput()+'\n'), 'gold-tag')
+                    iter = buf.get_end_iter()
+                    buf.insert_with_tags_by_name(iter, self.utf8conv(stdout_helper.getOutput()+'\n'), 'gold-tag')
                        
                 stdout_helper.setNotReady() 
                 
             if stderr_helper.isReady():
+                iter = buf.get_end_iter()
                 buf.insert_with_tags_by_name(buf.get_end_iter(), self.utf8conv('\n'+stderr_helper.getOutput()), 'red-tag')
                 stderr_helper.setNotReady()
                 
             while(gtk.events_pending()):
                 gtk.main_iteration()
+         
+        self.isRunning = False
+        
+        return advance >= 1.0
+    
+    '''kill_win:
+    Windows specific process killing'''
+    def kill_win(self,pid):
+        kernel32 = ctypes.windll.kernel32
+        handle = kernel32.OpenProcess(1, 0, pid)
+        return (0 != kernel32.TerminateProcess(handle, 0)) 
     
 	'''run_reset_callback(self):
- 		this function stops the read_output function, and so stops the openmalaria simulation'''
+ 	This function stops the read_output function, and so stops the openmalaria simulation'''
     def run_reset_callback(self):
         self.userStop = True
         buffer = self.textView.get_buffer()
         iter = buffer.get_end_iter()
         buffer.place_cursor(iter)
-        self.livegraph.quit_livegraph()
-        self.livegraph = None
+        if(self.livegraph != None):
+            self.livegraph.quit_livegraph()
+            self.livegraph = None
         buffer.insert_with_tags_by_name(iter, self.utf8conv('\nThe simulation has been stopped... \n'), 'red-tag')
     
 	'''feed_command(self, line, colorCode):
-		This function is used to output text in the gtk.TextView object used to mimic a terminal'''	
+	This function is used to output text in the gtk.TextView object used to mimic a terminal'''	
     def feed_command(self, line, colorCode = None):
         buffer = self.textView.get_buffer()
         iter = buffer.get_end_iter()
@@ -224,10 +285,8 @@ class VirtualTerminal_win(gtk.ScrolledWindow):
         buffer.insert(iter, '\n')         
     
 	'''run_openmalaria_command(self, command_string, simDir, livegraph, ctsoutFile, runLiveGraph):
-		start the openmalaria simulation by invoking the read_output function'''
-    def run_openmalaria_command(self, command_string, simDir, livegraph, ctsoutFile, runLiveGraph=False):
-        
+	start the openmalaria simulation by invoking the read_output function'''
+    def run_openmalaria_command(self, command_list, simDir, livegraph, ctsoutFile, runLiveGraph=False):
         self.userStop = False
-        command = command_string.split(' ')
-        self.read_output(command, simDir, ctsoutFile, runLiveGraph)
+        return self.read_output(command_list, simDir, ctsoutFile, runLiveGraph)
         
