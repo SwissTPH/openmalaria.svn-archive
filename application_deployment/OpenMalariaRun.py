@@ -85,7 +85,10 @@ class OpenMalariaRun():
     runScenario:
     runs a Scenario using the openmalaria executable.
     TODO: Add comparison to existing outputs'''
-    def runScenario(self, terminal, livegraph, path, name, simDir, only_one_folder, custom_pop_size=0, use_custom_pop_size=False, checkpointing=False, nocleanup=False, runLiveGraph=False):
+    def runScenario(self, terminal, livegraph, path, name, simDir, only_one_folder, custom_pop_size=0, use_custom_pop_size=False, checkpointing=False, nocleanup=False, runLiveGraph=False, newBuffer=False):
+        
+        if newBuffer:
+            terminal.init_new_buffer()
         
         scenarioSrc = path
         

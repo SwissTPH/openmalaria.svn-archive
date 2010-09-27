@@ -25,17 +25,22 @@ import subprocess
 import signal
 import threading
 import ctypes
+import time
 
+'''
+ExperimentCreatorRun:
+This class is used to start the experiment_creator.jar
+java application'''
 class ExperimentCreatorRun():
     base_folder = os.getcwd()
     experiment_creator_path = os.path.join(base_folder, 'application', 'experiment_creator', 'experiment_creator.jar')
     pid = ''
     
-    def start_experimentCreator(self, input_path, output_path, seeds_nr = 0):
-        thread = threading.Thread(group=None, target=self.start, args=(input_path, output_path, seeds_nr))
-        thread.start()
+    '''
+    start_experimentCreator:
+    Starts the java program'''
+    def start_experimentCreator(self, input_folder, output_folder, mainFileList, seeds_nr=0):
         
-    def start(self, input_path, output_path, seeds_nr):
         arglist = list()
         arglist.append('java')
         arglist.append('-jar')
@@ -47,14 +52,41 @@ class ExperimentCreatorRun():
             
         arglist.append('--no-validation')
             
-        arglist.append(input_path)
-        arglist.append(output_path)
+        arglist.append(input_folder)
+        arglist.append(output_folder)
         
-        print "c'est parti!"
         
-        self.pid = subprocess.Popen (arglist).pid
+        sub = subprocess.Popen (arglist)
+        self.pid = sub.pid
         
-        print "c'est fini"
+        while(sub.poll()==None):
+            time.sleep(.1)
+        
+        if os.path.exists(output_folder) and os.path.isdir(output_folder):
+            files = os.listdir(output_folder)
+            filenames = list()
+            for file in files:
+                file_split = str.split(file, '.')
+                extension = file_split[len(file_split)-1]
+                if extension == 'xml':
+                    file_path = os.path.join(output_folder, file)
+                    
+                    src=open(file_path)
+                    file_string=src.read()
+                    src.close()
+                
+                    file_string = re.sub('xsi:noNamespaceSchemaLocation="scenario_20.xsd"', 'xsi:noNamespaceSchemaLocation="scenario.xsd"', file_string)
+                
+                    dest= open(file_path, 'w')
+                    dest.write(file_string)
+                    dest.close()
+                    
+                    filenames.append(file_path)
+            if len(filenames)>0:
+                #mainFileList.removeScenarios()
+                mainFileList.addScenarios(filenames)
+        
+        
     
     '''quit_experimentCreator:
     Close the experimentCreator subprocess'''

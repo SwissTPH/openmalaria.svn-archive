@@ -158,24 +158,7 @@ class VirtualTerminal_win(gtk.ScrolledWindow):
         self.textView.show()
         self.userStop = False
         self.isRunning = False
-        self.livegraph = None
-        
-        
-        buffer = self.textView.get_buffer()
-        
-        green_color = gtk.gdk.Color(red=26985, green=35723, blue=26985)
-        gold_color = gtk.gdk.Color(red=65535, green=65535, blue=0)
-        red_color = gtk.gdk.Color(red=65535, green=0, blue=0)
-        white_color = gtk.gdk.Color(red=65535, green=65535, blue=65535)
-        
-        self.red_tag = buffer.create_tag('red-tag')
-        self.red_tag.set_property("foreground-gdk", red_color)
-        self.gold_tag = buffer.create_tag('gold-tag')
-        self.gold_tag.set_property("foreground-gdk", gold_color)
-        self.green_tag = buffer.create_tag('green-tag')
-        self.green_tag.set_property("foreground-gdk", green_color)
-        self.white_tag = buffer.create_tag('white-tag')
-        self.white_tag.set_property("foreground-gdk", white_color)   
+        self.livegraph = None  
  
     ''' read_output:
 	Creates the subprocess openmalaria, the two threads waiting output from stdout and stderr
@@ -289,4 +272,23 @@ class VirtualTerminal_win(gtk.ScrolledWindow):
     def run_openmalaria_command(self, command_list, simDir, livegraph, ctsoutFile, runLiveGraph=False):
         self.userStop = False
         return self.read_output(command_list, simDir, ctsoutFile, runLiveGraph)
+    
+    def init_new_buffer(self):
+        self.textView.set_buffer(gtk.TextBuffer())
+        
+        buffer = self.textView.get_buffer()
+        
+        green_color = gtk.gdk.Color(red=26985, green=35723, blue=26985)
+        gold_color = gtk.gdk.Color(red=65535, green=65535, blue=0)
+        red_color = gtk.gdk.Color(red=65535, green=0, blue=0)
+        white_color = gtk.gdk.Color(red=65535, green=65535, blue=65535)
+        
+        self.red_tag = buffer.create_tag('red-tag')
+        self.red_tag.set_property("foreground-gdk", red_color)
+        self.gold_tag = buffer.create_tag('gold-tag')
+        self.gold_tag.set_property("foreground-gdk", gold_color)
+        self.green_tag = buffer.create_tag('green-tag')
+        self.green_tag.set_property("foreground-gdk", green_color)
+        self.white_tag = buffer.create_tag('white-tag')
+        self.white_tag.set_property("foreground-gdk", white_color) 
         

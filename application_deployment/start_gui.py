@@ -158,7 +158,12 @@ class FileList(gtk.Frame):
         self.cell = gtk.CellRendererToggle()
         self.cell.set_property('activatable', True)
         model = self.treeview.get_model()
-        self.cell.connect( 'toggled', self.cell_toggle, model)
+        if not experimentDialog:
+            self.cell.connect( 'toggled', self.cell_toggle, model)
+        else:
+            self.cell.connect('toggled', self.creator_cell_toggle, model)
+            self.old_path = None
+    
         self.tcolumn1.pack_start(self.cell, True)
         self.tcolumn1.add_attribute(self.cell, "active", 3)
         
@@ -177,6 +182,17 @@ class FileList(gtk.Frame):
         self.scrolledWindow.show_all()
         
         self.vbox.pack_start(self.scrolledWindow, True, True, 2)
+        
+        if experimentDialog:
+            hbox = gtk.HBox(False, 2)
+            comboBox = gtk.combo_box_new_text()
+            comboBox.append_text('base')
+            comboBox.append_text('reference')
+            comboBox.append_text('comparator')
+            comboBox.connect('changed', self.set_reference_type)
+            comboBox.set_active(0)
+            hbox.pack_start(comboBox, False, False, 2)
+            self.vbox.pack_start(hbox, False, False, 2)
         
         if not experimentDialog:
             self.hbox = gtk.HBox(False, 5)
@@ -269,6 +285,17 @@ class FileList(gtk.Frame):
         self.update_livegraph_toggle()
     
     '''
+    creator_cell_toggle:
+    In this case, only one row at a time can be set
+    to true (Select all isn't used in the experiment creator)'''
+    def creator_cell_toggle(self, cell, path, model):
+        if not self.old_path == None:
+            model[self.old_path][3] = False
+            
+        model[path][3] = not model[path][3]
+        self.old_path = path
+    
+    '''
     update_livegraph_toggle:
     Sets if the toggle button for sim_option_livegraph is sensitive.
     If there are more than two selected scenarios, then the livegraph
@@ -322,6 +349,9 @@ class FileList(gtk.Frame):
                 self.liststore.remove(iterator)
             iterator = iterator_temp
     
+    '''
+    return_first_true:
+    Returns the first activated toggle button path'''
     def return_first_true(self):
         iterator = self.liststore.get_iter_first()
         first_found_path = None
@@ -333,19 +363,22 @@ class FileList(gtk.Frame):
             iterator = self.liststore.iter_next(iterator)
         return first_found_path
     
+    '''
+    return_sweep_list:
+    Returns the actual sweep files' list'''
     def return_sweep_list(self):
         iterator = self.liststore.get_iter_first()
-        sweeps = list()
+        sweep = list()
         path = list()
         state = list()
-        sweeps.append(path)
-        sweeps.append(state)
+        sweep.append(path)
+        sweep.append(state)
         while iterator:
             path.append(self.liststore.get_value(iterator, 0))
             state.append(self.liststore.get_value(iterator, 3))
             iterator = self.liststore.iter_next(iterator)
             
-        return sweeps
+        return sweep
                 
     
     '''
@@ -415,28 +448,41 @@ class FileList(gtk.Frame):
             pb = self.treeview.render_icon(gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU, None)
             self.liststore.set_value(iterator,2, pb)
             iterator = self.liststore.iter_next(iterator)
+            
+    '''
+    set_reference_type:
+    Sets the actual reference_type (This could be base, comparator or reference)'''
+    def set_reference_type(self, comboBox):
+        self.reference_type = comboBox.get_active_text()
+    '''
+    get_reference_type:
+    Returns the reference typ (base, comparator or reference)'''
+    def get_reference_type(self):
+        return self.reference_type   
                                 
 '''
 FileViewersContainers(gtk.Window):
 Window containing all the loaded scenarios.
 Every scenario will be added in a notebook.
 '''
-class FileViewersContainer(gtk.Window):
+class FileViewersContainer(gtk.Dialog):
     
     
     def __init__(self):
-        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
+        gtk.Dialog.__init__(self)
         self.set_border_width(10)
         self.set_title("Editor")
-        self.vbox = gtk.VBox(False, 10)
         self.notebook = gtk.Notebook()
         self.notebook.set_tab_pos(gtk.POS_TOP)
         self.connect('delete-event', self.nothing)
         self.vbox.pack_start(self.notebook, True, True, 2)
-        self.add(self.vbox)
         self.show_all()
         self.filenames = list()
         self.names = list()
+        
+        icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+        self.set_icon_from_file(icon_path)
+        
         self.hide()
         
     '''
@@ -763,6 +809,7 @@ class ScenariosChoice(gtk.FileChooserDialog):
         
         self.fileList= fileList
         self.connect('response', self.updateFileList)
+        self.connect('destroy', self.closed_scenarios_choice)
         
         filter = gtk.FileFilter()
         filter.set_name("Xml files")
@@ -770,6 +817,10 @@ class ScenariosChoice(gtk.FileChooserDialog):
         self.add_filter(filter)
         
         self.show_all()
+        
+    def closed_scenarios_choice(self, widget, data=None):
+        NotebookFrame.load_allready_open = False
+    
     '''
     updateFileViewerContainer:
     update the FileViewerContainer when new scenarios are selected
@@ -835,12 +886,13 @@ This gtk.Dialog allows the user to create
 a full experiment (With sweeps and arms)'''    
 class ExperimentCreatorDialog(gtk.Dialog):
     
-    def __init__(self):
-        gtk.Dialog.__init__(self,'Experiment creation', None,0,(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
-                      gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
+    def __init__(self, mainFileList):
+        gtk.Dialog.__init__(self,'Experiment creation', None,0,('Cancel', gtk.RESPONSE_REJECT,
+                      'Ok', gtk.RESPONSE_ACCEPT))
         
         icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
         self.set_icon_from_file(icon_path)
+        self.mainFileList = mainFileList
         
         
         hbox_name_entry= gtk.HBox(False, 2)
@@ -867,30 +919,75 @@ class ExperimentCreatorDialog(gtk.Dialog):
         self.sweeps_notebook.set_tab_pos(gtk.POS_TOP)
         self.vbox.add(self.sweeps_notebook)
         self.connect('response', self.choose_action)
+        self.connect('destroy', self.closed_creator)
         
         self.sweeps_paths = list()
         self.base_file_path = None
+        
+        self.sweep_folder_chooser_opened=False
+        self.base_file_chooser_opened=False
     
         self.show_all()
-        
-    def open_sweep_folder_chooser(self, widget, data=None):
-        folder_chooser = gtk.FileChooserDialog('Choose sweep folder', None, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, ('ok',gtk.RESPONSE_OK)) 
-        folder_chooser.connect('response', self.select_sweep_folder)
-        folder_chooser.show() 
     
+    '''
+    open_sweep_folder_chooser:
+    Opens a Folder chooser. The user should then
+    select a Folder (sweep) containing .xml scenarios'''    
+    def open_sweep_folder_chooser(self, widget, data=None):
+        if not self.sweep_folder_chooser_opened:
+            self.sweep_folder_chooser_opened = True
+            folder_chooser = gtk.FileChooserDialog('Choose sweep folder', None, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, ('ok',gtk.RESPONSE_OK)) 
+            folder_chooser.connect('response', self.select_sweep_folder)
+            folder_chooser.connect('destroy', self.allow_open_sweep_folder_chooser)
+            folder_chooser.show()
+    
+    '''
+    allow_open_sweep_folder_chooser:
+    Sets sweep_folder_chooser_opened to True. Then the user
+    is able to reopen a sweep folder chooser dialog'''
+    def allow_open_sweep_folder_chooser(self, widget, data=None):
+        self.sweep_folder_chooser_opened = False
+        
+    '''
+    select_sweep_folder:
+    Selects a Sweep folder. Then a new tab is added in 
+    the experiment creator containing an overview of all
+    the scenarios contained in the folder'''
     def select_sweep_folder(self, widget, data):
         self.add_sweep_tab(widget.get_filename())
         widget.destroy()
     
+    '''
+    open_base_file_chooser:
+    Opens a File chooser. The user should then 
+    select a base scenario'''
     def open_base_file_chooser(self, widget, data=None):
-        base_file_chooser = gtk.FileChooserDialog('Choose base file', None, gtk.FILE_CHOOSER_ACTION_OPEN, ('ok', gtk.RESPONSE_OK))
-        base_file_chooser.connect('response', self.select_base_file)
-        base_file_chooser.show()
-        
+        if not self.base_file_chooser_opened:
+            self.base_file_chooser_opened = True
+            base_file_chooser = gtk.FileChooserDialog('Choose base file', None, gtk.FILE_CHOOSER_ACTION_OPEN, ('ok', gtk.RESPONSE_OK))
+            base_file_chooser.connect('response', self.select_base_file)
+            base_file_chooser.connect('destroy', self.allow_open_base_file_chooser)
+            base_file_chooser.show()
+    
+    '''
+    allow_open_base_file_chooser:
+    Sets base_file_chooser_opened to True. Then the user
+    is able to reopen a new base file chooser dialog'''        
+    def allow_open_base_file_chooser(self, widget, data=None):
+        self.base_file_chooser_opened = False
+    
+    '''
+    select_base_file:
+    Selects the base scenario file. the filechooser
+    widget is then destroyed'''    
     def select_base_file(self, widget, data):
         self.add_base_file(widget.get_filename())
         widget.destroy()
-            
+    
+    '''
+    add_base_file:
+    Sets self.base_file_path to the given base file path.
+    The base file path is then displayed on an entry.'''        
     def add_base_file(self, base_file_path):
         if(os.path.isfile(base_file_path)):
             path, name = os.path.split(base_file_path)
@@ -922,20 +1019,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
         if not fileList == None:
             path, name = os.path.split(sweep_folder_path)
             label = self.create_tab_label(name, fileList, sweep_folder_path)
-            vbox = gtk.VBox(False, 2)
-            hbox = gtk.HBox(False, 2)
-            comboBox = gtk.combo_box_new_text()
-            comboBox.append_text('base')
-            comboBox.append_text('reference')
-            comboBox.append_text('comparator')
-            comboBox.set_active(0)
-            hbox.pack_start(comboBox, False, False, 2)
-            
-            vbox.pack_start(fileList, True, True, 2)
-            vbox.pack_start(hbox, False, False, 2)
-            vbox.show_all()
-            
-            self.sweeps_notebook.insert_page(vbox, label)
+            self.sweeps_notebook.insert_page(fileList, label)
             self.sweeps_paths.append(sweep_folder_path)             
         
         
@@ -980,17 +1064,31 @@ class ExperimentCreatorDialog(gtk.Dialog):
         self.sweeps_notebook.queue_draw_area(0,0,-1,-1)
         if(self.sweeps_notebook.get_n_pages()==0):
             self.hide()
-            
+    
+    '''
+    choose_action:
+    This function is called when "response" callback is triggered.
+    If the "response" is ok (-3) then start the creation, else (cancel)
+    stop'''        
     def choose_action(self, widget, response_id):
         
         if response_id == -3:
-            self.start_creation()
+            self.create_experiment_files()
         else:
             self.destroy()
     
-    def start_creation(self):
-        self.create_experiment_files()
-        
+    '''
+    closed_creator:
+    This function is called when "destroy" callback is triggered.
+    This function sets NotebookFrame.creator_allready_open = False
+    to allow the user to open a new experiment creator dialog'''        
+    def closed_creator(self, widget, data=None):
+        NotebookFrame.creator_allready_open = False
+    
+    '''
+    create_experiment_files:
+    Creates the input, output folders and the whole file structure for
+    the experiment_creator.jar java application and then runs it'''    
     def create_experiment_files(self):
         base_folder = os.getcwd() 
         
@@ -1027,19 +1125,21 @@ class ExperimentCreatorDialog(gtk.Dialog):
                 
                 if sweep[1][k]:
                     path, name = os.path.split(sweep[0][k])
-                    os.rename(os.path.join(new_sweep_path, name), os.path.join(new_sweep_path, 'reference.xml'))
+                    os.rename(os.path.join(new_sweep_path, name), os.path.join(new_sweep_path, fileList.get_reference_type()+'.xml'))
                 
                 k+=1
             i+=1
         
         experimentCreator = ExperimentCreatorRun()
-        experimentCreator.start_experimentCreator(input_folder, output_folder)
-            
-        
+        experimentCreator.start_experimentCreator(input_folder, output_folder, self.mainFileList)
+        self.destroy()
                 
-        
+    '''
+    cancel_creation:
+    If button cancel is clicked, then the experiment_creator dialog 
+    is closed'''    
     def cancel_creation(self, widget, data=None):
-        self.destroy()    
+        self.destroy()  
 
 
 '''
@@ -1087,6 +1187,8 @@ class NotebookFrame(gtk.Frame):
             self.run_scenarios_outputs = os.path.join(base_folder, 'run_scenarios', 'outputs')
             self.liveGraphRun = LiveGraphRun()
             self.openMalariaRun = OpenMalariaRun()
+            NotebookFrame.load_allready_open = False
+            NotebookFrame.creator_allready_open = False
         else:
             self.run_scenarios_base = os.path.join(base_folder,'translate_scenarios', 'scenarios_to_translate')
             self.schemaTranslatorRun = SchemaTranslatorRun()
@@ -1138,13 +1240,16 @@ class NotebookFrame(gtk.Frame):
                         pop_size = int(popsize_string)
                     except exceptions.ValueError:
                         pop_size = -1
-
                     
         for i in range(len(filenames)):
             if not only_one_folder:
                 simDir = os.path.join(testOutputsDir,names[i]+'_'+time.strftime("%d_%b_%Y_%H%M%S"))
                 os.mkdir(simDir)
-            run_feedback = self.openMalariaRun.runScenario(self.terminal, self.liveGraphRun, filenames[i], names[i], simDir, only_one_folder, pop_size, custom_pop_size, checkpointing, nocleanup, use_livegraph)
+            if i == 0:
+                newBuffer = True
+            else:
+                newBuffer = False    
+            run_feedback = self.openMalariaRun.runScenario(self.terminal, self.liveGraphRun, filenames[i], names[i], simDir, only_one_folder, pop_size, custom_pop_size, checkpointing, nocleanup, use_livegraph, newBuffer)
             if not only_one_folder:
                 if(self.stop_run):
                     self.stop_run = False
@@ -1178,7 +1283,9 @@ class NotebookFrame(gtk.Frame):
     Opens a new File Chooser, so the user can choose what files he would like
     to load in the tool'''
     def openNewDialog(self, widget, data=None):
-        self.scenarioChoice = ScenariosChoice(self.fileList)
+        if not NotebookFrame.load_allready_open:
+            self.scenarioChoice = ScenariosChoice(self.fileList)
+            NotebookFrame.load_allready_open = True
     
     '''
     add_object:
@@ -1296,7 +1403,10 @@ class NotebookFrame(gtk.Frame):
         sim_option_vbox.pack_start(sim_option, False, False, 2)
         self.add_object(line_number, sim_option_vbox, at_start_h)
         
-    
+    '''
+    add_livegraph_option:
+    Adds the livegraph option that allows user to have a look at the
+    variables and parameters changes during the simulation'''
     def add_livegraph_option(self, title, option_code, at_start_h=True, line_number=0):
         sim_option_vbox = gtk.VBox(False, 2)
         
@@ -1411,9 +1521,13 @@ class NotebookFrame(gtk.Frame):
     open_new_experiment_creator_dialog:
     Opens a new experiment creator dialog''' 
     def open_new_experiment_creator_dialog(self, widget, data=None):
-        ExperimentCreatorDialog()
+        if not NotebookFrame.creator_allready_open:
+            ExperimentCreatorDialog(self.fileList)
+            NotebookFrame.creator_allready_open = True
     
-    
+    '''
+    reset_callback:
+    Does a reset callback on the terminal object'''
     def reset_callback(self, widget, data=None):
         self.terminal.run_reset_callback()
 
@@ -1432,8 +1546,8 @@ class OMFrontend:
         testSrcDir = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run')
         files = os.listdir(testSrcDir)
         for file in files:
-            if os.path.isfile(file):
-                os.remove(file)
+            if os.path.isfile(os.path.join(testSrcDir, file)):
+                os.remove(os.path.join(testSrcDir,file))
         
         gtk.main_quit()
         sys.exit()
@@ -1466,9 +1580,9 @@ class OMFrontend:
         self.window.add(openmalaria)
         openmalaria.show()
         
-        self.window.resize(gtk.gdk.screen_width()/2,gtk.gdk.screen_height()/2)
-        self.fileviewersContainer.resize(self.window.get_size()[0]/2, self.window.get_size()[1])
-        self.fileviewersContainer.move(self.window.get_position()[0]+self.window.get_size()[0]+20, self.window.get_position()[1])
+        self.window.resize(gtk.gdk.screen_width(),gtk.gdk.screen_height())
+        self.fileviewersContainer.set_transient_for(self.window)
+        self.fileviewersContainer.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
         self.window.set_icon_from_file(icon_path)
         self.fileviewersContainer.set_icon_from_file(icon_path)
         self.window.show()

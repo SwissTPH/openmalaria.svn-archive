@@ -301,7 +301,7 @@
       <xs:documentation>Description of input EIR for
        one specific vector species in terms of a Fourier approximation
        to the ln of the EIR during the burn in period</xs:documentation>
-      <xs:appinfo>name;Description of input EIR for one vector;</xs:appinfo>
+      <xs:appinfo>name:Description of input EIR for one vector;</xs:appinfo>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="eir">
@@ -592,8 +592,8 @@
           <xs:appinfo>units:List of elements;name:Survey times (time steps);</xs:appinfo>
         </xs:annotation>
         <xs:complexType>
-          <xs:sequence maxOccurs="unbounded">
-            <xs:element name="surveyTime" type="xs:int">
+          <xs:sequence>
+            <xs:element name="surveyTime" type="xs:int" maxOccurs="unbounded">
               <xs:annotation>
                 <xs:documentation>
                   Survey time; 0 means just before start of main sim and is a valid survey-point.
@@ -610,7 +610,7 @@
                 Detection limit for parasitemia
               </xs:documentation>
               <xs:appinfo>
-                units:parasites/micolitre;min:0;max:1000;name=Detection limit for parasitaemia;
+                units:parasites/micolitre;min:0;max:1000;name:Detection limit for parasitaemia;
               </xs:appinfo>
             </xs:annotation>
           </xs:attribute>
@@ -630,7 +630,19 @@
         <xs:documentation>
           Name of monitoring data
         </xs:documentation>
-        <xs:appinfo>units:string;name of monitoring information;</xs:appinfo>
+        <xs:appinfo>units:string;name:Name of monitoring information;</xs:appinfo>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="cohortOnly" type="xs:boolean" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          If true, for many output measures, the output comes only from individuals
+          in the cohort; otherwise output is from the entire population.
+          
+          Does not need to be specified if no cohort-selecting "interventions"
+          are present.
+        </xs:documentation>
+        <xs:appinfo>name:Survey only cohort;</xs:appinfo>
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
@@ -794,6 +806,14 @@
           <xs:appinfo>units:List of elements;name:List of age groups for IPTi</xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="cohort" type="ageSpecific">
+        <xs:annotation>
+          <xs:documentation>
+            Description of continuous selection of individuals for a cohort study.
+          </xs:documentation>
+          <xs:appinfo>units:List of elements;name:Continuous cohort selection;</xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="timed">
@@ -832,6 +852,14 @@
         <xs:appinfo>units:Proportion;min:0;max:1;name:Coverage;sweepable:true</xs:appinfo>
       </xs:annotation>
     </xs:attribute>
+    <xs:attribute name="cohort" type="xs:boolean" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          Restrict distribution to chosen cohort.
+        </xs:documentation>
+        <xs:appinfo>units:Proportion;min:0;max:1;name:Cohort only;</xs:appinfo>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
   <xs:complexType name="ageSpecific">
     <xs:attribute name="targetAgeYrs" type="xs:double" use="required">
@@ -848,6 +876,14 @@
           Coverage of intervention
         </xs:documentation>
         <xs:appinfo>units:Proportion;min:0;max:1;name:Proportion covered;</xs:appinfo>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="cohort" type="xs:boolean" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          Restrict distribution to chosen cohort.
+        </xs:documentation>
+        <xs:appinfo>units:Proportion;min:0;max:1;name:Cohort only;</xs:appinfo>
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
@@ -936,9 +972,11 @@
             Used to simulate R_0. First, infections should be eliminated,
             immunity removed, and the population given an effective transmission-
             blocking vaccine (not done by this intervention). Then this
-            intervention may be used to: pick one human, infect him, and remove
+            intervention may be used to: pick one human, infect him, administer
+            a fully effective Preerythrocytic vaccine and remove
             transmission-blocking vaccine effect on this human. Thus only this
-            one human will be a source of infections in an unprotected population.
+            one human will be a source of infections in an unprotected population,
+            and will not reinfected himself.
           </xs:documentation>
           <xs:appinfo>units:List of elements;name:Insert R_0 case;</xs:appinfo>
         </xs:annotation>
@@ -971,6 +1009,14 @@
             <xs:element name="anopheles" type="larvicidingAnopheles" maxOccurs="unbounded" />
           </xs:sequence>
         </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="cohort" type="mass">
+        <xs:annotation>
+          <xs:documentation>
+            Description of mass cohort selection.
+          </xs:documentation>
+          <xs:appinfo>units:List of elements;name:Mass Cohort Selection;</xs:appinfo>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
     <xs:attribute name="time" type="xs:int" use="required">
@@ -1031,7 +1077,7 @@
     <xs:attribute name="vaccineType" type="xs:int" use="required">
       <xs:annotation>
         <xs:documentation>Type of vaccine</xs:documentation>
-        <xs:appinfo>units:Code;Type of vaccine;</xs:appinfo>
+        <xs:appinfo>units:Code;name:Type of vaccine;</xs:appinfo>
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
