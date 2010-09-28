@@ -40,7 +40,7 @@ http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier_f.png
 \end{align*}
 </wiki:comment>
 
-and thus show that the annual EIR is scaled by http://openmalaria.googlecode.com/svn/wiki/images/exp_a0.png:
+and thus show that the annual EIR is scaled by [http://openmalaria.googlecode.com/svn/wiki/images/exp_a0.png]:
 
 http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier_annual.png
 <wiki:comment>
