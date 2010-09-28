@@ -36,11 +36,11 @@ http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier_f.png
 <wiki:comment>
 \begin{align*}
 \Xi_t &= e^{a_0 + f(t)} \\
-      &= e^{a_0} + e^{f(t)}
+      &= e^{a_0} \cdot e^{f(t)}
 \end{align*}
 </wiki:comment>
 
-and thus show that the annual EIR is scaled by a,,0,,:
+and thus show that the annual EIR is scaled by http://openmalaria.googlecode.com/svn/wiki/images/exp_a0.png:
 
 http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier_annual.png
 <wiki:comment>
