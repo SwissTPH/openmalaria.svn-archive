@@ -47,7 +47,9 @@ This output normally starts from the beginning of the intervention period, but f
 
 === Surveys: `surveys`, `ageGroup` ===
 
-The `surveys` element has a list of `surveyTime` sub-elements, each with the timestep of a survey, starting from 0, the start of the intervention period (numbers match timesteps at which interventions can be deployed).
+The `surveys` element has a list of `surveyTime` sub-elements, each with the timestep of a survey, starting from 0, the start of the intervention period (numbers match timesteps at which interventions can be deployed). A survey at time `x` takes place at the beginning of that timestep, so, for example, if the first survey has time 73 with a 5-day timestep, it covers exactly the first year of the intervention period.
+
+Timestep 0 will always correspond to the first of January (up to 5th Jan with a 5-day timestep), except that, prior to schema 22, when the `maximumAgeYrs` attribute of `demography` was not a whole number of years timestep values may well have been offset. Years are always modelled as 365 days long, hence `(n * 365 / days_per_timestep)` is always the beginning of the n-th year of the intervention period (excepting above offset).
 
 The `ageGroup` element contains a list of `group` sub-elements, each of which has an `upperbound` attribute. These (and the `lowerbound` attribute of `ageGroup`) define the age-groups which reports are divided into. The age-group specified in output data is the index within these groups, ordered by age (youngest to oldest), with the first age-group having index `1`.
 
