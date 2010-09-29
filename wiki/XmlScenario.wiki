@@ -228,7 +228,7 @@ The `entoData` element also has two attributes: `name` (just a user-friendly nam
 
 === Non-vector parameters: `nonVector` ===
 
-The `nonVector` element primarily consists of a list of daily EIR (_Entomological Inoculation Rate_) parameters (`EIRDaily` elements). These specify the EIR per day of the year for the pre-intervention equilibrium state. Where data for more than one year are provided, they are simply averaged for each day of the year.
+The `nonVector` element primarily consists of a list of daily EIR (_Entomological Inoculation Rate_) parameters (`EIRDaily` elements) specifying the annual EIR (thus 365 values are expected). In theory the first value should correspond to January 1st (though if not, it simply means timestep 0 should correspond to the same day of year as the first value here). These are averaged per timestep resulting in the EIR per timestep of the year for the pre-intervention equilibrium state. Where data for more than one year are provided, the data is assumed to wrap into the next year and all values for the same timestep of the year are averaged.
 
 `nonVector` also has an `eipDuration` attribute: the _extrinsic incubation period_ (sporozoite development time, in days), which determines the delay before changes in human infectiousness affect the EIR (in dynamic mode only).
 
