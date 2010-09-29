@@ -3,15 +3,18 @@ Precompiled Binaries for windows, macosx and linux.
 = Introduction =
 
 It's now possible to download Precompiled Binaries from the openmalaria repository.
+You can either choose to download the binaries and then run the scientific application using the terminal or to download the all in one installer including a GUI (openmalaria tools) for the interaction with the openmalaria application.
+
+= Binaries only =
 
 Start by making a folder wherever you want to use OpenMalaria. Then, you need to download one of the archives here (The links given point to the latest versions):
 
  * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/win32/openmalaria-647.zip win32]
  * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/macosx/openmalaria-647.zip macosx]
- * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/gnu32/openmalaria-647.zip gnu32]
- * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/gnu64/openmalaria-647.zip gnu64]
+ * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/gnu32/openmalaria-647.tar.gz gnu32]
+ * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/gnu64/openmalaria-647.tar.gz gnu64]
 
-Extract whichever you download into your openmalaria folder. Within this, move everything in the common folder into the one above (alongside the executable). On windows, you should be able to (double) click on the runOpenMalaria.bat file to test the program will run (if not, see below). On other platforms, this doesn't appear to work but you can run it from a command line (see [SetupOverview Getting Started]).
+Extract whichever you download into your openmalaria folder and then run the openmalaria executable from a command line (see [SetupOverview Getting Started]).
 
 == Errors ==
 
@@ -24,6 +27,6 @@ If this doesn't help, please contact us (or better, open an [http://code.google.
 Now it works, I should tell you what all the files are:
 
 || openMalaria[.exe]|| binary files (executable)||
-|| scenario_VER.xsd || schema file (formally describes what the xml files may contain); currently version 17 is used while 18 is under development ||
+|| scenario_VER.xsd || schema file (formally describes what the xml files may contain); currently version 21 is used while 22 is under development ||
 || scenario.xml || An example scenario document (this one is simply a copy of examples/scenarioVecFullTestII.xml) ||
 || autoRegressionParameters.csv, densities.csv || auxiliary data files for openmalaria ||
