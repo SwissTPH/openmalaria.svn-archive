@@ -48,7 +48,7 @@ class ExperimentCreatorRun():
         
         if seeds_nr > 0:
             arglist.append('--seeds')
-            arglist.append(seeds_nr)
+            arglist.append(str(seeds_nr))
             
         arglist.append('--no-validation')
             
