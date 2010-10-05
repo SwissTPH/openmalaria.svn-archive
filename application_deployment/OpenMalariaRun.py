@@ -34,13 +34,14 @@ import re
 from VirtualTerminal_win import VirtualTerminal_win
 from JavaAppsRun import LiveGraphRun
 from datetime import date
-from VirtualTerminal_win import VirtualTerminal_win
 
 '''
 OpenMalariaRun:
 This object provides all the arguments, inputs and outputs
 for the openmalaria executable'''
 class OpenMalariaRun():
+    
+    actual_scenario_version = '20'
     
     base_folder = os.getcwd()
     sys.path[0] = os.path.join(base_folder, 'application', 'common')
@@ -138,10 +139,10 @@ class OpenMalariaRun():
         # The schema file only needs to be copied in BOINC mode, since otherwise the
         # scenario is opened with a path and the schema can be found in the same
         # directory. We copy it anyway.
-        scenario_xsd=os.path.join(simDir,'scenario.xsd')
+        scenario_xsd=os.path.join(simDir,'scenario_'+self.actual_scenario_version+'.xsd')
         densities_csv=os.path.join(simDir, 'densities.csv')
         if not os.path.exists(scenario_xsd):
-            shutil.copy2(os.path.join(self.testCommonDir ,'scenario.xsd'), scenario_xsd)
+            shutil.copy2(os.path.join(self.testCommonDir ,'scenario_'+self.actual_scenario_version+'.xsd'), scenario_xsd)
         if not os.path.exists(densities_csv):
             shutil.copy2(os.path.join(self.testCommonDir, 'densities.csv'), densities_csv)
         

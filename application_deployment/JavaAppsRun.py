@@ -27,11 +27,16 @@ import threading
 import ctypes
 import time
 
+#from OpenMalariaRun import OpenMalariaRun
+
 '''
 ExperimentCreatorRun:
 This class is used to start the experiment_creator.jar
 java application'''
 class ExperimentCreatorRun():
+    
+    actual_scenario_version = '20'
+    
     base_folder = os.getcwd()
     experiment_creator_path = os.path.join(base_folder, 'application', 'experiment_creator', 'experiment_creator.jar')
     pid = ''
@@ -39,7 +44,7 @@ class ExperimentCreatorRun():
     '''
     start_experimentCreator:
     Starts the java program'''
-    def start_experimentCreator(self, input_folder, output_folder, mainFileList, seeds_nr=0):
+    def start_experimentCreator(self, input_folder, output_folder, mainFileList, seeds_nr=0, validation=False, db_login = None, db_passwd = None, db_address = None):
         
         arglist = list()
         arglist.append('java')
@@ -49,8 +54,17 @@ class ExperimentCreatorRun():
         if seeds_nr > 0:
             arglist.append('--seeds')
             arglist.append(str(seeds_nr))
+        
+        if not validation:    
+            arglist.append('--no-validation')
             
-        arglist.append('--no-validation')
+        if db_login != None and db_passwd != None and db_address != None :
+            arglist.append('--db')
+            arglist.append('jdbc:mysql://'+db_address)
+            arglist.append('--dbuser')
+            arglist.append(db_login)
+            arglist.append('--dbpasswdb')
+            
             
         arglist.append(input_folder)
         arglist.append(output_folder)
@@ -70,18 +84,8 @@ class ExperimentCreatorRun():
                 extension = file_split[len(file_split)-1]
                 if extension == 'xml':
                     file_path = os.path.join(output_folder, file)
-                    
-                    src=open(file_path)
-                    file_string=src.read()
-                    src.close()
-                
-                    file_string = re.sub('xsi:noNamespaceSchemaLocation="scenario_20.xsd"', 'xsi:noNamespaceSchemaLocation="scenario.xsd"', file_string)
-                
-                    dest= open(file_path, 'w')
-                    dest.write(file_string)
-                    dest.close()
-                    
                     filenames.append(file_path)
+                    
             if len(filenames)>0:
                 #mainFileList.removeScenarios()
                 mainFileList.addScenarios(filenames)
