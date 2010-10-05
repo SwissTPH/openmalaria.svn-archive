@@ -16,6 +16,18 @@ Start by making a folder wherever you want to use OpenMalaria. Then, you need to
 
 Extract whichever you download into your openmalaria folder and then run the openmalaria executable from a command line (see [SetupOverview Getting Started]).
 
+= OpenmalariaTools =
+
+It is now possible to test a new application for creating and running experiments locally. The tool is currently in Beta phase (beta 1) and could present some bugs. This tool allows the user to execute, create, monitor experiments using a GUI instead of a terminal or the command line. The Application was first written on linux using pyGTK but is usable on windows. Because of the amount of libraries needed for using pyGTK on windows, an "all in one installer" has been developed and simplifies the whole installation.
+
+The beta 1 is using the schema version 20 and the linux, macosx installer will follow.
+
+You can download the latest installer here:
+
+* [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.01/win32/all_in_one_installer/all_in_one_installer_v00.01.exe win32 all in one installer]
+
+For further informations please have a look at [UseOpenMalariaTools Install and Use openmalariaTools]
+
 == Errors ==
 
 Note that, for windows, you may well have to install the .net framework (if trying to run openMalaria as above gives you an error message like "reinstall the application", try this). The most straightforward way of getting this seems to be to search for .net, go to the microsoft link, and click download.
