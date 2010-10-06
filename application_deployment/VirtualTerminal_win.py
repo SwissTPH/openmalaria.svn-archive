@@ -33,6 +33,7 @@ import time
 import subprocess
 import re
 import ctypes
+import signal
 
 from JavaAppsRun import LiveGraphRun
 
@@ -192,7 +193,10 @@ class VirtualTerminal_win(gtk.ScrolledWindow):
             if(self.userStop):
                 stderr_helper.reset_callback()
                 stdout_helper.reset_callback()
-                self.kill_win(sub.pid)
+                #self.kill_win(sub.pid)
+		if sub.poll()==None:
+			sub.kill()
+                        
             
             if(sub.poll()!=None):
                 stderr_helper.setOpenMalariaFinished()

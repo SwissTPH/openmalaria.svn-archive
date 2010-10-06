@@ -41,7 +41,7 @@ This object provides all the arguments, inputs and outputs
 for the openmalaria executable'''
 class OpenMalariaRun():
     
-    actual_scenario_version = '20'
+    actual_scenario_version = '21'
     
     base_folder = os.getcwd()
     sys.path[0] = os.path.join(base_folder, 'application', 'common')

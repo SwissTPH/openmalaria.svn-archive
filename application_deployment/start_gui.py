@@ -34,6 +34,7 @@ import time
 import os
 import exceptions
 import shutil
+import signal
 
 from xml.dom.minidom import parse
 from xml.dom.minidom import Node
@@ -1708,9 +1709,9 @@ class OMFrontend:
         for file in files:
             if os.path.isfile(os.path.join(testSrcDir, file)):
                 os.remove(os.path.join(testSrcDir,file))
-        
         gtk.main_quit()
-        sys.exit()
+        #sys.exit()
+	os.kill(os.getpid(),signal.SIGTERM)
         
     def __init__(self):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -1721,7 +1722,6 @@ class OMFrontend:
         self.window.set_gravity(gtk.gdk.GRAVITY_NORTH_WEST)
         icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
     
-        #self.fileviewersContainer = FileViewersContainer()
         openmalaria = NotebookFrame('', self.window, True, True)
         
         openmalaria.add_import_button()
@@ -1742,7 +1742,6 @@ class OMFrontend:
         
         self.window.resize(gtk.gdk.screen_width(),gtk.gdk.screen_height())
         self.window.set_icon_from_file(icon_path)
-        #self.fileviewersContainer.set_icon_from_file(icon_path)
         self.window.show()
         
     def main(self):

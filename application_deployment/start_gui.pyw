@@ -34,6 +34,7 @@ import time
 import os
 import exceptions
 import shutil
+import signal
 
 from xml.dom.minidom import parse
 from xml.dom.minidom import Node
@@ -127,7 +128,7 @@ This Frame lists the xml files. This list allows the user to do
 batch jobs without freezing the whole GUI'''        
 class FileList(gtk.Frame):
     
-    def __init__(self, experimentDialog = False):
+    def __init__(self, parent = None, experimentDialog = False):
         gtk.Frame.__init__(self)
         self.set_label('Scenarios')
         
@@ -233,7 +234,7 @@ class FileList(gtk.Frame):
             
             self.vbox.pack_start(self.hbox, False, False, 2)
             
-            self.fileViewersContainer = FileViewersContainer()
+            self.fileViewersContainer = FileViewersContainer(parent)
             self.filenames = list()
             
         self.total_selected = 0
@@ -468,10 +469,14 @@ Every scenario will be added in a notebook.
 class FileViewersContainer(gtk.Dialog):
     
     
-    def __init__(self):
-        gtk.Dialog.__init__(self)
+    def __init__(self, parent):
+        gtk.Dialog.__init__(self, 'Viewer', parent, 0, None)
+        
+        if parent != None:
+            self.resize(400, 500)
+        
+        
         self.set_border_width(10)
-        self.set_title("Editor")
         self.notebook = gtk.Notebook()
         self.notebook.set_tab_pos(gtk.POS_TOP)
         self.connect('delete-event', self.nothing)
@@ -795,8 +800,8 @@ One or more scenario files are selected, then those are loaded in the fileviewer
 The FileChooserDialog is then closed.
 '''
 class ScenariosChoice(gtk.FileChooserDialog):
-    def __init__(self, fileList):
-        gtk.FileChooserDialog.__init__(self, 'Scenarios to run...', None, gtk.FILE_CHOOSER_ACTION_OPEN, ('load',gtk.RESPONSE_OK))
+    def __init__(self, fileList, parent):
+        gtk.FileChooserDialog.__init__(self, 'Scenarios to run...', parent, gtk.FILE_CHOOSER_ACTION_OPEN, ('load',gtk.RESPONSE_OK))
         icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
         self.set_icon_from_file(icon_path)
         
@@ -886,8 +891,8 @@ This gtk.Dialog allows the user to create
 a full experiment (With sweeps and arms)'''    
 class ExperimentCreatorDialog(gtk.Dialog):
     
-    def __init__(self, mainFileList):
-        gtk.Dialog.__init__(self,'Experiment creation', None,0,('Cancel', gtk.RESPONSE_REJECT,
+    def __init__(self, mainFileList, parent):
+        gtk.Dialog.__init__(self,'Experiment creation', parent,0,('Cancel', gtk.RESPONSE_REJECT,
                       'Ok', gtk.RESPONSE_ACCEPT))
         
         icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
@@ -908,32 +913,96 @@ class ExperimentCreatorDialog(gtk.Dialog):
         self.base_entry = gtk.Entry()
         self.base_entry.set_width_chars(100)
         self.base_entry.set_sensitive(False)
+        sweeps_button = gtk.Button('Add sweeps...')
+        sweeps_button.connect('clicked', self.open_sweep_folder_chooser)
         hbox_base_button.pack_start(base_button, False, False, 2)
         hbox_base_button.pack_start(self.base_entry, True, True, 2)
+        hbox_base_button.pack_start(sweeps_button, False, False, 2)
         
         self.vbox.pack_start(hbox_base_button, False, False, 2)
         
-        hbox_options_sweeps = gtk.HBox(False, 2)
-        sweeps_button = gtk.Button('Add sweeps...')
-        sweeps_button.connect('clicked', self.open_sweep_folder_chooser)
+        hbox_options = gtk.HBox(False, 2)
         
-        seeds_label = gtk.Label('Seeds nbr')
-        self.seeds_entry = gtk.Entry()
-        self.seeds_entry.set_text('1')
-        self.seeds_entry.set_width_chars(10)
-        
+        vbox_1 = gtk.VBox(False, 2)
+        label_options = gtk.Label('Options')
+        label_options.set_alignment(0,0)
         self.validate_checkbox = gtk.CheckButton('Validate', False)
+        vbox_1.pack_start(label_options, False, False, 2)
+        vbox_1.pack_start(self.validate_checkbox, False, False, 2)
         
-        hbox_options_sweeps.pack_start(sweeps_button, False, False, 4)
-        hbox_options_sweeps.pack_start(self.seeds_entry, False, False, 0)
-        hbox_options_sweeps.pack_start(seeds_label, False, False, 2)
-        hbox_options_sweeps.pack_start(self.validate_checkbox, False, False, 2)
+        vbox_2 = gtk.VBox(False, 2)
+        label_seeds = gtk.Label('')
+        label_seeds.set_alignment(0,0)
+        self.seeds_checkbox = gtk.CheckButton('Add Seeds')
+        self.seeds_checkbox.connect('toggled', self.show_seeds_entry)
+        vbox_2.pack_start(label_seeds, False, False, 2)
+        vbox_2.pack_start(self.seeds_checkbox, False, False, 2)
         
-        self.vbox.pack_start(hbox_options_sweeps, False, False, 2)
+        '''vbox_3 = gtk.VBox(False, 2)
+        label_sql = gtk.Label('')
+        label_sql.set_alignment(0,0)
+        self.sql_checkbox = gtk.CheckButton('Export to database', False)
+        self.sql_checkbox.connect('toggled', self.show_db_entries)
+        vbox_3.pack_start(label_sql, False, False, 2)
+        vbox_3.pack_start(self.sql_checkbox, False, False, 2)'''
+        
+        
+        hbox_options.pack_start(vbox_1, False, False, 2)
+        hbox_options.pack_start(vbox_2, False, False, 2)
+        #hbox_options.pack_start(vbox_3, False, False, 20)
+        
+        
+        self.vbox.pack_start(hbox_options, False, False, 2)
+        
+        hbox_entries = gtk.HBox(False, 2)
+        
+        label_nothing = gtk.Label('')
+        
+        
+        self.vbox_seeds = gtk.VBox(False, 2)
+        label_seeds = gtk.Label('Number of seeds')
+        self.seeds_entry = gtk.Entry()
+        self.seeds_entry.set_width_chars(10)
+        self.vbox_seeds.pack_start(label_seeds, False, False, 2)
+        self.vbox_seeds.pack_start(self.seeds_entry, False, False, 2)
+        
+        self.vbox_login = gtk.VBox(False, 2)
+        label_login = gtk.Label('Login')
+        label_login.set_alignment(0,0)
+        self.entry_login = gtk.Entry()
+        self.vbox_login.pack_start(label_login, False, False, 2)
+        self.vbox_login.pack_start(self.entry_login, False, False, 2)
+        
+        self.vbox_passwd = gtk.VBox(False, 2)
+        label_passwd = gtk.Label('Password')
+        label_passwd.set_alignment(0,0)
+        self.entry_passwd = gtk.Entry()
+        self.vbox_passwd.pack_start(label_passwd, False, False, 2)
+        self.vbox_passwd.pack_start(self.entry_passwd, False, False, 2)
+        
+        self.vbox_address = gtk.VBox(False, 2)
+        label_server= gtk.Label('Server Address')
+        label_server.set_alignment(0,0)
+        self.entry_server = gtk.Entry()
+        self.vbox_address.pack_start(label_server, False, False, 2)
+        self.vbox_address.pack_start(self.entry_server, False, False, 2)
+        
+        
+        hbox_entries.pack_start(label_nothing, False, False, 33)
+        hbox_entries.pack_start(self.vbox_seeds, False, False, 2)
+        #hbox_entries.pack_start(self.vbox_login, False, False, 13)
+        #hbox_entries.pack_start(self.vbox_passwd, False, False, 13)
+        #hbox_entries.pack_start(self.vbox_address, False, False, 13)
+        
+        self.vbox.pack_start(hbox_entries, False, False, 2)
         
         self.sweeps_notebook = gtk.Notebook()
         self.sweeps_notebook.set_tab_pos(gtk.POS_TOP)
-        self.vbox.add(self.sweeps_notebook)
+        self.vbox.pack_start(self.sweeps_notebook, True, True, 2)
+        
+        self.status_label = gtk.Label('')
+        self.status_label.set_alignment(0,0)
+        self.vbox.pack_start(self.status_label, False, False, 2)
         self.connect('response', self.choose_action)
         self.connect('destroy', self.closed_creator)
         
@@ -944,6 +1013,10 @@ class ExperimentCreatorDialog(gtk.Dialog):
         self.base_file_chooser_opened=False
     
         self.show_all()
+        self.vbox_seeds.set_sensitive(False)
+        self.vbox_login.set_sensitive(False)
+        self.vbox_passwd.set_sensitive(False)
+        self.vbox_address.set_sensitive(False)
     
     '''
     open_sweep_folder_chooser:
@@ -952,12 +1025,27 @@ class ExperimentCreatorDialog(gtk.Dialog):
     def open_sweep_folder_chooser(self, widget, data=None):
         if not self.sweep_folder_chooser_opened:
             self.sweep_folder_chooser_opened = True
-            folder_chooser = gtk.FileChooserDialog('Choose sweep folder', None, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, ('ok',gtk.RESPONSE_OK)) 
+            folder_chooser = gtk.FileChooserDialog('Choose sweep folder', self, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, ('ok',gtk.RESPONSE_OK)) 
             icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
             folder_chooser.set_icon_from_file(icon_path)
             folder_chooser.connect('response', self.select_sweep_folder)
             folder_chooser.connect('destroy', self.allow_open_sweep_folder_chooser)
             folder_chooser.show()
+    
+    '''
+    show_seeds_entry:
+    If toggle button is active, then the seeds nbr entry is shown'''        
+    def show_seeds_entry(self, widget, data=None):
+        self.vbox_seeds.set_sensitive(widget.get_active())
+    
+    '''
+    show_db_entries:
+    If toggle button is active, then the entries for db connection
+    informations are shown'''    
+    def show_db_entries(self, widget, data=None):
+        self.vbox_login.set_sensitive(widget.get_active())
+        self.vbox_passwd.set_sensitive(widget.get_active())
+        self.vbox_address.set_sensitive(widget.get_active())
     
     '''
     allow_open_sweep_folder_chooser:
@@ -982,7 +1070,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
     def open_base_file_chooser(self, widget, data=None):
         if not self.base_file_chooser_opened:
             self.base_file_chooser_opened = True
-            base_file_chooser = gtk.FileChooserDialog('Choose base file', None, gtk.FILE_CHOOSER_ACTION_OPEN, ('ok', gtk.RESPONSE_OK))
+            base_file_chooser = gtk.FileChooserDialog('Choose base file', self, gtk.FILE_CHOOSER_ACTION_OPEN, ('ok', gtk.RESPONSE_OK))
             icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
             base_file_chooser.set_icon_from_file(icon_path)
             base_file_chooser.connect('response', self.select_base_file)
@@ -1033,7 +1121,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
                     extension = name_split[len(name_split)-1]
                     if extension == 'xml':
                         if fileList == None:
-                            fileList = FileList(True)
+                            fileList = FileList(None, True)
                         fileList.add_file(file_path, file)
                         
         if not fileList == None:
@@ -1110,7 +1198,11 @@ class ExperimentCreatorDialog(gtk.Dialog):
     Creates the input, output folders and the whole file structure for
     the experiment_creator.jar java application and then runs it'''    
     def create_experiment_files(self):
-        base_folder = os.getcwd() 
+        
+        base_folder = os.getcwd()
+        not_actual_scenario = False
+        
+        self.status_label.set_text('The system is currently creating the File Structure for the experiment creator, please wait...')
         
         experiment_name = self.name_entry.get_text()
         experiment_name += '_'+ time.strftime("%d_%b_%Y_%H%M%S")
@@ -1123,7 +1215,11 @@ class ExperimentCreatorDialog(gtk.Dialog):
         os.mkdir(input_folder)
         os.mkdir(output_folder)
         
+        if not self.is_using_right_schema_version(self.base_file_path):
+            not_actual_scenario = True
         shutil.copy2(self.base_file_path, os.path.join(input_folder, 'base.xml'))
+        testCommonDir = os.path.join(base_folder, 'application', 'common')
+        shutil.copy2(os.path.join(testCommonDir ,'scenario_'+OpenMalariaRun.actual_scenario_version+'.xsd'), input_folder)
         
         i=0
         while i < self.sweeps_notebook.get_n_pages():
@@ -1141,6 +1237,8 @@ class ExperimentCreatorDialog(gtk.Dialog):
             k = 0
             while k< len(sweep[0]):
                 if os.path.isfile(sweep[0][k]):
+                    if not self.is_using_right_schema_version(sweep[0][k]):
+                        not_actual_scenario = True
                     shutil.copy2(sweep[0][k], new_sweep_path)
                 
                 if sweep[1][k]:
@@ -1149,9 +1247,22 @@ class ExperimentCreatorDialog(gtk.Dialog):
                 
                 k+=1
             i+=1
+                
+        if not_actual_scenario:
+            error = 'The scenario files are using another schema version than the supported one (schema vers.'+OpenMalariaRun.actual_scenario_version+').'
+            error += '\nThe experiment creator will not be started.'
+            error += '\nPlease change the schema version.'
+            scenario_error_dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, error)
+            scenario_error_dialog.add_button('Ok', gtk.RESPONSE_OK)
+            scenario_error_dialog.run()
+            scenario_error_dialog.destroy()
+        else:
+            self.status_label.set_text('The experiment creator is now started, please wait...')
+            experimentCreator = ExperimentCreatorRun()
+            experimentCreator.start_experimentCreator(input_folder, output_folder, self.mainFileList, self.get_seeds_nbr(), self.validate_checkbox.get_active())
         
-        experimentCreator = ExperimentCreatorRun()
-        experimentCreator.start_experimentCreator(input_folder, output_folder, self.mainFileList, self.get_seeds_nbr())
+        
+        self.status_label.set_text('')    
         self.destroy()
                 
     '''
@@ -1162,6 +1273,19 @@ class ExperimentCreatorDialog(gtk.Dialog):
         self.destroy()
         
     
+    '''
+    is_using_right_schema_version:
+    Checks if the scenario is using the actual schema version'''
+    def is_using_right_schema_version(self, file_path):
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            src=open(file_path)
+            file_string=src.read()
+            src.close()
+        
+            return re.search('xsi:noNamespaceSchemaLocation="scenario_'+OpenMalariaRun.actual_scenario_version +'.xsd"', file_string) != None
+        else: 
+            return False
+
     '''
     get_seeds_nbr(self):
     Returns the number of seeds set by the user. If an invalid 
@@ -1186,11 +1310,13 @@ bottom line: Start/Stop buttons
 '''
 class NotebookFrame(gtk.Frame):
     
-    def __init__(self, frame_name, isWindows = False, isSimulatorFrame = True, fileViewerContainer = None, actualScenariosFolders=None):
+    def __init__(self, frame_name, parent, isWindows = False, isSimulatorFrame = True):
         gtk.Frame.__init__(self, frame_name)
         self.vertical_box = gtk.VBox(False, 10)
         self.vertical_box.show()
         self.lines_boxes = list()
+        self.parent_window = parent
+        self.fileList = FileList(self.parent_window)
         
         for i in range(3):
             self.lines_boxes.append(gtk.HBox(False, 7))
@@ -1211,8 +1337,6 @@ class NotebookFrame(gtk.Frame):
         
         self.sim_option_popsize = gtk.Entry()
         self.options = list()
-        
-        self.actualScenariosFolders = actualScenariosFolders
         
         base_folder = os.getcwd()
         
@@ -1237,6 +1361,7 @@ class NotebookFrame(gtk.Frame):
     def openMalariaCommand(self, widget, data=None):
         selected = self.fileList.get_selected_filenames()
         self.fileList.reset_simulation_state()
+        self.is_running = True
         filenames = selected[0]
         names = selected[1]
         iterators = selected[2]
@@ -1274,8 +1399,9 @@ class NotebookFrame(gtk.Frame):
                         pop_size = int(popsize_string)
                     except exceptions.ValueError:
                         pop_size = -1
-                    
-        for i in range(len(filenames)):
+        
+        i = 0            
+        while i < len(filenames) and self.is_running:
             if not only_one_folder:
                 simDir = os.path.join(testOutputsDir,names[i]+'_'+time.strftime("%d_%b_%Y_%H%M%S"))
                 os.mkdir(simDir)
@@ -1290,6 +1416,7 @@ class NotebookFrame(gtk.Frame):
                 elif run_feedback:
                     self.actualScenariosFolders.add_folder(simDir, names[i])
             self.fileList.set_simulation_state(run_feedback, iterators[i])
+            i += 1
         
         if only_one_folder:
             self.actualScenariosFolders.add_folder(simDir,name)
@@ -1318,7 +1445,7 @@ class NotebookFrame(gtk.Frame):
     to load in the tool'''
     def openNewDialog(self, widget, data=None):
         if not NotebookFrame.load_allready_open:
-            self.scenarioChoice = ScenariosChoice(self.fileList)
+            self.scenarioChoice = ScenariosChoice(self.fileList, self.parent_window)
             NotebookFrame.load_allready_open = True
     
     '''
@@ -1391,7 +1518,6 @@ class NotebookFrame(gtk.Frame):
     Adds a FileList Frame to the actual window
     (See FileList class)'''
     def add_file_list(self, line_number=1, at_start_h=True, resize=False):
-        self.fileList = FileList()
         self.add_object(line_number, self.fileList, at_start_h, resize)
     
     '''
@@ -1556,7 +1682,7 @@ class NotebookFrame(gtk.Frame):
     Opens a new experiment creator dialog''' 
     def open_new_experiment_creator_dialog(self, widget, data=None):
         if not NotebookFrame.creator_allready_open:
-            ExperimentCreatorDialog(self.fileList)
+            ExperimentCreatorDialog(self.fileList, self.parent_window)
             NotebookFrame.creator_allready_open = True
     
     '''
@@ -1564,6 +1690,7 @@ class NotebookFrame(gtk.Frame):
     Does a reset callback on the terminal object'''
     def reset_callback(self, widget, data=None):
         self.terminal.run_reset_callback()
+        self.is_running = False
 
 '''
 class creating the openMalaria Tools UI'''
@@ -1582,9 +1709,9 @@ class OMFrontend:
         for file in files:
             if os.path.isfile(os.path.join(testSrcDir, file)):
                 os.remove(os.path.join(testSrcDir,file))
-        
         gtk.main_quit()
-        sys.exit()
+        #sys.exit()
+	os.kill(os.getpid(),signal.SIGTERM)
         
     def __init__(self):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -1595,8 +1722,7 @@ class OMFrontend:
         self.window.set_gravity(gtk.gdk.GRAVITY_NORTH_WEST)
         icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
     
-        self.fileviewersContainer = FileViewersContainer()
-        openmalaria = NotebookFrame('', True, True, self.fileviewersContainer)
+        openmalaria = NotebookFrame('', self.window, True, True)
         
         openmalaria.add_import_button()
         openmalaria.add_experiment_creator_button()
@@ -1615,10 +1741,7 @@ class OMFrontend:
         openmalaria.show()
         
         self.window.resize(gtk.gdk.screen_width(),gtk.gdk.screen_height())
-        self.fileviewersContainer.set_transient_for(self.window)
-        self.fileviewersContainer.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
         self.window.set_icon_from_file(icon_path)
-        self.fileviewersContainer.set_icon_from_file(icon_path)
         self.window.show()
         
     def main(self):

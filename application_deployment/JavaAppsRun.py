@@ -35,7 +35,7 @@ This class is used to start the experiment_creator.jar
 java application'''
 class ExperimentCreatorRun():
     
-    actual_scenario_version = '20'
+    actual_scenario_version = '21'
     
     base_folder = os.getcwd()
     experiment_creator_path = os.path.join(base_folder, 'application', 'experiment_creator', 'experiment_creator.jar')
@@ -97,8 +97,8 @@ class ExperimentCreatorRun():
     def quit_experimentCreator(self):
         if not (self.pid == ''):
             try:
-                #os.kill(self.pid, signal.SIGKILL)
-                self.kill_win(self.pid)
+                os.kill(self.pid, signal.SIGKILL)
+                #self.kill_win(self.pid)
             except OSError:
                 self.pid = ''
     
