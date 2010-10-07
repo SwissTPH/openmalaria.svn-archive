@@ -24,6 +24,8 @@ The beta 1 is using the schema version 20 and the linux, macosx installer will f
 
 You can download the latest installer here:
 
+Please be aware of the fact that the windows all_in_one_installer will install all the needed python and pyGTK libraries. If you already have a python version installed, this could lead to conflicts. So you should uninstall your previous python installation or skip the python setup after having launched the all_in_one_installer. 
+
 * [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.01/win32/all_in_one_installer/all_in_one_installer_v00.01.exe win32 all in one installer]
 
 For further informations please have a look at [UseOpenMalariaTools Install and Use openmalariaTools]
