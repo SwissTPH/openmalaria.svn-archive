@@ -26,6 +26,8 @@ import signal
 import threading
 import ctypes
 import time
+import tempfile
+import shutil
 
 #from OpenMalariaRun import OpenMalariaRun
 
@@ -170,15 +172,13 @@ class LiveGraphRun():
         handle = kernel32.OpenProcess(1, 0, pid)
         return (0 != kernel32.TerminateProcess(handle, 0))  
 
-'''SchemaTranslatorRun:
-Deprecated, this object should allow the user 
-to use the SchemaTranslator. This will be implemented later'''
+'''SchemaTranslatorRun:'''
 class SchemaTranslatorRun():
     base_folder = os.getcwd()
-    input_folder_path = base_folder + "/translate_scenarios/scenarios_to_translate"
-    output_folder_path = base_folder + "/translate_scenarios/translated_scenarios"
-    schema_translator_folder = base_folder + "/application/schemaTranslator/SchemaTranslator.jar"
-    schema_folder = base_folder + "/application/common/"  
+    input_folder_path = os.path.join(base_folder, "translate_scenarios", "scenarios_to_translate")
+    output_folder_path = os.path.join(base_folder,  "translate_scenarios","translated_scenarios")
+    schema_translator_path = os.path.join(base_folder, "application", "schemaTranslator", "SchemaTranslator.jar")
+    schema_folder = os.path.join(base_folder,  "application", "common") + '/' 
     
     def set_input_folder_path(self, input_folder_path):
         self.input_folder_path = input_folder_path
@@ -186,8 +186,36 @@ class SchemaTranslatorRun():
     def set_output_folder_path(self, output_folder_path):
         self.output_folder_path = output_folder_path
         
-    def get_schemaTranslator_command(self):
-            return "java -jar "+self.schema_translator_folder+" --schema_folder "+self.schema_folder+" --input_folder "+self.input_folder_path+" --output_folder "+self.output_folder_path
+    def start_schematranslator_run_single(self, input_file_path):
+        
+        input_folder = os.path.split(input_file_path)[0]
+        
+        output_folder_path = os.path.join(input_folder, 'translated_to_schema_'+ExperimentCreatorRun.actual_scenario_version)
+        if not os.path.exists(output_folder_path):
+            os.mkdir(output_folder_path)
+            
+        temp_folder_path = tempfile.mkdtemp(dir=input_folder)
+        shutil.copy2(input_file_path, temp_folder_path)
+        
+        arglist = list()
+        arglist.append('java')
+        arglist.append('-jar')
+        arglist.append(self.schema_translator_path)
+        arglist.append('--schema_folder')
+        arglist.append(self.schema_folder)
+        arglist.append('--input_folder')
+        arglist.append(temp_folder_path)
+        arglist.append('--output_folder')
+        arglist.append(output_folder_path)
+        
+        sub = subprocess.Popen (arglist)
+        
+        while(sub.poll()==None):
+            time.sleep(.1)
+            
+        shutil.rmtree(temp_folder_path, ignore_errors=True)
+        
+        return output_folder_path
         
         
         

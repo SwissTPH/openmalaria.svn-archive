@@ -128,12 +128,20 @@ This Frame lists the xml files. This list allows the user to do
 batch jobs without freezing the whole GUI'''        
 class FileList(gtk.Frame):
     
+    IS_USING_CORRECT_SCENARIO_VERSION = 0
+    IS_TRANSLATABLE = 1
+    IS_NOT_TRANSLATABLE = -1
+    NOT_FOUND = -2
+    
     def __init__(self, parent = None, experimentDialog = False):
         gtk.Frame.__init__(self)
         self.set_label('Scenarios')
         
         self.scrolledWindow = gtk.ScrolledWindow()
         self.scrolledWindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        
+        self.experimentDialog = experimentDialog
+        self.parent_window = parent
         
         self.vbox = gtk.VBox(False, 2)
         
@@ -240,6 +248,40 @@ class FileList(gtk.Frame):
         self.total_selected = 0
         self.add(self.vbox)
         self.show_all()
+        
+    '''
+    check_scenario_version:
+    checks whether or not the loaded scenario schema version is supported
+    by the openmalaria application. If the schema version is higher than
+    the one used by the openmalaria application, then this schema can't be used
+    at all and no translation is possible. On an other hand, if the schema version
+    is lower than the one used by the openmalaria application, then in some cases,
+    a translation is possible.'''
+    def check_scenario_version(self, scenario_path):
+        if os.path.exists(scenario_path) and os.path.isfile(scenario_path):
+            src=open(scenario_path)
+            file_string=src.read()
+            src.close()
+            
+            search_match = re.search(r'(?P<schema_text_1>schemaVersion=")(?P<schema_version>\d+)(?P<schema_text_2>")', file_string)
+            
+            if search_match == None:
+                return self.IS_NOT_TRANSLATABLE
+            else:
+                try:
+                    schema_vers = int(search_match.group('schema_version'))
+                    print schema_vers
+                    if schema_vers > int(OpenMalariaRun.actual_scenario_version):
+                        return self.IS_NOT_TRANSLATABLE
+                    elif schema_vers < int(OpenMalariaRun.actual_scenario_version):
+                        return self.IS_TRANSLATABLE
+                    else:
+                        return self.IS_USING_CORRECT_SCENARIO_VERSION   
+                except exceptions.ValueError:
+                    return self.IS_NOT_TRANSLATABLE
+        else:
+            return self.NOT_FOUND
+                
     
     '''
     select_all:
@@ -319,8 +361,13 @@ class FileList(gtk.Frame):
     
     '''
     addScenarios:
-    Adds all in filenames list given files in the filelist.'''        
+    Adds all in filenames list given files in the filelist.
+    Checks scenario's schema version'''        
     def addScenarios(self, filenames):
+        wrong_version_not_translatable_scenarios = list()
+        wrong_version_translatable_scenarios = list()
+        not_found_scenarios = list()
+        
         for i in range(len(filenames)):
             actual_filename = filenames[i]
             if not(os.path.isdir(actual_filename)):
@@ -328,7 +375,66 @@ class FileList(gtk.Frame):
                 head, tail = os.path.split(actual_filename)
                 actual_name = tail
                 actual_name = string.split(actual_name, '.')[0]
-                self.add_file(actual_filename, actual_name)
+                if not self.experimentDialog:
+                    scenario_infos = list()
+                    scenario_infos.append(actual_name)
+                    scenario_infos.append(actual_filename)
+                    scenario_check = self.check_scenario_version(actual_filename)
+                    if(scenario_check == self.IS_USING_CORRECT_SCENARIO_VERSION):
+                        self.add_file(actual_filename, actual_name)
+                    elif(scenario_check == self.IS_TRANSLATABLE):
+                        wrong_version_translatable_scenarios.append(scenario_infos)
+                    elif(scenario_check == self.IS_NOT_TRANSLATABLE):
+                        wrong_version_not_translatable_scenarios.append(scenario_infos)
+                    else:
+                        not_found_scenarios.append(scenario_infos)
+                else:
+                    self.add_file(actual_filename, actual_name)
+                    
+        if len(wrong_version_translatable_scenarios) > 0 or len(wrong_version_not_translatable_scenarios) > 0 or len(not_found_scenarios) > 0:
+            self.show_import_problems_message(wrong_version_not_translatable_scenarios, wrong_version_translatable_scenarios, not_found_scenarios)
+            
+    '''
+    show_import_problems_message:
+    Shows the found problems during the importation of some scenarios in openMalariaTools'''
+    def show_import_problems_message(self, wvnts, wvts, nfs):
+        
+        if len(wvts) > 0:
+            problems = str(len(wvts)) + " scenarios are using an older (possibly translatable) schema version. Would you like that the system tries to update the scenarios using an older schema version? "
+            import_problems_message = gtk.MessageDialog(self.parent_window, gtk.DIALOG_MODAL,gtk.MESSAGE_WARNING,gtk.BUTTONS_NONE, problems)
+            import_problems_message.add_button('Yes', gtk.RESPONSE_YES)
+            import_problems_message.add_button('No', gtk.RESPONSE_NO)
+            import_problems_message.connect('response', self.start_translator, wvts)
+            import_problems_message.run()
+            import_problems_message.destroy()
+            
+        if len(wvnts)>0:
+            error_message = str(len(wvnts)) + " scenarios are using an unsupported schema version. Please try to update to a newest version of openmalariaTools..."
+            import_error_message = gtk.MessageDialog(self.parent_window, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, problems)
+            import_error_message.add_button('Ok', gtk.RESPONSE_OK)
+            import_error_message.run()
+            import_error_message.destroy()     
+    
+    '''
+    start_translator:
+    Starts the translator if the user press ok on the message dialog'''
+    def start_translator(self, dialog, response_id, wvts):
+        if response_id == gtk.RESPONSE_YES:
+            progress_bar = gtk.ProgressBar()
+            progress_bar.set_text("Scenarios' translation...")
+            dialog.vbox.pack_start(progress_bar, False, False, 2)
+            progress_bar.show()
+            div = len(wvts)
+            translator = SchemaTranslatorRun()
+            i=1
+            for scenario_to_translate in wvts:
+                output_folder = translator.start_schematranslator_run_single(scenario_to_translate[1])
+                output_file_path = os.path.join(output_folder, scenario_to_translate[0]+'.xml')
+                if os.path.exists(output_file_path):
+                    self.add_file(output_file_path, scenario_to_translate[0])
+                progress_bar.set_fraction(i/div)
+                i +=1
+                       
     
     '''
     add_file:
