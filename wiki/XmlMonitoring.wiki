@@ -31,6 +31,7 @@ All options not otherwise specified are point-time outputs.
 || human availability || Mean availability of humans to mosquitoes over human population. ||
 || immunity h || Average of `_cumulativeh` parameter across humans, which is the cumulative number of infections recieved since birth ||
 || immunity Y || Average of `_cumulativeY` parameter across humans, which is the cumulative parasite density since birth ||
+|| new infections || Number of new infections since last report, including super infections as with survey measure 43. ||
 
 == Survey measures ==
 
@@ -93,7 +94,7 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 40 || Clinical_DrugUsage  || n ||  Quantities of drugs used, per active ingredient abbreviation ||
 || 41 || Clinical_FirstDayDeaths  || n ||  Direct death on first day of CM (before treatment takes effect) ||
 || 42 || Clinical_HospitalFirstDayDeaths  || n ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
-|| 43 || nNewInfections || y || The number of actual infections since the last survey, per age group. ||
+|| 43 || nNewInfections || y || The number of infections introduced since the last survey, per age group. This counts super-infections without the usual limit of 21 concurrent infections, so in some ways is similar to introduction of infections in an infinite population. ||
 || 44 || nMassITNs || n || The number of ITNs delivered by mass distribution since last survey. ||
 || 45 || nEPI_ITNs || n || The number of ITNs delivered through EPI since last survey. ||
 || 46 || nMassIRS || n || The number of people newly protected by IRS since last survey. ||
