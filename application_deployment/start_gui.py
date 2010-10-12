@@ -420,7 +420,6 @@ class FileList(gtk.Frame):
     Starts the translator if the user press ok on the message dialog'''
     def start_translator(self, dialog, response_id, wvts):
         if response_id == gtk.RESPONSE_YES:
-            print 'fais chier bordel de merde!'
             progress_bar = gtk.ProgressBar()
             progress_bar.set_text("Scenarios' translation...")
             dialog.vbox.pack_start(progress_bar, True, True, 2)
@@ -1654,8 +1653,7 @@ class NotebookFrame(gtk.Frame):
         if response_id == gtk.RESPONSE_OK:
             self.run_scenarios_outputs = widget.get_filename()
             entry.set_text(self.run_scenarios_outputs)
-            widget.destroy()
-        
+            widget.destroy()  
    
     '''
     add_terminal:
