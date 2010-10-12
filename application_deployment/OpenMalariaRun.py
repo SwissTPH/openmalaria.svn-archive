@@ -52,10 +52,6 @@ class OpenMalariaRun():
     testSrcDir = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run')
     testBuildDir = os.path.join(base_folder,  'application')
     
-    testTranslationDir = os.path.join(base_folder,  'translate_scenarios')
-    testTranslationDirIn = os.path.join(testTranslationDir,  'scenarios_to_translate')
-    testTranslationDirOut = os.path.join(testTranslationDir,  'translated_scenarios')
-    
     
     def findFile (self, *names):
         

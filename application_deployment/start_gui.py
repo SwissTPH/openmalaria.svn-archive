@@ -420,10 +420,11 @@ class FileList(gtk.Frame):
     Starts the translator if the user press ok on the message dialog'''
     def start_translator(self, dialog, response_id, wvts):
         if response_id == gtk.RESPONSE_YES:
+            print 'fais chier bordel de merde!'
             progress_bar = gtk.ProgressBar()
             progress_bar.set_text("Scenarios' translation...")
-            dialog.vbox.pack_start(progress_bar, False, False, 2)
-            progress_bar.show()
+            dialog.vbox.pack_start(progress_bar, True, True, 2)
+            dialog.vbox.show_all()
             div = len(wvts)
             translator = SchemaTranslatorRun()
             i=1
@@ -1424,13 +1425,14 @@ class NotebookFrame(gtk.Frame):
         self.parent_window = parent
         self.fileList = FileList(self.parent_window)
         
-        for i in range(3):
+        for i in range(4):
             self.lines_boxes.append(gtk.HBox(False, 7))
             self.lines_boxes[i].show() 
         
         self.vertical_box.pack_start(self.lines_boxes[0], False, False, 0)
-        self.vertical_box.pack_start(self.lines_boxes[1], True, True, 0)
-        self.vertical_box.pack_start(self.lines_boxes[2], False, False, 0)
+        self.vertical_box.pack_start(self.lines_boxes[1], False, False, 0)
+        self.vertical_box.pack_start(self.lines_boxes[2], True, True, 0)
+        self.vertical_box.pack_start(self.lines_boxes[3], False, False, 0)
         
         self.add(self.vertical_box)
         
@@ -1482,8 +1484,6 @@ class NotebookFrame(gtk.Frame):
         custom_pop_size = False
         pop_size = 0
         
-        testOutputsDir = os.path.join(os.getcwd(),  'run_scenarios', 'outputs')
-        
         for i in range(len(self.options)):
             option = self.options[i]
             if(option[0].get_active()):
@@ -1496,7 +1496,7 @@ class NotebookFrame(gtk.Frame):
                 elif(option[1]=='only_one_folder'):
                     only_one_folder = True
                     name = "batch_run_"+time.strftime("%d_%b_%Y_%H%M%S")
-                    simDir= os.path.join(testOutputsDir,name)
+                    simDir= os.path.join(self.run_scenarios_outputs,name)
                     os.mkdir(simDir)
                 elif(option[1]=='custom_population_size'):
                     popsize_string = self.sim_population_size_entry.get_text()
@@ -1509,7 +1509,7 @@ class NotebookFrame(gtk.Frame):
         i = 0            
         while i < len(filenames) and self.is_running:
             if not only_one_folder:
-                simDir = os.path.join(testOutputsDir,names[i]+'_'+time.strftime("%d_%b_%Y_%H%M%S"))
+                simDir = os.path.join(self.run_scenarios_outputs,names[i]+'_'+time.strftime("%d_%b_%Y_%H%M%S"))
                 os.mkdir(simDir)
             if i == 0:
                 newBuffer = True
@@ -1599,11 +1599,68 @@ class NotebookFrame(gtk.Frame):
     changes the population size's option toggle button state'''
     def change_sim_population_size_entry_state(self, widget):
         self.sim_population_size_entry.set_sensitive(widget.get_active())
+        
+    '''
+    add_output_folder_button:
+    Adds a button and an entry that permits the user to choose the output folder'''
+    def add_output_folder_button(self, line_number=1, at_start_h=True):
+        
+        self.output_folder_chooser_opened = False
+        
+        output_folder_button_vbox = gtk.VBox(False, 2)
+        output_folder_label = gtk.Label('Select Output folder')
+        output_folder_label.set_alignment(0,0)
+        
+        output_folder_button_hbox = gtk.HBox(False, 2)
+        output_folder_button = gtk.Button("Select...")
+        output_folder_entry = gtk.Entry()
+        output_folder_entry.set_text(self.run_scenarios_outputs)
+        output_folder_entry.set_width_chars(113)
+        output_folder_entry.set_sensitive(False)
+        output_folder_button.connect('clicked', self.open_output_folder_chooser, output_folder_entry)
+        output_folder_button_hbox.pack_start(output_folder_button, False, False, 0)
+        output_folder_button_hbox.pack_start(output_folder_entry)
+        
+        output_folder_button_vbox.pack_start(output_folder_label, False, False, 2)
+        output_folder_button_vbox.pack_start(output_folder_button_hbox, False, False, 2)
+        output_folder_button_vbox.show_all()
+        
+        self.add_object(line_number, output_folder_button_vbox, at_start_h)
+    
+    '''
+    open_output_folder_chooser:
+    Opens a folder chooser dialog'''
+    def open_output_folder_chooser(self, widget, entry):
+        if not self.output_folder_chooser_opened:
+            self.output_folder_chooser_opened = True
+            folder_chooser = gtk.FileChooserDialog('Choose output folder', self.parent, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, ('ok',gtk.RESPONSE_OK)) 
+            icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+            folder_chooser.set_icon_from_file(icon_path)
+            folder_chooser.connect('response', self.select_output_folder, entry)
+            folder_chooser.connect('destroy', self.allow_open_output_folder_chooser)
+            folder_chooser.show()
+    
+    '''
+    allow_open_output_folder_chooser:
+    This function is used to prevent multiple chooser openings'''
+    def allow_open_output_folder_chooser(self, widget, data=None):
+        self.output_folder_chooser_opened = False
+    
+    '''
+    select_output_folder:
+    If the user clicks ok, then the actual output folder path is
+    the same as the selected folder in the chooser'''
+    def select_output_folder(self, widget, response_id, entry):
+        if response_id == gtk.RESPONSE_OK:
+            self.run_scenarios_outputs = widget.get_filename()
+            entry.set_text(self.run_scenarios_outputs)
+            widget.destroy()
+        
    
     '''
     add_terminal:
     Adds a terminal to output the simulations status during the runs''' 
-    def add_terminal(self, line_number=1, at_start_h=True, resize=True):
+    def add_terminal(self, line_number=2, at_start_h=True, resize=True):
         if(self.first_terminal):
             terminal_hbox = gtk.HBox(False, 2)
             
@@ -1623,14 +1680,14 @@ class NotebookFrame(gtk.Frame):
     add_file_list:
     Adds a FileList Frame to the actual window
     (See FileList class)'''
-    def add_file_list(self, line_number=1, at_start_h=True, resize=False):
+    def add_file_list(self, line_number=2, at_start_h=True, resize=False):
         self.add_object(line_number, self.fileList, at_start_h, resize)
     
     '''
     add_outputs_frame:
     Adds a ActualScenariosFolders Frame to the actual window 
     (See ActualScenariosFolders class)'''    
-    def add_outputs_frame(self, line_number=2, at_start_h=True, resize=True):
+    def add_outputs_frame(self, line_number=3, at_start_h=True, resize=True):
         self.actualScenariosFolders = ActualScenariosFolders()
         self.add_object(line_number, self.actualScenariosFolders, at_start_h, resize)
     
@@ -1715,7 +1772,7 @@ class NotebookFrame(gtk.Frame):
     '''
     add_start_button:
     Adds a start button for starting the simulations\batches'''
-    def add_start_button(self, at_start_h=True, cbox_line_number=0, button_line_number=2, title="Start", simulator=True):
+    def add_start_button(self, at_start_h=True, cbox_line_number=0, button_line_number=3, title="Start", simulator=True):
         if(self.first_start_button):
             if(simulator):
                 vbox = gtk.VBox(False,2)
@@ -1745,7 +1802,7 @@ class NotebookFrame(gtk.Frame):
     '''
     add_stop_button:
     Adds a stop button for terminating the simulations\batches'''
-    def add_stop_button(self, at_start_h=True, line_number=2, title="Stop"):
+    def add_stop_button(self, at_start_h=True, line_number=3, title="Stop"):
         if(self.first_stop_button):
             vbox = gtk.VBox(False,2)
             sim_stop_button_label = gtk.Label(title)
@@ -1842,6 +1899,7 @@ class OMFrontend:
         openmalaria.add_option_button("Don't cleanup", '-c')
         openmalaria.add_option_button('Single output folder', 'only_one_folder')
         openmalaria.add_population_size_entry()
+        openmalaria.add_output_folder_button()
         
         self.window.add(openmalaria)
         openmalaria.show()
