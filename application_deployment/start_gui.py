@@ -426,14 +426,16 @@ class FileList(gtk.Frame):
             dialog.vbox.show_all()
             div = len(wvts)
             translator = SchemaTranslatorRun()
-            i=1
-            for scenario_to_translate in wvts:
+            new_files = translator.start_schematranslator_run(wvts)
+            self.addScenarios(new_files)
+            
+            '''for scenario_to_translate in wvts:
                 output_folder = translator.start_schematranslator_run_single(scenario_to_translate[1])
                 output_file_path = os.path.join(output_folder, scenario_to_translate[0]+'.xml')
                 if os.path.exists(output_file_path):
                     self.add_file(output_file_path, scenario_to_translate[0])
                 progress_bar.set_fraction(i/div)
-                i +=1
+                i +=1'''
                        
     
     '''
@@ -907,7 +909,7 @@ The FileChooserDialog is then closed.
 '''
 class ScenariosChoice(gtk.FileChooserDialog):
     def __init__(self, fileList, parent):
-        gtk.FileChooserDialog.__init__(self, 'Scenarios to run...', parent, gtk.FILE_CHOOSER_ACTION_OPEN, ('load',gtk.RESPONSE_OK))
+        gtk.FileChooserDialog.__init__(self, 'Scenarios to run...', parent, gtk.FILE_CHOOSER_ACTION_OPEN, ('load',gtk.RESPONSE_OK, 'cancel', gtk.RESPONSE_CANCEL))
         icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
         self.set_icon_from_file(icon_path)
         
@@ -937,9 +939,10 @@ class ScenariosChoice(gtk.FileChooserDialog):
     update the FileViewerContainer when new scenarios are selected
     and the load button has been clicked.
     '''
-    def updateFileList(self, widget, data=None):
-        scenarios = self.importScenarios()
-        self.fileList.addScenarios(scenarios)
+    def updateFileList(self, widget, response_id, data=None):
+        if response_id == gtk.RESPONSE_OK:
+            scenarios = self.importScenarios()
+            self.fileList.addScenarios(scenarios)
         self.destroy()
     
     '''
@@ -949,11 +952,10 @@ class ScenariosChoice(gtk.FileChooserDialog):
     '''
     def importScenarios(self,data=None):
         selectedFiles = self.get_filenames()
-        selectedFolder = self.get_current_folder()
+        '''selectedFolder = self.get_current_folder()
         if not (selectedFolder == self.run_scenarios_base):
             for i in range(len(selectedFiles)):
-                selectedFiles[i] = self.importScenario(selectedFiles[i])
-                print selectedFiles[i]
+                selectedFiles[i] = self.importScenario(selectedFiles[i])'''
         return selectedFiles
     
     '''
@@ -1027,6 +1029,21 @@ class ExperimentCreatorDialog(gtk.Dialog):
         
         self.vbox.pack_start(hbox_base_button, False, False, 2)
         
+        label_experiment_vbox = gtk.VBox(False, 2)
+        label_experiment_hbox = gtk.HBox(False, 2)
+        experiment_folder_button = gtk.Button('Select output folder')
+        self.experiment_folder_entry = gtk.Entry()
+        self.experiment_folder_entry.set_width_chars(100)
+        self.experiment_folder_entry.set_sensitive(False)
+        self.experiment_folder_entry.set_text(os.path.join(os.getcwd(), 'run_scenarios', 'scenarios_to_run'))
+        experiment_folder_button.connect('clicked', self.open_output_folder_chooser, self.experiment_folder_entry)
+        label_experiment_hbox.pack_start(experiment_folder_button, False, False, 0)
+        label_experiment_hbox.pack_start(self.experiment_folder_entry, True, True, 2)
+        label_experiment_hbox.show_all()
+        label_experiment_vbox.pack_start(label_experiment_hbox, False, False, 2)
+        
+        self.vbox.pack_start(label_experiment_vbox, False, False, 2)
+        
         hbox_options = gtk.HBox(False, 2)
         
         vbox_1 = gtk.VBox(False, 2)
@@ -1044,26 +1061,14 @@ class ExperimentCreatorDialog(gtk.Dialog):
         vbox_2.pack_start(label_seeds, False, False, 2)
         vbox_2.pack_start(self.seeds_checkbox, False, False, 2)
         
-        '''vbox_3 = gtk.VBox(False, 2)
-        label_sql = gtk.Label('')
-        label_sql.set_alignment(0,0)
-        self.sql_checkbox = gtk.CheckButton('Export to database', False)
-        self.sql_checkbox.connect('toggled', self.show_db_entries)
-        vbox_3.pack_start(label_sql, False, False, 2)
-        vbox_3.pack_start(self.sql_checkbox, False, False, 2)'''
-        
-        
         hbox_options.pack_start(vbox_1, False, False, 2)
         hbox_options.pack_start(vbox_2, False, False, 2)
-        #hbox_options.pack_start(vbox_3, False, False, 20)
-        
         
         self.vbox.pack_start(hbox_options, False, False, 2)
         
         hbox_entries = gtk.HBox(False, 2)
         
         label_nothing = gtk.Label('')
-        
         
         self.vbox_seeds = gtk.VBox(False, 2)
         label_seeds = gtk.Label('Number of seeds')
@@ -1093,7 +1098,6 @@ class ExperimentCreatorDialog(gtk.Dialog):
         self.vbox_address.pack_start(label_server, False, False, 2)
         self.vbox_address.pack_start(self.entry_server, False, False, 2)
         
-        
         hbox_entries.pack_start(label_nothing, False, False, 33)
         hbox_entries.pack_start(self.vbox_seeds, False, False, 2)
         #hbox_entries.pack_start(self.vbox_login, False, False, 13)
@@ -1117,6 +1121,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
         
         self.sweep_folder_chooser_opened=False
         self.base_file_chooser_opened=False
+        self.output_folder_chooser_opened=False
     
         self.show_all()
         self.vbox_seeds.set_sensitive(False)
@@ -1134,9 +1139,25 @@ class ExperimentCreatorDialog(gtk.Dialog):
             folder_chooser = gtk.FileChooserDialog('Choose sweep folder', self, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, ('ok',gtk.RESPONSE_OK)) 
             icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
             folder_chooser.set_icon_from_file(icon_path)
+            folder_chooser.set_select_multiple(True)
             folder_chooser.connect('response', self.select_sweep_folder)
             folder_chooser.connect('destroy', self.allow_open_sweep_folder_chooser)
             folder_chooser.show()
+    
+    '''
+    open_output_folder_chooser:
+    Opens a Folder chooser. The user should then select
+    a folder where the generated scenarios should be saved'''
+    def open_output_folder_chooser(self, widget, entry):
+        if not self.output_folder_chooser_opened:
+            self.output_folder_chooser_opened = True
+            folder_chooser = gtk.FileChooserDialog('Choose sweep folder', self, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, ('ok',gtk.RESPONSE_OK, 'cancel', gtk.RESPONSE_CANCEL)) 
+            icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+            folder_chooser.set_icon_from_file(icon_path)
+            folder_chooser.connect('response', self.add_output_folder, entry)
+            folder_chooser.connect('destroy', self.allow_open_output_folder_chooser)
+            folder_chooser.show()
+            
     
     '''
     show_seeds_entry:
@@ -1161,12 +1182,30 @@ class ExperimentCreatorDialog(gtk.Dialog):
         self.sweep_folder_chooser_opened = False
         
     '''
+    allow_open_output_folder_chooser:
+    Sets output_folder_chooser_opened to True. Then the user 
+    is able to reopen an output folder chooser dialog'''
+    def allow_open_output_folder_chooser(self, widget, data=None):
+        self.output_folder_chooser_opened = False
+        
+    '''
     select_sweep_folder:
     Selects a Sweep folder. Then a new tab is added in 
     the experiment creator containing an overview of all
     the scenarios contained in the folder'''
-    def select_sweep_folder(self, widget, data):
-        self.add_sweep_tab(widget.get_filename())
+    def select_sweep_folder(self, widget, response_id, data=None):
+        if response_id == gtk.RESPONSE_OK:
+            filenames = widget.get_filenames()
+            for filename in filenames:
+                self.add_sweep_tab(filename)
+        widget.destroy()
+    
+        
+    def add_output_folder(self, widget, response_id, entry):
+        output_folder_path = widget.get_filename()
+        if response_id == gtk.RESPONSE_OK:
+            if(os.path.isdir(output_folder_path)):
+                entry.set_text(output_folder_path)
         widget.destroy()
     
     '''
@@ -1285,8 +1324,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
     If the "response" is ok (-3) then start the creation, else (cancel)
     stop'''        
     def choose_action(self, widget, response_id):
-        
-        if response_id == -3:
+        if response_id == gtk.RESPONSE_ACCEPT:
             self.create_experiment_files()
         else:
             self.destroy()
@@ -1305,7 +1343,6 @@ class ExperimentCreatorDialog(gtk.Dialog):
     the experiment_creator.jar java application and then runs it'''    
     def create_experiment_files(self):
         
-        base_folder = os.getcwd()
         not_actual_scenario = False
         
         self.status_label.set_text('The system is currently creating the File Structure for the experiment creator, please wait...')
@@ -1313,8 +1350,9 @@ class ExperimentCreatorDialog(gtk.Dialog):
         experiment_name = self.name_entry.get_text()
         experiment_name += '_'+ time.strftime("%d_%b_%Y_%H%M%S")
         
-        experiment_folder = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run', experiment_name)
-        os.mkdir(experiment_folder)
+        experiment_folder = os.path.join(self.experiment_folder_entry.get_text(), experiment_name)
+        if not os.path.exists(experiment_folder):
+            os.mkdir(experiment_folder)
         
         input_folder = os.path.join(experiment_folder, 'input')
         output_folder = os.path.join(experiment_folder, 'output')
@@ -1324,6 +1362,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
         if not self.is_using_right_schema_version(self.base_file_path):
             not_actual_scenario = True
         shutil.copy2(self.base_file_path, os.path.join(input_folder, 'base.xml'))
+        base_folder = os.getcwd()
         testCommonDir = os.path.join(base_folder, 'application', 'common')
         shutil.copy2(os.path.join(testCommonDir ,'scenario_'+OpenMalariaRun.actual_scenario_version+'.xsd'), input_folder)
         
@@ -1337,8 +1376,21 @@ class ExperimentCreatorDialog(gtk.Dialog):
             head, sweep_name = os.path.split(sweep_path)
             
             new_sweep_path = os.path.join(input_folder, sweep_name)
-            os.mkdir(new_sweep_path)
             
+            if os.path.exists(new_sweep_path):
+                filenames = list()
+                for filename in os.listdir(input_folder):
+                    filenames.append(filename)
+                test_sweep_name = sweep_name
+                i = 1
+                
+                while(filenames.count(test_sweep_name)>0):
+                    test_sweep_name = sweep_name + '_'+str(i)
+                    i = i + 1 
+                     
+                new_sweep_path = os.path.join(input_folder, test_sweep_name)
+                 
+            os.mkdir(new_sweep_path)
             
             k = 0
             while k< len(sweep[0]):

@@ -230,7 +230,8 @@ class OpenMalariaRun():
         try:
             os.rmdir(simDir)
         except OSError:
-            terminal.feed_command("files are in Directory %s " % simDir +'\n\n')
+            if success:
+                terminal.feed_command("files are in Directory %s " % simDir +'\n\n')
         
         #terminal.feed_command("\033[0;00m")
         return success

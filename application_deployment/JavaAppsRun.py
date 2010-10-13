@@ -186,16 +186,13 @@ class SchemaTranslatorRun():
     def set_output_folder_path(self, output_folder_path):
         self.output_folder_path = output_folder_path
         
-    def start_schematranslator_run_single(self, input_file_path):
+    def start_schematranslator_run(self, input_files_paths):
         
-        input_folder = os.path.split(input_file_path)[0]
+        temp_input_folder_path = tempfile.mkdtemp(dir=self.input_folder_path)
+        temp_output_folder_path = tempfile.mkdtemp(dir=self.output_folder_path)
         
-        output_folder_path = os.path.join(input_folder, 'translated_to_schema_'+ExperimentCreatorRun.actual_scenario_version)
-        if not os.path.exists(output_folder_path):
-            os.mkdir(output_folder_path)
-            
-        temp_folder_path = tempfile.mkdtemp(dir=input_folder)
-        shutil.copy2(input_file_path, temp_folder_path)
+        for input_file_path in input_files_paths:
+            shutil.copy2(input_file_path[1], temp_input_folder_path)
         
         arglist = list()
         arglist.append('java')
@@ -204,18 +201,32 @@ class SchemaTranslatorRun():
         arglist.append('--schema_folder')
         arglist.append(self.schema_folder)
         arglist.append('--input_folder')
-        arglist.append(temp_folder_path)
+        arglist.append(temp_input_folder_path)
         arglist.append('--output_folder')
-        arglist.append(output_folder_path)
+        arglist.append(temp_output_folder_path)
         
         sub = subprocess.Popen (arglist)
         
         while(sub.poll()==None):
             time.sleep(.1)
-            
-        shutil.rmtree(temp_folder_path, ignore_errors=True)
         
-        return output_folder_path
+        output_files_paths = list()
+            
+        for input_file_path in input_files_paths:
+            input_folder_path, input_file_name = os.path.split(input_file_path[1])
+            temp_output_file_path = os.path.join(temp_output_folder_path, input_file_name)
+            if os.path.exists(temp_output_file_path) and os.path.isfile(temp_output_file_path):
+                output_folder_path = os.path.join(input_folder_path, 'translated_to_schema_'+ExperimentCreatorRun.actual_scenario_version)
+                if not os.path.exists(output_folder_path):
+                    os.mkdir(output_folder_path)
+                shutil.copy2(temp_output_file_path, output_folder_path)
+                output_files_paths.append(os.path.join(output_folder_path, input_file_name))
+                
+            
+        shutil.rmtree(temp_input_folder_path, ignore_errors=True)
+        shutil.rmtree(temp_output_folder_path, ignore_errors=True)
+        
+        return output_files_paths
         
         
         
