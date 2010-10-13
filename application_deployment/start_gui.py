@@ -363,7 +363,7 @@ class FileList(gtk.Frame):
     addScenarios:
     Adds all in filenames list given files in the filelist.
     Checks scenario's schema version'''        
-    def addScenarios(self, filenames):
+    def addScenarios(self, filenames, added_message = None):
         wrong_version_not_translatable_scenarios = list()
         wrong_version_translatable_scenarios = list()
         not_found_scenarios = list()
@@ -375,32 +375,33 @@ class FileList(gtk.Frame):
                 head, tail = os.path.split(actual_filename)
                 actual_name = tail
                 actual_name = string.split(actual_name, '.')[0]
-                if not self.experimentDialog:
-                    scenario_infos = list()
-                    scenario_infos.append(actual_name)
-                    scenario_infos.append(actual_filename)
-                    scenario_check = self.check_scenario_version(actual_filename)
-                    if(scenario_check == self.IS_USING_CORRECT_SCENARIO_VERSION):
-                        self.add_file(actual_filename, actual_name)
-                    elif(scenario_check == self.IS_TRANSLATABLE):
-                        wrong_version_translatable_scenarios.append(scenario_infos)
-                    elif(scenario_check == self.IS_NOT_TRANSLATABLE):
-                        wrong_version_not_translatable_scenarios.append(scenario_infos)
-                    else:
-                        not_found_scenarios.append(scenario_infos)
-                else:
+                scenario_infos = list()
+                scenario_infos.append(actual_name)
+                scenario_infos.append(actual_filename)
+                scenario_check = self.check_scenario_version(actual_filename)
+                if(scenario_check == self.IS_USING_CORRECT_SCENARIO_VERSION):
                     self.add_file(actual_filename, actual_name)
+                elif(scenario_check == self.IS_TRANSLATABLE):
+                    wrong_version_translatable_scenarios.append(scenario_infos)
+                elif(scenario_check == self.IS_NOT_TRANSLATABLE):
+                    wrong_version_not_translatable_scenarios.append(scenario_infos)
+                else:
+                    not_found_scenarios.append(scenario_infos)
                     
         if len(wrong_version_translatable_scenarios) > 0 or len(wrong_version_not_translatable_scenarios) > 0 or len(not_found_scenarios) > 0:
-            self.show_import_problems_message(wrong_version_not_translatable_scenarios, wrong_version_translatable_scenarios, not_found_scenarios)
+            self.show_import_problems_message(wrong_version_not_translatable_scenarios, wrong_version_translatable_scenarios, not_found_scenarios, added_message)
             
     '''
     show_import_problems_message:
     Shows the found problems during the importation of some scenarios in openMalariaTools'''
-    def show_import_problems_message(self, wvnts, wvts, nfs):
+    def show_import_problems_message(self, wvnts, wvts, nfs, added_message):
         
         if len(wvts) > 0:
-            problems = str(len(wvts)) + " scenarios are using an older (possibly translatable) schema version. Would you like that the system tries to update the scenarios using an older schema version? "
+            problems = ''
+            if not added_message == None:
+                problems = added_message + '\n'
+            
+            problems += str(len(wvts)) + " scenarios are using an older (possibly translatable) schema version. Would you like that the system tries to update the scenarios using an older schema version? "
             import_problems_message = gtk.MessageDialog(self.parent_window, gtk.DIALOG_MODAL,gtk.MESSAGE_WARNING,gtk.BUTTONS_NONE, problems)
             import_problems_message.add_button('Yes', gtk.RESPONSE_YES)
             import_problems_message.add_button('No', gtk.RESPONSE_NO)
@@ -409,7 +410,11 @@ class FileList(gtk.Frame):
             import_problems_message.destroy()
             
         if len(wvnts)>0:
-            error_message = str(len(wvnts)) + " scenarios are using an unsupported schema version. Please try to update to a newest version of openmalariaTools..."
+            error_message = ''
+            if not added_message == None:
+                error_message = added_message + '\n'
+            
+            error_message += str(len(wvnts)) + " scenarios are using an unsupported schema version. You will not be able to run these scenarios. Please try to update to a newest version of openmalariaTools..."
             import_error_message = gtk.MessageDialog(self.parent_window, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, problems)
             import_error_message.add_button('Ok', gtk.RESPONSE_OK)
             import_error_message.run()
@@ -420,23 +425,9 @@ class FileList(gtk.Frame):
     Starts the translator if the user press ok on the message dialog'''
     def start_translator(self, dialog, response_id, wvts):
         if response_id == gtk.RESPONSE_YES:
-            progress_bar = gtk.ProgressBar()
-            progress_bar.set_text("Scenarios' translation...")
-            dialog.vbox.pack_start(progress_bar, True, True, 2)
-            dialog.vbox.show_all()
-            div = len(wvts)
             translator = SchemaTranslatorRun()
             new_files = translator.start_schematranslator_run(wvts)
             self.addScenarios(new_files)
-            
-            '''for scenario_to_translate in wvts:
-                output_folder = translator.start_schematranslator_run_single(scenario_to_translate[1])
-                output_file_path = os.path.join(output_folder, scenario_to_translate[0]+'.xml')
-                if os.path.exists(output_file_path):
-                    self.add_file(output_file_path, scenario_to_translate[0])
-                progress_bar.set_fraction(i/div)
-                i +=1'''
-                       
     
     '''
     add_file:
@@ -1200,7 +1191,9 @@ class ExperimentCreatorDialog(gtk.Dialog):
                 self.add_sweep_tab(filename)
         widget.destroy()
     
-        
+    '''
+    add_output_folder:
+    Adds a user specific output folder'''    
     def add_output_folder(self, widget, response_id, entry):
         output_folder_path = widget.get_filename()
         if response_id == gtk.RESPONSE_OK:
@@ -1256,18 +1249,20 @@ class ExperimentCreatorDialog(gtk.Dialog):
     file with the extension xml is found in the sweep
     folder'''
     def add_sweep_tab(self, sweep_folder_path):
-        fileList = None
         if(os.path.isdir(sweep_folder_path)):
             files = os.listdir(sweep_folder_path)
+            valid_files = list()
             for file in files:
                 file_path = os.path.join(sweep_folder_path, file)
                 if os.path.isfile(file_path):
                     name_split = str.split(file, '.')
                     extension = name_split[len(name_split)-1]
                     if extension == 'xml':
-                        if fileList == None:
-                            fileList = FileList(None, True)
-                        fileList.add_file(file_path, file)
+                        valid_files.append(file_path)
+                        
+        if len(valid_files) > 0:
+            fileList = FileList(None, True)
+            fileList.addScenarios(valid_files,'sweep '+os.path.split(sweep_folder_path)[1] + ': ')
                         
         if not fileList == None:
             path, name = os.path.split(sweep_folder_path)
@@ -1626,17 +1621,18 @@ class NotebookFrame(gtk.Frame):
     def add_population_size_entry(self, line_number=0, at_start_h=True, resize=False):
         sim_population_size_vbox = gtk.VBox(False, 2)
         sim_population_size_label = gtk.Label('')
+        sim_population_size_label.set_alignment(0,0)
         
         sim_population_size_hbox = gtk.HBox(False, 2)
         self.sim_population_size_entry = gtk.Entry(25)
         self.sim_population_size_entry.set_text('100')
         self.sim_population_size_entry.set_sensitive(False)
         sim_population_size_checkbox = gtk.CheckButton('Custom population size ', False)
-        sim_population_size_hbox.pack_start(sim_population_size_checkbox, False, False, 0)
-        sim_population_size_hbox.pack_start(self.sim_population_size_entry, False, False, 0)
+        sim_population_size_hbox.pack_start(sim_population_size_checkbox, False, False, 2)
+        sim_population_size_hbox.pack_start(self.sim_population_size_entry, False, False, 2)
         
-        sim_population_size_vbox.pack_start(sim_population_size_label)
-        sim_population_size_vbox.pack_start(sim_population_size_hbox)
+        sim_population_size_vbox.pack_start(sim_population_size_label, False, False, 1)
+        sim_population_size_vbox.pack_start(sim_population_size_hbox, False, False, 1)
         sim_population_size_vbox.show_all()
         
         sim_population_size_checkbox.connect('toggled', self.change_sim_population_size_entry_state)
@@ -1666,7 +1662,7 @@ class NotebookFrame(gtk.Frame):
         output_folder_button = gtk.Button("Select...")
         output_folder_entry = gtk.Entry()
         output_folder_entry.set_text(self.run_scenarios_outputs)
-        output_folder_entry.set_width_chars(113)
+        output_folder_entry.set_width_chars(114)
         output_folder_entry.set_sensitive(False)
         output_folder_button.connect('clicked', self.open_output_folder_chooser, output_folder_entry)
         output_folder_button_hbox.pack_start(output_folder_button, False, False, 0)
