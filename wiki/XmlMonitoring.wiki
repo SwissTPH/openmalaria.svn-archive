@@ -25,8 +25,8 @@ All options not otherwise specified are point-time outputs.
 || N_v || The number of mosquitoes ||
 || O_v || The number of infected mosquitoes ||
 || S_v || The number of infectious mosquitoes ||
-|| input EIR || Total entomological infection rate input. This is a fixed periodic value, for comparison with simulated EIR. (TODO: find units) ||
-|| simulated EIR || EIR actually acting on humans, as calculated by the transmission model. ||
+|| input EIR || Total entomological infection rate input. This is a fixed periodic value, for comparison with simulated EIR. Units: innoculations per person per timestep. ||
+|| simulated EIR || EIR actually acting on humans, as calculated by the transmission model. Units: innoculations per person per timestep. ||
 || human infectiousness || Infectiousness of humans to mosquitoes, also known as kappa. This is the probability of a mosquito biting a human from becoming infected. ||
 || human availability || Mean availability of humans to mosquitoes over human population. ||
 || immunity h || Average of `_cumulativeh` parameter across humans, which is the cumulative number of infections recieved since birth ||
