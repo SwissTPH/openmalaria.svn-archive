@@ -46,7 +46,7 @@ The `SurveyOptions` element controls which survey measures are [OutputFiles#meas
 These tables come from [http://code.google.com/p/openmalaria/source/browse/trunk/include/Monitoring/Survey.h this file] in the code. The "cohort" column indicates whether, when cohort mode is enabled, this output is restricted to the cohort; if false, it is unaffected by the cohort mode.
 
 || id || measure || cohort || description ||
-||  0 || nHost  || y ||  Total number of humans ||
+||  0 || nHost  || y || Total number of humans. *Note*: when using the `IPTI_SP_MODEL` option, humans not at risk of a further episode due to having had a recent episode within the health-system-memory period are subtracted from this and several other outputs (only applies to the `IPTI_SP_MODEL`). ||
 ||  1 || nInfect  || y || number of infected hosts  ||
 || 2 || nExpectd  || y ||  expected number of infected hosts ||
 || 3 || nPatent  || y || number of patent hosts ||
