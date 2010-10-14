@@ -128,10 +128,7 @@ This Frame lists the xml files. This list allows the user to do
 batch jobs without freezing the whole GUI'''        
 class FileList(gtk.Frame):
     
-    IS_USING_CORRECT_SCENARIO_VERSION = 0
-    IS_TRANSLATABLE = 1
-    IS_NOT_TRANSLATABLE = -1
-    NOT_FOUND = -2
+    
     
     def __init__(self, parent = None, experimentDialog = False):
         gtk.Frame.__init__(self)
@@ -248,39 +245,6 @@ class FileList(gtk.Frame):
         self.total_selected = 0
         self.add(self.vbox)
         self.show_all()
-        
-    '''
-    check_scenario_version:
-    checks whether or not the loaded scenario schema version is supported
-    by the openmalaria application. If the schema version is higher than
-    the one used by the openmalaria application, then this schema can't be used
-    at all and no translation is possible. On an other hand, if the schema version
-    is lower than the one used by the openmalaria application, then in some cases,
-    a translation is possible.'''
-    def check_scenario_version(self, scenario_path):
-        if os.path.exists(scenario_path) and os.path.isfile(scenario_path):
-            src=open(scenario_path)
-            file_string=src.read()
-            src.close()
-            
-            search_match = re.search(r'(?P<schema_text_1>schemaVersion=")(?P<schema_version>\d+)(?P<schema_text_2>")', file_string)
-            
-            if search_match == None:
-                return self.IS_NOT_TRANSLATABLE
-            else:
-                try:
-                    schema_vers = int(search_match.group('schema_version'))
-                    print schema_vers
-                    if schema_vers > int(OpenMalariaRun.actual_scenario_version):
-                        return self.IS_NOT_TRANSLATABLE
-                    elif schema_vers < int(OpenMalariaRun.actual_scenario_version):
-                        return self.IS_TRANSLATABLE
-                    else:
-                        return self.IS_USING_CORRECT_SCENARIO_VERSION   
-                except exceptions.ValueError:
-                    return self.IS_NOT_TRANSLATABLE
-        else:
-            return self.NOT_FOUND
                 
     
     '''
@@ -364,9 +328,8 @@ class FileList(gtk.Frame):
     Adds all in filenames list given files in the filelist.
     Checks scenario's schema version'''        
     def addScenarios(self, filenames, added_message = None):
-        wrong_version_not_translatable_scenarios = list()
-        wrong_version_translatable_scenarios = list()
-        not_found_scenarios = list()
+        
+        scenario_infos_list = list()
         
         for i in range(len(filenames)):
             actual_filename = filenames[i]
@@ -378,56 +341,17 @@ class FileList(gtk.Frame):
                 scenario_infos = list()
                 scenario_infos.append(actual_name)
                 scenario_infos.append(actual_filename)
-                scenario_check = self.check_scenario_version(actual_filename)
-                if(scenario_check == self.IS_USING_CORRECT_SCENARIO_VERSION):
-                    self.add_file(actual_filename, actual_name)
-                elif(scenario_check == self.IS_TRANSLATABLE):
-                    wrong_version_translatable_scenarios.append(scenario_infos)
-                elif(scenario_check == self.IS_NOT_TRANSLATABLE):
-                    wrong_version_not_translatable_scenarios.append(scenario_infos)
-                else:
-                    not_found_scenarios.append(scenario_infos)
-                    
-        if len(wrong_version_translatable_scenarios) > 0 or len(wrong_version_not_translatable_scenarios) > 0 or len(not_found_scenarios) > 0:
-            self.show_import_problems_message(wrong_version_not_translatable_scenarios, wrong_version_translatable_scenarios, not_found_scenarios, added_message)
-            
-    '''
-    show_import_problems_message:
-    Shows the found problems during the importation of some scenarios in openMalariaTools'''
-    def show_import_problems_message(self, wvnts, wvts, nfs, added_message):
+                scenario_infos_list.append(scenario_infos)
         
-        if len(wvts) > 0:
-            problems = ''
-            if not added_message == None:
-                problems = added_message + '\n'
+        translator = SchemaTranslatorRun()
+        runnable_scenarios = translator.check_and_return_runnable_scenarios(scenario_infos_list)
+        
+        if len(runnable_scenarios)>0 :
+            for runnable_scenario in runnable_scenarios:
+                self.add_file(runnable_scenario[1], runnable_scenario[0])
+        else:
+            self.destroy()
             
-            problems += str(len(wvts)) + " scenarios are using an older (possibly translatable) schema version. Would you like that the system tries to update the scenarios using an older schema version? "
-            import_problems_message = gtk.MessageDialog(self.parent_window, gtk.DIALOG_MODAL,gtk.MESSAGE_WARNING,gtk.BUTTONS_NONE, problems)
-            import_problems_message.add_button('Yes', gtk.RESPONSE_YES)
-            import_problems_message.add_button('No', gtk.RESPONSE_NO)
-            import_problems_message.connect('response', self.start_translator, wvts)
-            import_problems_message.run()
-            import_problems_message.destroy()
-            
-        if len(wvnts)>0:
-            error_message = ''
-            if not added_message == None:
-                error_message = added_message + '\n'
-            
-            error_message += str(len(wvnts)) + " scenarios are using an unsupported schema version. You will not be able to run these scenarios. Please try to update to a newest version of openmalariaTools..."
-            import_error_message = gtk.MessageDialog(self.parent_window, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, problems)
-            import_error_message.add_button('Ok', gtk.RESPONSE_OK)
-            import_error_message.run()
-            import_error_message.destroy()     
-    
-    '''
-    start_translator:
-    Starts the translator if the user press ok on the message dialog'''
-    def start_translator(self, dialog, response_id, wvts):
-        if response_id == gtk.RESPONSE_YES:
-            translator = SchemaTranslatorRun()
-            new_files = translator.start_schematranslator_run(wvts)
-            self.addScenarios(new_files)
     
     '''
     add_file:
@@ -573,7 +497,6 @@ class FileViewersContainer(gtk.Dialog):
         
         if parent != None:
             self.resize(400, 500)
-        
         
         self.set_border_width(10)
         self.notebook = gtk.Notebook()
@@ -1213,6 +1136,10 @@ class ExperimentCreatorDialog(gtk.Dialog):
             base_file_chooser.set_icon_from_file(icon_path)
             base_file_chooser.connect('response', self.select_base_file)
             base_file_chooser.connect('destroy', self.allow_open_base_file_chooser)
+            filter = gtk.FileFilter()
+            filter.set_name("Xml files")
+            filter.add_pattern("*.xml")
+            base_file_chooser.add_filter(filter)
             base_file_chooser.show()
     
     '''
@@ -1240,8 +1167,20 @@ class ExperimentCreatorDialog(gtk.Dialog):
             name_split = str.split(name, '.')
             extension = name_split[len(name_split)-1]
             if extension == 'xml':
-                self.base_file_path = base_file_path
-                self.base_entry.set_text(base_file_path)
+                translator = SchemaTranslatorRun()
+                scenario_infos_list = list()
+                input_path, input_file_name = os.path.split(base_file_path)
+                short_name, extension = os.path.splitext(input_file_name)
+                scenario_infos = list()
+                scenario_infos.append(short_name)
+                scenario_infos.append(base_file_path)
+                scenario_infos_list.append(scenario_infos)
+                
+                scenario_infos_list = translator.check_and_return_runnable_scenarios(scenario_infos_list)
+                
+                if len(scenario_infos_list)>0:    
+                    self.base_file_path = scenario_infos_list[0][1]
+                    self.base_entry.set_text(self.base_file_path)
          
     '''
     add_sweep_tab:
@@ -1259,6 +1198,8 @@ class ExperimentCreatorDialog(gtk.Dialog):
                     extension = name_split[len(name_split)-1]
                     if extension == 'xml':
                         valid_files.append(file_path)
+        
+        fileList = None
                         
         if len(valid_files) > 0:
             fileList = FileList(None, True)
@@ -1338,85 +1279,94 @@ class ExperimentCreatorDialog(gtk.Dialog):
     the experiment_creator.jar java application and then runs it'''    
     def create_experiment_files(self):
         
-        not_actual_scenario = False
-        
-        self.status_label.set_text('The system is currently creating the File Structure for the experiment creator, please wait...')
-        
-        experiment_name = self.name_entry.get_text()
-        experiment_name += '_'+ time.strftime("%d_%b_%Y_%H%M%S")
-        
-        experiment_folder = os.path.join(self.experiment_folder_entry.get_text(), experiment_name)
-        if not os.path.exists(experiment_folder):
-            os.mkdir(experiment_folder)
-        
-        input_folder = os.path.join(experiment_folder, 'input')
-        output_folder = os.path.join(experiment_folder, 'output')
-        os.mkdir(input_folder)
-        os.mkdir(output_folder)
-        
-        if not self.is_using_right_schema_version(self.base_file_path):
-            not_actual_scenario = True
-        shutil.copy2(self.base_file_path, os.path.join(input_folder, 'base.xml'))
-        base_folder = os.getcwd()
-        testCommonDir = os.path.join(base_folder, 'application', 'common')
-        shutil.copy2(os.path.join(testCommonDir ,'scenario_'+OpenMalariaRun.actual_scenario_version+'.xsd'), input_folder)
-        
-        i=0
-        while i < self.sweeps_notebook.get_n_pages():
-            fileList = self.sweeps_notebook.get_nth_page(i)
-            sweep = fileList.return_sweep_list()
-            
-            first_sweep_path = sweep[0][0]
-            sweep_path, tail = os.path.split(first_sweep_path)
-            head, sweep_name = os.path.split(sweep_path)
-            
-            new_sweep_path = os.path.join(input_folder, sweep_name)
-            
-            if os.path.exists(new_sweep_path):
-                filenames = list()
-                for filename in os.listdir(input_folder):
-                    filenames.append(filename)
-                test_sweep_name = sweep_name
-                i = 1
-                
-                while(filenames.count(test_sweep_name)>0):
-                    test_sweep_name = sweep_name + '_'+str(i)
-                    i = i + 1 
-                     
-                new_sweep_path = os.path.join(input_folder, test_sweep_name)
-                 
-            os.mkdir(new_sweep_path)
-            
-            k = 0
-            while k< len(sweep[0]):
-                if os.path.isfile(sweep[0][k]):
-                    if not self.is_using_right_schema_version(sweep[0][k]):
-                        not_actual_scenario = True
-                    shutil.copy2(sweep[0][k], new_sweep_path)
-                
-                if sweep[1][k]:
-                    path, name = os.path.split(sweep[0][k])
-                    os.rename(os.path.join(new_sweep_path, name), os.path.join(new_sweep_path, fileList.get_reference_type()+'.xml'))
-                
-                k+=1
-            i+=1
-                
-        if not_actual_scenario:
-            error = 'The scenario files are using another schema version than the supported one (schema vers.'+OpenMalariaRun.actual_scenario_version+').'
-            error += '\nThe experiment creator will not be started.'
-            error += '\nPlease change the schema version.'
+        if self.base_file_path == None:
+            error = 'Base file undefined. Please choose a base file.'
             scenario_error_dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, error)
             scenario_error_dialog.add_button('Ok', gtk.RESPONSE_OK)
             scenario_error_dialog.run()
             scenario_error_dialog.destroy()
+        
         else:
-            self.status_label.set_text('The experiment creator is now started, please wait...')
-            experimentCreator = ExperimentCreatorRun()
-            experimentCreator.start_experimentCreator(input_folder, output_folder, self.mainFileList, self.get_seeds_nbr(), self.validate_checkbox.get_active())
+            not_actual_scenario = False
+            
+            self.status_label.set_text('The system is currently creating the File Structure for the experiment creator, please wait...')
+            
+            experiment_name = self.name_entry.get_text()
+            experiment_name += '_'+ time.strftime("%d_%b_%Y_%H%M%S")
+            
+            experiment_folder = os.path.join(self.experiment_folder_entry.get_text(), experiment_name)
+            if not os.path.exists(experiment_folder):
+                os.mkdir(experiment_folder)
+            
+            input_folder = os.path.join(experiment_folder, 'input')
+            output_folder = os.path.join(experiment_folder, 'output')
+            os.mkdir(input_folder)
+            os.mkdir(output_folder)
+            
+            if not self.is_using_right_schema_version(self.base_file_path):
+                not_actual_scenario = True
+            shutil.copy2(self.base_file_path, os.path.join(input_folder, 'base.xml'))
+            base_folder = os.getcwd()
+            testCommonDir = os.path.join(base_folder, 'application', 'common')
+            shutil.copy2(os.path.join(testCommonDir ,'scenario_'+OpenMalariaRun.actual_scenario_version+'.xsd'), input_folder)
+            
+            i=0
+            while i < self.sweeps_notebook.get_n_pages():
+                fileList = self.sweeps_notebook.get_nth_page(i)
+                sweep = fileList.return_sweep_list()
+                
+                first_sweep_path = sweep[0][0]
+                sweep_path, tail = os.path.split(first_sweep_path)
+                head, sweep_name = os.path.split(sweep_path)
+                
+                new_sweep_path = os.path.join(input_folder, sweep_name)
+                
+                if os.path.exists(new_sweep_path):
+                    filenames = list()
+                    for filename in os.listdir(input_folder):
+                        filenames.append(filename)
+                    test_sweep_name = sweep_name
+                    i = 1
+                    
+                    while(filenames.count(test_sweep_name)>0):
+                        test_sweep_name = sweep_name + '_'+str(i)
+                        i = i + 1 
+                         
+                    new_sweep_path = os.path.join(input_folder, test_sweep_name)
+                     
+                os.mkdir(new_sweep_path)
+                
+                k = 0
+                while k< len(sweep[0]):
+                    if os.path.isfile(sweep[0][k]):
+                        if not self.is_using_right_schema_version(sweep[0][k]):
+                            not_actual_scenario = True
+                        shutil.copy2(sweep[0][k], new_sweep_path)
+                    
+                    if sweep[1][k]:
+                        path, name = os.path.split(sweep[0][k])
+                        os.rename(os.path.join(new_sweep_path, name), os.path.join(new_sweep_path, fileList.get_reference_type()+'.xml'))
+                    
+                    k+=1
+                i+=1
+                    
+            if not_actual_scenario:
+                error = 'The scenario files are using another schema version than the supported one (schema vers.'+OpenMalariaRun.actual_scenario_version+').'
+                error += '\nThe experiment creator will not be started.'
+                error += '\nPlease change the schema version.'
+                scenario_error_dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, error)
+                scenario_error_dialog.add_button('Ok', gtk.RESPONSE_OK)
+                scenario_error_dialog.run()
+                scenario_error_dialog.destroy()
+            else:
+                self.status_label.set_text("The experiment's files are now generated... Please wait...")
+                time.sleep(.2)
+                experimentCreator = ExperimentCreatorRun()
+                experimentCreator.start_experimentCreator(input_folder, output_folder, self.mainFileList, self.get_seeds_nbr(), self.validate_checkbox.get_active())
         
         
-        self.status_label.set_text('')    
-        self.destroy()
+            self.status_label.set_text('')    
+            self.destroy()
                 
     '''
     cancel_creation:
