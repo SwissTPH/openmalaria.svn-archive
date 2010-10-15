@@ -349,7 +349,7 @@ class FileList(gtk.Frame):
         if len(runnable_scenarios)>0 :
             for runnable_scenario in runnable_scenarios:
                 self.add_file(runnable_scenario[1], runnable_scenario[0])
-        else:
+        elif self.experimentDialog:
             self.destroy()
             
     

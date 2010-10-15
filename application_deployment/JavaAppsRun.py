@@ -276,6 +276,9 @@ class SchemaTranslatorRun():
         if(len(self.translated_files)>0):
             right_version_scenarios.extend(self.translated_files)
         
+        for right_version_scenario in right_version_scenarios:
+            self.correct_schema_file_name(right_version_scenario[1])
+        
         return right_version_scenarios
     
     '''
@@ -317,6 +320,23 @@ class SchemaTranslatorRun():
                     return self.IS_NOT_TRANSLATABLE
         else:
             return self.NOT_FOUND
+    
+    '''
+    correct_schema_file_name:
+    Sets the schema_file_name (after having checked that the schema version is the same as the one used by the openmalaria application) to
+    a name that will be recognized by the application'''    
+    def correct_schema_file_name(self,scenario_path):
+        if os.path.exists(scenario_path) and os.path.isfile(scenario_path):
+            src=open(scenario_path)
+            file_string=src.read()
+            src.close()
+            
+            file_string = re.sub(r'SchemaLocation="scenario.xsd"', 'SchemaLocation="scenario_'+ExperimentCreatorRun.actual_scenario_version+'.xsd"', file_string)
+            
+            dest=open(scenario_path,'w')
+            dest.write(file_string)
+            dest.close()
+        
 
     '''
     show_import_problems_message:
