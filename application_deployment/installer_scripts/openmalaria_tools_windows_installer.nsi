@@ -132,6 +132,13 @@ Section "openmalariaTools" SEC01
   File "..\application\schemaTranslator\SchemaTranslator.class"
   File "..\application\schemaTranslator\SchemaTranslator.jar"
   File "..\application\schemaTranslator\SchemaTranslator.java"
+  SetOutPath "$INSTDIR\examples"
+  File "..\examples\scenario3.xml"
+  File "..\examples\scenarioESCMTest.xml"
+  File "..\examples\scenarioMolineaux.xml"
+  File "..\examples\scenarioNamawalaArabiensis.xml"
+  File "..\examples\scenarioVecFullTest.xml"
+  File "..\examples\scenarioVecTest.xml"
   SetOutPath "$INSTDIR"
   File "..\JavaAppsRun.py"
   File "..\OpenMalariaRun.py"
@@ -144,33 +151,37 @@ Section "openmalariaTools" SEC01
   CreateDirectory "$INSTDIR\run_scenarios"
   CreateDirectory "$INSTDIR\run_scenarios\outputs"
   CreateDirectory "$INSTDIR\run_scenarios\scenarios_to_run"
-  CreateDirectory "$INSTDIR\examples"
 SectionEnd
 
 Section "python" SEC02
   SetOverwrite ifnewer
   File "python-2.6.4.msi"
   ExecWait '"msiexec" /i "$INSTDIR\python-2.6.4.msi"'
+  Delete "$INSTDIR\python-2.6.4.msi"
 SectionEnd
 
 Section "pyGTK Runtime" SEC03
   File "gtk2-runtime-2.16.0-2009-03-22-ash.exe"
   ExecWait "$INSTDIR\gtk2-runtime-2.16.0-2009-03-22-ash.exe"
+  Delete "$INSTDIR\gtk2-runtime-2.16.0-2009-03-22-ash.exe"
 SectionEnd
 
 Section "pyGTK" SEC04
   File "pygtk-2.16.0.win32-py2.6.exe"
   ExecWait "$INSTDIR\pygtk-2.16.0.win32-py2.6.exe"
+  Delete "$INSTDIR\pygtk-2.16.0.win32-py2.6.exe"
 SectionEnd
 
 Section "pycairo" SEC05
   File "pycairo-1.8.6.win32-py2.6.exe"
   ExecWait "$INSTDIR\pycairo-1.8.6.win32-py2.6.exe"
+  Delete "$INSTDIR\pycairo-1.8.6.win32-py2.6.exe"
 SectionEnd
 
 Section "pygobject" SEC06
   File "pygobject-2.20.0.win32-py2.6.exe"
   ExecWait "$INSTDIR\pygobject-2.20.0.win32-py2.6.exe"
+  Delete "$INSTDIR\pygobject-2.20.0.win32-py2.6.exe"	
 SectionEnd
 
 Section -AdditionalIcons
@@ -205,11 +216,6 @@ FunctionEnd
 Section Uninstall
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
-  Delete "$INSTDIR\pygobject-2.20.0.win32-py2.6.exe"
-  Delete "$INSTDIR\pycairo-1.8.6.win32-py2.6.exe"
-  Delete "$INSTDIR\pygtk-2.16.0.win32-py2.6.exe"
-  Delete "$INSTDIR\gtk2-runtime-2.16.0-2009-03-22-ash.exe"
-  Delete "$INSTDIR\python-2.6.4.msi"
   Delete "$INSTDIR\VirtualTerminal_win.py"
   Delete "$INSTDIR\VirtualTerminal.py"
   Delete "$INSTDIR\start_gui.pyw"
