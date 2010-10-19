@@ -10,9 +10,15 @@ The vector element consists of a list of at least one `anopheles` sub-element, f
 
 == Mosquito parameters ==
 
-Each anopheles elements has the following sub-elements: `eir`, `mosq`, and a list of zero or more `nonHumanHosts`.
+Each anopheles elements has the following sub-elements: either `eir` or `monthlyEir`, `mosq`, and a list of zero or more `nonHumanHosts`.
 
 === Entomological Infection Rate ===
+
+EIR can be specified either via 5 Fourier coefficients and a rotation factor (`eir` element) or via 12 monthly values plus an annual level (`monthlyEir` element). Exactly one of these elements must appear.
+
+==== EIR via Fourier coefficients ====
+
+This is the older method (only available before schema version 22).
 
 The `eir` element describes the Entomological Infection Rate for this mosquito species, which is used as a target when fitting the emergence rate of adult mosquitoes. The EIR is given via a [http://en.wikipedia.org/wiki/Fourier_series Fourier series] and a rotation offset; more accurately, the exposed EIR, in units of bites per day, is:
 
@@ -49,6 +55,29 @@ http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier_annual.png
     &= e^{a_0} \int_{t=0}^{365} e^{f(t)} dt
 \end{align*}
 </wiki:comment>
+
+==== EIR via monthly values ====
+
+As of schema version 22 this method of entering EIR was added to simplify entry of field data. Fourier coefficients are still used within the code (for smoothing), but are calculated internally.
+
+The `monthlyEir` element requires one attribute: `annualEIR`, specifying the total annual EIR as infectious bites per person per year. It should have a sequence of 12 child elements, named `item`, specifying the EIR in terms of infectious bites per person per month, in the months of January through December. An (unrealistic) example:
+
+{{{
+        <monthlyEir annualEIR="20">
+          <item>10</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+        </monthlyEir>
+}}}
 
 === Mosquito lifecycle and human-interaction parameters ===
 
