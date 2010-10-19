@@ -222,6 +222,8 @@ Entomological data are described by the `entoData` element — this can have eit
 
 The `entoData` element also has two attributes: `name` (just a user-friendly name), and `mode`. The `mode` parameter determines which transmission mode to enter at the start of the intervention period: 2 to enforce fixed EIR or 4 to allow dynamic simulations where human infectiousness has a feed-back effect on EIR (the usual choice). (For more info on `mode`, see `enum SimulationMode` in [http://code.google.com/p/openmalaria/source/browse/trunk/include/Transmission/TransmissionModel.h TransmissionModel.h].)
 
+From schema version 22 it has an optional third attribute: `annualEIR`. If this is set, the equilibrium-period EIR is rescaled to this level (units: infectious bites per person/adult per year). Affects both vector and non-vector models, though not the non-vector model EIR introduced by a `changeEIR` pseudo-intervention.
+
 === Vector parameters: `vector` ===
 
 [XmlEntoVector Vector-model parameter description.]
