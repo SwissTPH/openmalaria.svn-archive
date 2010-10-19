@@ -16,7 +16,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "openmalariaTools"
-!define PRODUCT_VERSION "00.01"
+!define PRODUCT_VERSION "00.02"
 !define PRODUCT_PUBLISHER "Swiss TPH"
 !define PRODUCT_WEB_SITE "http://www.swisstph.ch"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\openMalaria.exe"
@@ -56,7 +56,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "all_in_one_installer_v00.01.exe"
+OutFile "all_in_one_installer_v00.02.exe"
 InstallDir "$PROGRAMFILES\openmalariaTools"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -89,6 +89,7 @@ Section "openmalariaTools" SEC01
   File "..\application\common\scenario_19.xsd"
   File "..\application\common\scenario_2.xsd"
   File "..\application\common\scenario_20.xsd"
+  File "..\application\common\scenario_21.xsd"
   File "..\application\common\scenario_3.xsd"
   File "..\application\common\scenario_4.xsd"
   File "..\application\common\scenario_5.xsd"
@@ -127,18 +128,18 @@ Section "openmalariaTools" SEC01
   SetOutPath "$INSTDIR\application"
   File "..\application\openMalaria.exe"
   SetOutPath "$INSTDIR\application\schemaTranslator"
-  File "..\application\schemaTranslator\SchemaTranslator$BugCorrectionBehaviour.class"
-  File "..\application\schemaTranslator\SchemaTranslator$IptiSpBehaviour.class"
-  File "..\application\schemaTranslator\SchemaTranslator.class"
   File "..\application\schemaTranslator\SchemaTranslator.jar"
-  File "..\application\schemaTranslator\SchemaTranslator.java"
   SetOutPath "$INSTDIR\examples"
+  File "..\examples\scenario1.xml"
+  File "..\examples\scenario2.xml"
   File "..\examples\scenario3.xml"
-  File "..\examples\scenarioESCMTest.xml"
-  File "..\examples\scenarioMolineaux.xml"
-  File "..\examples\scenarioNamawalaArabiensis.xml"
-  File "..\examples\scenarioVecFullTest.xml"
-  File "..\examples\scenarioVecTest.xml"
+  File "..\examples\scenario4.xml"
+  File "..\examples\scenario5.xml"
+  File "..\examples\scenario6.xml"
+  File "..\examples\scenario12.xml"
+  File "..\examples\scenario11.xml"
+  File "..\examples\scenario9.xml"
+  File "..\examples\scenario10.xml"
   SetOutPath "$INSTDIR"
   File "..\JavaAppsRun.py"
   File "..\OpenMalariaRun.py"
@@ -151,6 +152,9 @@ Section "openmalariaTools" SEC01
   CreateDirectory "$INSTDIR\run_scenarios"
   CreateDirectory "$INSTDIR\run_scenarios\outputs"
   CreateDirectory "$INSTDIR\run_scenarios\scenarios_to_run"
+  CreateDirectory "$INSTDIR\translate_scenarios"
+  CreateDirectory "$INSTDIR\translate_scenarios\scenarios_to_translate"
+  CreateDirectory "$INSTDIR\translate_scenarios\translated_scenarios"
 SectionEnd
 
 Section "python" SEC02
