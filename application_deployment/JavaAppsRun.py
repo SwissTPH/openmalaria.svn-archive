@@ -103,8 +103,8 @@ class ExperimentCreatorRun():
     def quit_experimentCreator(self):
         if not (self.pid == ''):
             try:
-                os.kill(self.pid, signal.SIGKILL)
-                #self.kill_win(self.pid)
+                #os.kill(self.pid, signal.SIGKILL)
+                self.kill_win(self.pid)
             except OSError:
                 self.pid = ''
     
@@ -164,8 +164,8 @@ class LiveGraphRun():
     def quit_livegraph(self):
         if not (self.pid == ''):
             try:
-                os.kill(self.pid, signal.SIGKILL)
-                #self.kill_win(self.pid)
+                #os.kill(self.pid, signal.SIGKILL)
+                self.kill_win(self.pid)
             except OSError:
                 self.pid = ''
     
@@ -344,6 +344,7 @@ class SchemaTranslatorRun():
     def show_import_problems_message(self, parent_window, wvnts, wvts, nfs, added_message):
         
         self.translated_files = list()
+        icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
         
         if len(wvts) > 0:
             problems = ''
@@ -355,6 +356,7 @@ class SchemaTranslatorRun():
             import_problems_message.add_button('Yes', gtk.RESPONSE_YES)
             import_problems_message.add_button('No', gtk.RESPONSE_NO)
             import_problems_message.connect('response', self.init_translation, wvts)
+            import_problems_message.set_icon_from_file(icon_path)
             import_problems_message.run()
             import_problems_message.destroy()
             

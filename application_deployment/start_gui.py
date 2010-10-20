@@ -1558,9 +1558,9 @@ class NotebookFrame(gtk.Frame):
     def add_object(self, line_number, window_object, at_start_h=True, resize=False):
             
         if(at_start_h):
-            self.lines_boxes[line_number].pack_start(window_object, resize, resize)
+            self.lines_boxes[line_number].pack_start(window_object, resize, resize,2)
         else:
-            self.lines_boxes[line_number].pack_end(window_object, resize, resize)
+            self.lines_boxes[line_number].pack_end(window_object, resize, resize,2)
         
         window_object.show()
     
@@ -1581,8 +1581,8 @@ class NotebookFrame(gtk.Frame):
         sim_population_size_hbox.pack_start(sim_population_size_checkbox, False, False, 2)
         sim_population_size_hbox.pack_start(self.sim_population_size_entry, False, False, 2)
         
-        sim_population_size_vbox.pack_start(sim_population_size_label, False, False, 1)
-        sim_population_size_vbox.pack_start(sim_population_size_hbox, False, False, 1)
+        sim_population_size_vbox.pack_start(sim_population_size_label, False, False, 2)
+        sim_population_size_vbox.pack_start(sim_population_size_hbox, False, False, 2)
         sim_population_size_vbox.show_all()
         
         sim_population_size_checkbox.connect('toggled', self.change_sim_population_size_entry_state)
@@ -1612,11 +1612,11 @@ class NotebookFrame(gtk.Frame):
         output_folder_button = gtk.Button("Select...")
         output_folder_entry = gtk.Entry()
         output_folder_entry.set_text(self.run_scenarios_outputs)
-        output_folder_entry.set_width_chars(114)
+        output_folder_entry.set_width_chars(120)
         output_folder_entry.set_sensitive(False)
         output_folder_button.connect('clicked', self.open_output_folder_chooser, output_folder_entry)
         output_folder_button_hbox.pack_start(output_folder_button, False, False, 0)
-        output_folder_button_hbox.pack_start(output_folder_entry)
+        output_folder_button_hbox.pack_start(output_folder_entry, False, False, 2)
         
         output_folder_button_vbox.pack_start(output_folder_label, False, False, 2)
         output_folder_button_vbox.pack_start(output_folder_button_hbox, False, False, 2)
@@ -1869,8 +1869,8 @@ class OMFrontend:
             if os.path.isfile(os.path.join(testSrcDir, file)):
                 os.remove(os.path.join(testSrcDir,file))
         gtk.main_quit()
-        #sys.exit()
-	os.kill(os.getpid(),signal.SIGTERM)
+        sys.exit()
+	  #os.kill(os.getpid(),signal.SIGTERM)
         
     def __init__(self):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
