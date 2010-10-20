@@ -18,15 +18,15 @@ Extract whichever you download into your openmalaria folder and then run the ope
 
 = OpenmalariaTools =
 
-It is now possible to test a new application for creating and running experiments locally. The tool is currently in Beta phase (beta 1) and could present some bugs. This tool allows the user to execute, create, monitor experiments using a GUI instead of a terminal or the command line. The Application was first written on linux using pyGTK but is usable on windows. Because of the amount of libraries needed for using pyGTK on windows, an "all in one installer" has been developed and simplifies the whole installation.
+It is now possible to test a new application for creating and running experiments locally. The tool is currently in Beta phase (beta 2) and could present some bugs. This tool allows the user to execute, create, monitor experiments using a GUI instead of a terminal or the command line. The Application was first written on linux using pyGTK but is usable on windows. An installer is given for the windows version.
 
-The beta 1 is using the schema version 20 and the linux, macosx installer will follow.
+The beta 2 is using the schema version 21 and the linux, macosx installer will follow.
 
 You can download the latest installer here:
 
-Please be aware of the fact that the windows all_in_one_installer will install all the needed python and pyGTK libraries. If you already have a python version installed, this could lead to conflicts. So you should uninstall your previous python installation or skip the python setup after having launched the all_in_one_installer. 
+Thew new installer (since beta 2) doesn't need some python tools installation anymore. You still need to have java installed on your computer. 
 
-* [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.01/win32/all_in_one_installer/all_in_one_installer_v00.01.exe win32 all in one installer]
+* [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.02/win32/openMalariaTools_installer_v00.02.exe win32 openmalariaTools installer]
 
 For further informations please have a look at [UseOpenMalariaTools Install and Use openmalariaTools]
 
