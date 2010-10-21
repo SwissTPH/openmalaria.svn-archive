@@ -127,9 +127,6 @@ class ActualScenariosFolders(gtk.Frame):
 This Frame lists the xml files. This list allows the user to do 
 batch jobs without freezing the whole GUI'''        
 class FileList(gtk.Frame):
-    
-    
-    
     def __init__(self, parent = None, experimentDialog = False):
         gtk.Frame.__init__(self)
         self.set_label('Scenarios')
@@ -344,7 +341,7 @@ class FileList(gtk.Frame):
                 scenario_infos_list.append(scenario_infos)
         
         translator = SchemaTranslatorRun()
-        runnable_scenarios = translator.check_and_return_runnable_scenarios(scenario_infos_list)
+        runnable_scenarios = translator.check_and_return_runnable_scenarios(scenario_infos_list, self.parent_window)
         
         if len(runnable_scenarios)>0 :
             for runnable_scenario in runnable_scenarios:
@@ -371,7 +368,10 @@ class FileList(gtk.Frame):
             iterator_temp = self.liststore.iter_next(iterator)
             if(self.liststore.get_value(iterator, 3)== True):
                 self.liststore.remove(iterator)
+                self.total_selected -=1
             iterator = iterator_temp
+        self.update_livegraph_toggle()
+            
     
     '''
     return_first_true:
@@ -920,6 +920,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
         icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
         self.set_icon_from_file(icon_path)
         self.mainFileList = mainFileList
+        self.parent_window = parent
         
         
         hbox_name_entry= gtk.HBox(False, 2)
@@ -1176,7 +1177,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
                 scenario_infos.append(base_file_path)
                 scenario_infos_list.append(scenario_infos)
                 
-                scenario_infos_list = translator.check_and_return_runnable_scenarios(scenario_infos_list)
+                scenario_infos_list = translator.check_and_return_runnable_scenarios(scenario_infos_list, self.parent_window)
                 
                 if len(scenario_infos_list)>0:    
                     self.base_file_path = scenario_infos_list[0][1]
@@ -1202,7 +1203,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
         fileList = None
                         
         if len(valid_files) > 0:
-            fileList = FileList(None, True)
+            fileList = FileList(self.parent_window, True)
             fileList.addScenarios(valid_files,'sweep '+os.path.split(sweep_folder_path)[1] + ': ')
                         
         if not fileList == None:
@@ -1610,19 +1611,19 @@ class NotebookFrame(gtk.Frame):
         
         output_folder_button_hbox = gtk.HBox(False, 2)
         output_folder_button = gtk.Button("Select...")
-        output_folder_entry = gtk.Entry()
+        output_folder_entry = gtk.Entry(65535)
         output_folder_entry.set_text(self.run_scenarios_outputs)
-        output_folder_entry.set_width_chars(120)
+        #output_folder_entry.set_width_chars(400)
         output_folder_entry.set_sensitive(False)
         output_folder_button.connect('clicked', self.open_output_folder_chooser, output_folder_entry)
         output_folder_button_hbox.pack_start(output_folder_button, False, False, 0)
-        output_folder_button_hbox.pack_start(output_folder_entry, False, False, 2)
+        output_folder_button_hbox.pack_start(output_folder_entry, True, True, 2)
         
-        output_folder_button_vbox.pack_start(output_folder_label, False, False, 2)
-        output_folder_button_vbox.pack_start(output_folder_button_hbox, False, False, 2)
+        output_folder_button_vbox.pack_start(output_folder_label, True, True, 2)
+        output_folder_button_vbox.pack_start(output_folder_button_hbox, True, True, 2)
         output_folder_button_vbox.show_all()
         
-        self.add_object(line_number, output_folder_button_vbox, at_start_h)
+        self.add_object(line_number, output_folder_button_vbox, at_start_h, True)
     
     '''
     open_output_folder_chooser:
@@ -1900,7 +1901,7 @@ class OMFrontend:
         self.window.add(openmalaria)
         openmalaria.show()
         
-        self.window.resize(gtk.gdk.screen_width(),gtk.gdk.screen_height())
+        self.window.maximize()
         self.window.set_icon_from_file(icon_path)
         self.window.show()
         

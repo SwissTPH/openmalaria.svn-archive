@@ -366,7 +366,7 @@ class SchemaTranslatorRun():
                 error_message = added_message + '\n'
             
             error_message += str(len(wvnts)) + " scenarios are using an unsupported schema version. You will not be able to run these scenarios. Please try to update to a newest version of openmalariaTools..."
-            import_error_message = gtk.MessageDialog(self.parent_window, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, problems)
+            import_error_message = gtk.MessageDialog(parent_window, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, problems)
             import_error_message.add_button('Ok', gtk.RESPONSE_OK)
             import_error_message.run()
             import_error_message.destroy()
