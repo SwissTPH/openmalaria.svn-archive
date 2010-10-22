@@ -26,19 +26,8 @@ if not sys.platform == 'win32':
     pygtk.require('2.0')
 import gtk
 
-from openMalariaTools.tools_management.OpenMalariaRun import OpenMalariaRun
-from openMalariaTools.tools_management.JavaAppsRun import SchemaTranslatorRun
-from openMalariaTools.tools_management.JavaAppsRun import LiveGraphRun
-from openMalariaTools.tools_management.JavaAppsRun import ExperimentCreatorRun
-
-from openMalariaTools.gui.ActualScenariosFoldersFrame import ActualScenariosFolders
-from openMalariaTools.gui.ExperimentCreatorDialog import ExperimentCreatorDialog
-from openMalariaTools.gui.FileListFrame import FileList
-from openMalariaTools.gui.FileViewerFrame import FileViewer
 from openMalariaTools.gui.NotebookFrame import NotebookFrame
-from openMalariaTools.gui.ScenariosChoiceDialog import ScenariosChoice
-from openMalariaTools.gui.VirtualTerminal_win import VirtualTerminal_win
-
+from openMalariaTools.utils.PathsAndSchema import PathsAndSchema
 
 '''
 class creating the openMalaria Tools UI'''
@@ -68,9 +57,9 @@ class OMFrontend:
         self.window.set_border_width(10)
         self.window.set_title("openMalaria Tools")
         self.window.set_gravity(gtk.gdk.GRAVITY_NORTH_WEST)
-        icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+        icon_path = PathsAndSchema.get_icon_path()
     
-        openmalaria = NotebookFrame('', self.window, True, True)
+        openmalaria = NotebookFrame('', self.window, True)
         
         openmalaria.add_import_button()
         openmalaria.add_experiment_creator_button()
@@ -81,7 +70,6 @@ class OMFrontend:
         openmalaria.add_outputs_frame()
         
         openmalaria.add_livegraph_option('Use Livegraph', '--liveGraph')
-        openmalaria.add_option_button("Don't cleanup", '-c')
         openmalaria.add_option_button('Single output folder', 'only_one_folder')
         openmalaria.add_population_size_entry()
         openmalaria.add_output_folder_button()
