@@ -33,6 +33,7 @@ import shutil
 import exceptions
 
 from FileListFrame import FileList
+from CustomMessageDialogs import CustomMessageDialogs
 from ..utils.PathsAndSchema import PathsAndSchema
 from ..tools_management.JavaAppsRun import SchemaTranslatorRun
 from ..tools_management.JavaAppsRun import ExperimentCreatorRun
@@ -308,7 +309,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
                 scenario_infos.append(base_file_path)
                 scenario_infos_list.append(scenario_infos)
                 
-                scenario_infos_list = translator.check_and_return_runnable_scenarios(scenario_infos_list, self.parent_window)
+                scenario_infos_list = translator.check_and_return_runnable_scenarios(scenario_infos_list, self.parent_window, 'Base File:')
                 
                 if len(scenario_infos_list)>0:    
                     self.base_file_path = scenario_infos_list[0][1]
@@ -413,11 +414,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
         
         if self.base_file_path == None:
             error = 'Base file undefined. Please choose a base file.'
-            scenario_error_dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, error)
-            scenario_error_dialog.add_button('Ok', gtk.RESPONSE_OK)
-            scenario_error_dialog.run()
-            scenario_error_dialog.destroy()
-        
+            CustomMessageDialogs.show_message_dialog(self, gtk.MESSAGE_ERROR, error)
         else:
             not_actual_scenario = False
             
@@ -484,10 +481,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
                 error = 'The scenario files are using another schema version than the supported one (schema vers.'+PathsAndSchema.get_actual_schema()+').'
                 error += '\nThe experiment creator will not be started.'
                 error += '\nPlease change the schema version.'
-                scenario_error_dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, error)
-                scenario_error_dialog.add_button('Ok', gtk.RESPONSE_OK)
-                scenario_error_dialog.run()
-                scenario_error_dialog.destroy()
+                CustomMessageDialogs.show_message_dialog(self, gtk.MESSAGE_ERROR, error)
             else:
                 self.status_label.set_text("The experiment's files are now generated... Please wait...")
                 time.sleep(.2)

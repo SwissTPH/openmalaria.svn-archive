@@ -72,7 +72,7 @@ class ScenariosChoice(gtk.FileChooserDialog):
     def updateFileList(self, widget, response_id, data=None):
         if response_id == gtk.RESPONSE_OK:
             scenarios = self.importScenarios()
-            self.fileList.addScenarios(scenarios)
+            self.fileList.addScenarios(scenarios, 'Imported scenarios:')
         self.destroy()
     
     '''

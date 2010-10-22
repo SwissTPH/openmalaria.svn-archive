@@ -38,6 +38,7 @@ import string
 import exceptions
 
 from ..utils.PathsAndSchema import PathsAndSchema
+from ..gui.CustomMessageDialogs import CustomMessageDialogs
 
 '''
 ExperimentCreatorRun:
@@ -339,18 +340,14 @@ class SchemaTranslatorRun():
         icon_path = PathsAndSchema.get_icon_path()
         
         if len(wvts) > 0:
-            problems = ''
+            problem_message = ''
             if not added_message == None:
-                problems = added_message + '\n'
+                problem_message = added_message + '\n'
             
-            problems += str(len(wvts)) + " scenarios are using an older (possibly translatable) schema version. Would you like that the system tries to update the scenarios using an older schema version? "
-            import_problems_message = gtk.MessageDialog(parent_window, gtk.DIALOG_MODAL,gtk.MESSAGE_WARNING,gtk.BUTTONS_NONE, problems)
-            import_problems_message.add_button('Yes', gtk.RESPONSE_YES)
-            import_problems_message.add_button('No', gtk.RESPONSE_NO)
-            import_problems_message.connect('response', self.init_translation, wvts)
-            import_problems_message.set_icon_from_file(icon_path)
-            import_problems_message.run()
-            import_problems_message.destroy()
+            problem_message += str(len(wvts)) + " scenarios are using an older (possibly translatable) schema version. Would you like that the system tries to update the scenarios using an older schema version? "
+            argv = list()
+            argv.append(wvts)
+            CustomMessageDialogs.show_message_dialog(parent_window, gtk.MESSAGE_WARNING, problem_message,CustomMessageDialogs.SCHEMA_TRANSLATOR_TYPE, self, argv)
             
         if len(wvnts)>0:
             error_message = ''
@@ -358,9 +355,6 @@ class SchemaTranslatorRun():
                 error_message = added_message + '\n'
             
             error_message += str(len(wvnts)) + " scenarios are using an unsupported schema version. You will not be able to run these scenarios. Please try to update to a newest version of openmalariaTools..."
-            import_error_message = gtk.MessageDialog(parent_window, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, problems)
-            import_error_message.add_button('Ok', gtk.RESPONSE_OK)
-            import_error_message.run()
-            import_error_message.destroy()
+            CustomMessageDialogs.show_message_dialog(parent_window, gtk.MESSAGE_ERROR, error_message)
         
         

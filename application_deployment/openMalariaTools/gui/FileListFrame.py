@@ -260,7 +260,7 @@ class FileList(gtk.Frame):
                 scenario_infos_list.append(scenario_infos)
         
         translator = SchemaTranslatorRun()
-        runnable_scenarios = translator.check_and_return_runnable_scenarios(scenario_infos_list, self.parent_window)
+        runnable_scenarios = translator.check_and_return_runnable_scenarios(scenario_infos_list, self.parent_window, added_message)
         
         if len(runnable_scenarios)>0 :
             for runnable_scenario in runnable_scenarios:
