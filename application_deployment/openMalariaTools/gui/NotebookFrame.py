@@ -36,6 +36,7 @@ from ScenariosChoiceDialog import ScenariosChoice
 
 from ..tools_management.JavaAppsRun import LiveGraphRun
 from ..tools_management.OpenMalariaRun import OpenMalariaRun
+from ..utils.PathsAndSchema import PathsAndSchema
 
 '''
 This class helps to build
@@ -47,7 +48,7 @@ bottom line: Start/Stop buttons
 '''
 class NotebookFrame(gtk.Frame):
     
-    def __init__(self, frame_name, parent, isWindows = False, isSimulatorFrame = True):
+    def __init__(self, frame_name, parent, isWindows = False):
         gtk.Frame.__init__(self, frame_name)
         self.vertical_box = gtk.VBox(False, 10)
         self.vertical_box.show()
@@ -78,18 +79,12 @@ class NotebookFrame(gtk.Frame):
         
         base_folder = os.getcwd()
         
-        if(isSimulatorFrame):
-            self.run_scenarios_base = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run')
-            self.run_scenarios_outputs = os.path.join(base_folder, 'run_scenarios', 'outputs')
-            self.liveGraphRun = LiveGraphRun()
-            self.openMalariaRun = OpenMalariaRun()
-            NotebookFrame.load_allready_open = False
-            NotebookFrame.creator_allready_open = False
-        else:
-            self.run_scenarios_base = os.path.join(base_folder,'translate_scenarios', 'scenarios_to_translate')
-            self.schemaTranslatorRun = SchemaTranslatorRun()
+        self.run_scenarios_outputs = PathsAndSchema.get_outputs_folder()
+        self.liveGraphRun = LiveGraphRun()
+        self.openMalariaRun = OpenMalariaRun()
+        self.load_allready_open = False
+        self.creator_allready_open = False
             
-        self.isSimulatorFrame = isSimulatorFrame
         self.stop_run = False
     
     '''
@@ -180,9 +175,9 @@ class NotebookFrame(gtk.Frame):
     Opens a new File Chooser, so the user can choose what files he would like
     to load in the tool'''
     def openNewDialog(self, widget, data=None):
-        if not NotebookFrame.load_allready_open:
+        if not self.load_allready_open:
             self.scenarioChoice = ScenariosChoice(self.fileList, self.parent_window, self)
-            NotebookFrame.load_allready_open = True
+            self.load_allready_open = True
     
     '''
     add_object:
@@ -265,7 +260,7 @@ class NotebookFrame(gtk.Frame):
         if not self.output_folder_chooser_opened:
             self.output_folder_chooser_opened = True
             folder_chooser = gtk.FileChooserDialog('Choose output folder', self.parent, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, ('ok',gtk.RESPONSE_OK)) 
-            icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+            icon_path = PathsAndSchema.get_icon_path()
             folder_chooser.set_icon_from_file(icon_path)
             folder_chooser.connect('response', self.select_output_folder, entry)
             folder_chooser.connect('destroy', self.allow_open_output_folder_chooser)
@@ -474,9 +469,9 @@ class NotebookFrame(gtk.Frame):
     open_new_experiment_creator_dialog:
     Opens a new experiment creator dialog''' 
     def open_new_experiment_creator_dialog(self, widget, data=None):
-        if not NotebookFrame.creator_allready_open:
-            ExperimentCreatorDialog(self.fileList, self.parent_window)
-            NotebookFrame.creator_allready_open = True
+        if not self.creator_allready_open:
+            ExperimentCreatorDialog(self.fileList, self.parent_window, self)
+            self.creator_allready_open = True
     
     '''
     reset_callback:

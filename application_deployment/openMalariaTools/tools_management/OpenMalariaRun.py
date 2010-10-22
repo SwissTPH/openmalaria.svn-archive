@@ -29,8 +29,7 @@ import shutil
 import gzip
 import re
 
-
-#from VirtualTerminal import VirtualTerminal
+from ..utils.PathsAndSchema import PathsAndSchema
 from VirtualTerminal_win import VirtualTerminal_win
 from JavaAppsRun import LiveGraphRun
 from datetime import date
@@ -41,23 +40,17 @@ This object provides all the arguments, inputs and outputs
 for the openmalaria executable'''
 class OpenMalariaRun():
     
-    actual_scenario_version = '21'
-    
-    base_folder = os.getcwd()
-    sys.path[0] = os.path.join(base_folder, 'application', 'common')
+    #base_folder = os.getcwd()
+    #sys.path[0] = os.path.join(base_folder, 'application', 'common')
     #import compareOutput
     #import compareCtsout
-    
-    testCommonDir = os.path.join(base_folder, 'application', 'common')
-    testSrcDir = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run')
-    testBuildDir = os.path.join(base_folder,  'application')
     
     
     def findFile (self, *names):
         
         execs=set()
         for name in names:
-            path=os.path.join(self.testBuildDir,name)
+            path=os.path.join(PathsAndSchema.get_application_folder(),name)
             if os.path.isfile (path):
                 execs.add (path)
         
@@ -135,12 +128,12 @@ class OpenMalariaRun():
         # The schema file only needs to be copied in BOINC mode, since otherwise the
         # scenario is opened with a path and the schema can be found in the same
         # directory. We copy it anyway.
-        scenario_xsd=os.path.join(simDir,'scenario_'+self.actual_scenario_version+'.xsd')
+        scenario_xsd=os.path.join(simDir,'scenario_'+PathsAndSchema.get_actual_schema()+'.xsd')
         densities_csv=os.path.join(simDir, 'densities.csv')
         if not os.path.exists(scenario_xsd):
-            shutil.copy2(os.path.join(self.testCommonDir ,'scenario_'+self.actual_scenario_version+'.xsd'), scenario_xsd)
+            shutil.copy2(os.path.join(PathsAndSchema.get_common_folder() ,'scenario_'+PathsAndSchema.get_actual_schema()+'.xsd'), scenario_xsd)
         if not os.path.exists(densities_csv):
-            shutil.copy2(os.path.join(self.testCommonDir, 'densities.csv'), densities_csv)
+            shutil.copy2(os.path.join(PathsAndSchema.get_common_folder(), 'densities.csv'), densities_csv)
         
         terminal.feed_command(time.strftime("%a, %d %b %Y %H:%M:%S")+"   %s.xml" % name, terminal.GOLD)
             
@@ -186,7 +179,7 @@ class OpenMalariaRun():
         if only_one_folder:
             if os.path.exists(outputFile):
                 os.rename(outputFile, os.path.join(simDir, name + '.txt'))
-            if os.path.exists(ctsoutFile):
+            if os.path.exists(ctsoutFile) and not runLiveGraph:
                 os.rename(ctsoutFile, os.path.join(simDir, 'ct_'+name+'.txt'))
         
         # Compare outputs:

@@ -19,6 +19,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
+import sys
+import pygtk
+if not sys.platform == 'win32':
+    pygtk.require('2.0')
+import gtk
+
 import os
 import re
 import subprocess
@@ -28,12 +34,10 @@ import ctypes
 import time
 import tempfile
 import shutil
-import pygtk
-pygtk.require('2.0')
-import gtk
 import string
+import exceptions
 
-#from OpenMalariaRun import OpenMalariaRun
+from ..utils.PathsAndSchema import PathsAndSchema
 
 '''
 ExperimentCreatorRun:
@@ -41,10 +45,9 @@ This class is used to start the experiment_creator.jar
 java application'''
 class ExperimentCreatorRun():
     
-    actual_scenario_version = '21'
     
     base_folder = os.getcwd()
-    experiment_creator_path = os.path.join(base_folder, 'application', 'experiment_creator', 'experiment_creator.jar')
+    experiment_creator_path = PathsAndSchema.get_experiment_creator_path()
     pid = ''
     
     '''
@@ -123,8 +126,8 @@ called LiveGraph. This program allows the user to
 monitor the evolution of openmalaria's parameters''' 
 class LiveGraphRun():
     base_folder = os.getcwd()
-    live_graph_path= os.path.join(base_folder,'application', 'LiveGraph.2.0.beta01.Complete', 'LiveGraph.2.0.beta01.Complete.jar')
-    settings_file_path = os.path.join(base_folder, 'application', 'common', 'settings.lgdfs')
+    live_graph_path= PathsAndSchema.get_livegraph_path()
+    settings_file_path = PathsAndSchema.get_settings_file_path()
     pid = ''
     
     '''
@@ -179,22 +182,11 @@ class LiveGraphRun():
 '''SchemaTranslatorRun:
 Starts the java SchemaTranslator tool'''
 class SchemaTranslatorRun():
-    base_folder = os.getcwd()
-    input_folder_path = os.path.join(base_folder, "translate_scenarios", "scenarios_to_translate")
-    output_folder_path = os.path.join(base_folder,  "translate_scenarios","translated_scenarios")
-    schema_translator_path = os.path.join(base_folder, "application", "schemaTranslator", "SchemaTranslator.jar")
-    schema_folder = os.path.join(base_folder,  "application", "common") + '/' 
     
     IS_USING_CORRECT_SCENARIO_VERSION = 0
     IS_TRANSLATABLE = 1
     IS_NOT_TRANSLATABLE = -1
     NOT_FOUND = -2
-    
-    def set_input_folder_path(self, input_folder_path):
-        self.input_folder_path = input_folder_path
-    
-    def set_output_folder_path(self, output_folder_path):
-        self.output_folder_path = output_folder_path
     
     '''
     start_schematranslator_run:
@@ -204,8 +196,8 @@ class SchemaTranslatorRun():
     '''    
     def start_schematranslator_run(self, input_files_paths):
         
-        temp_input_folder_path = tempfile.mkdtemp(dir=self.input_folder_path)
-        temp_output_folder_path = tempfile.mkdtemp(dir=self.output_folder_path)
+        temp_input_folder_path = tempfile.mkdtemp(dir=PathsAndSchema.get_scenarios_to_translate_folder())
+        temp_output_folder_path = tempfile.mkdtemp(dir=PathsAndSchema.get_translated_scenarios_folder())
         
         for input_file_path in input_files_paths:
             shutil.copy2(input_file_path[1], temp_input_folder_path)
@@ -213,9 +205,9 @@ class SchemaTranslatorRun():
         arglist = list()
         arglist.append('java')
         arglist.append('-jar')
-        arglist.append(self.schema_translator_path)
+        arglist.append(PathsAndSchema.get_schema_translator_path())
         arglist.append('--schema_folder')
-        arglist.append(self.schema_folder)
+        arglist.append(PathsAndSchema.get_common_folder()+'/')
         arglist.append('--input_folder')
         arglist.append(temp_input_folder_path)
         arglist.append('--output_folder')
@@ -232,7 +224,7 @@ class SchemaTranslatorRun():
             input_folder_path, input_file_name = os.path.split(input_file_path[1])
             temp_output_file_path = os.path.join(temp_output_folder_path, input_file_name)
             if os.path.exists(temp_output_file_path) and os.path.isfile(temp_output_file_path):
-                output_folder_path = os.path.join(input_folder_path, 'translated_to_schema_'+ExperimentCreatorRun.actual_scenario_version)
+                output_folder_path = os.path.join(input_folder_path, 'translated_to_schema_'+PathsAndSchema.get_actual_schema())
                 if not os.path.exists(output_folder_path):
                     os.mkdir(output_folder_path)
                 output_file_infos = list()
@@ -310,9 +302,9 @@ class SchemaTranslatorRun():
             else:
                 try:
                     schema_vers = int(search_match.group('schema_version'))
-                    if schema_vers > int(ExperimentCreatorRun.actual_scenario_version):
+                    if schema_vers > int(PathsAndSchema.get_actual_schema()):
                         return self.IS_NOT_TRANSLATABLE
-                    elif schema_vers < int(ExperimentCreatorRun.actual_scenario_version):
+                    elif schema_vers < int(PathsAndSchema.get_actual_schema()):
                         return self.IS_TRANSLATABLE
                     else:
                         return self.IS_USING_CORRECT_SCENARIO_VERSION   
@@ -331,7 +323,7 @@ class SchemaTranslatorRun():
             file_string=src.read()
             src.close()
             
-            file_string = re.sub(r'SchemaLocation="scenario.xsd"', 'SchemaLocation="scenario_'+ExperimentCreatorRun.actual_scenario_version+'.xsd"', file_string)
+            file_string = re.sub(r'SchemaLocation="scenario.xsd"', 'SchemaLocation="scenario_'+PathsAndSchema.get_actual_schema()+'.xsd"', file_string)
             
             dest=open(scenario_path,'w')
             dest.write(file_string)
@@ -344,7 +336,7 @@ class SchemaTranslatorRun():
     def show_import_problems_message(self, parent_window, wvnts, wvts, nfs, added_message):
         
         self.translated_files = list()
-        icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+        icon_path = PathsAndSchema.get_icon_path()
         
         if len(wvts) > 0:
             problems = ''

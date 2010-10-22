@@ -26,20 +26,32 @@ if not sys.platform == 'win32':
     pygtk.require('2.0')
 import gtk
 
+import time
+import re
+import string
+import shutil
+import exceptions
+
+from FileListFrame import FileList
+from ..utils.PathsAndSchema import PathsAndSchema
+from ..tools_management.JavaAppsRun import SchemaTranslatorRun
+from ..tools_management.JavaAppsRun import ExperimentCreatorRun
+
 '''
 ExperimentCreatorDialog:
 This gtk.Dialog allows the user to create
 a full experiment (With sweeps and arms)'''    
 class ExperimentCreatorDialog(gtk.Dialog):
     
-    def __init__(self, mainFileList, parent):
+    def __init__(self, mainFileList, parent, notebookFrame):
         gtk.Dialog.__init__(self,'Experiment creation', parent,0,('Cancel', gtk.RESPONSE_REJECT,
                       'Ok', gtk.RESPONSE_ACCEPT))
         
-        icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+        icon_path = PathsAndSchema.get_icon_path()
         self.set_icon_from_file(icon_path)
         self.mainFileList = mainFileList
         self.parent_window = parent
+        self.notebookFrame = notebookFrame
         
         
         hbox_name_entry= gtk.HBox(False, 2)
@@ -69,7 +81,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
         self.experiment_folder_entry = gtk.Entry()
         self.experiment_folder_entry.set_width_chars(100)
         self.experiment_folder_entry.set_sensitive(False)
-        self.experiment_folder_entry.set_text(os.path.join(os.getcwd(), 'run_scenarios', 'scenarios_to_run'))
+        self.experiment_folder_entry.set_text(PathsAndSchema.get_scenarios_to_run_folder())
         experiment_folder_button.connect('clicked', self.open_output_folder_chooser, self.experiment_folder_entry)
         label_experiment_hbox.pack_start(experiment_folder_button, False, False, 0)
         label_experiment_hbox.pack_start(self.experiment_folder_entry, True, True, 2)
@@ -171,7 +183,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
         if not self.sweep_folder_chooser_opened:
             self.sweep_folder_chooser_opened = True
             folder_chooser = gtk.FileChooserDialog('Choose sweep folder', self, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, ('ok',gtk.RESPONSE_OK)) 
-            icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+            icon_path = PathsAndSchema.get_icon_path()
             folder_chooser.set_icon_from_file(icon_path)
             folder_chooser.set_select_multiple(True)
             folder_chooser.connect('response', self.select_sweep_folder)
@@ -186,7 +198,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
         if not self.output_folder_chooser_opened:
             self.output_folder_chooser_opened = True
             folder_chooser = gtk.FileChooserDialog('Choose sweep folder', self, gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, ('ok',gtk.RESPONSE_OK, 'cancel', gtk.RESPONSE_CANCEL)) 
-            icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+            icon_path = PathsAndSchema.get_icon_path()
             folder_chooser.set_icon_from_file(icon_path)
             folder_chooser.connect('response', self.add_output_folder, entry)
             folder_chooser.connect('destroy', self.allow_open_output_folder_chooser)
@@ -252,7 +264,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
         if not self.base_file_chooser_opened:
             self.base_file_chooser_opened = True
             base_file_chooser = gtk.FileChooserDialog('Choose base file', self, gtk.FILE_CHOOSER_ACTION_OPEN, ('ok', gtk.RESPONSE_OK))
-            icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+            icon_path = PathsAndSchema.get_icon_path()
             base_file_chooser.set_icon_from_file(icon_path)
             base_file_chooser.connect('response', self.select_base_file)
             base_file_chooser.connect('destroy', self.allow_open_base_file_chooser)
@@ -388,10 +400,10 @@ class ExperimentCreatorDialog(gtk.Dialog):
     '''
     closed_creator:
     This function is called when "destroy" callback is triggered.
-    This function sets NotebookFrame.creator_allready_open = False
+    This function sets self.notebookFrame.creator_allready_open = False
     to allow the user to open a new experiment creator dialog'''        
     def closed_creator(self, widget, data=None):
-        NotebookFrame.creator_allready_open = False
+        self.notebookFrame.creator_allready_open = False
     
     '''
     create_experiment_files:
@@ -426,9 +438,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
             if not self.is_using_right_schema_version(self.base_file_path):
                 not_actual_scenario = True
             shutil.copy2(self.base_file_path, os.path.join(input_folder, 'base.xml'))
-            base_folder = os.getcwd()
-            testCommonDir = os.path.join(base_folder, 'application', 'common')
-            shutil.copy2(os.path.join(testCommonDir ,'scenario_'+OpenMalariaRun.actual_scenario_version+'.xsd'), input_folder)
+            shutil.copy2(os.path.join(PathsAndSchema.get_common_folder() ,'scenario_'+PathsAndSchema.get_actual_schema()+'.xsd'), input_folder)
             
             i=0
             while i < self.sweeps_notebook.get_n_pages():
@@ -471,7 +481,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
                 i+=1
                     
             if not_actual_scenario:
-                error = 'The scenario files are using another schema version than the supported one (schema vers.'+OpenMalariaRun.actual_scenario_version+').'
+                error = 'The scenario files are using another schema version than the supported one (schema vers.'+PathsAndSchema.get_actual_schema()+').'
                 error += '\nThe experiment creator will not be started.'
                 error += '\nPlease change the schema version.'
                 scenario_error_dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_NONE, error)
@@ -505,7 +515,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
             file_string=src.read()
             src.close()
         
-            return re.search('xsi:noNamespaceSchemaLocation="scenario_'+OpenMalariaRun.actual_scenario_version +'.xsd"', file_string) != None
+            return re.search('xsi:noNamespaceSchemaLocation="scenario_'+PathsAndSchema.get_actual_schema() +'.xsd"', file_string) != None
         else: 
             return False
 

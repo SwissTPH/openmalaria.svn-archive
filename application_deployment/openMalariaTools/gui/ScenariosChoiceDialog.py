@@ -27,7 +27,7 @@ if not sys.platform == 'win32':
 import gtk
 import string
 
-import openMalariaTools.gui.NotebookFrame
+from ..utils.PathsAndSchema import PathsAndSchema
 
 
 '''
@@ -38,7 +38,7 @@ The FileChooserDialog is then closed.
 class ScenariosChoice(gtk.FileChooserDialog):
     def __init__(self, fileList, parent,notebookFrame = None):
         gtk.FileChooserDialog.__init__(self, 'Scenarios to run...', parent, gtk.FILE_CHOOSER_ACTION_OPEN, ('load',gtk.RESPONSE_OK, 'cancel', gtk.RESPONSE_CANCEL))
-        icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+        icon_path = PathsAndSchema.get_icon_path()
         self.set_icon_from_file(icon_path)
         
         self.set_border_width(10)

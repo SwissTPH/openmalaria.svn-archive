@@ -28,6 +28,7 @@ import gtk
 import string
 
 from FileViewerFrame import FileViewer
+from ..utils.PathsAndSchema import PathsAndSchema
 
 '''
 FileViewersContainers(gtk.Window):
@@ -52,7 +53,7 @@ class FileViewersContainer(gtk.Dialog):
         self.filenames = list()
         self.names = list()
         
-        icon_path = os.path.join(os.getcwd(), 'application', 'common', 'om.ico')
+        icon_path = PathsAndSchema.get_icon_path()
         self.set_icon_from_file(icon_path)
         
         self.hide()
