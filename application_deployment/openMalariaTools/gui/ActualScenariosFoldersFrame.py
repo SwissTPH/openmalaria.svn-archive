@@ -26,6 +26,8 @@ if not sys.platform == 'win32':
     pygtk.require('2.0')
 import gtk
 
+from ..utils.PositionContainer import PositionContainer
+
 '''
 This Frame shows all the outputs' folders created during
 the session'''
@@ -42,7 +44,11 @@ class ActualScenariosFolders(gtk.Frame):
         self.treeview.connect('button-press-event', self.double_click)
         
         self.tcolumn1 = gtk.TreeViewColumn('  ')
+        
         self.tcolumn2 = gtk.TreeViewColumn('  name  ')
+        self.tcolumn2.set_clickable(True)
+        self.tcolumn2.connect('clicked', self.arrange_filenames)
+        
         self.tcolumn3 = gtk.TreeViewColumn('  path  ')
         
         self.treeview.append_column(self.tcolumn1)
@@ -65,7 +71,9 @@ class ActualScenariosFolders(gtk.Frame):
         self.scrolledWindow = gtk.ScrolledWindow()
         self.scrolledWindow.add_with_viewport(self.treeview)
         self.scrolledWindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        
         self.First = True
+        self.reverse_order = False
 
         self.add(self.scrolledWindow)
         self.show_all()
@@ -101,4 +109,26 @@ class ActualScenariosFolders(gtk.Frame):
     Adds a new outputs' folder in the list'''           
     def add_folder(self, path, name):
         self.liststore.append([path, gtk.STOCK_DIRECTORY, name])
-        self.show()   
+        self.show()
+        
+    '''
+    arrange_filenames:
+    Arranges all the filenames in the liststore
+    '''
+    def arrange_filenames(self, widget):
+        self.reverse_order = not self.reverse_order
+            
+        positionContainer = PositionContainer(self.reverse_order)
+        actual_position = 0
+        
+        iterator = self.liststore.get_iter_first()
+        
+        while iterator:
+            name = self.liststore.get_value(iterator, 2)
+            
+            positionContainer.add(name, actual_position)
+            
+            actual_position += 1
+            iterator = self.liststore.iter_next(iterator)
+        
+        self.liststore.reorder(positionContainer.get_positions_numbers())   

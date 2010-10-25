@@ -40,6 +40,7 @@ import signal
 
 from FileViewersContainerDialog import FileViewersContainer
 from ..tools_management.JavaAppsRun import SchemaTranslatorRun
+from ..utils.PositionContainer import PositionContainer
 
 '''
 This Frame lists the xml files. This list allows the user to do 
@@ -65,11 +66,17 @@ class FileList(gtk.Frame):
             self.tcolumn1 = gtk.TreeViewColumn(' Reference   ')
         else:
             self.tcolumn1 = gtk.TreeViewColumn(' Selection   ')
+            self.tcolumn1.set_clickable(True)
+            self.tcolumn1.connect('clicked', self.arrange_selected)
         
         self.tcolumn2 = gtk.TreeViewColumn(' Loaded files   ')
+        self.tcolumn2.set_clickable(True)
+        self.tcolumn2.connect('clicked', self.arrange_filenames)
         
         if not experimentDialog:
             self.tcolumn3 = gtk.TreeViewColumn(' Outcomes   ')
+            self.tcolumn3.set_clickable(True)
+            self.tcolumn3.connect('clicked', self.arrange_outcomes)
         
         self.treeview.append_column(self.tcolumn1)
         self.treeview.append_column(self.tcolumn2)
@@ -158,6 +165,10 @@ class FileList(gtk.Frame):
             self.fileViewersContainer = FileViewersContainer(parent)
             self.filenames = list()
             
+            self.reverse_order_outcomes = False
+            self.reverse_order_selected = False
+        
+        self.reverse_order = False    
         self.total_selected = 0
         self.add(self.vbox)
         self.show_all()
@@ -275,7 +286,7 @@ class FileList(gtk.Frame):
     about path, name, outcomes (at the beginning none) and 
     the toggle button state (False, because the file isn't selected...)'''
     def add_file(self, path, name):
-        pb = self.treeview.render_icon(gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU, None)
+        pb = None
         self.liststore.append([path, name, pb , False])
     
     '''
@@ -375,10 +386,10 @@ class FileList(gtk.Frame):
     scenario's row'''
     def set_simulation_state(self, state, iterator):
         if state:
-            pb = self.treeview.render_icon(gtk.STOCK_APPLY, gtk.ICON_SIZE_MENU, None)
+            pb = self.treeview.render_icon(gtk.STOCK_OK, gtk.ICON_SIZE_MENU, None)
             self.liststore.set_value(iterator,2, pb)
         else:
-            pb = self.treeview.render_icon(gtk.STOCK_CANCEL, gtk.ICON_SIZE_MENU, None)
+            pb = self.treeview.render_icon(gtk.STOCK_NO, gtk.ICON_SIZE_MENU, None)
             self.liststore.set_value(iterator,2, pb)
     
     '''
@@ -388,7 +399,7 @@ class FileList(gtk.Frame):
     def reset_simulation_state(self):
         iterator = self.liststore.get_iter_first()
         while iterator:
-            pb = self.treeview.render_icon(gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU, None)
+            pb = None
             self.liststore.set_value(iterator,2, pb)
             iterator = self.liststore.iter_next(iterator)
             
@@ -402,3 +413,119 @@ class FileList(gtk.Frame):
     Returns the reference typ (base, comparator or reference)'''
     def get_reference_type(self):
         return self.reference_type
+    
+    '''
+    arrange_filenames:
+    Arranges all the filenames in the liststore
+    '''
+    def arrange_filenames(self, widget):
+        self.reverse_order = not self.reverse_order
+            
+        positionContainer = PositionContainer(self.reverse_order)
+        actual_position = 0
+        
+        iterator = self.liststore.get_iter_first()
+        
+        while iterator:
+            name = self.liststore.get_value(iterator, 1)
+            
+            positionContainer.add(name, actual_position)
+            
+            actual_position += 1
+            iterator = self.liststore.iter_next(iterator)
+        
+        self.liststore.reorder(positionContainer.get_positions_numbers())
+    
+    '''
+    arrange_outcomes:
+    Groups the successfully, unsuccessfully and not runned elements. Each group is ordered by name
+    '''
+    def arrange_outcomes(self, widget):
+        self.reverse_order = True
+        self.reverse_order_outcomes = not self.reverse_order_outcomes
+        
+        none_positionContainer = PositionContainer(self.reverse_order)
+        success_positionContainer = PositionContainer(self.reverse_order)
+        error_positionContainer = PositionContainer(self.reverse_order)
+        
+        #no_test = self.treeview.render_icon(gtk.STOCK_NO, gtk.ICON_SIZE_MENU, None)
+        ok_test = self.treeview.render_icon(gtk.STOCK_OK, gtk.ICON_SIZE_MENU, None)
+        
+        actual_position = 0
+        
+        iterator = self.liststore.get_iter_first()
+        
+        while iterator:
+            outcomes_value = self.liststore.get_value(iterator,2)
+            name = self.liststore.get_value(iterator, 1)
+            
+            if cmp(outcomes_value, None) == 0:
+                none_positionContainer.add(name,actual_position)
+            elif cmp(outcomes_value, ok_test) == 0:
+                success_positionContainer.add(name, actual_position)
+            else:
+                error_positionContainer.add(name, actual_position)
+                
+            actual_position += 1    
+            iterator = self.liststore.iter_next(iterator)
+        
+        complete_list = list()
+        if self.reverse_order_outcomes:
+            complete_list = error_positionContainer.get_positions_numbers()
+            complete_list.extend(none_positionContainer.get_positions_numbers())
+            complete_list.extend(success_positionContainer.get_positions_numbers())
+        else:
+            complete_list = success_positionContainer.get_positions_numbers()
+            complete_list.extend(none_positionContainer.get_positions_numbers())
+            complete_list.extend(error_positionContainer.get_positions_numbers())
+            
+        self.liststore.reorder(complete_list)
+    
+    '''
+    arrange_selected:
+    Groups the selected and un_selected elements. Each group is ordered by name
+    '''    
+    def arrange_selected(self, widget):
+        self.reverse_order = True
+        self.reverse_order_selected = not self.reverse_order_selected
+        
+        not_selected_positionContainer = PositionContainer(self.reverse_order)
+        selected_positionContainer = PositionContainer(self.reverse_order)
+        
+        actual_position = 0
+        
+        iterator = self.liststore.get_iter_first()
+        
+        while iterator:
+            
+            name = self.liststore.get_value(iterator, 1)
+            
+            if self.liststore.get_value(iterator, 3) == True:
+                selected_positionContainer.add(name, actual_position)
+            else:
+                not_selected_positionContainer.add(name, actual_position)
+            
+            actual_position +=1
+            iterator = self.liststore.iter_next(iterator)
+         
+        complete_list = list()    
+        if self.reverse_order_selected:
+            complete_list = not_selected_positionContainer.get_positions_numbers()
+            complete_list.extend(selected_positionContainer.get_positions_numbers())
+        else:
+            complete_list = selected_positionContainer.get_positions_numbers()
+            complete_list.extend(not_selected_positionContainer.get_positions_numbers())
+        
+        self.liststore.reorder(complete_list)
+            
+            
+    
+     
+    
+    
+        
+        
+        
+        
+        
+        
