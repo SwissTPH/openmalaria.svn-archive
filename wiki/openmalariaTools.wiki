@@ -10,13 +10,17 @@ Please be aware that openmalariaTools needs for some functionalities that java s
 
 openmalariaTools features:
 
-  * [http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg Experiment creator]
+  * Experiment creator
   * Basic scenario editor 
   * Batch mode 
   * Live graph integration
   * Automatic schema translation
   * Custom population size setting (for test batches)
 
-Screenshot:
+Screenshots:
 
-http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/overview.jpg
+||*overview*||*livegraph*||
+||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/run.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/run.jpg" width="600"/></a>||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/livegraph.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/livegraph.jpg" width="600"/></a>||
+
+||*editor*||*experiment creator*||
+||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/editor.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/editor.jpg" width="600"/></a>||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg" width="600"/></a>||
