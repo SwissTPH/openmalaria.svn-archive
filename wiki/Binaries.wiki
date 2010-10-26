@@ -20,11 +20,11 @@ Extract whichever you download into your openmalaria folder and then run the ope
 
 It is now possible to test a new application for creating and running experiments locally. The tool is currently in Beta phase (beta 2) and could present some bugs. This tool allows the user to execute, create, monitor experiments using a GUI instead of a terminal or the command line. The Application was first written on linux using pyGTK but is usable on windows. An installer is given for the windows version.
 
-The beta 3 is using the schema version 21 and the linux, macosx installer will follow.
+The beta 3 is using the schema version 21 and the linux installer will follow.
 
 You can download the latest installer here:
 
-Thew new installer (since beta 2) doesn't need some python tools installation anymore. You still need to have java installed on your computer. 
+The new installer (since beta 2) doesn't need some python tools installation anymore. You still need to have java installed on your computer. 
 
 * [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.03/win32/openMalariaTools_installer_v00.03.exe win32 openmalariaTools installer]
 
