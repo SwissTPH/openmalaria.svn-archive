@@ -16,7 +16,7 @@ Start by making a folder wherever you want to use OpenMalaria. Then, you need to
 
 Extract whichever you download into your openmalaria folder and then run the openmalaria executable from a command line (see [SetupOverview Getting Started]).
 
-= OpenmalariaTools =
+= [openmalariaTools OpenmalariaTools] =
 
 It is now possible to test a new application for creating and running experiments locally. The tool is currently in Beta phase (beta 2) and could present some bugs. This tool allows the user to execute, create, monitor experiments using a GUI instead of a terminal or the command line. The Application was first written on linux using pyGTK but is usable on windows. An installer is given for the windows version.
 
