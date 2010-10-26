@@ -35,7 +35,7 @@ import re
 import ctypes
 import signal
 
-from JavaAppsRun import LiveGraphRun
+from ..tools_management.JavaAppsRun import LiveGraphRun
 
 '''StreamHelper:
 Class (Thread) for handling the stdout, stderr streams and check the application status''' 

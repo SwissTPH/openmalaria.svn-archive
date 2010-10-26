@@ -30,7 +30,7 @@ import gzip
 import re
 
 from ..utils.PathsAndSchema import PathsAndSchema
-from VirtualTerminal_win import VirtualTerminal_win
+from ..gui.VirtualTerminal_win import VirtualTerminal_win
 from JavaAppsRun import LiveGraphRun
 from datetime import date
 
