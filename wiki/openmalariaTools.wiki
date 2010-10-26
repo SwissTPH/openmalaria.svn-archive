@@ -1,13 +1,17 @@
-#summary One-sentence summary of this page.
+#A GUI frontend for managing, creating and running local experiments.
 
 = Introduction =
 
-Add your content here.
+openmalariaTools is a GUI created for an easier interaction with the openmalaria scientific application. Instead of putting different commands in a terminal the user just chooses his options in the GUI.
 
+Please be aware that openmalariaTools needs for some functionalities that java sdk or jdk is installed on your operating system. 
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+openmalariaTools features:
+  * Experiment creator
+  * Basic scenario editor 
+  * Batch mode 
+  * Live graph integration
+  * Automatic schema translation
+  * Custom population size setting (for test batches)
