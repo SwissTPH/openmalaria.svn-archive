@@ -10,7 +10,7 @@ Please be aware that openmalariaTools needs for some functionalities that java s
 
 openmalariaTools features:
 
-  * Experiment creator
+  * [http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg Experiment creator]
   * Basic scenario editor 
   * Batch mode 
   * Live graph integration
