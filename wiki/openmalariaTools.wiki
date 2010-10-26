@@ -6,7 +6,7 @@ openmalariaTools is a GUI created for an easier interaction with the openmalaria
 
 Please be aware that openmalariaTools needs for some functionalities that java sdk or jdk is installed on your operating system. 
 
-= Details =
+= Features =
 
 openmalariaTools features:
   * Experiment creator
@@ -15,3 +15,6 @@ openmalariaTools features:
   * Live graph integration
   * Automatic schema translation
   * Custom population size setting (for test batches)
+
+Screenshot:
+http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/overview.jpg
