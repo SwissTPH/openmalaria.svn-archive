@@ -1,4 +1,4 @@
-#A GUI frontend for managing, creating and running local experiments.
+A GUI frontend for managing, creating and running local experiments.
 
 = Introduction =
 
@@ -9,6 +9,7 @@ Please be aware that openmalariaTools needs for some functionalities that java s
 = Features =
 
 openmalariaTools features:
+
   * Experiment creator
   * Basic scenario editor 
   * Batch mode 
@@ -17,4 +18,5 @@ openmalariaTools features:
   * Custom population size setting (for test batches)
 
 Screenshot:
+
 http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/overview.jpg
