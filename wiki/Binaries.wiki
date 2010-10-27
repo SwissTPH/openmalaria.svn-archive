@@ -1,11 +1,30 @@
-Precompiled Binaries for windows, macosx and linux.
+#summary Installation packages for windows, macosx and linux.
 
 = Introduction =
 
-It's now possible to download Precompiled Binaries from the openmalaria repository.
-You can either choose to download the binaries and then run the scientific application using the terminal or to download the all in one installer including a GUI (openmalaria tools) for the interaction with the openmalaria application.
+A GUI for running OpenMalaria simulations and analysing results — OpenMalariaTools — is under development. This should provide the easiest method of using OpenMalaria on a PC (it is currently usable, though still under development).
 
-= Binaries only =
+Alternately, one may run the OpenMalaria executable directly with a bash/shell script or from a command-line; see [Binaries#Binaries_only Binaries only].
+
+== [openmalariaTools OpenMalariaTools] ==
+
+It is now possible to test a new application for creating and running experiments locally. The tool is currently in Beta phase (beta 2) and could present some bugs. This tool allows the user to execute, create, monitor experiments using a GUI instead of a terminal or the command line. The Application was first written on Linux using PyGTK but is usable on windows. An installer is given for the windows version.
+
+The beta 3 is using the schema version 21 and the Linux installer will follow. The same package can, of course, be used with OpenMalaria binaries compiled from source, by replacing the application/openMalaria[.exe] binary.
+
+Installation:
+
+  * Prior to beta 2, some python tools needed to be installed independently.
+  * A [http://www.java.com/en/download/ Java run-time environment] must be installed.
+  * Download and install OpenMalariaTools:
+    * [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.03/win32/openMalariaTools_installer_v00.03.exe Windows (32-bit) openmalariaTools installer]
+    * MacOSX and Linux packages will follow.
+
+For further informations please have a look at [UseOpenMalariaTools Install and Use openmalariaTools]
+
+== Binaries only ==
+
+Previously, we made OpenMalaria available for download in a much simpler package. These downloads are still available, though a little old.
 
 Start by making a folder wherever you want to use OpenMalaria. Then, you need to download one of the archives here (The links given point to the latest versions):
 
@@ -15,20 +34,6 @@ Start by making a folder wherever you want to use OpenMalaria. Then, you need to
  * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/gnu64/openmalaria-647.tar.gz gnu64]
 
 Extract whichever you download into your openmalaria folder and then run the openmalaria executable from a command line (see [SetupOverview Getting Started]).
-
-= [openmalariaTools OpenmalariaTools] =
-
-It is now possible to test a new application for creating and running experiments locally. The tool is currently in Beta phase (beta 2) and could present some bugs. This tool allows the user to execute, create, monitor experiments using a GUI instead of a terminal or the command line. The Application was first written on linux using pyGTK but is usable on windows. An installer is given for the windows version.
-
-The beta 3 is using the schema version 21 and the linux installer will follow.
-
-You can download the latest installer here:
-
-The new installer (since beta 2) doesn't need some python tools installation anymore. You still need to have java installed on your computer. 
-
-* [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.03/win32/openMalariaTools_installer_v00.03.exe win32 openmalariaTools installer]
-
-For further informations please have a look at [UseOpenMalariaTools Install and Use openmalariaTools]
 
 == Errors ==
 
