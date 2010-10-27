@@ -6,6 +6,10 @@ openmalariaTools is a GUI created for an easier interaction with the openmalaria
 
 Please be aware that openmalariaTools needs for some functionalities that java sdk or jdk is installed on your operating system. 
 
+= Downloads =
+
+Please see the [Binaries] page.
+
 = Features =
 
 openmalariaTools features:
@@ -38,6 +42,4 @@ Run some scenarios:
 
 ||*editor*||*experiment creator*||
 ||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/editor.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/editor.jpg" width="600"/></a>||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg" width="600"/></a>||
-
-
 
