@@ -17,10 +17,27 @@ openmalariaTools features:
   * Automatic schema translation
   * Custom population size setting (for test batches)
 
-Screenshots:
+= Usage =
+
+Run some scenarios:
+
+  # Open the application
+  # Click on the load button
+  # Select some scenario files. If the files' schema version is older than the system supported one, then the tool will ask if you want that it updates the scenario files for you (It could happen that an automatic translation isn't possible. In this case you will need to update the scenario yourself).
+  # Add some options or select a specific output folder.
+    * Use Livegraph (is enabled only if one scenario is selected). This option allows you to start a third party software called livegraph which is real-time plotting the data outputted from openmalaria scientific application (This needs some specific parameters in the scenario file's monitoring section).
+    * Single Output folder. Instead of having an output folder per scenario file, you will have only one output folder for all the selected scenarios. This is useful if you're running a large amount of scenarios (batch).
+    * Custom population size. You can set a custom population size for all the selected scenarios. This is useful if you want to test your scenarios (a small population size is less demanding in term of computing power and time).
+    * Please be aware that for security reasons, you could not be able on windows seven or vista to write output data in the default output folder. You should then select another path (eg. your home folder).
+  # Finally click on the start button under the "terminal" screen and wait. You can either follow your scenarios' progression on the "terminal" or have a situation summary in scenarios' list where you can see the outcomes (success, failure or not yet started).
+
+= Screenshots =
 
 ||*overview*||*livegraph*||
 ||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/run.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/run.jpg" width="600"/></a>||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/livegraph.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/livegraph.jpg" width="600"/></a>||
 
 ||*editor*||*experiment creator*||
 ||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/editor.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/editor.jpg" width="600"/></a>||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg" width="600"/></a>||
+
+
+
