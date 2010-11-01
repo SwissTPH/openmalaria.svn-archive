@@ -8,7 +8,7 @@ Alternately, one may run the OpenMalaria executable directly with a bash/shell s
 
 == [openmalariaTools OpenMalariaTools] ==
 
-It is now possible to test a new application for creating and running experiments locally. The tool is currently in Beta phase (beta 2) and could present some bugs. This tool allows the user to execute, create, monitor experiments using a GUI instead of a terminal or the command line. The Application was first written on Linux using PyGTK but is usable on windows. An installer is given for the windows version.
+It is now possible to test a new application for creating and running experiments locally. The tool is currently in Beta phase (beta 3) and could present some bugs. This tool allows the user to execute, create and monitor experiments using a GUI instead of a terminal or the command line. The Application was first written on Linux using PyGTK but is usable on windows. An installer is given for the windows version.
 
 The beta 3 is using the schema version 21 and the Linux installer will follow. The same package can, of course, be used with OpenMalaria binaries compiled from source, by replacing the application/openMalaria[.exe] binary.
 
