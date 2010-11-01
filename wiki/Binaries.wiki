@@ -18,7 +18,7 @@ Installation:
   * A [http://www.java.com/en/download/ Java run-time environment] must be installed.
   * Download and install OpenMalariaTools:
     * [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.03/win32/openMalariaTools_installer_v00.03.exe Windows (32-bit) openmalariaTools installer]
-    * MacOSX and Linux packages will follow.
+    * Linux package will follow.
 
 For further informations please have a look at [UseOpenMalariaTools Install and Use openmalariaTools]
 
