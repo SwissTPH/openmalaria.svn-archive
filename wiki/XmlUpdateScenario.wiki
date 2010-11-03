@@ -23,6 +23,9 @@ You need to put the scenarios to be converted in the scenarios folder and then s
 If you don't add any options, then the scenarios will be converted to the latest schema version.
 
 == Options ==
+
+(Note that this list may not always be up-to-date. You can see all options by running with --help.)
+
    * --required_version XX: The version number to update the scenarios to. By default, the latest schema version will be used.
    * --no-validation: The scenarios are converted and written without any validation against the schema
    * --no-translation: The scenarios are not written, but still converted for validation
