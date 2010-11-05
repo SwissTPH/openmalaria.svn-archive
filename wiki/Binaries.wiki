@@ -28,10 +28,10 @@ Previously, we made OpenMalaria available for download in a much simpler package
 
 Start by making a folder wherever you want to use OpenMalaria. Then, you need to download one of the archives here (The links given point to the latest versions):
 
- * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/win32/openmalaria-647.zip win32]
- * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/macosx/openmalaria-647.zip macosx]
- * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/gnu32/openmalaria-647.tar.gz gnu32]
- * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-647/gnu64/openmalaria-647.tar.gz gnu64]
+ * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-649/win32/openmalaria-649.zip win32]
+ * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-649/macosx/openmalaria-649.zip macosx]
+ * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-649/gnu32/openmalaria-649.tar.gz gnu32]
+ * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-649/gnu64/openmalaria-649.tar.gz gnu64]
 
 Extract whichever you download into your openmalaria folder and then run the openmalaria executable from a command line (see [SetupOverview Getting Started]).
 
