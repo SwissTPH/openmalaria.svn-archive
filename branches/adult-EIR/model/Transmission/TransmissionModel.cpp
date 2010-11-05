@@ -121,6 +121,9 @@ TransmissionModel::~TransmissionModel () {
 
 
 void TransmissionModel::updateAgeCorrectionFactor (std::list<Host::Human>& population, int populationSize) {
+    //NOTE: ageCorrectionFactor is now only used within the vector
+    // init & update, so could be calculated there.
+    
     // Calculate relative availability correction, so calls from vectorUpdate,
     // etc., will have a mean of 1.0.
     double sumRelativeAvailability = 0.0;
@@ -144,7 +147,6 @@ void TransmissionModel::updateKappa (const std::list<Host::Human>& population, i
   nByAge.assign (noOfAgeGroupsSharedMem, 0);
   
   for (std::list<Host::Human>::const_iterator h = population.begin(); h != population.end(); ++h) {
-      // Note: should multiply by ageCorrectionFactor for relative availability; however factor cancels:
     double t = h->perHostTransmission.relativeAvailabilityHetAge(h->getAgeGroupData());
     sumWeight += t;
     t *= h->probTransmissionToMosquito();

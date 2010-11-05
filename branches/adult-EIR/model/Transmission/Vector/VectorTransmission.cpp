@@ -174,13 +174,13 @@ void VectorTransmission::initMainSimulation() {
 double VectorTransmission::calculateEIR(int simulationTime, PerHostTransmission& host, const AgeGroupData ageGroupData) {
   if (simulationMode == equilibriumMode)
     return initialisationEIR[simulationTime%Global::intervalsPerYear]
-	 * host.relativeAvailabilityHetAge (ageGroupData) * ageCorrectionFactor;
+	 * host.relativeAvailabilityHetAge (ageGroupData);
   
   double EIR = 0.0;
   for (size_t i = 0; i < numSpecies; ++i) {
     EIR += species[i].calculateEIR (i, host);
   }
-  return EIR * host.relativeAvailabilityAge (ageGroupData) * ageCorrectionFactor;
+  return EIR * host.relativeAvailabilityAge (ageGroupData);
 }
 
 

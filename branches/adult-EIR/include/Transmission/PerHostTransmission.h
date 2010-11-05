@@ -40,16 +40,19 @@ public:
   /** Static initialisation. */
   static void initParameters ();
   
-  //! Calculates the adjustment for body size in exposure to mosquitoes 
-  /*! 
-  The bites are assumed proportional to average surface area for hosts of the given age. 
-  Linear interpolation is used to calculate this from the input array of surface areas. 
-  \param ageyrs age in years 
-  \return the ratio of bites received by the host to the average for an adult 
-   *
-   * Age factor of availiability; to be multiplied by partial availability.
+  /** Calculates the adjustment for body size in exposure to mosquitoes,
+   * relative to an average adult.
    * 
-   * Mean output should be 1.0/ageCorrectionFactor.
+   * The bites are assumed proportional to average surface area for hosts of
+   * the given age. Linear interpolation is used to calculate this from the
+   * input array of surface areas. 
+   * 
+   * @param ageyrs Age of host (encapsulated by AgeGroupData for performance
+   * reasons).
+   * @return the ratio of bites received by the host to the average for an adult 
+   *
+   * This is the age factor of availiability; mean output should be
+   *  1.0/ageCorrectionFactor.
    * 
    * Also has a switch to put individuals entirely outside transmission. */
   inline double relativeAvailabilityAge (AgeGroupData ageGroupData) const {
@@ -97,9 +100,8 @@ public:
   double probMosqResting (const HostCategoryAnopheles& base, size_t speciesIndex) const;
   //@}
   
-  /** Get the availability of this host to mosquitoes relative to other hosts.
-   * (Includes heterogeneity and age effects; for non-vector model this is the
-   * whole availability factor.)
+  /** Get the availability of this host to mosquitoes relative to an average
+   * adult (including heterogeneity and age effects).
    *
    * Used to drive a simulation from an input EIR.
    * Is relativeAvailabilityHet()*relativeAvailabilityAge(ageYears).

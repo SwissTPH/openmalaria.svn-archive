@@ -100,7 +100,7 @@ private:
   //@}
   
   /// EIR per time interval during the intervention period
-  /// Units: innoculations per adult per timestep
+  /// Units: inoculations per adult per timestep
   vector<double> interventionEIR;
   
   /** initialKappa[] is the value of kappa during the pre-intervention phase.

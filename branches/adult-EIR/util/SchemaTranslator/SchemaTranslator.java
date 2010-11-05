@@ -45,7 +45,7 @@ public class SchemaTranslator {
     Document scenarioDocument;
     Element scenarioElement;
 
-    static final int CURRENT_VERSION = 22;
+    static final int CURRENT_VERSION = 23;
 
     private static int _required_version = CURRENT_VERSION;
     private static boolean latestSchema = false;
@@ -1192,6 +1192,14 @@ public class SchemaTranslator {
                 System.err.println("Error: please specify --iptiReportOnlyAtRisk");
                 return false;
             }
+        }
+        return true;
+    }
+    
+    /* Units of EIR inputs in vector model changed. */
+    public Boolean translate22To23() throws Exception {
+        if( getChildNodes(getChildElement(scenarioElement, "entoData"), "vector").size() > 0 ){
+            System.err.println("Warning: units of EIR for vector model changed from inoculations per averaged person to inoculations per average adult.");
         }
         return true;
     }
