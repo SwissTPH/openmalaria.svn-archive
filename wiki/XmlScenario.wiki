@@ -224,6 +224,8 @@ The `entoData` element also has two attributes: `name` (just a user-friendly nam
 
 From schema version 22 it has an optional third attribute: `annualEIR`. If this is set, the equilibrium-period EIR is rescaled to this level (units: infectious bites per person/adult per year). Affects both vector and non-vector models, though not the non-vector model EIR introduced by a `changeEIR` pseudo-intervention.
 
+Note that prior to schema 24, the vector model used EIR in units of infectious bites per person per time-period, averaged across the population, while the non-vector model used units of infectious bites per adult per time-period. From schema version 24 both will use units of infectious bites per adult per day/timestep/month/year. (The difference being that children receive fewer bites than adults.)
+
 === Vector parameters: `vector` ===
 
 [XmlEntoVector Vector-model parameter description.]
