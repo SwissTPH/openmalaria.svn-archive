@@ -65,6 +65,7 @@ class StreamHelper():
                 if(char == ' ' or char == '') and self.openMalariaFinished:
                     time.sleep(.2)
                     if self.tics == 2:
+                        self.is_ready = True
                         self.alive = False
                     self.tics += 1
                 else:
@@ -83,6 +84,7 @@ class StreamHelper():
                     self.is_ready = True
                 else:
                     total_string += char
+        self.file_stream.close()
     
     '''
     setOpenMalariaFinished:
@@ -194,8 +196,8 @@ class VirtualTerminal_win(gtk.ScrolledWindow):
                 stderr_helper.reset_callback()
                 stdout_helper.reset_callback()
                 #self.kill_win(sub.pid)
-		if sub.poll()==None:
-			sub.kill()
+                if sub.poll()==None:
+                    sub.terminate()
                         
             
             if(sub.poll()!=None):
