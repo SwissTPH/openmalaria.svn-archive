@@ -1197,7 +1197,7 @@ public class SchemaTranslator {
     }
     
     /* Units of EIR inputs in vector model changed. */
-    public Boolean translate22To23() throws Exception {
+    public Boolean translate23To24() throws Exception {
         if( getChildNodes(getChildElement(scenarioElement, "entoData"), "vector").size() > 0 ){
             System.err.println("Warning: units of EIR for vector model changed from inoculations per averaged person to inoculations per average adult.");
         }
