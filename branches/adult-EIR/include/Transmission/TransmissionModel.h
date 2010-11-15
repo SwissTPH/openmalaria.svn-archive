@@ -200,7 +200,8 @@ private:
     void ctsCbSimulatedEIR (ostream& stream);
     void ctsCbKappa (ostream& stream);
     void ctsCbHumanAvail (ostream& stream);
-  
+    void ctsCbNumTransmittingHumans (ostream& stream);
+    
 public:
   /** Correction factor for PerHostTransmission::getRelativeAvailability.
    *
@@ -248,6 +249,9 @@ private:
   double BSSInitialisationEIR;
   double BSSInnoculationsPerDayOfYear;
   int BSSTimesteps;
+  
+  /// For "num transmitting humans" cts output.
+  int numTransmittingHumans;
 
 protected:
   /** Total annual infectious bites per adult.

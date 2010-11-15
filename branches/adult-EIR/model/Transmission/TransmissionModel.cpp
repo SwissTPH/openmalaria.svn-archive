@@ -90,6 +90,9 @@ void TransmissionModel::ctsCbKappa (ostream& stream){
 void TransmissionModel::ctsCbHumanAvail (ostream& stream){
     stream<<'\t'<<1.0/ageCorrectionFactor;
 }
+void TransmissionModel::ctsCbNumTransmittingHumans (ostream& stream){
+    stream<<'\t'<<numTransmittingHumans;
+}
 
 TransmissionModel::TransmissionModel() :
     ageCorrectionFactor(numeric_limits<double>::signaling_NaN()),
@@ -114,6 +117,7 @@ TransmissionModel::TransmissionModel() :
   Continuous::registerCallback( "simulated EIR", "\tsimulated EIR", MakeDelegate( this, &TransmissionModel::ctsCbSimulatedEIR ) );
   Continuous::registerCallback( "human infectiousness", "\thuman infectiousness", MakeDelegate( this, &TransmissionModel::ctsCbKappa ) );
   Continuous::registerCallback( "human availability", "\tmean human availability", MakeDelegate( this, &TransmissionModel::ctsCbHumanAvail ) );
+  Continuous::registerCallback( "num transmitting humans", "\tnum transmitting humans", MakeDelegate( this, &TransmissionModel::ctsCbNumTransmittingHumans ) );
 }
 
 TransmissionModel::~TransmissionModel () {
@@ -145,18 +149,22 @@ void TransmissionModel::updateKappa (const std::list<Host::Human>& population, i
   double sumWeight  = 0.0;
   kappaByAge.assign (noOfAgeGroupsSharedMem, 0.0);
   nByAge.assign (noOfAgeGroupsSharedMem, 0);
+  numTransmittingHumans = 0;
   
   for (std::list<Host::Human>::const_iterator h = population.begin(); h != population.end(); ++h) {
     double t = h->perHostTransmission.relativeAvailabilityHetAge(h->getAgeGroupData());
     sumWeight += t;
     t *= h->probTransmissionToMosquito();
     sumWt_kappa += t;
+    if( t > 0.0 )
+        ++numTransmittingHumans;
     
     // kappaByAge and nByAge are used in the screensaver only
     Monitoring::AgeGroup ag = h->ageGroup();
     kappaByAge[ag.i()] += t;
     ++nByAge[ag.i()];
   }
+  
   
   size_t tmod = (simulationTime-1) % Global::intervalsPerYear;
   if( population.empty() ){	// this is valid
