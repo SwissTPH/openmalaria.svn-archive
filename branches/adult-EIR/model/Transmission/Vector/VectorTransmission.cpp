@@ -141,8 +141,9 @@ void VectorTransmission::scaleXML_EIR (scnXml::EntoData& ed, double factor) cons
 }
 
 int VectorTransmission::transmissionInitDuration () {
-    // Data is summed over the last year of human initialisation.
-    return 0;
+    // Data is summed over the last year of human initialisation
+    // plus an extra 4 years.
+    return 4*Global::intervalsPerYear;
 }
 int VectorTransmission::transmissionInitIterate () {
   bool iterate = false;

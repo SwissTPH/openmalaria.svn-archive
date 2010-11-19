@@ -182,8 +182,7 @@ public:
     FSCoeffic & stream;
     mosqEmergeRate & stream;
     forcedS_v & stream;
-    annualS_v & stream;
-    sumAnnualForcedS_v & stream;
+    quinquennialS_v & stream;
     initNv0FromSv & stream;
     initNvFromSv & stream;
     N_v_length & stream;
@@ -342,13 +341,13 @@ private:
    * Should be checkpointed. */
   vector<double> forcedS_v;
   
-  /** Used by vectorInitIterate to calculate scaling factor.
-  *
-  * Length of annualS_v is Global::DAYS_IN_YEAR. Checkpoint.
-  * 
-  * Units of both should be inoculations. */
-  vector<double> annualS_v;
-  double sumAnnualForcedS_v;	///< ditto
+  /** Summary of S_v over the last five years, used by vectorInitIterate to
+   * calculate scaling factor.
+   *
+   * Length of annualS_v is Global::DAYS_IN_YEAR * 5. Checkpoint.
+   * 
+   * Units of both should be inoculations. */
+  vector<double> quinquennialS_v;
   
   /** Conversion factor from forcedS_v to mosqEmergeRate.
    *
