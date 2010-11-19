@@ -63,7 +63,7 @@ virtual checkpoint (ostream& stream);
  * here. */
 namespace OM { namespace util { namespace checkpoint {
     
-    const long DEFAULT_MAX_LENGTH = 1000;
+    const long DEFAULT_MAX_LENGTH = 2000;
     
     ///@brief Utility functions
     //@{
