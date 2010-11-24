@@ -3,7 +3,7 @@
 ===contents===
 
   * [Start Introduction]
-  * *Simulations*
+  * *[OMUsage Simulations]*
     * [SetupOverview Getting started (local simulations)]
       * [Binaries Pre-compiled binaries]
       * [UtilsWindows Useful utilities on Windows]
