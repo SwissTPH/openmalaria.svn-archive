@@ -1,0 +1,51 @@
+#summary Design of scenarios and XML configuration
+
+= Design of scenario configuration =
+
+OpenMalaria is designed to run small-medium scale independent simulations. If you want to design an experiment evaluating the impact of one of more factors, you may want to read about [ExperimentDesign designing experiments].
+
+Within a simulation of a single setting, dubbed a _scenario_, there are a number of choices to make, outlined below. These choices are entered as XML elements. Removing much of the detail, such an XML file looks like this:
+
+{{{
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="0" assimMode="0" name="template scenario" schemaVersion="23" wuID="0" xsi:noNamespaceSchemaLocation="scenario_23.xsd">
+  <demography ...>
+    ...
+  </demography>
+  <monitoring name="Quarterly Surveys">
+    ...
+  </monitoring>
+  <interventions name="Full Set">
+    ...
+  </interventions>
+  <healthSystem>
+    ...
+  </healthSystem>
+  <entoData ...>
+    ...
+  </entoData>
+  <model>
+    <ModelOptions>
+      ...
+    </ModelOptions>
+    <clinical healthSystemMemory="6"/>
+    <parameters interval="5" iseed="0" latentp="3">
+      ...
+    </parameters>
+  </model>
+</scenario>
+}}}
+
+This may be used as a template, adapting if necessary to the latest schema version.
+
+
+
+= To describe =
+
+  * demography
+  * monitoring
+  * interventions
+  * health system
+  * entomological model
+  * drug data
+  * model
