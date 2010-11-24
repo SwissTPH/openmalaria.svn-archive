@@ -2,7 +2,7 @@
 
 ===contents===
 
-  * [Start Introduction]
+  * *[Start Introduction]*
   * *[OMUsage Simulations]*
     * [SetupOverview Getting started (local simulations)]
       * [Binaries Pre-compiled binaries]
@@ -34,5 +34,5 @@
       * [Code#Doxygen_documentation doxygen-generated documentation]
     * [BuildSystem Building and Testing]
       * [WindowsBuildOpenMalaria Windows]
-      * [UnixBuildOpenMalaria Unix]
+      * [UnixBuildOpenMalaria Linux]
       * [MacBuildOpenMalaria Mac]
