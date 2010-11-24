@@ -1,28 +1,34 @@
 #summary Content of wiki
 
-===OpenMalaria===
-  * [Start Introduction]
-  * [SetupOverview Getting started (local simulations)]
-     * [Binaries Pre-compiled binaries]
-     * [UtilsWindows Useful utilities on Windows]
-  * *[XmlScenario Inputs: creating a scenario]*
-     * [XmlEntoVector Vector-transmission parameters]
+[Start Introduction]
+
+===Simulating===
+
+[SetupOverview Getting started (local simulations)]
+  * [Binaries Pre-compiled binaries]
+  * [UtilsWindows Useful utilities on Windows]
+
+Scenario design
+
+  * [XmlEntoVector Vector-transmission parameters]
+
+[OutputFormats Results]
+
+  * [OutputFiles File formats]
+
+Tools
      * [XmlUpdateScenario Updating schema version]
-  * *[OutputFiles Outputs: interpreting results]*
-     * [XmlMonitoring Monitoring measures]
      * LiveGraph
+
+References
+
+  * [XmlScenario Scenario XML]
+  * [XmlMonitoring Monitoring measures]
   * [Terminology]
 
-===Code===
-  * [Code#Source_code Source]
-  * [Code#Doxygen_documentation doxygen-generated documentation]
-  * [BuildSystem Building and Testing]
-     * [WindowsBuildOpenMalaria Windows]
-     * [UnixBuildOpenMalaria Unix]
-     * [MacBuildOpenMalaria Mac]
+===Model descriptions===
 
-===Model components===
-  * [ModelsOverview Overview]
+[ModelsOverview Components]
   * [ModelDemography Human demography]
   * [ModelTransmission Transmission models]
   * [ModelWithinHost Within-host models]
@@ -30,4 +36,16 @@
   * [ModelClinical Clinical (sickness) models]
   * [ModelDrug Drug (PKPD) action & resistance models]
   * [ModelNeonatal Neonatal mortality]
+
+Interventions
   * [ModelInterventions Intervention deployment and descriptions]
+
+===Code development===
+
+[Code#Source_code Source code]
+  * [Code#Doxygen_documentation doxygen-generated documentation]
+
+[BuildSystem Building and Testing]
+  * [WindowsBuildOpenMalaria Windows]
+  * [UnixBuildOpenMalaria Unix]
+  * [MacBuildOpenMalaria Mac]
