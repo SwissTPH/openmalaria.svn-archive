@@ -24,6 +24,9 @@ Within a simulation of a single setting, dubbed a _scenario_, there are a number
   <entoData ...>
     ...
   </entoData>
+  <drugDescription>
+    ...
+  </drugDescription>
   <model>
     <ModelOptions>
       ...
@@ -38,7 +41,30 @@ Within a simulation of a single setting, dubbed a _scenario_, there are a number
 
 This may be used as a template, adapting if necessary to the latest schema version.
 
+== Model ==
 
+The first decision to make is which models to use. You may have noticed above that the `parameters` element has an `interval="5"` attribute; this specifies the length (in days) of the fundamental time-step of the simulator. Some models work on a 5-day time-step, and some on a 1-day time-step (which has extra capabilities but results in a more complex and slower model). Note that several other parts of the configuration are entered using units of the length of a time-step.
+
+The main choices to make with regards to the model to use is the [ModelWithinHost#Asexual_infection_models within-host / infection model]:
+  * "Descriptive" model: 5-day time-step; several parameterizations have been fit for this model
+  * "Empirical" model: 1-day time-step; currently has not been parameterized
+  * Molineaux model: 1-day time-step; parameter fitting is currently in progress
+
+This will also determine which [ModelClinical clinical / health system model] may be used:
+  * 5-day timestep model with simple cure/fail response to treatment and immediately determined clinical outcome
+  * 1-day timestep model: treatments use full PKPD modelling with a daily effect on parasite densities; clinical outcome determined by both the parasite density and clinical decisions
+
+After selecting the within-host model to use, an appropriate `<model>...</model>` element should be copied. Note that while `ModelOptions` and `clinical` settings within the `model` element _can_ be changed, in theory they have an effect on the optimal paramerization(s), so changing them would result in an invalid model.
+
+TODO: add some parameterizations
+
+The `drugDescription` element is only required when a 1-day time-step is used, and is essentially a library of parameters for the drug model. It should therefore not need to be edited (just copied from a source).
+
+[ModelTransmission Transmission model] (independent of length of time-step):
+  * direct input of transmission intensity with (optional) response to human infectiousness
+  * model of the transmission vector (_anopheles_ mosquito)'s feeding cycle; allows modelling of vector stage interventions
+
+After selecting
 
 = To describe =
 
@@ -48,4 +74,3 @@ This may be used as a template, adapting if necessary to the latest schema versi
   * health system
   * entomological model
   * drug data
-  * model
