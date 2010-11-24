@@ -60,17 +60,54 @@ TODO: add some parameterizations
 
 The `drugDescription` element is only required when a 1-day time-step is used, and is essentially a library of parameters for the drug model. It should therefore not need to be edited (just copied from a source).
 
-[ModelTransmission Transmission model] (independent of length of time-step):
+== Health system ==
+
+Two [ModelClinical health system models] are available (listed above). Their configuration is described [http://code.google.com/p/openmalaria/wiki/XmlScenario#Health_system:_healthSystem here].
+
+== Transmission model ==
+
+Two [ModelTransmission Transmission models] are available (independent of the length of the time-step):
   * direct input of transmission intensity with (optional) response to human infectiousness
   * model of the transmission vector (_anopheles_ mosquito)'s feeding cycle; allows modelling of vector stage interventions
 
-After selecting
+Configuration of these is described [Entomological_data:_entoData here].
 
-= To describe =
+== Demography ==
 
-  * demography
-  * monitoring
-  * interventions
-  * health system
-  * entomological model
-  * drug data
+OpenMalaria uses a simple [ModelDemography demography model], enforcing a particular age distribution. Our standard set of demography data comes from Ifakara, Tanzania:
+
+{{{
+  <demography maximumAgeYrs="90" name="Ifakara" popSize="1000">
+    <ageGroup lowerbound="0.0">
+      <group poppercent="3.474714994" upperbound="1"/>
+      <group poppercent="12.76004028" upperbound="5"/>
+      <group poppercent="14.52151394" upperbound="10"/>
+      <group poppercent="12.75565434" upperbound="15"/>
+      <group poppercent="10.83632374" upperbound="20"/>
+      <group poppercent="8.393312454" upperbound="25"/>
+      <group poppercent="7.001421452" upperbound="30"/>
+      <group poppercent="5.800587654" upperbound="35"/>
+      <group poppercent="5.102136612" upperbound="40"/>
+      <group poppercent="4.182561874" upperbound="45"/>
+      <group poppercent="3.339409351" upperbound="50"/>
+      <group poppercent="2.986112356" upperbound="55"/>
+      <group poppercent="2.555766582" upperbound="60"/>
+      <group poppercent="2.332763433" upperbound="65"/>
+      <group poppercent="1.77400255" upperbound="70"/>
+      <group poppercent="1.008525491" upperbound="75"/>
+      <group poppercent="0.74167341" upperbound="80"/>
+      <group poppercent="0.271863401" upperbound="85"/>
+      <group poppercent="0.161614642" upperbound="90"/>
+    </ageGroup>
+  </demography>
+}}}
+
+The only aspect of this we commonly change is the population size. Population sizes below around 1000 humans tend to have large amounts of stochastic noise (although this is still clearly noticeable with 1000 humans, particularly in low-frequency outputs such as deaths resulting from malaria). Large numbers increase computation time and RAM usage; as a rough guide 100,000 individuals when using a 5-day time-step or 10,000 individuals when using a 1-day time-step should require somewhere (very roughly, depending on machine performance) in the region of two hours computation.
+
+== Interventions ==
+
+For now, see [ModelInterventions this page].
+
+== Monitoring ==
+
+When designing a scenario, you will need to think about what kind of output is required. See [OutputFiles] and the [XmlMonitoring list of available measures].
