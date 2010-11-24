@@ -1,7 +1,7 @@
 #summary Building and Testing OpenMalaria
 
 == Building OpenMalaria ==
- * [UnixBuildOpenMalaria On Unix]
+ * [UnixBuildOpenMalaria On Linux] / Unix in general
  * [WindowsBuildOpenMalaria On Windows]
  * [MacBuildOpenMalaria On Mac] (addition to unix instructions)
 
