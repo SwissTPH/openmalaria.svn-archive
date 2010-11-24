@@ -12,8 +12,8 @@ The software implements models of individual-based stochastic simulations of mal
 
 There are several envisaged methods of carrying out predictive simulations:
 
- * [SetupOverview as a stand-alone program], capable of simulating a few hand-crafted scenarios and producing results analyzable with spread-sheets or simple scripts
- * via the [http://www.malariacontrol.net/ BOINC volunteer computing platform] and a semi-automated experiment design and analysis platform (under development), capable of handling entire experiments of 10000-100000 scenarios
+ * as a [SetupOverview stand-alone program], capable of simulating a few hand-crafted scenarios and producing results analyzable with spread-sheets or simple scripts
+ * via the [http://boinc.berkeley.edu/ BOINC] volunteer computing platform [http://www.malariacontrol.net/] and a semi-automated experiment design and analysis platform (under development), capable of handling entire experiments of 10000-100000 scenarios
  * via a GUI-driven job submission system (under development), capable of deploying simulations on different computer resources.
 
 The outputs from these simulations can be linked to cost data from endemic countries to analyse the economics of malaria interventions.  
