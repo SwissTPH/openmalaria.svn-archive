@@ -1,0 +1,105 @@
+#summary Description of monitoring methods available
+
+= Monitoring =
+
+When designing simulations, one also needs to think about which outputs are desired. A lot of data is generated during simulations: mosquito-to-human transmission intensity, parasite density per infection per human together with human infectiousness to mosquitoes, bouts of sickness and treatments affecting each human, etc. In order to reduce to more manageable amounts of information, summaries need to be made.
+
+Monitoring is described by an XML element of the form below. The `continuous` element is optional and describes continuous reporting, while the other three elements are required and describe surveys.
+
+{{{
+  <monitoring name="(some description or name)">
+    <continuous ... />
+    <SurveyOptions ... />
+    <surveys ... />
+    <ageGroup ... />
+  </monitoring>
+}}}
+
+== Surveys ==
+
+Simulating surveys allows trials to be simulated. In a survey taken at some particular time point, information is recorded about either the current state of some measurable quantity or a measure of events which have taken place since the last survey. Where this data concerns humans, it can be segregated into age groups, and can be sampled either across all simulated individuals or from a selected cohort.
+
+=== Survey measures ===
+
+Exactly which measures will be output by a simulation depends on the `SurveyOptions` element. This contains a list of options, for example:
+
+{{{
+    <SurveyOptions>
+      <option name="nHost" value="true"/>
+      <option name="nPatent" value="true"/>
+      <option name="nMassVaccinations" value="true"/>
+    </SurveyOptions>
+}}}
+
+(The `value` attribute must be true to include the output measure; to disable it, `value` may be set false or the option ommitted.)
+
+A list of all outputs currently implemented can be found [XmlMonitoring here].
+
+=== Cohort-mode ===
+
+By default, survey data comes from the whole simulated population. In order to restrict human measures of all surveys to only a cohort, add the attribute `cohortOnly="true"` to the `monitoring` element. Note that currently not all measures are restricted to the cohort as they should be; see the [XmlMonitoring list of measures] for exactly which measures are restricted to the cohort.
+
+A cohort must also be selected. To do this, (pseudo-)interventions have been added to select individuals either from a proportion of the population at some time point, and to continuously select some proportion of individuals as they reach a set age. See <placeholder>
+
+=== Survey time points ===
+
+Surveys can take place at any time point, starting from the beginning of the intervention period. Surveys only report events which happened from the beginning of the time-step of the last survey until the end of the time-step _before_ the current survey time-step, and measures of the current state (such as the number of patent hosts) from the _beginning_ of the survey time-step.
+
+The timing of these is described as in the XML fragment below (which describes four quarterly surveys assuming a 5-day time-step). The first valid time-point for a survey is time-step 0; however, any events happening before time-step 0 are not reported, so measures of events (such as infectious bites received) will be zero.
+
+{{{
+<surveys detectionLimit="40">
+  <surveyTime>18</surveyTime>
+  <surveyTime>37</surveyTime>
+  <surveyTime>55</surveyTime>
+  <surveyTime>73</surveyTime>
+</surveys>
+}}}
+
+(The `detectionLimit` attribute describes the minimum parasite density (parasites per µl/microlitre) at which a human is counted as having a patent infection.)
+
+Timestep 0 will always correspond to the first of January (up to 5th Jan with a 5-day timestep), except that, prior to schema 22, when the maximumAgeYrs attribute of demography was not a whole number of years timestep values may well have been offset. Years are always modelled as 365 days long, hence (n * 365 / days_per_timestep) is always the beginning of the n-th year of the intervention period (excepting above offset). 
+
+=== Survey age groups ===
+
+The `ageGroup` element describes which age-groups human-specific data is segregated into. Examples:
+
+{{{
+<ageGroup lowerbound="0.0">
+      <group upperbound="0.25"/>
+      <group upperbound="0.5"/>
+      <group upperbound="0.75"/>
+      <group upperbound="1"/>
+      <group upperbound="1.5"/>
+      <group upperbound="2"/>
+      <group upperbound="3"/>
+      <group upperbound="4"/>
+      <group upperbound="5"/>
+      <group upperbound="6"/>
+      <group upperbound="7"/>
+      <group upperbound="8"/>
+      <group upperbound="9"/>
+      <group upperbound="10"/>
+      <group upperbound="12"/>
+      <group upperbound="14"/>
+      <group upperbound="16"/>
+      <group upperbound="18"/>
+      <group upperbound="20"/>
+      <group upperbound="25"/>
+      <group upperbound="30"/>
+      <group upperbound="35"/>
+      <group upperbound="40"/>
+      <group upperbound="45"/>
+      <group upperbound="50"/>
+      <group upperbound="55"/>
+      <group upperbound="60"/>
+      <group upperbound="65"/>
+      <group upperbound="70"/>
+      <group upperbound="99"/>
+    </ageGroup>
+}}}
+{{{
+    <ageGroup lowerbound="0.0">
+      <group upperbound="99"/>
+    </ageGroup>
+}}}
