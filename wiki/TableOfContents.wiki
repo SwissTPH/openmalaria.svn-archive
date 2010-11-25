@@ -7,7 +7,7 @@
     * [SetupOverview Getting started (local simulations)]
       * [Binaries Pre-compiled binaries]
       * [UtilsWindows Useful utilities on Windows]
-    * Scenario design
+    * [ScenarioDesign Scenario design]
       * [XmlEntoVector Vector-transmission parameters]
     * [OutputFormats Results]
       * [OutputFiles File formats]
