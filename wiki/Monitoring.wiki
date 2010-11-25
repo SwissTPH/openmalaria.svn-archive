@@ -33,7 +33,7 @@ Exactly which measures will be output by a simulation depends on the `SurveyOpti
 
 (The `value` attribute must be true to include the output measure; to disable it, `value` may be set false or the option ommitted.)
 
-A list of all outputs currently implemented can be found [XmlMonitoring here].
+A list of all outputs currently implemented can be found [XmlMonitoring#Survey_measures here].
 
 === Cohort-mode ===
 
@@ -103,3 +103,19 @@ The `ageGroup` element describes which age-groups human-specific data is segrega
       <group upperbound="99"/>
     </ageGroup>
 }}}
+
+== Continuous ==
+
+Whereas survey reporting is designed to aggregate data into configurable-size lumps, the continuous reporting mechanism is designed to report some data at high frequencies (but generally without segregation by age group and with less configuration potential).
+
+To enable continuous reporting, add a `continuous` sub-element to the `monitoring` element, of the following form.
+{{{
+<continuous duringInit="false" period="1">
+  <option name="input EIR" value="true"/>
+  <option name="simulated EIR" value="true"/>
+  <option name="human infectiousness" value="true"/>
+</continuous>
+}}}
+The `period` attribute specifies the number of time-steps between reports. `duringInit` is mostly used for debugging and can be omitted entirely; if set to true it enables reporting during the warm-up period and an extra column in the output (simulation time, the time-step counting from the beginning of the simulation rather than the beginning of the intervention period).
+
+A list of available outputs is [XmlMonitoring#Continuous_measures here].
