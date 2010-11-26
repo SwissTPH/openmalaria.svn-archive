@@ -32,6 +32,6 @@ The `immuneSuppression` intervention removes all natural immunity (though not va
 
 == Cohort selection ==
 
-The intervention deployment mechanisms also turn out to be a useful system for selecting individuals into the [LINK cohort].
+The intervention deployment mechanisms also turn out to be a useful system for selecting individuals into the [Monitoring#Cohort-mode cohort].
 
-Configuration of timed and continuous usage as with [LINK mass selection] interventions.
+Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] descriptions.
