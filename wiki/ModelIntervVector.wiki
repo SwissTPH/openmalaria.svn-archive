@@ -34,6 +34,8 @@ The `changeEIR` element has the same type as the [http://code.google.com/p/openm
 </anopheles>
 }}}
 
+Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] descriptions.
+
 == Indoor Residual Spraying ==
 
 `IRS` affects the availability of hosts to mosquitoes, and the chance of a mosquito surviving resting (egg incubation) after having fed on an IRS-protected human. Its effects should be described in the intervention `descriptions` element, for example:
@@ -47,6 +49,8 @@ The `changeEIR` element has the same type as the [http://code.google.com/p/openm
 </anopheles>
 }}}
 
+Uses standard [ModelInterventions#Timed_descriptions timed] descriptions.
+
 == Vector Availability ==
 
 A theoretical `VectorAvailability` intervention functions similarly to ITN/IRS interventions, but only affects the availability of humans to mosquitoes. Its effectiveness must be described in the `descriptions` element, for example:
@@ -59,6 +63,8 @@ A theoretical `VectorAvailability` intervention functions similarly to ITN/IRS i
   </VADescription>
 </anopheles>
 }}}
+
+Uses standard [ModelInterventions#Timed_descriptions timed] descriptions.
 
 == Larviciding ==
 
