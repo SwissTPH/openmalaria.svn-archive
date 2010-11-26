@@ -20,18 +20,14 @@ Syntax:
 <dl>
   <dt>Bout</dt>
   <dd>In our 1 day time-step clinical model, a *bout* of sickness is considered to be a fever or severe illness that usually lasts no more than 5 days. When an individual recovers (or dies), that bout is considered over. </dd>
-  <dt>Event</dt> 
-  <dd>In the clinical models, an occurrence without measurable duration.</dd>
-  <dt>Episode</dt>
-  <dd>The health-system's reporting unit; only one malaria *episode* is possible in a 30-day period. Therefore, each bout is either considered the start of a new episode, or, if it occurs within 30 days of a previous bout, part of the same episode. Thus, at least in low transmission settings, an episode should roughly correspond to one malaria infection (which can cause multiple bouts). An episode's severity (non-malarial, malarial or severe) is considered to be that of its worst bout.</dd>
-  <dt>Health system memory</dt>
-  <dd>The pre-determined, fixed period of time, currently set at 30 days, during which all bouts of illness are considered to be related to the same infection. The *health system memory* has implications for reporting and for treatment practices.</dd>
-  <dt>Severe malaria</dt>
-  <dd>Clinical malaria illness that is life-threatening if left untreated.</dd>
-  <dt>Non-malarial fever</dt>
-  <dd>A febrile illness, accompanied or not by parasites in the blood, which is not caused by malaria parasites.</dd>
   <dt>Component</dt>
   <dd>The simulator is divided up into several *components*: e.g. within-host, transmission, health-system. From a computing perspective these may be called _interfaces_.</dd>
+  <dt>Episode</dt>
+  <dd>The health-system's reporting unit; only one malaria *episode* is possible in a 30-day period. Therefore, each bout is either considered the start of a new episode, or, if it occurs within 30 days of a previous bout, part of the same episode. Thus, at least in low transmission settings, an episode should roughly correspond to one malaria infection (which can cause multiple bouts). An episode's severity (non-malarial, malarial or severe) is considered to be that of its worst bout.</dd>
+  <dt>Event</dt> 
+  <dd>In the clinical models, an occurrence without measurable duration.</dd>
+  <dt>Health system memory</dt>
+  <dd>The pre-determined, fixed period of time, currently set at 30 days, during which all bouts of illness are considered to be related to the same infection. The *health system memory* has implications for reporting and for treatment practices.</dd>
   <dt>Implementation</dt>
   <dd>Each _component_ needs at least one *implementation*, describing how the relevent processes are simulated. Logically, these can also be called _models_.</dd>
   <dt>Intervention</dt>
@@ -40,12 +36,16 @@ Syntax:
   <dt>Model</dt>
   <dd>The openmalaria simulator platform supports several *models*: each is a selection of options (including a choice of _implementations_) defining how _scenarios_ are simulated.</dd>
   <dd>In the past, both _components_ and _implementations_ have been referred to as *models*.</dd>
+  <dt>Non-malarial fever</dt>
+  <dd>A febrile illness, accompanied or not by parasites in the blood, which is not caused by malaria parasites.</dd>
   <dt>OpenMalaria</dt>
   <dd>*OpenMalaria* is the name of the C++ project and is the implementation of our simulator; i.e. the source code on this website.</dd>
   <dt>Parameterization</dt>
   <dd>Each _model_ has several parameters. A choice of values for each of these parameters leads to a *parameterization* of a _model_. We usually use a fitting process involving several _scenarios_ modelling field trials in order to find optimal parameterizations.</dd>
   <dt>Scenario</dt>
   <dd>_OpenMalaria_ takes as its input a *scenario* file describing what it should simulate. This includes a description of the _model_ and _parameterization_ to use, as well as the setting, _interventions_ to use, and other parameters relevent to the _study_.</dd>
+  <dt>Severe malaria</dt>
+  <dd>Clinical malaria illness that is life-threatening if left untreated.</dd>
   <dt>Study</dt>
   <dd>A simulation _study_ comprises a set of scenarios used to make a specific set of comparisons between settings or interventions.  The word _study_ is also used to refer to field studies used for parameterizing models.</dd>
 </dl>
