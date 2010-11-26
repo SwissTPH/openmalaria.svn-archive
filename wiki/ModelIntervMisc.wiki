@@ -1,10 +1,11 @@
-#summary Description of mosquito-stage malarial interventions
+#summary Description of pseudo-interventions
 
-= Mosquito-stage interventions =
+= Pseudo interventions =
 
-The following table lists interventions which have been implemented in OpenMalaria, and which deployment methods are available:
+The simulation description can include a number of actions that, while not technically corresponding to malaria interventions, act on the simulated population in an analogous way and are hence specified in the intervention section of the scenaria description.
+The following table lists these pseudo-interventions and the deployment methods for them:
 
-|| intervention || mass-deployment || continuous-deployment ||
+|| pseudo-intervention || mass-deployment || continuous-deployment ||
 || [ModelIntervMisc#Import_Infections `ImportedInfectionsPerThousandHosts`] || yes || no ||
 || [ModelIntervMisc#Insert_R_0_case `InsertR_0Case`] || yes || no ||
 || [ModelIntervMisc#Immune_suppression `immuneSuppression`] || yes || no ||
@@ -12,15 +13,15 @@ The following table lists interventions which have been implemented in OpenMalar
 
 == Import Infections ==
 
-This "intervention" provides a way to model infections being imported into the model. A value, x, is passed into the intervention:
+This pseudo-intervention provides a way to model infections being imported into the simulated population. A value, x, is passed into the intervention:
 
 <placeholder>
 
-Each human then has an x/1000 chance of being infected on this time-step. As this is a stochastic process, the actual number of imported infections at each time point varies.
+Each human then has an x/1000 probability of being assigned a new (imported liver-stage) infection at this time-step. The number of imported infections at each time point thus varies stochastically with a Binomial distribution about the specified number.
 
 == Insert R_0 case ==
 
-The `InsertR_0Case` intervention is very specialized. It is assumed before deployment that all infections have been removed from the population, and that all humans are completely protected with a transmission-blocking vaccine.
+The `InsertR_0Case` pseudo-intervention is used in estimating R,,0,,,. It is assumed before deployment that all infections have been removed from the population, and that all humans are completely protected with a transmission-blocking vaccine.
 
 This intervention then picks one human, removes his transmission-blocking vaccine but gives him a pre-erythrocytic vaccine to prevent re-infection (bypassing the usual vaccine configuration to allow this person to have a PEV vaccine without the rest of the population), and finally infects this human.
 
@@ -32,6 +33,6 @@ The `immuneSuppression` intervention removes all natural immunity (though not va
 
 == Cohort selection ==
 
-The intervention deployment mechanisms also turn out to be a useful system for selecting individuals into the [Monitoring#Cohort-mode cohort].
+Field trials of interventions generally enroll only a defined sub-group of the human population (a cohort) into a study, and consider only data collected on those individuals.  Simulation of such cohorts can be achieved by marking a subset of the simulated population as [LINK cohort] members.  This restricts monitoring of outcomes to the marked individuals.
 
-Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] descriptions.
+This pseudo-intervention uses analogous syntax to [LINK mass selection] interventions, allowing configuration of either timed and continuous enrollment into the simulated cohort.
