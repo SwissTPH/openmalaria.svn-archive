@@ -8,6 +8,7 @@ The following table lists interventions which have been implemented in OpenMalar
 || [ModelIntervMisc#Import_Infections `ImportedInfectionsPerThousandHosts`] || yes || no ||
 || [ModelIntervMisc#Insert_R_0_case `InsertR_0Case`] || yes || no ||
 || [ModelIntervMisc#Immune_suppression `immuneSuppression`] || yes || no ||
+|| [ModelIntervMisc#Cohort_selection `cohort`] || yes || yes ||
 
 == Import Infections ==
 
@@ -28,3 +29,9 @@ Its purpose is to allow estimates of R,,0,,, along the following lines: if only 
 == Immune suppression ==
 
 The `immuneSuppression` intervention removes all natural immunity (though not vaccine effects) from humans. It does not prevent development of new immunity.
+
+== Cohort selection ==
+
+The intervention deployment mechanisms also turn out to be a useful system for selecting individuals into the [LINK cohort].
+
+Configuration of timed and continuous usage as with [LINK mass selection] interventions.
