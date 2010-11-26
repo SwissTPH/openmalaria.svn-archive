@@ -14,9 +14,13 @@ Deployment of vaccines uses these basic methods, but is a special case. Each hum
 
 = Intervention descriptions =
 
-List of available interventions (TODO: document). Configuration instructions can be found [XmlScenario#Deployment_of_interventions:_interventions here].
+Documentation of interventions can be found on these pages:
 
-The following table shows which deployment methods are available to which interventions.
+  * [ModelIntervHuman human-stage interventions]
+  * [ModelIntervVector mosquito-stage interventions]
+  * [ModelIntervMisc special/pseudo interventions]
+
+This table lists all interventions noting which deployment methods have been implemented for each.
 
 || intervention || timed || continuous || notes ||
 || change health system || y || n ||
