@@ -18,17 +18,15 @@
       * [XmlScenario Scenario XML]
       * [XmlMonitoring Monitoring measures]
       * [Terminology]
-  * *Model descriptions*
-    * [ModelsOverview Components]
-      * [ModelDemography Human demography]
-      * [ModelTransmission Transmission models]
-      * [ModelWithinHost Within-host models]
-      * [ModelPathogenesis Morbidity (pathogenesis) models]
-      * [ModelClinical Clinical (sickness) models]
+  * *[ModelsOverview Model descriptions]*
+    * [ModelDemography Human demography]
+    * [ModelTransmission Transmission models]
+    * [ModelWithinHost Within-host models]
       * [ModelDrug Drug (PKPD) action & resistance models]
+    * [ModelClinical Clinical (sickness) models]
+      * [ModelPathogenesis Morbidity (pathogenesis) models]
       * [ModelNeonatal Neonatal mortality]
-    * Interventions
-      * [ModelInterventions Intervention deployment and descriptions]
+    * [ModelInterventions Interventions]
   * *Code development*
     * [Code#Source_code Source code]
       * [Code#Doxygen_documentation doxygen-generated documentation]
