@@ -1,6 +1,10 @@
 #summary Intervention deployment methods and descriptions
 
-= Intervention deployment =
+= Interventions =
+
+An intervention is a method used to bring about a _change_ in the state of the simulation (usually to reduce transmission). Some of these are realistic strategies (e.g. vaccine treatment), some of these unrealistic (e.g. "uninfect vectors"), and some don't concern themselves with transmission (e.g. cohort selection). Note that existing malaria-control measures such as the initial state of the health-system are not considered an intervention since they form the initial state rather than change it.
+
+== Deployment ==
 
 There are two generic methods of intervention deployment in openmalaria:
 
@@ -12,7 +16,7 @@ In both cases, the coverage parameter describes the probability of each individu
 Deployment of vaccines uses these basic methods, but is a special case. Each human "remembers" how many vaccine doses they have received (through continuous and campaign deployment combined). Given a continuous vaccination schedule for vaccinating at ages `a_0`, `a_1`, ..., each individual, at age `a_n` is vaccinated (through the continuous vaccination program) if and only if they are included within the vaccine coverage, and they have had `n - 1` previous vaccinations. This is intended to account for individuals dropping out of the vaccination program and not returning, and those vaccinated through a mass campaign not also getting an age-based vaccination at (roughly) the same time.
 
 
-= Intervention descriptions =
+== Descriptions ==
 
 Documentation of interventions can be found on these pages:
 
@@ -23,11 +27,7 @@ Documentation of interventions can be found on these pages:
 This table lists all interventions noting which deployment methods have been implemented for each.
 
 || intervention || timed || continuous || notes ||
-|| change health system || y || n ||
 || change EIR || y || n ||
-|| vaccines || y || y || age-specific doses are not taken if already taken through a (timed) mass campaign ||
-|| Mass Drug Administration || y || n ||
-|| Intermittend Preventative Treatment (for Infants) || y || y ||
 || Insecticide Treated Nets || y || y ||
 || Indoor Residual Spraying || y || n ||
 || Vector Availability || y || n ||
@@ -41,14 +41,6 @@ This table lists all interventions noting which deployment methods have been imp
 == Change "something" ==
 
 The `changeHS` and `changeEIR` interventions replace the original description of these items.
-
-== Vaccines ==
-
-Three vaccines; all those active are deployed simultaneously.
-
- * Pre-erythrocytic vaccine (vaccineType 1): prevents a proportion of infections from commencing.
- * Blood-stage vaccine (vaccineType 2): acts as a killing factor on blood-stage parasites
- * Transmission-blocking vaccine (vaccineType 3): one minus this scales the probability of transmission to mosquitoes
 
 == Drug administration ==
 
