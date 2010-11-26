@@ -5,10 +5,10 @@
 The following table lists interventions which have been implemented in OpenMalaria, and which deployment methods are available:
 
 || intervention || mass-deployment || continuous-deployment ||
-|| [ModelIntervHuman#Change_health_system `changeHS`] || yes || no ||
-|| [ModelIntervHuman#Vaccines `vaccine`] || yes || yes (see deployment notes) ||
-|| [ModelIntervHuman#Mass_drug_administration `MDA`] || yes || no ||
-|| [ModelIntervHuman#Intermittent_Preventative_Treatment `IPT`] || yes || yes ||
+|| [ModelIntervHuman#Change_health_system changeHS] || yes || no ||
+|| [ModelIntervHuman#Vaccines vaccine] || yes || yes (see deployment notes) ||
+|| [ModelIntervHuman#Mass_drug_administration MDA] || yes || no ||
+|| [ModelIntervHuman#Intermittent_Preventative_Treatment IPT] || yes || yes ||
 
 == Change heath system ==
 
@@ -28,7 +28,7 @@ Three vaccine types are simulated; this intervention administers all of these wh
 MDA simply gives humans drugs. In the 5-day timestep models, these drugs are simply modelled (drug kills 100% of parasites in all patients receiving it with no lasting effect), while with the 1-day time-step model a drug dosage must be specified.
 <placeholder>
 
-== Intermittent Preventative Treatment ==
+== Intermittent Preventive Treatment ==
 
 IPTi and IPTc: Intermittent Preventative Treatment for infants/children. Somewhat similar to mass drug administration, but allows drugs to have a lasting (prophylactic) effect using the 5-day time-step model.
 
