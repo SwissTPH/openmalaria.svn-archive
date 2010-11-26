@@ -1,0 +1,35 @@
+#summary Description of human-stage malarial interventions
+
+= Human-stage interventions =
+
+The following table lists interventions which have been implemented in OpenMalaria, and which deployment methods are available:
+
+|| intervention || mass-deployment || continuous-deployment ||
+|| [ModelIntervHuman#Change_health_system `changeHS`] || yes || no ||
+|| [ModelIntervHuman#Vaccines `vaccine`] || yes || yes (see deployment notes) ||
+|| [ModelIntervHuman#Mass_drug_administration `MDA`] || yes || no ||
+|| [ModelIntervHuman#Intermittent_Preventative_Treatment `IPT`] || yes || yes ||
+
+== Change heath system ==
+
+This intervention updates the health-system by providing an entirely new description; e.g. it can be used to simulate the effects of improved access to treatment. The `changeHS` element takes exactly the same content as the [XmlScenario#Health_system:_healthSystem `healthSystem`] element used to describe the initial health system.
+
+
+== Vaccines ==
+
+Three vaccine types are simulated; this intervention administers all of these which have been configured to individuals (so changing the type of vaccine used during a simulation is not currently possible). Types of vaccine:
+
+ * Pre-erythrocytic vaccine (vaccineType 1): prevents a proportion of infections from commencing.
+ * Blood-stage vaccine (vaccineType 2): acts as a killing factor on blood-stage parasites
+ * Transmission-blocking vaccine (vaccineType 3): one minus this scales the probability of transmission to mosquitoes
+
+== Mass Drug Administration ==
+
+MDA simply gives humans drugs. In the 5-day timestep models, these drugs are simply modelled (drug kills 100% of parasites in all patients receiving it with no lasting effect), while with the 1-day time-step model a drug dosage must be specified.
+<placeholder>
+
+== Intermittent Preventative Treatment ==
+
+IPTi and IPTc: Intermittent Preventative Treatment for infants/children. Somewhat similar to mass drug administration, but allows drugs to have a lasting (prophylactic) effect using the 5-day time-step model.
+
+There is currently no equivalent for 1-day time-step models, since the PKPD model used for mass-drug administration already allows prophylactic effects.
