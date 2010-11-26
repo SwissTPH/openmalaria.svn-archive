@@ -4,6 +4,16 @@
 
 An intervention is a method used to bring about a _change_ in the state of the simulation (usually to reduce transmission). Some of these are realistic strategies (e.g. vaccine treatment), some of these unrealistic (e.g. "uninfect vectors"), and some don't concern themselves with transmission (e.g. cohort selection). Note that existing malaria-control measures such as the initial state of the health-system are not considered an intervention since they form the initial state rather than change it.
 
+
+== Descriptions ==
+
+Documentation of interventions can be found on these pages:
+
+  * [ModelIntervHuman human-stage interventions]
+  * [ModelIntervVector mosquito-stage interventions]
+  * [ModelIntervMisc special/pseudo interventions]
+
+
 == Deployment ==
 
 There are two generic methods of intervention deployment in openmalaria:
@@ -16,10 +26,70 @@ In both cases, the coverage parameter describes the probability of each individu
 Deployment of vaccines uses these basic methods, but is a special case. Each human "remembers" how many vaccine doses they have received (through continuous and campaign deployment combined). Given a continuous vaccination schedule for vaccinating at ages `a_0`, `a_1`, ..., each individual, at age `a_n` is vaccinated (through the continuous vaccination program) if and only if they are included within the vaccine coverage, and they have had `n - 1` previous vaccinations. This is intended to account for individuals dropping out of the vaccination program and not returning, and those vaccinated through a mass campaign not also getting an age-based vaccination at (roughly) the same time.
 
 
-== Descriptions ==
+== Configuration ==
 
-Documentation of interventions can be found on these pages:
+Interventions are configured within the `interventions` element in the [ScenarioDesign scenario XML document]. A sample element:
 
-  * [ModelIntervHuman human-stage interventions]
-  * [ModelIntervVector mosquito-stage interventions]
-  * [ModelIntervMisc special/pseudo interventions]
+{{{
+<interventions name="Full Set">
+  <descriptions>
+    <MDADescription ... />
+    <vaccineDescription ... />
+    <iptiDescription ... />
+    <anopheles mosquito="gambiae_ss">
+      <ITNDescription ... />
+      <IRSDescription ... />
+      <VADescription ... />
+    </anopheles>
+  </descriptions>
+  <continuous>
+    ...
+  </continuous>
+  <timed>
+    <intervention time="1">
+      ...
+    </intervention>
+    ...
+  </timed>
+</interventions>
+}}}
+
+Note that the `descriptions` element is the only required element.
+
+=== Continuous descriptions ===
+
+All continuous deployments are described by elements of type `ageSpecific`; for example, three vaccine doses at ages 1, 2 and 3 months:
+
+{{{
+    <continuous>
+      <vaccine coverage="0.95" targetAgeYrs="0.0833"/>
+      <vaccine coverage="0.95" targetAgeYrs="0.17"/>
+      <vaccine coverage="0.95" targetAgeYrs="0.25"/>
+    </continuous>
+}}}
+Attributes this can include:
+
+|| name || type || description ||
+|| `coverage` || floating-point || Proportion of eligible candidates actually receiving the intervention (range [0-1]) ||
+|| `targetAgeYrs` || floating-point || Age at which individuals are eligible for this intervention in years ||
+|| `cohort` || boolean || Restrict distribution to the current [Monitoring#Cohort-mode cohort] if true ||
+|| `begin` || integer || The time-step of the intervention period at which this intervention becomes active (default: 0) ||
+|| `end` || integer || The time-step of the intervention period at which this intervention becomes inactive (default: 2147483647) ||
+
+=== Timed descriptions ===
+
+Many timed interventions also use a standard type of description, `mass` (deployment), although several timed interventions use a different description. An example:
+
+{{{
+      <intervention time="13">
+        <vaccinate coverage="0.95"/>
+      </intervention>
+}}}
+
+Attributes:
+
+|| name || type || description ||
+|| `coverage` || floating-point || Proportion of eligible candidates actually receiving the intervention (range [0-1]) ||
+|| `minAge` || floating-point || Minimum age at which humans are considered eligible in years ||
+|| `maxAge` || floating-point || Maximum age at which humans are considered eligible in years ||
+|| `cohort` || boolean || Restrict distribution to the current [Monitoring#Cohort-mode cohort] if true ||
