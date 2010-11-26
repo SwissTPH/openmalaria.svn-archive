@@ -5,9 +5,9 @@
 The following table lists interventions which have been implemented in OpenMalaria, and which deployment methods are available:
 
 || intervention || mass-deployment || continuous-deployment ||
-|| [ModelIntervMist#Import_Infections `ImportedInfectionsPerThousandHosts`] || yes || no ||
-|| [ModelIntervMist#Insert_R_0_case `InsertR_0Case`] || yes || no ||
-|| [ModelIntervMist#Immune_suppression `immuneSuppression`] || yes || no ||
+|| [ModelIntervMisc#Import_Infections `ImportedInfectionsPerThousandHosts`] || yes || no ||
+|| [ModelIntervMisc#Insert_R_0_case `InsertR_0Case`] || yes || no ||
+|| [ModelIntervMisc#Immune_suppression `immuneSuppression`] || yes || no ||
 
 == Import Infections ==
 
