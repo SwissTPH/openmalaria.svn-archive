@@ -33,6 +33,6 @@ The `immuneSuppression` intervention removes all natural immunity (though not va
 
 == Cohort selection ==
 
-Field trials of interventions generally enroll only a defined sub-group of the human population (a cohort) into a study, and consider only data collected on those individuals.  Simulation of such cohorts can be achieved by marking a subset of the simulated population as [LINK cohort] members.  This restricts monitoring of outcomes to the marked individuals.
+Field trials of interventions generally enroll only a defined sub-group of the human population (a cohort) into a study, and consider only data collected on those individuals.  Simulation of such cohorts can be achieved by marking a subset of the simulated population as [Monitoring#Cohort-mode cohort] members.  This restricts monitoring of outcomes to the marked individuals.
 
-This pseudo-intervention uses analogous syntax to [LINK mass selection] interventions, allowing configuration of either timed and continuous enrollment into the simulated cohort.
+This pseudo-intervention uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] descriptions, allowing configuration of either timed and continuous enrollment into the simulated cohort.
