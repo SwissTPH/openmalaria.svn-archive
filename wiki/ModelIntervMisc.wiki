@@ -1,0 +1,30 @@
+#summary Description of mosquito-stage malarial interventions
+
+= Mosquito-stage interventions =
+
+The following table lists interventions which have been implemented in OpenMalaria, and which deployment methods are available:
+
+|| intervention || mass-deployment || continuous-deployment ||
+|| [ModelIntervMist#Import_Infections `ImportedInfectionsPerThousandHosts` || yes || no ||
+|| [ModelIntervMist#Insert_R_0_case `InsertR_0Case` || yes || no ||
+|| [ModelIntervMist#Immune_suppression `immuneSuppression` || yes || no ||
+
+== Import Infections ==
+
+This "intervention" provides a way to model infections being imported into the model. A value, x, is passed into the intervention:
+
+<placeholder>
+
+Each human then has an x/1000 chance of being infected on this time-step. As this is a stochastic process, the actual number of imported infections at each time point varies.
+
+== Insert R_0 case ==
+
+The `InsertR_0Case` intervention is very specialized. It is assumed before deployment that all infections have been removed from the population, and that all humans are completely protected with a transmission-blocking vaccine.
+
+This intervention then picks one human, removes his transmission-blocking vaccine but gives him a pre-erythrocytic vaccine to prevent re-infection (bypassing the usual vaccine configuration to allow this person to have a PEV vaccine without the rest of the population), and finally infects this human.
+
+Its purpose is to allow estimates of R,,0,,, along the following lines: if only one person is infected and is able to transmit infections, then the total number of infections received after this (reported by "new infections" output) is the number of secondary cases one primary infection has caused (within the simulator).
+
+== Immune suppression ==
+
+The `immuneSuppression` intervention removes all natural immunity (though not vaccine effects) from humans. It does not prevent development of new immunity.
