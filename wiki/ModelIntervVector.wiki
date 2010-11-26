@@ -66,4 +66,4 @@ A larviciding intervention is currently also available, but very simple in that 
 
 == Uninfect Vectors ==
 
-A special intervention which instantly uninfects all mosquitoes of malarial parasites (though doesn't prevent reinfection).
+A special intervention which instantly uninfects all mosquitoes of malarial parasites (though doesn't prevent reinfection). If combining with mass drug administration to eliminate malaria from a scenario, note that humans can harbour gametocytes up to 20 days following "parasite clearance", hence vectors will need to be uninfected multiple times.
