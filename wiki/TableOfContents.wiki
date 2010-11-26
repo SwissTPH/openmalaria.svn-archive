@@ -27,6 +27,9 @@
       * [ModelPathogenesis Morbidity (pathogenesis) models]
       * [ModelNeonatal Neonatal mortality]
     * [ModelInterventions Interventions]
+      * [ModelIntervHuman Human-stage]
+      * [ModelIntervVector Mosquito-stage]
+      * [ModelIntervMisc Special interventions]
   * *Code development*
     * [Code#Source_code Source code]
       * [Code#Doxygen_documentation doxygen-generated documentation]
