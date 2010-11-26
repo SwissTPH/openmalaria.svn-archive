@@ -89,7 +89,7 @@ Many timed interventions also use a standard type of description, `mass` (deploy
 Attributes:
 
 || name || type || description ||
-|| `coverage` || floating-point || Proportion of eligible candidates actually receiving the intervention (range [0-1]) ||
-|| `minAge` || floating-point || Minimum age at which humans are considered eligible in years ||
-|| `maxAge` || floating-point || Maximum age at which humans are considered eligible in years ||
-|| `cohort` || boolean || Restrict distribution to the current [Monitoring#Cohort-mode cohort] if true ||
+|| coverage || floating-point || Proportion of eligible candidates actually receiving the intervention (range [0-1]) ||
+|| minAge || floating-point || Minimum age at which humans are considered eligible in years ||
+|| maxAge || floating-point || Maximum age at which humans are considered eligible in years ||
+|| cohort || boolean || Restrict distribution to the current [Monitoring#Cohort-mode cohort] if true ||
