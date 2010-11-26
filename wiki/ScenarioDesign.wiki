@@ -110,8 +110,8 @@ The only aspect of this we commonly change is the population size. Population si
 
 == Interventions ==
 
-For now, see [ModelInterventions this page].
+See [ModelInterventions this page].
 
 == Monitoring ==
 
-When designing a scenario, you will need to think about what kind of output is required. See [OutputFiles] and the [XmlMonitoring list of available measures].
+When designing a scenario, you will need to think about what kind of output is required. See [Monitoring] and the [XmlMonitoring list of available measures].
