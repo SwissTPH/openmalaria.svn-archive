@@ -5,13 +5,13 @@
   * *[Start Introduction]*
   * *[OMUsage Simulations]*
     * [SetupOverview Getting started (local simulations)]
-      * [Binaries Pre-compiled binaries]
-      * [UtilsWindows Useful utilities on Windows]
     * [ScenarioDesign Scenario design]
       * [XmlEntoVector Vector-transmission parameters]
     * [OutputFormats Results]
       * [OutputFiles File formats]
     * Tools
+      * [Binaries OpenMalariaTools]
+      * [UtilsWindows Useful utilities on Windows]
       * [XmlUpdateScenario Updating schema version]
       * LiveGraph
     * References
