@@ -1,0 +1,143 @@
+[DEBREATE-1.0]
+<<MODE>>0<</MODE>>
+<<CTRL>>
+Package: openmalariaTools
+Version: 00.04
+Section: science
+Maintainer: Michael Tarantino <michael.tarantino@unibas.ch>
+Homepage: www.swisstph.ch
+Priority: standard
+Architecture: amd64
+Description: openmalariaTools is a GUI for openmalaria scientific application
+ openmalariaTools is a GUI for openmalaria scientific application
+
+<</CTRL>>
+<<FILES>>
+1
+/home/gouigoui/devel/deployment_package/application/common/om.ico -> om.ico -> /usr/local/openmalariaTools/application/common/
+/home/gouigoui/devel/deployment_package/openmalariatools* -> openmalariatools -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/application/common/scenario_23.xsd -> scenario_23.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_22.xsd -> scenario_22.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/termios.so -> termios.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/readline.so -> readline.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/pyexpat.so -> pyexpat.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/pangocairo.so -> pangocairo.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/pango.so -> pango.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/libpython2.6.so.1.0 -> libpython2.6.so.1.0 -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/gtk._gtk.so -> gtk._gtk.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/gobject._gobject.so -> gobject._gobject.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/glib._glib.so -> glib._glib.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/gio.unix.so -> gio.unix.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/gio._gio.so -> gio._gio.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/datetime.so -> datetime.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/cairo._cairo.so -> cairo._cairo.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/atk.so -> atk.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/_heapq.so -> _heapq.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/_ctypes.so -> _ctypes.so -> /usr/local/openmalariaTools/
+/home/gouigoui/devel/deployment_package/application/schemaTranslator/SchemaTranslator.jar -> SchemaTranslator.jar -> /usr/local/openmalariaTools/application/schemaTranslator
+/home/gouigoui/devel/deployment_package/application/common/scenario_19.xsd -> scenario_19.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/compareOutput.pyc -> compareOutput.pyc -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/om.ico -> om.ico -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/compareOutput.py* -> compareOutput.py -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_7.xsd -> scenario_7.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_3.xsd -> scenario_3.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_20.xsd -> scenario_20.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_6.xsd -> scenario_6.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_4.xsd -> scenario_4.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_14.xsd -> scenario_14.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/settings.lgdfs -> settings.lgdfs -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_18.xsd -> scenario_18.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/densities.csv -> densities.csv -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_15.xsd -> scenario_15.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario.xsd -> scenario.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_16.xsd -> scenario_16.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_17.xsd -> scenario_17.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_9.xsd -> scenario_9.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/compareCtsout.pyc -> compareCtsout.pyc -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_2.xsd -> scenario_2.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_11.xsd -> scenario_11.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_21.xsd -> scenario_21.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_5.xsd -> scenario_5.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/approxEqual.pyc -> approxEqual.pyc -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/policy.txt -> policy.txt -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/approxEqual.py* -> approxEqual.py -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/compareCtsout.py* -> compareCtsout.py -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_13.xsd -> scenario_13.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_8.xsd -> scenario_8.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_10.xsd -> scenario_10.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/autoRegressionParameters.csv -> autoRegressionParameters.csv -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/common/scenario_12.xsd -> scenario_12.xsd -> /usr/local/openmalariaTools/application/common
+/home/gouigoui/devel/deployment_package/application/experiment_creator/experiment_creator.jar -> experiment_creator.jar -> /usr/local/openmalariaTools/application/experiment_creator
+/home/gouigoui/devel/deployment_package/application/LiveGraph.2.0.beta01.Complete/Examples/Demo-DataSeriesSettings.lgdss -> Demo-DataSeriesSettings.lgdss -> /usr/local/openmalariaTools/application/LiveGraph.2.0.beta01.Complete/Examples
+/home/gouigoui/devel/deployment_package/application/LiveGraph.2.0.beta01.Complete/Examples/Demo-GraphSettings.lggs -> Demo-GraphSettings.lggs -> /usr/local/openmalariaTools/application/LiveGraph.2.0.beta01.Complete/Examples
+/home/gouigoui/devel/deployment_package/application/LiveGraph.2.0.beta01.Complete/Examples/Demo-DataFileSettings.lgdfs -> Demo-DataFileSettings.lgdfs -> /usr/local/openmalariaTools/application/LiveGraph.2.0.beta01.Complete/Examples
+/home/gouigoui/devel/deployment_package/application/LiveGraph.2.0.beta01.Complete/Examples/Demo-DataFile.lgdat -> Demo-DataFile.lgdat -> /usr/local/openmalariaTools/application/LiveGraph.2.0.beta01.Complete/Examples
+/home/gouigoui/devel/deployment_package/application/LiveGraph.2.0.beta01.Complete/LiveGraph.ico -> LiveGraph.ico -> /usr/local/openmalariaTools/application/LiveGraph.2.0.beta01.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.2.0.beta01.Complete/LiveGraph-SplashScreen.gif -> LiveGraph-SplashScreen.gif -> /usr/local/openmalariaTools/application/LiveGraph.2.0.beta01.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.2.0.beta01.Complete/readme.txt -> readme.txt -> /usr/local/openmalariaTools/application/LiveGraph.2.0.beta01.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.2.0.beta01.Complete/LiveGraph.2.0.beta01.Complete.jar -> LiveGraph.2.0.beta01.Complete.jar -> /usr/local/openmalariaTools/application/LiveGraph.2.0.beta01.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.2.0.beta01.Complete/SoftNetConsultUtils.2.01.slim.jar -> SoftNetConsultUtils.2.01.slim.jar -> /usr/local/openmalariaTools/application/LiveGraph.2.0.beta01.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/Examples/Demo-DataSeriesSettings.lgdss -> Demo-DataSeriesSettings.lgdss -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete/Examples
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/Examples/Demo-GraphSettings.lggs -> Demo-GraphSettings.lggs -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete/Examples
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/Examples/Demo-DataFileSettings.lgdfs -> Demo-DataFileSettings.lgdfs -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete/Examples
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/Examples/Demo-DataFile.dat -> Demo-DataFile.dat -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete/Examples
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/session.lgdfs -> session.lgdfs -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/LiveGraph.ico -> LiveGraph.ico -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/LiveGraph-SplashScreen.gif -> LiveGraph-SplashScreen.gif -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/LiveGraph.1.14.Complete.jar -> LiveGraph.1.14.Complete.jar -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/readme.txt -> readme.txt -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/session.lgdss -> session.lgdss -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/SoftNetConsultUtils.2.01.slim.jar -> SoftNetConsultUtils.2.01.slim.jar -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete
+/home/gouigoui/devel/deployment_package/application/LiveGraph.1.14.Complete/session.lggs -> session.lggs -> /usr/local/openmalariaTools/application/LiveGraph.1.14.Complete
+/home/gouigoui/devel/deployment_package/application/openMalaria* -> openMalaria -> /usr/local/openmalariaTools/application
+<</FILES>>
+<<SCRIPTS>>
+<<PREINST>>
+0
+<</PREINST>>
+<<POSTINST>>
+1
+#! /bin/bash -e
+
+ln -fs "/usr/local/openmalariaTools/openmalariatools" "/usr/local/bin/openmalariatools"
+
+<</POSTINST>>
+<<PRERM>>
+1
+#! /bin/bash -e
+
+unlink "/usr/local/bin/openmalariatools"
+<</PRERM>>
+<<POSTRM>>
+0
+<</POSTRM>>
+<</SCRIPTS>>
+<<CHANGELOG>>
+<<DEST>>DEFAULT<</DEST>>
+
+<</CHANGELOG>>
+<<COPYRIGHT>>
+OpenmalariaTools: A pyGTK GUI for the openmalaria scientific application 
+Copyright (C) 2005-2010 Swiss Tropical Institute and Liverpool School Of Tropical Medicine
+ 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+<</COPYRIGHT>>
+<<MENU>>
+0
+<</MENU>>
+<<BUILD>>
+1
+1
+1
+<</BUILD>>
