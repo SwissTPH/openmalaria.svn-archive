@@ -218,7 +218,11 @@ class VirtualTerminal_win(gtk.ScrolledWindow):
                         advance = 1.0
                         stdout_helper.reset_callback()
                     else:
-                        advance = progressbar.get_fraction()+0.01
+                        if(advance < 1):
+                            advance = progressbar.get_fraction()+0.01
+                        else:
+                            advance = 1
+                        
                         progressbar.set_fraction(advance)
                     
                 else:

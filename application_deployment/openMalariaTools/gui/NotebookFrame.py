@@ -109,6 +109,9 @@ class NotebookFrame(gtk.Frame):
         custom_pop_size = False
         pop_size = 0
         
+        if not os.path.exists(self.run_scenarios_outputs):
+            os.mkdir(self.run_scenarios_outputs)
+        
         for i in range(len(self.options)):
             option = self.options[i]
             if(option[0].get_active()):
@@ -479,3 +482,4 @@ class NotebookFrame(gtk.Frame):
     def reset_callback(self, widget, data=None):
         self.terminal.run_reset_callback()
         self.is_running = False
+        

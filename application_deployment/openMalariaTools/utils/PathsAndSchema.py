@@ -21,6 +21,8 @@
 
 import os
 import string
+import sys
+import tempfile
 
 '''
 PathsAndSchema:
@@ -32,6 +34,13 @@ directly to the variables, but only to the get_ methods.
 class PathsAndSchema():
     
     _base_path = os.getcwd()
+    _temp_path = _base_path
+    _home_path = _base_path
+    
+    if not sys.platform == 'win32':
+        _temp_path = tempfile.gettempdir()
+        _home_path = os.getenv("HOME") 
+        
     _application_folder = os.path.join(_base_path, 'application')
     _common_folder = os.path.join(_base_path, 'application', 'common')
     
@@ -40,15 +49,14 @@ class PathsAndSchema():
     _livegraph_path = os.path.join(_base_path, 'application', 'LiveGraph.2.0.beta01.Complete', 'LiveGraph.2.0.beta01.Complete.jar')
     _settings_file_path = os.path.join(_base_path, 'application', 'common', 'settings.lgdfs')
     
-    _scenarios_to_translate_folder = os.path.join(_base_path, 'translate_scenarios', 'scenarios_to_translate')
-    _translated_scenarios_folder = os.path.join(_base_path, 'translate_scenarios', 'translated_scenarios')
+    _scenarios_to_translate_folder = os.path.join(_temp_path, 'omt_scenarios_to_translate')
+    _translated_scenarios_folder = os.path.join(_temp_path, 'omt_translated_scenarios')
     
-    _outputs_folder = os.path.join(_base_path, 'run_scenarios','outputs')
-    _scenarios_to_run_folder = os.path.join(_base_path, 'run_scenarios', 'scenarios_to_run')
+    _outputs_folder = os.path.join(_home_path, 'openmalariaTools')
     
     _icon_path = os.path.join(_base_path, 'application', 'common', 'om.ico')
     
-    _actual_schema_version = '21'
+    _actual_schema_version = '23'
     
     @staticmethod
     def get_application_folder():
@@ -81,10 +89,6 @@ class PathsAndSchema():
     @staticmethod
     def get_outputs_folder():
         return PathsAndSchema._outputs_folder
-    
-    @staticmethod
-    def get_scenarios_to_run_folder():
-        return PathsAndSchema._scenarios_to_run_folder
     
     @staticmethod
     def get_actual_schema():

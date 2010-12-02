@@ -36,6 +36,7 @@ import tempfile
 import shutil
 import string
 import exceptions
+import signal
 
 from ..utils.PathsAndSchema import PathsAndSchema
 from ..gui.CustomMessageDialogs import CustomMessageDialogs
@@ -107,8 +108,8 @@ class ExperimentCreatorRun():
     def quit_experimentCreator(self):
         if not (self.pid == ''):
             try:
-                #os.kill(self.pid, signal.SIGKILL)
-                self.kill_win(self.pid)
+                os.kill(self.pid, signal.SIGKILL)
+                #self.kill_win(self.pid)
             except OSError:
                 self.pid = ''
     
@@ -168,8 +169,8 @@ class LiveGraphRun():
     def quit_livegraph(self):
         if not (self.pid == ''):
             try:
-                #os.kill(self.pid, signal.SIGKILL)
-                self.kill_win(self.pid)
+                os.kill(self.pid, signal.SIGKILL)
+                #self.kill_win(self.pid)
             except OSError:
                 self.pid = ''
     
@@ -195,7 +196,13 @@ class SchemaTranslatorRun():
     The translated scenarios are then stored in a temporary output folder before being copied to the
     initial input folder. This is done so to avoid starting the schema translator for every loaded scenario
     '''    
-    def start_schematranslator_run(self, input_files_paths):
+    def start_schematranslator_run(self, parent_window, input_files_paths, erase=False):
+        
+        if not os.path.exists(PathsAndSchema.get_scenarios_to_translate_folder()):
+            os.mkdir(PathsAndSchema.get_scenarios_to_translate_folder())
+            
+        if not os.path.exists(PathsAndSchema.get_translated_scenarios_folder()):
+            os.mkdir(PathsAndSchema.get_translated_scenarios_folder())
         
         temp_input_folder_path = tempfile.mkdtemp(dir=PathsAndSchema.get_scenarios_to_translate_folder())
         temp_output_folder_path = tempfile.mkdtemp(dir=PathsAndSchema.get_translated_scenarios_folder())
@@ -214,10 +221,14 @@ class SchemaTranslatorRun():
         arglist.append('--output_folder')
         arglist.append(temp_output_folder_path)
         
-        sub = subprocess.Popen (arglist)
+        sub = subprocess.Popen (arglist, stderr=subprocess.PIPE)
         
         while(sub.poll()==None):
             time.sleep(.1)
+        
+        if sub.returncode > 0:
+            message_text = "A problem occured during scenarios' translation. Some scenarios may not have been translated properly, or not translated at all."
+            CustomMessageDialogs.show_message_dialog(parent_window, gtk.MESSAGE_ERROR, message_text)
         
         output_files_infos_list = list()
             
@@ -225,7 +236,10 @@ class SchemaTranslatorRun():
             input_folder_path, input_file_name = os.path.split(input_file_path[1])
             temp_output_file_path = os.path.join(temp_output_folder_path, input_file_name)
             if os.path.exists(temp_output_file_path) and os.path.isfile(temp_output_file_path):
-                output_folder_path = os.path.join(input_folder_path, 'translated_to_schema_'+PathsAndSchema.get_actual_schema())
+                if not erase:
+                    output_folder_path = os.path.join(input_folder_path, 'translated_to_schema_'+PathsAndSchema.get_actual_schema())
+                else:
+                    output_folder_path = input_folder_path
                 if not os.path.exists(output_folder_path):
                     os.mkdir(output_folder_path)
                 output_file_infos = list()
@@ -277,9 +291,11 @@ class SchemaTranslatorRun():
     '''
     init_translation:
     Initializes the translation if the user press ok on the message dialog'''
-    def init_translation(self, dialog, response_id, wvts):
+    def init_translation(self, dialog, response_id, parent_window, wvts):
         if response_id == gtk.RESPONSE_YES:
-            self.translated_files = self.start_schematranslator_run(wvts)
+            self.translated_files = self.start_schematranslator_run(parent_window, wvts, True)
+        elif response_id == gtk.RESPONSE_NO:
+            self.translated_files = self.start_schematranslator_run(parent_window, wvts)
             
     
     '''
@@ -344,7 +360,7 @@ class SchemaTranslatorRun():
             if not added_message == None:
                 problem_message = added_message + '\n'
             
-            problem_message += str(len(wvts)) + " scenarios are using an older (possibly translatable) schema version. Would you like that the system tries to update the scenarios using an older schema version? "
+            problem_message += str(len(wvts)) + " scenarios are using an older (possibly translatable) schema version. The system will try to translate the scenarios.\nWould you like to replace the current files? (if no, a folder called translated_to_schema_"+PathsAndSchema.get_actual_schema()+" will be created )"
             argv = list()
             argv.append(wvts)
             CustomMessageDialogs.show_message_dialog(parent_window, gtk.MESSAGE_WARNING, problem_message,CustomMessageDialogs.SCHEMA_TRANSLATOR_TYPE, self, argv)

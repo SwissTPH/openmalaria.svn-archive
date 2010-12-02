@@ -53,7 +53,8 @@ class CustomMessageDialogs():
             if(parent_type == CustomMessageDialogs.SCHEMA_TRANSLATOR_TYPE):
                 custom_message_dialog.add_button('Yes', gtk.RESPONSE_YES)
                 custom_message_dialog.add_button('No', gtk.RESPONSE_NO)
-                custom_message_dialog.connect('response', parent_class.init_translation, args[0])
+                custom_message_dialog.add_button('Cancel', gtk.RESPONSE_CANCEL)
+                custom_message_dialog.connect('response', parent_class.init_translation, parent_window, args[0])
                 
                 
         custom_message_dialog.run()

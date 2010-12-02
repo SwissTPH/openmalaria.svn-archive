@@ -25,6 +25,7 @@ import pygtk
 if not sys.platform == 'win32':
     pygtk.require('2.0')
 import gtk
+import signal
 
 from openMalariaTools.gui.NotebookFrame import NotebookFrame
 from openMalariaTools.utils.PathsAndSchema import PathsAndSchema
@@ -40,15 +41,9 @@ class OMFrontend:
     destroy:
     Kills the actual window'''
     def destroy(self, widget, data=None):
-        base_folder = os.getcwd()
-        testSrcDir = os.path.join(base_folder, 'run_scenarios', 'scenarios_to_run')
-        files = os.listdir(testSrcDir)
-        for file in files:
-            if os.path.isfile(os.path.join(testSrcDir, file)):
-                os.remove(os.path.join(testSrcDir,file))
-        gtk.main_quit()
-        sys.exit()
-	  #os.kill(os.getpid(),signal.SIGTERM)
+        #gtk.main_quit()
+        #sys.exit()
+	    os.kill(os.getpid(),signal.SIGTERM)
         
     def __init__(self):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
