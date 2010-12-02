@@ -67,7 +67,7 @@ void LSTMPkPdModel::medicate(string drugAbbrev, double qty, double time, const A
   medicateGotDrug:
   drug->medicate (time, qty, ageToWeight (ageGroupData, ageYears));
 }
-void LSTMPkPdModel::medicateIV(string drugAbbrev, double qty, double duration, double endTime, const AgeGroupData ageGroupData, double ageYears) {
+void LSTMPkPdModel::medicateIV(string drugAbbrev, double qty, double duration, double endTime) {
   list<LSTMDrug>::iterator drug = _drugs.begin();
   while (drug != _drugs.end()) {
     if (drug->getAbbreviation() == drugAbbrev)
@@ -79,7 +79,7 @@ void LSTMPkPdModel::medicateIV(string drugAbbrev, double qty, double duration, d
   drug = _drugs.begin();	// the drug we just added
   
   medicateGotDrug:
-  drug->medicateIV (duration, endTime, qty, ageToWeight (ageGroupData, ageYears));
+  drug->medicateIV (duration, endTime, qty);
 }
 
 // This may look complicated but its just some machinery to call updateConcentration() and return its result

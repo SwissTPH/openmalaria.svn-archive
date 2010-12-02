@@ -96,7 +96,7 @@ public:
   /** Medicate via IV. Mostly as for medicate(). End-time of IV period is passed
    * (time at which concentration is added to use oral effect calculation code).
    */
-  virtual void medicateIV(string drugAbbrev, double qty, double duration, double endTime, const AgeGroupData ageGroupData, double age) =0;
+  virtual void medicateIV(string drugAbbrev, double qty, double duration, double endTime) =0;
   
   /// Called each timestep immediately after the drug acts on any infections.
   virtual void decayDrugs () =0;

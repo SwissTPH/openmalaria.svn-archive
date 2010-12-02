@@ -2039,28 +2039,6 @@
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
-            <xs:element name="IV" minOccurs="0">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="half_life" type="xs:double">
-                    <xs:annotation>
-                      <xs:documentation>
-                          Used to calculate elimination rate (which is: ln(2) / half_life).
-                        </xs:documentation>
-                      <xs:appinfo>units:days;min:0;name:drug half-life;</xs:appinfo>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="vol_dist" type="xs:double">
-                    <xs:annotation>
-                      <xs:documentation>
-                          Volume of Distribution
-                        </xs:documentation>
-                      <xs:appinfo>units:l/kg;min:0;name:Volume of Distribution;</xs:appinfo>
-                    </xs:annotation>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
           </xs:sequence>
           <xs:attribute name="abbrev" use="required" type="xs:string" />
         </xs:complexType>

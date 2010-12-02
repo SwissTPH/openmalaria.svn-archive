@@ -93,7 +93,7 @@ public:
    * @param ageGroupData	Age group of human (passed to avoid having to calculate later)
    * @param age		Age of human in years
    */
-  virtual void medicateIV(string drugAbbrev, double qty, double duration, double endTime, const AgeGroupData ageGroupData, double age) {}
+  virtual void medicateIV(string drugAbbrev, double qty, double duration, double endTime) {}
 
   /** Update the parasite densities of infections.
    *
