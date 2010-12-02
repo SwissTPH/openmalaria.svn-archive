@@ -5,7 +5,7 @@
  * [WindowsBuildOpenMalaria On Windows]
  * [MacBuildOpenMalaria On Mac] (addition to unix instructions)
 
-Additionally, there's a [UnixBuildWindows summary] of how I tried (and failed) to cross-compile Windows binaries from linux, and some old documentation of how to [LinuxCompiling build openmalaria on linux].
+Additionally, there's a [UnixBuildWindows summary] of how I tried (and failed) to cross-compile Windows binaries from linux at one point.
 
 === Running the tests ===
 CMake creates a build target which is never actually built, but "building" this target will run any integrated tests which are enabled. You can run this by:
