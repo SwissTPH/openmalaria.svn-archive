@@ -20,7 +20,7 @@ Example:
 {{{
 1       15      2       4
 }}}
-Measure 2 is the "expected number of infected hosts", so this record specifies that during the first survey, the expected number of infected hosts in the fifteenth age group was 4.
+Measure 2 is the "expected number of infected hosts", so this record specifies that during the first survey, the expected number of infected hosts within the fifteenth age group was 4.
 
 == Continuous monitoring ==
 
@@ -33,5 +33,3 @@ Available outputs are listed [XmlMonitoring#Continuous_measures here]; note that
 == Checksum ==
 
 When compiled in BOINC mode, an additional file is output: `scenario.sum`, which is a checksum of the input XML file.
-
-<placeholder>
