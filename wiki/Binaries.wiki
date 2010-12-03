@@ -2,31 +2,13 @@
 
 = Introduction =
 
-A GUI for running OpenMalaria simulations and analysing results — OpenMalariaTools — is under development. This should provide the easiest method of using OpenMalaria on a PC (it is currently usable, though still under development).
+A GUI for running OpenMalaria simulations and analysing results — [openmalariaTools OpenMalariaTools] — is under development. This should provide the easiest method of using OpenMalaria on a PC (it is currently usable, though still under development).
 
-Alternately, one may run the OpenMalaria executable directly with a bash/shell script or from a command-line; see [Binaries#Binaries_only Binaries only].
+The OpenMalaria executable can also be downloaded here (or [BuildSystem compiled from source]). These executables can be used with OpenMalariaTools or standalone (run from a shell script or the command-line).
 
-== [openmalariaTools OpenMalariaTools] ==
+== Compiled executables ==
 
-It is now possible to test a new application for creating and running experiments locally. The tool is currently in Beta phase (beta 3) and could present some bugs. This tool allows the user to execute, create and monitor experiments using a GUI instead of a terminal or the command line. The Application was first written on Linux using PyGTK but is usable on windows. An installer is given for the windows version.
-
-The beta 3 is using the schema version 21 and the Linux installer will follow. The same package can, of course, be used with OpenMalaria binaries compiled from source, by replacing the application/openMalaria[.exe] binary.
-
-Installation:
-
-  * Prior to beta 2, some python tools needed to be installed independently.
-  * A [http://www.java.com/en/download/ Java run-time environment] must be installed.
-  * Download and install OpenMalariaTools:
-    * [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.03/win32/openMalariaTools_installer_v00.03.exe Windows (32-bit) openmalariaTools installer]
-    * Linux package will follow.
-
-For further informations please have a look at [openmalariaTools Install and Use openmalariaTools]
-
-== Binaries only ==
-
-Previously, we made OpenMalaria available for download in a much simpler package. These downloads are still available, though a little old.
-
-Start by making a folder wherever you want to use OpenMalaria. Then, you need to download one of the archives here (The links given point to the latest versions):
+OpenMalaria executables available (currently only old releases are available here; newer ones are included in the OpenMalariaTools package):
 
  * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-649/win32/openmalaria-649.zip win32]
  * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-649/macosx/openmalaria-649.zip macosx]
@@ -37,15 +19,15 @@ Extract whichever you download into your openmalaria folder and then run the ope
 
 == Errors ==
 
-Note that, for windows, you may well have to install the .net framework (if trying to run openMalaria as above gives you an error message like "reinstall the application", try this). The most straightforward way of getting this seems to be to search for .net, go to the microsoft link, and click download.
+Note that, for windows, you may well have to install the .net framework (if trying to run OpenMalaria as above gives you an error message like "reinstall the application", try this). You can download this from the [http://www.microsoft.com/net/ Microsoft .net page].
 
-If this doesn't help, please contact us (or better, open an [http://code.google.com/p/openmalaria/issues/list issue]) with the error message. There's quite a few possible reasons it won't work and these binaries aren't well tested, so you'd help us out!
+If this doesn't help, please contact us (or better, open an [http://code.google.com/p/openmalaria/issues/list issue]) with the error message.
 
 == What's what (files) ==
 
-Now it works, I should tell you what all the files are:
+A quick overview of the files included in the download:
 
 || openMalaria[.exe]|| binary files (executable)||
-|| scenario_VER.xsd || schema file (formally describes what the xml files may contain); currently version 21 is used while 22 is under development ||
+|| scenario_VER.xsd || schema file (formally describes what the xml files may contain) of version VER ||
 || scenario.xml || An example scenario document (this one is simply a copy of examples/scenarioVecFullTestII.xml) ||
 || autoRegressionParameters.csv, densities.csv || auxiliary data files for openmalaria ||
