@@ -1,0 +1,11 @@
+#summary Methods of running test cases and custom scenarios
+
+= Introduction =
+
+OpenMalaria comes with several [http://code.google.com/p/openmalaria/source/browse/#svn/trunk/test test scenarios] which can be used both as template scenarios and to check that OpenMalaria is working as usual. This page describes how one can run these tests and run other scenarios.
+
+== Schema versions ==
+
+OpenMalaria's [ScenarioDesign scenarios] are described in an XML document, which must conform to the executable's XSD (Xml Schema Document) version (as of recently running OpenMalaria with the `--version` command-line option will print the current schema version together with the oldest version which would potentially be compatible). In any case, the schema document relevant to the current scenario (e.g. `scenario_23.xsd`) must be present, usually in the working directory, when running a scenario.
+
+Usually new schema versions introduce new features, and in some cases no changes (other than increasing the version number) is needed when updating scenarios to a later schema version, while in other cases further changes are necessary. In any case, scenarios can be updated with the [XmlUpdateScenario SchemaTranslator] tool.
