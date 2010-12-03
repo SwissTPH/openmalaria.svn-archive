@@ -1,6 +1,14 @@
 #summary Overview of statistics outputs
 
-= Output Files =
+= Output of simulations =
+
+Output from OpenMalaria simulations is currently collected using two methods. The [Monitoring monitoring] page describes how these methods work and are configured, while the [XmlMonitoring monitoring measures] page lists what data these methods are able to output.
+
+== Surveys ==
+
+Output from the [Monitoring#surveys surveys] system is written at the end of the simulation to the `output.txt` (or when compiled in BOINC mode `output.txt.gz`) file. The contents are formatted as in a database, with tab-separated columns and one record per line.
+
+<placeholder>
 
 There are currently two statistical output files:
 
