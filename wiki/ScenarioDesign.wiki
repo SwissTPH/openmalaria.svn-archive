@@ -74,7 +74,7 @@ Two [ModelTransmission Transmission models] are available (independent of the le
   * direct input of transmission intensity with (optional) response to human infectiousness
   * model of the transmission vector (_anopheles_ mosquito)'s feeding cycle; allows modelling of vector stage interventions
 
-Configuration of these is described [Entomological_data:_entoData here].
+Configuration of these is described [XmlScenario#Entomological_data:_entoData here].
 
 == Demography ==
 
