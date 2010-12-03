@@ -108,8 +108,10 @@ class ExperimentCreatorRun():
     def quit_experimentCreator(self):
         if not (self.pid == ''):
             try:
-                os.kill(self.pid, signal.SIGKILL)
-                #self.kill_win(self.pid)
+                if sys.platform == 'win32':
+                    self.kill_win(self.pid)
+                else:
+                    os.kill(self.pid, signal.SIGKILL)
             except OSError:
                 self.pid = ''
     
@@ -169,8 +171,10 @@ class LiveGraphRun():
     def quit_livegraph(self):
         if not (self.pid == ''):
             try:
-                os.kill(self.pid, signal.SIGKILL)
-                #self.kill_win(self.pid)
+                if sys.platform == 'win32':
+                    self.kill_win(self.pid)
+                else:
+                    os.kill(self.pid, signal.SIGKILL)
             except OSError:
                 self.pid = ''
     

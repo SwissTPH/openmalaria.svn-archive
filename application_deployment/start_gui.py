@@ -41,9 +41,11 @@ class OMFrontend:
     destroy:
     Kills the actual window'''
     def destroy(self, widget, data=None):
-        #gtk.main_quit()
-        #sys.exit()
-	    os.kill(os.getpid(),signal.SIGTERM)
+        if sys.platform == 'win32':
+            gtk.main_quit()
+            sys.exit()
+        else:
+            os.kill(os.getpid(),signal.SIGTERM)
         
     def __init__(self):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
