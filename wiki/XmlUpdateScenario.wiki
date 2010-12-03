@@ -2,19 +2,23 @@ automatic schema translator
 
 = Automatic schema version update =
 
-If you use some scenarii working with an older schema version, you can update those with the schema translator. The translation may not work for some scenarii (The program will output the parameters you have to change or/and add manually and exit). 
+If you use some scenarii working with an older schema version, you can update those with the schema translator. The translation may not work for some scenarii (if it detects an ambiguous situation, it will ask you to run again specifying the value of a certain flag, or deal with something manually).
 
+The schema translator may be usable within [openmalariaTools]; alterantively it can be used as below.
 
 == Build and Install ==
   
-  * Building the schema translator from sources:
-      # Check if JDK and at least version 5 is installed. 
-          * If it's not the case, then you can download the installer [http://java.sun.com/javase/downloads/widget/jdk6.jsp, here]. 
-          * On ubuntu linux you can install de JDK with apt-get. Execute the command {{{sudo apt-get install sun-java6-jdk}}}. 
-      # Find the sources. 
-          * If you are already working with the openmalaria sources, then you can find the schema translator source files in util
-      # Build the sources.
-          * in the sources folder do {{{javac SchemaTranslator.java}}}
+Building the schema translator from sources:
+
+  # Check if JDK of at least version 5 is installed. 
+     * If it's not the case, then you can download the installer [http://java.sun.com/javase/downloads/widget/jdk6.jsp, here]. 
+     * On Ubuntu linux you can install JDK with apt. Install the `sun-java6-jdk` (or `java-gcj-compat-dev`) package.
+  # Find the sources. 
+     * If you are already working with the openmalaria sources, then you can find the schema translator source files in `util/SchemaTranslator`
+     * Grab from the repository:
+     {{{svn checkout http://openmalaria.googlecode.com/svn/trunk/util/SchemaTranslator SchemaTranslator}}}
+  # Build the sources.
+     * in the sources folder do {{{javac SchemaTranslator.java}}}
 
 == Usage ==
 
