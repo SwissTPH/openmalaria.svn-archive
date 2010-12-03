@@ -48,8 +48,11 @@ Run some scenarios:
 
 = Screenshots =
 
-||*overview*||*livegraph*||
-||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/run.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/run.jpg" width="600"/></a>||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/livegraph.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/livegraph.jpg" width="600"/></a>||
-
-||*editor*||*experiment creator*||
-||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/editor.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/editor.jpg" width="600"/></a>||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg" width="600"/></a>||
+||*overview*||
+||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/run.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/run.jpg" width="600"/></a>||
+||*livegraph*||
+||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/livegraph.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/livegraph.jpg" width="600"/></a>||
+||*editor*||
+||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/editor.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/editor.jpg" width="600"/></a>||
+||*experiment creator*||
+||<a href="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg"><img src="http://openmalaria.googlecode.com/svn/application_deployment/screenshots/beta_3/experiment_creator.jpg" width="600"/></a>||
