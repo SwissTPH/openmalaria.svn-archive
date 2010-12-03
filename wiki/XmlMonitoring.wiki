@@ -6,6 +6,8 @@
 
 = Monitoring options =
 
+The monitoring system is described [Monitoring here] and within the [XmlScenario#Monitoring_element:_monitoring scenario configuration reference].
+
 == Continuous measures ==
 
 This output format was introduced in schema version 19; some outputs were added later. There's no central list of these outputs in the code; instead search for calls to `Continuous::registerCallback` -- it's first argument should correspond to the output identifier in the table below.
