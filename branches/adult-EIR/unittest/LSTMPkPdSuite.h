@@ -49,34 +49,54 @@ public:
 	TS_ASSERT_EQUALS (proxy->getDrugFactor (proteome_ID), 1.0);
     }
     
-    void testCq () {
+    void testOral () {
 	proxy->medicate ("MF", 3000, 0, agd, 21);
 	TS_ASSERT_APPROX (proxy->getDrugFactor (proteome_ID), 0.03564073617400945);
     }
     
-    void testCqHalves () {	// the point being: check it can handle two doses at the same time-point correctly
+    void testOralHalves () {	// the point being: check it can handle two doses at the same time-point correctly
 	proxy->medicate ("MF", 1500, 0, agd, 21);
 	proxy->medicate ("MF", 1500, 0, agd, 21);
 	TS_ASSERT_APPROX (proxy->getDrugFactor (proteome_ID), 0.03564073617400945);
     }
     
-    void testCqSplit () {
+    void testOralSplit () {
 	proxy->medicate ("MF", 3000, 0, agd, 21);
 	proxy->medicate ("MF", 0, 0.5, agd, 21);	// insert a second dose half way through the day: forces drug calculation to be split into half-days but shouldn't affect result
 	TS_ASSERT_APPROX (proxy->getDrugFactor (proteome_ID), 0.03564073617400945);
     }
     
-    void testCqDecayed () {
+    void testOralDecayed () {
 	proxy->medicate ("MF", 3000, 0, agd, 21);
 	proxy->decayDrugs ();
 	TS_ASSERT_APPROX (proxy->getDrugFactor (proteome_ID), 0.03601694155274731);
     }
     
-    void testCq2Doses () {
+    void testOral2Doses () {
 	proxy->medicate ("MF", 3000, 0, agd, 21);
 	proxy->decayDrugs ();
 	proxy->medicate ("MF", 3000, 0, agd, 21);
 	TS_ASSERT_APPROX (proxy->getDrugFactor (proteome_ID), 0.03245158219000328);
+    }
+    
+    // IV tests. MF may not be used as an IV drug, but we can still use it to test.
+    void testIV () {
+        // IV over whole day
+        proxy->medicateIV ("MF", 50, 1, 1);
+        TS_ASSERT_APPROX (proxy->getDrugFactor(proteome_ID), 0.02212236680144665);
+    }
+    
+    void testIVSplit (){
+        // As above, but split into two doses
+        proxy->medicateIV ("MF", 50, 0.5, 0.5);
+        proxy->medicateIV ("MF", 50, 0.5, 1);
+        TS_ASSERT_APPROX (proxy->getDrugFactor(proteome_ID), 0.02212236680144665);
+    }
+    
+    void testCombined (){
+        proxy->medicateIV ("MF", 50, 0.5, 0.5);
+        proxy->medicate ("MF", 1500, 0.5, agd, 21);
+        TS_ASSERT_APPROX (proxy->getDrugFactor(proteome_ID), 0.02714870841762252);
     }
     
     AgeGroupData agd;

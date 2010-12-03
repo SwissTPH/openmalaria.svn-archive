@@ -308,8 +308,7 @@ void ClinicalEventScheduler::doClinicalUpdate (
 	if( it->duration == it->duration ){	// Have a duration, i.e. via IV administration
 	    if ( it->time + 0.5*it->duration < 1.0 ) { // Medicate today's medications
 	    withinHostModel.medicateIV (it->abbrev, it->qty, it->duration, it->time+it->duration);
-	    //FIXME: separate IV cost reporting?
-	    Monitoring::Surveys.current->report_Clinical_DrugUsage (it->abbrev, it->cost_qty);
+	    Monitoring::Surveys.current->report_Clinical_DrugUsageIV (it->abbrev, it->cost_qty);
 	    medicateQueue.erase (it);
 	    } else {   // and decrement treatment seeking delay for the rest
 		it->time -= 1.0;

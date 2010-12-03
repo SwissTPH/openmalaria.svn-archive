@@ -239,6 +239,10 @@ public:
       // Insert the pair (abbrev, 0.0) if not there, get an iterator to it, and increment it's second param (quantity) by qty
       (*((_sumClinical_DrugUsage.insert(make_pair(abbrev, 0.0))).first)).second += qty;
   }
+  void report_Clinical_DrugUsageIV (string abbrev, double qty) {
+      // Insert the pair (abbrev, 0.0) if not there, get an iterator to it, and increment it's second param (quantity) by qty
+      (*((_sumClinical_DrugUsageIV.insert(make_pair(abbrev, 0.0))).first)).second += qty;
+  }
   Survey& report_Clinical_FirstDayDeaths (AgeGroup ageGroup, int val) {
       _numClinical_FirstDayDeaths[ageGroup.i()] += val;
       return *this;
@@ -307,6 +311,7 @@ public:
     data_Vector_EIR_Simulated & stream;
     _numClinical_RDTs & stream;
     _sumClinical_DrugUsage & stream;
+    _sumClinical_DrugUsageIV & stream;
     _numClinical_FirstDayDeaths & stream;
     _numClinical_HospitalFirstDayDeaths & stream;
     _numNewInfections & stream;
@@ -374,6 +379,7 @@ private:
     
     int _numClinical_RDTs;
     map<string,double> _sumClinical_DrugUsage;
+    map<string,double> _sumClinical_DrugUsageIV;
     int _numClinical_Microscopy;
     
   friend class SurveysType;

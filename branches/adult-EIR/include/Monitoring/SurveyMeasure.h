@@ -143,8 +143,8 @@ enum SurveyMeasure {
     //@{
     /// Number of Rapid Diagnostic Tests used
     Clinical_RDTs = 39,
-    /** Effective total quanty of each drug used, in mg. (Per active ingredient
-     * abbreviation.)
+    /** Effective total quanty of each drug used orally, in mg.
+     * (Per active ingredient abbreviation.)
      * 
      * The quantity is efffective with respect to the cost (see treatment
      * schedule definition). */
@@ -177,6 +177,8 @@ enum SurveyMeasure {
     
     /// Number of malarial tests via microscopy used
     Clinical_Microscopy = 48,
+    /** As Clinical_DrugUsage, but for quatities of drug delivered via IV. */
+    Clinical_DrugUsageIV = 49,
     
     // must be hightest value above plus one
     NUM_SURVEY_OPTIONS	

@@ -187,9 +187,6 @@ double LSTMDrug::calculateDrugFactor(uint32_t proteome_ID) {
             //TODO: implement caching here: if already evaluated for this dose
             // and these PD_params, then reuse result.
             
-            double intfC, err_eps;
-            size_t n_evals;
-            
             IV_conc_params p;
             p.C0 = concentration_today;
             p.ivRate =  dose->second.qty;
@@ -204,8 +201,15 @@ double LSTMDrug::calculateDrugFactor(uint32_t proteome_ID) {
             F.params = static_cast<void*>(&p);
             
             //TODO: consider desired limits
-            gsl_integration_qng (&F, 0.0, duration, 0, 1e-7, &intfC, &err_eps, &n_evals); 
+            double abs_eps = 0.0, rel_eps = 1e-7;
+            double intfC, err_eps;
+            size_t n_evals;
             
+            gsl_integration_qng (&F, 0.0, duration, abs_eps, rel_eps, &intfC, &err_eps, &n_evals); 
+            
+#ifndef NDEBUG
+            cout << "IV: iterations: "<<n_evals<<"; error epsilon: "<<err_eps<<endl;
+#endif
             //TODO: check err_eps is OK
             //TODO: check qng is the best integration algorithm
             

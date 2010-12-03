@@ -86,7 +86,8 @@ class SurveyMeasureMap {
 	    codeMap["Vector_EIR_Input"] = SM::Vector_EIR_Input;
 	    codeMap["Vector_EIR_Simulated"] = SM::Vector_EIR_Simulated;
 	    codeMap["Clinical_RDTs"] = SM::Clinical_RDTs;
-	    codeMap["Clinical_DrugUsage"] = SM::Clinical_DrugUsage;
+            codeMap["Clinical_DrugUsage"] = SM::Clinical_DrugUsage;
+            codeMap["Clinical_DrugUsageIV"] = SM::Clinical_DrugUsageIV;
 	    codeMap["Clinical_FirstDayDeaths"] = SM::Clinical_FirstDayDeaths;
 	    codeMap["Clinical_HospitalFirstDayDeaths"] = SM::Clinical_HospitalFirstDayDeaths;
 	    codeMap["nNewInfections"] = SM::nNewInfections;
@@ -315,6 +316,9 @@ void Survey::writeSummaryArrays (ostream& outputFile, int survey)
   }
   if (active[SM::Clinical_DrugUsage]) {
       writeMap (outputFile, SM::Clinical_DrugUsage, _assimilatorMode, survey, _sumClinical_DrugUsage);
+  }
+  if (active[SM::Clinical_DrugUsageIV]) {
+      writeMap (outputFile, SM::Clinical_DrugUsageIV, _assimilatorMode, survey, _sumClinical_DrugUsageIV);
   }
   if (active[SM::Clinical_FirstDayDeaths]) {
       writePerAgeGroup (outputFile, SM::Clinical_FirstDayDeaths, _assimilatorMode, survey, _numClinical_FirstDayDeaths);
