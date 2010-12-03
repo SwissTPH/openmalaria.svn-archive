@@ -45,7 +45,7 @@ A cohort must also be selected. To do this, (pseudo-)interventions have been add
 
 Surveys can take place at any time point, starting from the beginning of the intervention period. Surveys only report events which happened from the beginning of the time-step of the last survey until the end of the time-step _before_ the current survey time-step, and measures of the current state (such as the number of patent hosts) from the _beginning_ of the survey time-step.
 
-The timing of these is described as in the XML fragment below (which describes four quarterly surveys assuming a 5-day time-step). The first valid time-point for a survey is time-step 0; however, any events happening before time-step 0 are not reported, so measures of events (such as infectious bites received) will be zero.
+The timing of these is described as in the XML fragment below. The first valid time-point for a survey is time-step 0; however, any events happening before time-step 0 are not reported, so measures of events (such as infectious bites received) will be zero.
 
 {{{
 <surveys detectionLimit="40">
@@ -56,7 +56,7 @@ The timing of these is described as in the XML fragment below (which describes f
 </surveys>
 }}}
 
-(The `detectionLimit` attribute describes the minimum parasite density (parasites per µl/microlitre) at which a human is counted as having a patent infection.)
+This example describes four quarterly surveys (assuming a 5-day time-step); these are reported in the [OutputFiles#Surveys output.txt] file as surveys 1, 2, 3 and 4. (The `detectionLimit` attribute describes the minimum parasite density (parasites per µl/microlitre) at which a human is counted as having a patent infection.)
 
 Timestep 0 will always correspond to the first of January (up to 5th Jan with a 5-day timestep), except that, prior to schema 22, when the maximumAgeYrs attribute of demography was not a whole number of years timestep values may well have been offset. Years are always modelled as 365 days long, hence (n * 365 / days_per_timestep) is always the beginning of the n-th year of the intervention period (excepting above offset). 
 
