@@ -18,7 +18,10 @@ The beta 3 release uses schema version 21 and has been packaged with an installe
 Alternatively, one can install from source (familiarity with [http://subversion.apache.org/ subversion] or [http://tortoisesvn.tigris.org/ TortoiseSVN] assumed).
 
   * Make sure a Java run-time environment, python and PyGTK are installed.
-  * Check out the sources: `svn checkout http://openmalaria.googlecode.com/svn/application_deployment OpenmalariaTools`
+  * Check out the sources:
+    {{{
+svn checkout http://openmalaria.googlecode.com/svn/application_deployment OpenmalariaTools
+}}}
   * Potentially replace the `application/openMalaria[.exe]` binary.
 
 = Features =
