@@ -33,13 +33,14 @@ directly to the variables, but only to the get_ methods.
 '''
 class PathsAndSchema():
     
-    _base_path = os.getcwd()
+    _base_path =  os.getcwd()
     _temp_path = _base_path
     _home_path = _base_path
     
     if not sys.platform == 'win32':
         _temp_path = tempfile.gettempdir()
         _home_path = os.getenv("HOME") 
+    	_base_path = '/usr/local/openmalariaTools' 
         
     _application_folder = os.path.join(_base_path, 'application')
     _common_folder = os.path.join(_base_path, 'application', 'common')
@@ -53,8 +54,10 @@ class PathsAndSchema():
     _translated_scenarios_folder = os.path.join(_temp_path, 'omt_translated_scenarios')
     
     _outputs_folder = os.path.join(_home_path, 'openmalariaTools')
-    
-    _icon_path = os.path.join(_base_path, 'application', 'common', 'om.ico')
+    if not sys.platform == 'win32':
+        _icon_path = os.path.join(_base_path, 'application', 'common', 'om.ico')
+    else:
+        _icon_path = os.path.join(_base_path, 'application', 'common', 'om.ico')
     
     _actual_schema_version = '23'
     
