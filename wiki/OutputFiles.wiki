@@ -6,39 +6,32 @@ Output from OpenMalaria simulations is currently collected using two methods. Th
 
 == Surveys ==
 
-Output from the [Monitoring#surveys surveys] system is written at the end of the simulation to the `output.txt` (or when compiled in BOINC mode `output.txt.gz`) file. The contents are formatted as in a database, with tab-separated columns and one record per line.
+Output from the [Monitoring#Surveys surveys] system is written at the end of the simulation to the `output.txt` (or when compiled in BOINC mode `output.txt.gz`) file. The contents are formatted as in a database, with tab-separated columns and one record per line. Each line has four columns with the following meaning:
+
+|| survey number || third dimension || measure || value ||
+
+The survey number starts from one and corresponds to the [Monitoring#Survey_time_points survey time point]. (Exception: measure 21 has one record from the end of the simulation and does not use the survey number or third dimension columns.)
+
+Output can be associated with several different [Monitoring#Survey_measures measures]; the code under the label "id" in the first column of the [XmlMonitoring#Survey_measures survey measures table] appears in the third column of output.
+
+The "third dimension" (in the second column for historical reasons) specifies another dimension of the output. For many measures it identifies the human [Monitoring#Survey_age_groups age group], for a few measures it is unused, and for some it holds a [XmlEntoVector mosquito species] or a [ModelDrug drug identifier].
+
+Example:
+{{{
+1       15      2       4
+}}}
+Measure 2 is the "expected number of infected hosts", so this record specifies that during the first survey, the expected number of infected hosts in the fifteenth age group was 4.
+
+== Continuous monitoring ==
+
+Some properties of the simulation can also be monitored continuously. The [Monitoring#Continuous continuous monitoring system] writes output to the `ctsout.txt` file in real-time (while the simulation is still running). This file can be monitored while a simulation is running from LiveGraph and read from most spread-sheet programs.
+
+This file starts with a line specifying the column separator (a tab) to make the files readable by [LiveGraph]. The next line is a header, giving a title for each column (note: spaces may occur within column names, whereas tab characters separate columns). Following this, each line corresponds to a time point.
+
+Available outputs are listed [XmlMonitoring#Continuous_measures here]; note that some of these output a single value while others output multiple values (using titles of the format "measure (subcategory)").
+
+== Checksum ==
+
+When compiled in BOINC mode, an additional file is output: `scenario.sum`, which is a checksum of the input XML file.
 
 <placeholder>
-
-There are currently two statistical output files:
-
-  * [OutputFiles#output.txt output.txt] — three-dimensional (survey, measure and often age-group) general statistics
-  * [OutputFiles#ctsout.txt ctsout.txt] — two-dimensional (time-step and measure) statistics from the vector transmission model
-
-Both consist of lines of tab-separated values.
-
-In addition a third file, scenario.sum is produced.
-This is only used only for internal validation.
-
-== output.txt ==
-
-Each line in this file specifies one record, and consists of four columns:
-
-  # Survey number (starting from one; indicates which survey specified in the [XmlScenario scenario file] this record is from)
-  # 3rd dimension (often corresponding to age group, but may mean something else or be 0)
-  # Measure as an integer code (see below)
-  # Value
-
-The value of the measure field affects how the other fields are interpreted. All but the `imr_summary` (code: 21) measure come from a survey. Most of the existing measures are reported per age-group and the 3rd dimension of the record specifies which age group specified in the scenario file the statistic comes from, while some of the newer measures use the 3rd-dimension to indicate the mosquito species/variant (as a string), and a few measures don't use this field. The value is always an integer or floating-point number, but its units depend on the measure.
-
-=== measures ===
-
-The measure indicates the meaning of statistics. It is specified by a short string identifier in the [XmlScenario scenario file] and by an integer code in the output files (a space optimization for when the results get imported into the results database).
-
-[XmlMonitoring#Survey_measures List of measures.]
-
-== ctsout.txt ==
-
-Some data can also be output to this file, in a simpler format (often a single value per time-step). Data output capabilities have some overlap with `output.txt`, but have the advantages of simpler [XmlScenario#Continuous:_continuous configuration] and a simple output format which can be easily plotted using LiveGraph or a spreadsheet program.
-
-[XmlMonitoring#Continuous_measures List of measures.]
