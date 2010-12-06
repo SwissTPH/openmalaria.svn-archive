@@ -126,28 +126,7 @@ double func_IV_conc( double t, void* pp ){
 }
 
 
-/* Function to avoid repeating some operations in calculateDrugFactor().
- * @param duration Time-span acted over with units days.
- * @returns a survival factor (no units). */
-inline double drugEffect (const LSTMDrugPDParameters& PD_params,
-                          double neg_elimination_rate_constant,
-                          double& concentration,
-                          double duration
-) {
-    //KW - start concentration is equal to the end concentration of the previous time step
-    double conc_after_decay = concentration * exp(neg_elimination_rate_constant *  duration);
-    
-    // Note: these look a little different from original equations because PD_params.IC50_pow_slope
-    // and PD_params.power are calculated when read from the scenario document instead of here.
-    double numerator = PD_params.IC50_pow_slope + pow(conc_after_decay,PD_params.slope);
-    double denominator = PD_params.IC50_pow_slope + pow(concentration,PD_params.slope);
-    double drug_effect = pow( numerator / denominator, PD_params.power );
-    
-    concentration = conc_after_decay;
-    return drug_effect;
-}
-
-// TODO: in high transmission, is this going to get called more than updateConcentration?
+// TODO: in high transmission, is this going to get called more often than updateConcentration?
 // When does it make sense to try to optimise (avoid doing decay calcuations here)?
 double LSTMDrug::calculateDrugFactor(uint32_t proteome_ID) {
     /* Survival factor of the parasite (this multiplies the parasite density).
@@ -179,7 +158,15 @@ double LSTMDrug::calculateDrugFactor(uint32_t proteome_ID) {
 	if( dose->second.duration == 0.0 ){
             // Oral dose
             concentration_today += dose->second.qty;
-            totalFactor *= drugEffect (PD_params, typeData->neg_elimination_rate_constant, concentration_today, duration);
+            
+            double initial_conc = concentration_today;
+            concentration_today *= exp(typeData->neg_elimination_rate_constant *  duration);
+            
+            // Note: these look a little different from original equations because PD_params.IC50_pow_slope
+            // and PD_params.power are calculated when read from the scenario document instead of here.
+            double numerator = PD_params.IC50_pow_slope + pow(concentration_today,PD_params.slope);
+            double denominator = PD_params.IC50_pow_slope + pow(initial_conc,PD_params.slope);
+            totalFactor *= pow( numerator / denominator, PD_params.power );
         } else {
             // IV dose
             assert( duration == dose->second.duration );

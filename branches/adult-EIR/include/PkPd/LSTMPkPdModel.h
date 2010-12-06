@@ -29,9 +29,6 @@ namespace OM { namespace PkPd {
 /** Pharmacokinetic and pharmacodynamics interface, used by each human's
  * within-host model.
  *
- * Placeholder for IH & KW's new PKPD model. Named in honour of the creators-to-
- * be (rename if you're more inspired).
- * 
  * Some of the implementation is contained in the drug.h/drug.cpp files. */
 class LSTMPkPdModel : public PkPdModel {
 public:
