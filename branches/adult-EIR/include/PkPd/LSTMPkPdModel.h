@@ -48,7 +48,10 @@ public:
 private:
     // Per-individual variables:
   list<LSTMDrug> _drugs;
-  //double metabolismMultiplier;
+  
+  /// Multiplies the mean weight for age.
+  /// Within PkPd class simply because it's not used elsewhere.
+  double hetWeightMultiplier;
 };
 
 } }

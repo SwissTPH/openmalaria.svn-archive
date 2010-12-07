@@ -19,23 +19,26 @@
 */
 
 #include "PkPd/PkPdModel.h"
-#include "PkPd/Drug/HoshenDrugType.h"
+// #include "PkPd/Drug/HoshenDrugType.h"
 #include "Global.h"
-#include "PkPd/Proteome.h"
+// #include "PkPd/Proteome.h"
 #include "util/ModelOptions.h"
+#include "util/errors.h"
 #include "inputData.h"
 
 // submodels:
-#include "PkPd/HoshenPkPdModel.h"
+// #include "PkPd/HoshenPkPdModel.h"
 #include "PkPd/LSTMPkPdModel.h"
 #include "PkPd/VoidPkPdModel.h"
 
 #include <assert.h>
 #include <stdexcept>
+#include <limits.h>
 
 namespace OM { namespace PkPd {
 
 PkPdModel::ActiveModel PkPdModel::activeModel = PkPdModel::NON_PKPD;
+double PkPdModel::hetWeightMultStdDev = std::numeric_limits<double>::signaling_NaN();
 
 // -----  static functions  -----
 
@@ -46,17 +49,22 @@ void PkPdModel::init () {
 	    LSTMDrugType::init(InputData().getDrugDescription().get ());
 	} else {
 	    activeModel = HOSHEN_PKPD;
-	    ProteomeManager::init ();
-	    HoshenDrugType::init();
+            // Hoshen model has been removed.
+            throw util::xml_scenario_error( "drugDescription element required in XML" );
+// 	    ProteomeManager::init ();
+// 	    HoshenDrugType::init();
 	}
+	
+	hetWeightMultStdDev = InputData().getModel().getHuman().getWeight().getMultStdDev();
     }
 }
 void PkPdModel::cleanup () {
     if (activeModel == LSTM_PKPD) {
 	LSTMDrugType::cleanup();
     } else if (activeModel == HOSHEN_PKPD) {
-	HoshenDrugType::cleanup();
-	ProteomeManager::cleanup ();
+        assert( false );
+// 	HoshenDrugType::cleanup();
+// 	ProteomeManager::cleanup ();
     }
 }
 
@@ -66,7 +74,8 @@ PkPdModel* PkPdModel::createPkPdModel () {
     } else if (activeModel == LSTM_PKPD) {
 	return new LSTMPkPdModel ();
     } else if (activeModel == HOSHEN_PKPD) {
-	return new HoshenPkPdModel ();
+        
+// 	return new HoshenPkPdModel ();
     }
     throw runtime_error("bad PKPD model");
 }

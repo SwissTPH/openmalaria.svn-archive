@@ -21,8 +21,9 @@
 #ifndef Hmod_PkPdModel
 #define Hmod_PkPdModel
 
-#include "PkPd/Proteome.h"
+// #include "PkPd/Proteome.h"
 #include "AgeGroupData.h"
+#include "Global.h"
 
 #include <fstream>
 using namespace std;
@@ -58,7 +59,7 @@ public:
   /** Factory function to create a drug interface, type dependant on run-time
    * options.
    * 
-   * Currently may return one of: PkPdModel, HoshenPkPdModel, IhKwPkPdModel. */
+   * Currently may return one of: PkPdModel, IhKwPkPdModel. */
   static PkPdModel* createPkPdModel ();
   //@}
   
@@ -125,10 +126,13 @@ protected:
    *
    * @param ageGroupData Age group for weight data
    * @param ageYears Age in years
+   * @param hetMult Multiplies age to introduce heterogeneity
    * @returns Mass in kg */
-  static inline double ageToWeight (const AgeGroupData ageGroupData, double ageYears) {
-      return ageGroupData.ageToWeight( ageYears );
+  static inline double ageToWeight (const AgeGroupData ageGroupData, double ageYears, double hetMult) {
+      return ageGroupData.ageToWeight( ageYears, hetMult );
   }
+  
+  static double hetWeightMultStdDev;
   
 private:
     /// Which model is in use (set by init())

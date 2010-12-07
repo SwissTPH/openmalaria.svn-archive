@@ -27,7 +27,7 @@
 #include "util/ModelOptions.h"
 
 #include "PkPd/PkPdModel.h"
-#include "PkPd/HoshenPkPdModel.h"
+// #include "PkPd/HoshenPkPdModel.h"
 #include "PkPd/LSTMPkPdModel.h"
 #include "WithinHost/Infection/Infection.h"
 #include "WithinHost/WithinHostModel.h"
@@ -45,6 +45,7 @@ public:
 	//PkPdModel::init ();
 	
 	PkPd::PkPdModel::activeModel = modelID;
+        PkPd::PkPdModel::hetWeightMultStdDev = 0.0;
 	if (modelID == PkPd::PkPdModel::LSTM_PKPD) {
 	    scnXml::Allele allele ( 1.0 /* initial_frequency */, 3.45 /* max_killing_rate */, 0.6654 /* IC50 */, 2.5 /* slope */, "sensitive" /* name */ );
 	    
@@ -60,8 +61,9 @@ public:
 	    
 	    PkPd::LSTMDrugType::init (dd);
 	} else if (modelID == PkPd::PkPdModel::HOSHEN_PKPD) {
-	    PkPd::ProteomeManager::init ();
-	    PkPd::HoshenDrugType::init();
+            assert( false );
+// 	    PkPd::ProteomeManager::init ();
+// 	    PkPd::HoshenDrugType::init();
 	} else {
 	    assert (false);
 	}
@@ -70,8 +72,9 @@ public:
 	if (PkPd::PkPdModel::activeModel == PkPd::PkPdModel::LSTM_PKPD) {
 	    PkPd::LSTMDrugType::cleanup();
 	} else if (PkPd::PkPdModel::activeModel == PkPd::PkPdModel::HOSHEN_PKPD) {
-	    PkPd::HoshenDrugType::cleanup();
-	    PkPd::ProteomeManager::cleanup();
+            assert( false );
+// 	    PkPd::HoshenDrugType::cleanup();
+// 	    PkPd::ProteomeManager::cleanup();
 	}
     }
     

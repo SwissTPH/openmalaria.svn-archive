@@ -36,13 +36,13 @@ set (Model_CPP
   Pathogenesis/Predet.cpp
   
   PkPd/PkPdModel.cpp
-  PkPd/HoshenPkPdModel.cpp
+  #PkPd/HoshenPkPdModel.cpp
   PkPd/LSTMPkPdModel.cpp
-  PkPd/Drug/HoshenDrug.cpp
-  PkPd/Drug/HoshenDrugType.cpp
+  #PkPd/Drug/HoshenDrug.cpp
+  #PkPd/Drug/HoshenDrugType.cpp
   PkPd/Drug/LSTMDrug.cpp
   PkPd/Drug/LSTMDrugType.cpp
-  PkPd/Proteome.cpp
+  #PkPd/Proteome.cpp
   
   Transmission/TransmissionModel.cpp
   Transmission/NonVector.cpp

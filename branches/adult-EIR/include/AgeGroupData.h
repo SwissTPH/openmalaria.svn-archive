@@ -47,9 +47,10 @@ public:
      * regards to humans (all humans considered the same at the same age).
      *
      * @param ageYears Person's age in years
-     * @returns Mass in kg (range approx 14 to 60 kg).
+     * @param hetMult Multiplies age to introduce heterogeneity
+     * @returns Mass in kg (range approx 14 to 60 kg when hetMult==1).
      */
-    double ageToWeight (double ageYears) const;
+    double ageToWeight (double ageYears, double hetMult ) const;
     
     /// Checkpointing
     template<class S>

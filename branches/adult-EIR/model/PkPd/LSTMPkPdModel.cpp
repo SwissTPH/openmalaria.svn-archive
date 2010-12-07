@@ -19,6 +19,7 @@
 */
 
 #include "PkPd/LSTMPkPdModel.h"
+#include "util/random.h"
 
 namespace OM { namespace PkPd {
 
@@ -26,7 +27,13 @@ namespace OM { namespace PkPd {
 
 LSTMPkPdModel::LSTMPkPdModel () {
     // TODO (LSTM): can add initialization, heterogeneity, etc., here
-    //metabolismMultiplier = 3;
+    AgeGroupData agd;
+    do {
+        //TODO: all results need to be updated because of random number stream displacement
+        hetWeightMultiplier = 1.0/*util::random::gauss( 1.0, hetWeightMultStdDev )*/;
+        // Make sure birth weight isn't less than 0.5 kg
+        // Convenient but not so optimal: we use AgeGroupData to calculate weight
+    } while( agd.ageToWeight( 0.0, hetWeightMultiplier ) < 0.5 );
 }
 LSTMPkPdModel::~LSTMPkPdModel () {}
 
@@ -65,7 +72,7 @@ void LSTMPkPdModel::medicate(string drugAbbrev, double qty, double time, const A
   drug = _drugs.begin();	// the drug we just added
   
   medicateGotDrug:
-  drug->medicate (time, qty, ageToWeight (ageGroupData, ageYears));
+  drug->medicate (time, qty, ageToWeight (ageGroupData, ageYears, hetWeightMultiplier));
 }
 void LSTMPkPdModel::medicateIV(string drugAbbrev, double qty, double duration, double endTime) {
   list<LSTMDrug>::iterator drug = _drugs.begin();

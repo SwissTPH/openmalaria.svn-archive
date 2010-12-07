@@ -24,6 +24,10 @@
 #include "PkPd/PkPdModel.h"
 #include "PkPd/Drug/HoshenDrug.h"
 
+/* WARNING: The Hoshen PK/PD model is no longer maintained.
+ * The LSTM model is partially a replacement, and the Hoshen model has so
+ * far had no use. */
+
 namespace OM { namespace PkPd {
     
 /** Pharmacokinetic and pharmacodynamics drug model, using the Hoshen

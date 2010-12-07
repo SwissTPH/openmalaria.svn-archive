@@ -43,31 +43,31 @@ public:
     void testLowerbound() {
 	double age = 0.0;
 	agd->update( age );
-	TS_ASSERT_APPROX (agd->ageToWeight(age), 13.9856718);
+	TS_ASSERT_APPROX (agd->ageToWeight(age, 1.0), 13.9856718);
     }
     
     void testUpperbound() {
 	double age = 100.0;
 	agd->update( age );
-	TS_ASSERT_APPROX (agd->ageToWeight(age), 60.0);
+	TS_ASSERT_APPROX (agd->ageToWeight(age, 1.0), 60.0);
     }
     
     void testStandardCaseLowerbound(){
 	double age = 14.99;
 	agd->update( age );
-	TS_ASSERT_APPROX (agd->ageToWeight(age), 49.48396092);
+	TS_ASSERT_APPROX (agd->ageToWeight(age, 1.0), 49.48396092);
     }
     
     void testStandardCase() {
 	double age = 17.0;
 	agd->update( age );
-	TS_ASSERT_APPROX (agd->ageToWeight(age), 51.44412863);
+	TS_ASSERT_APPROX (agd->ageToWeight(age, 1.0), 51.44412863);
     }
     
     void testStandardCaseUpperbound(){
 	double age = 19.99;
 	agd->update( age );
-	TS_ASSERT_APPROX (agd->ageToWeight(age), 54.36);
+	TS_ASSERT_APPROX (agd->ageToWeight(age, 1.0), 54.36);
     }
     
     AgeGroupData *agd;

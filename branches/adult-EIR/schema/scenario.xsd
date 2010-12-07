@@ -72,6 +72,7 @@
                 </xs:annotation>
               </xs:element>
               <xs:element name="clinical" type="clinical" />
+              <xs:element name="human" type="human"/>
               <xs:element name="parameters" type="parameters">
                 <xs:annotation>
                   <xs:documentation>
@@ -1215,37 +1216,6 @@
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
-  <xs:complexType name="WeibullDecayedProportion">
-    <xs:annotation>
-      <xs:documentation>
-        Specification of a proportion with Weibull or exponential decay.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="initial" type="xs:double" use="required">
-      <xs:annotation>
-        <xs:documentation>
-	  The value before any decay.
-	</xs:documentation>
-        <xs:appinfo>units:None;min:0;max:1;name:Initial proportion;</xs:appinfo>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="halflife" type="xs:double" use="required">
-      <xs:annotation>
-        <xs:documentation>
-	  Half-life in years (more generally, halflife/ln(2) is lambda from the Weibull distribution).
-	</xs:documentation>
-        <xs:appinfo>units:Years;min:0;name:half-life;</xs:appinfo>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="Weibullk" type="xs:double" use="optional">
-      <xs:annotation>
-        <xs:documentation>
-	  The parameter k of the Weibull distribution. If missing, 1.0 is used (equivalent to exponential decay).
-	</xs:documentation>
-        <xs:appinfo>min:0;name:Weibull k parameter;</xs:appinfo>
-      </xs:annotation>
-    </xs:attribute>
-  </xs:complexType>
   <xs:complexType name="ITNDescription">
     <xs:sequence>
       <xs:element name="deterrency" type="WeibullDecayedProportion">
@@ -1854,7 +1824,6 @@
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
-  
   <xs:complexType name="HSESTreatmentModifierEffect">
     <xs:attribute name="value" type="xs:string" use="required">
       <xs:annotation>
@@ -1886,7 +1855,6 @@
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
-  
   <xs:complexType name="ClinicalOutcomes">
     <xs:annotation>
       <xs:documentation>
@@ -1944,7 +1912,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-
+  <!-- Drug model -->
   <xs:complexType name="drugDescription">
     <xs:sequence>
       <xs:element name="drug" maxOccurs="unbounded">
@@ -2045,10 +2013,68 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+  <!-- Host data -->
+  <xs:complexType name="human">
+    <xs:annotation>
+      <xs:documentation>
+        Parameters of host models.
+      </xs:documentation>
+      <xs:appinfo>name:Human;</xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="weight">
+        <xs:complexType>
+          <xs:attribute name="multStdDev" type="xs:double" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                Each human is assigned a weight multiplier from a normal distribution
+                with mean 1 and this standard deviation at birth. His/her weight
+                is this multiplier times the mean from age distribution.
+                A standard deviation of zero for no heterogeneity is valid; a rough
+                value from Tanzania data is 0.14.
+              </xs:documentation>
+              <xs:appinfo>name:Standard deviation;units:None;min:0</xs:appinfo>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
   <!-- standard types used -->
   <xs:complexType name="doubleList">
     <xs:sequence>
       <xs:element name="item" maxOccurs="unbounded" type="xs:double" />
     </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WeibullDecayedProportion">
+    <xs:annotation>
+      <xs:documentation>
+        Specification of a proportion with Weibull or exponential decay.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="initial" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          The value before any decay.
+        </xs:documentation>
+        <xs:appinfo>units:None;min:0;max:1;name:Initial proportion;</xs:appinfo>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="halflife" type="xs:double" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          Half-life in years (more generally, halflife/ln(2) is lambda from the Weibull distribution).
+        </xs:documentation>
+        <xs:appinfo>units:Years;min:0;name:half-life;</xs:appinfo>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Weibullk" type="xs:double" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The parameter k of the Weibull distribution. If missing, 1.0 is used (equivalent to exponential decay).
+        </xs:documentation>
+        <xs:appinfo>min:0;name:Weibull k parameter;</xs:appinfo>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 </xs:schema>

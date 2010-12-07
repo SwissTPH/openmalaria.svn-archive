@@ -28,7 +28,6 @@
 #include <map>
 #include <vector>
 #include "Global.h"
-#include "PkPd/Proteome.h"
 #include "inputData.h"
 
 using namespace std;

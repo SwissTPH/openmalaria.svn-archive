@@ -44,10 +44,10 @@ void AgeGroupData::update (double ageYears) {
 	_i++;
 }
 
-double AgeGroupData::ageToWeight (double ageYears) const {
+double AgeGroupData::ageToWeight (double ageYears, double hetMult) const {
     double diff_wtprop = wtprop[_i]-wtpropmin[_i];
     double diff_age_max = agemax[_i]-agemin[_i];
     double diff_age = ageYears - agemin[_i];
     
-    return 120.0 * (wtpropmin[_i] + ((diff_wtprop/diff_age_max)*diff_age));
+    return 120.0 * (wtpropmin[_i] + ((diff_wtprop/diff_age_max)*diff_age)) * hetMult;
 }

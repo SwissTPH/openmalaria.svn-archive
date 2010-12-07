@@ -24,7 +24,6 @@
 #define Hmod_LSTMDrug
 
 #include "Global.h"
-#include "PkPd/Proteome.h"
 #include "LSTMDrugType.h"
 
 using namespace std;
