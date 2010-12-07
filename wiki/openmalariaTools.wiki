@@ -8,12 +8,13 @@ OpenmalariaTools is developed as a cross-platform application using [http://www.
 
 = Downloads =
 
-OpenmalariaTools is currently in beta stage 3. It runs on both Linux and Windows, but currently not on the Mac OS due to the unavailability of PyGTK natively on the Mac.
+OpenmalariaTools is currently in beta stage 4. It runs on both Linux and Windows, but currently not on the Mac OS due to the unavailability of PyGTK natively on the Mac.
 
-The beta 3 release uses schema version 21 and has been packaged with an installer for windows. To use:
+The beta 4 release uses schema version 23 and has been packaged with an installer for windows. To use:
 
   * Make sure a [http://www.java.com/en/download/ Java run-time environment] is installed.
-  * Download and run the [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.03/win32/openMalariaTools_installer_v00.03.exe Windows (32-bit) openmalariaTools installer]
+  * Download and run the [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/win32/openMalariaTools_installer_v00.04.exe Windows (32-bit) openmalariaTools installer]
+
 
 Alternatively, one can install from source (familiarity with [http://subversion.apache.org/ subversion] or [http://tortoisesvn.tigris.org/ TortoiseSVN] assumed).
 
