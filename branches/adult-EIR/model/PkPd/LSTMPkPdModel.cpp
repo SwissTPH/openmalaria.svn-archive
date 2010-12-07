@@ -29,8 +29,7 @@ LSTMPkPdModel::LSTMPkPdModel () {
     // TODO (LSTM): can add initialization, heterogeneity, etc., here
     AgeGroupData agd;
     do {
-        //TODO: all results need to be updated because of random number stream displacement
-        hetWeightMultiplier = 1.0/*util::random::gauss( 1.0, hetWeightMultStdDev )*/;
+        hetWeightMultiplier = util::random::gauss( 1.0, hetWeightMultStdDev );
         // Make sure birth weight isn't less than 0.5 kg
         // Convenient but not so optimal: we use AgeGroupData to calculate weight
     } while( agd.ageToWeight( 0.0, hetWeightMultiplier ) < 0.5 );

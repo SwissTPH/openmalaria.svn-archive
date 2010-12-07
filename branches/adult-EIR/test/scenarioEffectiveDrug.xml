@@ -1086,6 +1086,9 @@
       <option name="CLINICAL_EVENT_SCHEDULER" value="true"/>
     </ModelOptions>
     <clinical healthSystemMemory="28"/>
+    <human>
+      <weight multStdDev="0"/>
+    </human>
     <parameters interval="1" iseed="1" latentp="3">
       <parameter include="false" name="'-ln(1-Sinf)'" number="1" value="0.0507360000000001"/>
       <parameter include="false" name="Estar" number="2" value="0.03247"/>
