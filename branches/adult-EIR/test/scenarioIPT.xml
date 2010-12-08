@@ -596,6 +596,9 @@
       <option name="IPTI_SP_MODEL" value="true"/>
     </ModelOptions>
     <clinical healthSystemMemory="6"/>
+    <human>
+      <weight multStdDev="0"/>
+    </human>
     <parameters interval="5" iseed="0" latentp="3">
       <parameter include="0" name=" '-ln(1-Sinf)' " number="1" value="0.050736"/>
       <parameter include="0" name=" Estar " number="2" value="0.03247"/>

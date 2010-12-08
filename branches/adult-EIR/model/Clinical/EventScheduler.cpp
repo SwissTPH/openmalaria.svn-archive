@@ -37,7 +37,6 @@ int ClinicalEventScheduler::uncomplicatedCaseDuration;
 int ClinicalEventScheduler::complicatedCaseDuration;
 int ClinicalEventScheduler::extraDaysAtRisk;
 double ClinicalEventScheduler::pImmediateUC;
-map<double,double> ClinicalEventScheduler::pDeathInitial;
 double ClinicalEventScheduler::neg_v;
 
 
@@ -70,16 +69,11 @@ void ClinicalEventScheduler::setParameters (const scnXml::HSEventScheduler& esDa
     
     pImmediateUC = coData.getPImmediateUC();
     double alpha = exp( -InputData.getParameter( Params::CFR_NEG_LOG_ALPHA ) );
-    if( !(0.0<=alpha && alpha<=1.0)
-	|| !(0.0<=pImmediateUC && pImmediateUC<=1.0)
-    )
+    if( !(0.0<=alpha && alpha<=1.0) || !(0.0<=pImmediateUC && pImmediateUC<=1.0) ){
 	throw util::xml_scenario_error("Clinical outcomes: pImmediateUC and propDeathsFirstDay should be within range [0,1]");
-    
-    const map<double,double>& cfr = CaseManagementCommon::getCaseFatalityRates();
-    pDeathInitial.clear();	// in case we're re-loading from intervention data
-    for( map<double,double>::const_iterator it = cfr.begin(); it != cfr.end(); ++it ){
-	pDeathInitial[it->first] = alpha * it->second;
     }
+    
+    CaseManagementCommon::scaleCaseFatalityRate( alpha );
     neg_v = - InputData.getParameter( Params::CFR_SCALE_FACTOR );
 }
 
@@ -114,18 +108,6 @@ void ClinicalEventScheduler::massDrugAdministration(OM::WithinHost::WithinHostMo
     // Note: we augment any existing medications, however future medications will replace any yet-
     // to-be-medicated MDA treatments (even all MDA doses when treatment happens immediately).
     ESCaseManagement::massDrugAdministration (medicateQueue);
-}
-
-double ClinicalEventScheduler::getPDeathInitial (double ageYears) {
-    assert ( ageYears >= 0.0 );
-    map<double,double>::const_iterator it = pDeathInitial.upper_bound( ageYears );
-    assert( it != pDeathInitial.end() );
-    double a1 = it->first;
-    double f1 = it->second;
-    --it;
-    double a0 = it->first;	// a0 <=ageYears < a1
-    double f0 = it->second;
-    return (ageYears - a0) / (a1 - a0) * (f1 - f0) + f0;
 }
 
 void ClinicalEventScheduler::doClinicalUpdate (
@@ -234,7 +216,7 @@ void ClinicalEventScheduler::doClinicalUpdate (
 	if( (pgState & Pathogenesis::COMPLICATED)
 	    && !(pgState & Pathogenesis::DIRECT_DEATH)
 	) {
-	    double pDeath = getPDeathInitial( ageYears );
+	    double pDeath = CaseManagementCommon::caseFatality( ageYears );
 	    // community fatality rate when not in hospital or delayed hospital entry
 	    if( auxOut.hospitalisation != CMAuxOutput::IMMEDIATE )
 		pDeath = CaseManagementCommon::getCommunityCaseFatalityRate( pDeath );

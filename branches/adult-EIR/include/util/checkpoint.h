@@ -229,6 +229,9 @@ namespace OM { namespace util { namespace checkpoint {
     void operator& (map<string,double> x, ostream& stream);
     void operator& (map<string, double >& x, istream& stream);
     
+    void operator& (map<double,double> x, ostream& stream);
+    void operator& (map<double, double>& x, istream& stream);
+    
     void operator& (multimap<double,double> x, ostream& stream);
     void operator& (multimap<double, double>& x, istream& stream);
     //@}

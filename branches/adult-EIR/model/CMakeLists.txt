@@ -76,6 +76,7 @@ set (Model_CPP
   util/random.cpp
   util/XmlUtils.cpp
   util/StreamValidator.cpp
+  util/AgeGroupInterpolation.cpp
   
   Monitoring/Continuous.cpp
   Monitoring/Surveys.cpp
