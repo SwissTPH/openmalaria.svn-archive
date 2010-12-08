@@ -40,7 +40,10 @@ class PathsAndSchema():
     if not sys.platform == 'win32':
         _temp_path = tempfile.gettempdir()
         _home_path = os.getenv("HOME") 
-    	_base_path = '/usr/local/openmalariaTools' 
+    	_base_path = '/usr/local/openmalariaTools'
+    else:
+        _temp_path = os.getenv("TEMP")
+        _home_path = os.getenv("USERPROFILE") 
         
     _application_folder = os.path.join(_base_path, 'application')
     _common_folder = os.path.join(_base_path, 'application', 'common')
@@ -53,11 +56,10 @@ class PathsAndSchema():
     _scenarios_to_translate_folder = os.path.join(_temp_path, 'omt_scenarios_to_translate')
     _translated_scenarios_folder = os.path.join(_temp_path, 'omt_translated_scenarios')
     
-    _outputs_folder = os.path.join(_home_path, 'openmalariaTools')
-    if not sys.platform == 'win32':
-        _icon_path = os.path.join(_base_path, 'application', 'common', 'om.ico')
-    else:
-        _icon_path = os.path.join(_base_path, 'application', 'common', 'om.ico')
+    _runs_folder = os.path.join(_home_path, 'openmalariaTools_runs')
+    _outputs_folder = os.path.join(_home_path, 'openmalariaTools_outputs')
+        
+    _icon_path = os.path.join(_base_path, 'application', 'common', 'om.ico')
     
     _actual_schema_version = '23'
     
@@ -104,5 +106,9 @@ class PathsAndSchema():
     @staticmethod
     def get_settings_file_path():
         return PathsAndSchema._settings_file_path
+    
+    @staticmethod
+    def get_scenarios_to_run_folder():
+        return PathsAndSchema._runs_folder
     
     

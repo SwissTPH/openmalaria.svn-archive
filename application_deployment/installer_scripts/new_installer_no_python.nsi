@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "openmalariaTools"
-!define PRODUCT_VERSION "00.03"
+!define PRODUCT_VERSION "00.04"
 !define PRODUCT_PUBLISHER "SwissTPH"
 !define PRODUCT_WEB_SITE "www.swisstph.ch"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\openMalaria.exe"
@@ -38,7 +38,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "openMalariaTools_installer_v00.03.exe"
+OutFile "openMalariaTools_installer_v00.04.exe"
 InstallDir "$PROGRAMFILES\openmalariaTools"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -237,6 +237,8 @@ Section "openMalariaTools" SEC01
   File "..\application\common\scenario_2.xsd"
   File "..\application\common\scenario_20.xsd"
   File "..\application\common\scenario_21.xsd"
+  File "..\application\common\scenario_22.xsd"
+  File "..\application\common\scenario_23.xsd"
   File "..\application\common\scenario_3.xsd"
   File "..\application\common\scenario_4.xsd"
   File "..\application\common\scenario_5.xsd"
