@@ -421,7 +421,16 @@ class ExperimentCreatorDialog(gtk.Dialog):
             self.status_label.set_text('The system is currently creating the File Structure for the experiment creator, please wait...')
             
             experiment_name = self.name_entry.get_text()
+            experiment_name_nodate = experiment_name
+            
+            if(len(experiment_name)==0):
+                experiment_name_nodate = 'experiment'
+                
+            
             experiment_name += '_'+ time.strftime("%d_%b_%Y_%H%M%S")
+            
+            if not os.path.exists(self.experiment_folder_entry.get_text()):
+                os.mkdir(self.experiment_folder_entry.get_text())
             
             experiment_folder = os.path.join(self.experiment_folder_entry.get_text(), experiment_name)
             if not os.path.exists(experiment_folder):
@@ -486,7 +495,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
                 self.status_label.set_text("The experiment's files are now generated... Please wait...")
                 time.sleep(.2)
                 experimentCreator = ExperimentCreatorRun()
-                experimentCreator.start_experimentCreator(input_folder, output_folder, self.mainFileList, self.get_seeds_nbr(), self.validate_checkbox.get_active())
+                experimentCreator.start_experimentCreator(input_folder, output_folder, self.mainFileList, experiment_name_nodate, self.get_seeds_nbr(), self.validate_checkbox.get_active())
         
         
             self.status_label.set_text('')    

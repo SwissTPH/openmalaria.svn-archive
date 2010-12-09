@@ -115,9 +115,9 @@ class FileList(gtk.Frame):
         if experimentDialog:
             hbox = gtk.HBox(False, 2)
             comboBox = gtk.combo_box_new_text()
-            comboBox.append_text('base')
             comboBox.append_text('reference')
             comboBox.append_text('comparator')
+            comboBox.append_text('base')
             comboBox.connect('changed', self.set_reference_type)
             comboBox.set_active(0)
             hbox.pack_start(comboBox, False, False, 2)

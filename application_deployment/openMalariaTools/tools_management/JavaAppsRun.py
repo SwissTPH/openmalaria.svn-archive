@@ -55,7 +55,7 @@ class ExperimentCreatorRun():
     '''
     start_experimentCreator:
     Starts the java program'''
-    def start_experimentCreator(self, input_folder, output_folder, mainFileList, seeds_nr=0, validation=False, db_login = None, db_passwd = None, db_address = None):
+    def start_experimentCreator(self, input_folder, output_folder, mainFileList, name, seeds_nr=0,validation=True ,db_login = None, db_passwd = None, db_address = None):
         
         arglist = list()
         arglist.append('java')
@@ -68,6 +68,9 @@ class ExperimentCreatorRun():
         
         if not validation:    
             arglist.append('--no-validation')
+            
+        arglist.append('--name')
+        arglist.append(name)
             
         if db_login != None and db_passwd != None and db_address != None :
             arglist.append('--db')

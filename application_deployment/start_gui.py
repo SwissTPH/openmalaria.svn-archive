@@ -64,6 +64,7 @@ class OMFrontend:
         openmalaria.add_file_list()
         openmalaria.add_start_button()
         openmalaria.add_stop_button()
+        #openmalaria.add_clear_button()
         openmalaria.add_outputs_frame()
         
         openmalaria.add_livegraph_option('Use Livegraph', '--liveGraph')

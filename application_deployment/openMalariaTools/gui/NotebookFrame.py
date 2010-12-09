@@ -449,6 +449,23 @@ class NotebookFrame(gtk.Frame):
         else:
             print("There is already an existing stop button for this frame")
             
+    '''
+    add_clear_button:
+    Adds a clear button for reseting the buffer on the terminal'''
+    def add_clear_button(self, at_start_h=True, line_number=3, title="Clear"):
+        vbox = gtk.VBox(False,2)
+        sim_clear_button_label = gtk.Label(title)
+        hbox = gtk.HBox(False,2)
+        self.terminal_clear_button = gtk.Button()
+        self.terminal_clear_button.set_image(gtk.image_new_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
+        hbox.pack_start(self.terminal_clear_button)
+        hbox.show_all()
+        vbox.pack_start(sim_clear_button_label, False, False, 2)
+        vbox.pack_start(hbox, False, False, 2)
+        vbox.show_all()
+        self.add_object(line_number, vbox,at_start_h)
+        self.terminal_clear_button.connect('clicked', self.reset_buffer)
+            
         
     '''
     add_experiment_creator_button:
@@ -482,4 +499,10 @@ class NotebookFrame(gtk.Frame):
     def reset_callback(self, widget, data=None):
         self.terminal.run_reset_callback()
         self.is_running = False
+     
+    '''
+    reset_buffer:
+    Does a buffer reset (clear) callback on the terminal'''  
+    def reset_buffer(self, widget, data=None):
+        self.terminal.init_new_buffer()
         

@@ -68,9 +68,20 @@ class ActualScenariosFolders(gtk.Frame):
         self.tcolumn3.pack_start(self.cell_path, True)
         self.tcolumn3.set_attributes(self.cell_path, text=0)
         
+        hbox = gtk.HBox(False, 2)
+        
         self.scrolledWindow = gtk.ScrolledWindow()
         self.scrolledWindow.add_with_viewport(self.treeview)
         self.scrolledWindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        
+        '''hbox.pack_start(self.scrolledWindow, True, True, 2)
+        
+        vbox_button = gtk.VBox(False, 2)
+        
+        clear_button = gtk.Button("Clear")
+        #clear_button.connect('clicked', self.openNewDialog)
+        vbox_button.pack_end(clear_button, False, False, 2)
+        hbox.pack_start(vbox_button, False, False, 2)'''
         
         self.First = True
         self.reverse_order = False
