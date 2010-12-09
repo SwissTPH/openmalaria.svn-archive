@@ -26,7 +26,7 @@
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
-!define MUI_FINISHPAGE_RUN "$INSTDIR\start_gui.exe"
+!define MUI_FINISHPAGE_RUN "$INSTDIR\openmalariatools.exe"
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -288,7 +288,7 @@ Section "openMalariaTools" SEC01
   SetOutPath "$INSTDIR\"
   SetOverwrite ifnewer
   File "..\unicodedata.pyd"
-  File "..\start_gui.exe"
+  File "..\openmalariatools.exe"
   File "..\select.pyd"
   File "..\python26.dll"
   File "..\pyexpat.pyd"
@@ -391,7 +391,7 @@ Section Uninstall
   Delete "$INSTDIR\pyexpat.pyd"
   Delete "$INSTDIR\python26.dll"
   Delete "$INSTDIR\select.pyd"
-  Delete "$INSTDIR\start_gui.exe"
+  Delete "$INSTDIR\openmalariatools.exe"
   Delete "$INSTDIR\unicodedata.pyd"
   Delete "$INSTDIR\application\schemaTranslator\SchemaTranslator.java"
   Delete "$INSTDIR\application\schemaTranslator\SchemaTranslator.jar"
