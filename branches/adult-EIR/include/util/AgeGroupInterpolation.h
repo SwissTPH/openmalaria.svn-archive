@@ -71,12 +71,34 @@ protected:
     virtual void checkpoint (istream& stream) =0;
 };
 
+
+/** This class gives direct access to input age-group
+ * data (discontinuous).
+ ********************************************/
+class AgeGroupPiecewiseConstant : public AgeGroupInterpolation
+{
+public:
+    AgeGroupPiecewiseConstant (
+        const scnXml::AgeGroupValues& ageGroups, const char* eltName
+    );
     
+    virtual double operator() (double ageYears) const;
+    
+    virtual void scale( double factor );
+    
+protected:
+    virtual void checkpoint (ostream& stream);
+    virtual void checkpoint (istream& stream);
+    
+    // Points to interpolate between in the middle of input age groups. Extra
+    // points at zero and infinity are added with equal value to first and last
+    // points respectively.
+    map<double,double> dataPoints;
+};
+
+
 /** This class gives piecewise linear inpolation on top of input age-group
  * data (continuous but with discontinuous derivative).
- *
- * Current version does not store an age index, thus an order log(n) lookup
- * must occur each time a value is looked up.
  ********************************************/
 class AgeGroupPiecewiseLinear : public AgeGroupInterpolation
 {

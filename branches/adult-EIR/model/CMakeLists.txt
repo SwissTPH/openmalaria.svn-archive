@@ -10,7 +10,6 @@ set (Model_CPP
   PopulationAgeStructure.cpp
   PopulationStats.cpp
   inputData.cpp
-  AgeGroupData.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/scenario.cxx
   
   Host/Human.cpp

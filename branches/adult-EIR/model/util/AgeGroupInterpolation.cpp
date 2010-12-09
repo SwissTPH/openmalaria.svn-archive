@@ -44,14 +44,22 @@ namespace OM { namespace util {
     };
     AgeGroupDummy AgeGroupDummy::singleton;
 
+    
     AgeGroupInterpolation* AgeGroupInterpolation::dummyObject(){
         return &AgeGroupDummy::singleton;
     }
     AgeGroupInterpolation* AgeGroupInterpolation::makeObject(
         const scnXml::AgeGroupValues& ageGroups, const char* eltName
     ){
-        // For now, we only have one implementation
-        return new AgeGroupPiecewiseLinear( ageGroups, eltName );
+        // Type mostly equivalent to a std::string:
+        const scnXml::Interpolation& interp = ageGroups.getInterpolation();
+        if( interp == "linear" ){
+            return new AgeGroupPiecewiseLinear( ageGroups, eltName );
+        }else if( interp == "none" ){
+            return new AgeGroupPiecewiseConstant( ageGroups, eltName );
+        }else{
+            throw util::xml_scenario_error( (boost::format( "age group interpolation %1% not implemented" ) %interp).str() );
+        }
     }
     void AgeGroupInterpolation::freeObject( AgeGroupInterpolation* obj ){
         assert( obj != NULL );  // should not do that
@@ -59,6 +67,57 @@ namespace OM { namespace util {
             delete obj;
             obj = &AgeGroupDummy::singleton;
         }
+    }
+
+
+    AgeGroupPiecewiseConstant::AgeGroupPiecewiseConstant(
+        const scnXml::AgeGroupValues& ageGroups,
+        const char* eltName
+    ){
+        map<double,double>::iterator pos = dataPoints.begin();
+        assert(pos == dataPoints.end());
+        
+        double greatestLbound = -1.0;
+        BOOST_FOREACH( const scnXml::Group& group, ageGroups.getGroup() ){
+            double lbound = group.getLowerbound();
+            if( lbound > greatestLbound ){
+                greatestLbound = lbound;
+                pos = dataPoints.insert( pos, make_pair( lbound, group.getValue() ) );
+            } else {
+                throw util::xml_scenario_error( (
+                    boost::format("%3%: lower bound %1% not greater than previous %2%")
+                    %lbound %greatestLbound %eltName
+                ).str() );
+            }
+        }
+        
+        // first lower-bound must be 0
+        if( dataPoints.begin()->first != 0.0 ){
+            throw util::xml_scenario_error( (
+                boost::format("%1%: first lower-bound must be 0")
+                %eltName
+            ).str() );
+        }
+    }
+    
+    double AgeGroupPiecewiseConstant::operator() (double ageYears) const {
+        assert ( ageYears >= 0.0 );
+        map<double,double>::const_iterator it = dataPoints.upper_bound( ageYears );
+        --it;   // previous point when ordered by age
+        return it->second;
+    }
+    
+    void AgeGroupPiecewiseConstant::scale( double factor ){
+        for( map<double,double>::iterator it = dataPoints.begin(); it != dataPoints.end(); ++it ){
+            it->second *= factor;
+        }
+    }
+    
+    void AgeGroupPiecewiseConstant::checkpoint (ostream& stream){
+        dataPoints & stream;
+    }
+    void AgeGroupPiecewiseConstant::checkpoint (istream& stream){
+        dataPoints & stream;
     }
 
     
@@ -92,7 +151,6 @@ namespace OM { namespace util {
             ).str() );
         }
         
-        // Useful where interpolation is used.
         dataPoints[ numeric_limits<double>::infinity() ] = dataPoints.rbegin()->second;
     }
     

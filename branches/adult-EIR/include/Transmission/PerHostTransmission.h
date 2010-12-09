@@ -22,12 +22,13 @@
 
 #include "util/random.h"
 #include "Transmission/Vector/HostCategoryAnopheles.h"
-#include "AgeGroupData.h"
+#include "util/AgeGroupInterpolation.h"
 
 namespace OM { namespace Transmission {
     
 class HostMosquitoInteraction;
 class TransmissionModel;
+using util::AgeGroupInterpolation;
 
 /** Contains TransmissionModel parameters which need to be stored per host.
  *
@@ -38,7 +39,9 @@ public:
   /// @brief Static member functions
   //@{
   /** Static initialisation. */
-  static void initParameters ();
+  static void init ();
+  /** Static cleanup. */
+  static void cleanup ();
   
   /** Calculates the adjustment for body size in exposure to mosquitoes,
    * relative to an average adult.
@@ -47,19 +50,16 @@ public:
    * the given age. Linear interpolation is used to calculate this from the
    * input array of surface areas. 
    * 
-   * @param ageyrs Age of host (encapsulated by AgeGroupData for performance
-   * reasons).
+   * @param ageYears Age of host
    * @return the ratio of bites received by the host to the average for an adult 
    *
    * This is the age factor of availiability; mean output should be
    *  1.0/ageCorrectionFactor.
    * 
    * Also has a switch to put individuals entirely outside transmission. */
-  inline double relativeAvailabilityAge (AgeGroupData ageGroupData) const {
-      // TODO: test if using an if condition like this or multiplying by a
-      // double (0.0 / 1.0) is faster (for usual case: in transmission).
+  inline double relativeAvailabilityAge (double ageYears) const {
     return outsideTransmission ? 0.0 :
-	ageGroupData.getAgeSpecificRelativeAvailability ();
+	(*relAvailAge)( ageYears );
   }
   //@}
   
@@ -79,11 +79,11 @@ public:
     inline double entoAvailabilityFull (
 	const HostCategoryAnopheles& base,
 	size_t speciesIndex,
-	AgeGroupData ageGroupData,
+	double ageYears,
 	double ageCorrectionFactor
     ) const {
 	return entoAvailabilityHetVecItv (base, speciesIndex)
-	    * relativeAvailabilityAge (ageGroupData)
+	    * relativeAvailabilityAge (ageYears)
 	    * ageCorrectionFactor;
   }
   /** @brief Availability of host to mosquitoes (α_i) excluding age factor.
@@ -108,9 +108,9 @@ public:
    * 
    * Mean output is less than 1.0 (roughly 1.0/ageCorrectionFactor).
    */
-  inline double relativeAvailabilityHetAge (AgeGroupData ageGroupData) const {
+  inline double relativeAvailabilityHetAge (double ageYears) const {
     return _relativeAvailabilityHet
-        * relativeAvailabilityAge (ageGroupData);
+        * relativeAvailabilityAge (ageYears);
   }
   /** Relative availability of host to mosquitoes excluding age factor.
    *
@@ -167,6 +167,8 @@ private:
   int timestepITN;
   int timestepIRS;
   int timestepVA;
+  
+  static AgeGroupInterpolation* relAvailAge;
 };
 
 /** Data needed for each human which is per-mosquito species. */

@@ -172,16 +172,16 @@ void VectorTransmission::initMainSimulation() {
     throw util::xml_scenario_error("mode attribute has invalid value (expected: 2 or 4)");
 }
 
-double VectorTransmission::calculateEIR(int simulationTime, PerHostTransmission& host, const AgeGroupData ageGroupData) {
+double VectorTransmission::calculateEIR(int simulationTime, PerHostTransmission& host, double ageYears) {
   if (simulationMode == equilibriumMode)
     return initialisationEIR[simulationTime%Global::intervalsPerYear]
-	 * host.relativeAvailabilityHetAge (ageGroupData);
+	 * host.relativeAvailabilityHetAge (ageYears);
   
   double EIR = 0.0;
   for (size_t i = 0; i < numSpecies; ++i) {
     EIR += species[i].calculateEIR (i, host);
   }
-  return EIR * host.relativeAvailabilityAge (ageGroupData);
+  return EIR * host.relativeAvailabilityAge (ageYears);
 }
 
 

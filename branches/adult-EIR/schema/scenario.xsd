@@ -1543,6 +1543,14 @@
   <xs:complexType name="AgeGroupValues">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" name="group">
+        <xs:annotation>
+          <xs:documentation>
+            A series of values according to age groups, each specified with
+            a lower-bound and a value. Normally these are interpolated by a
+            continuous function (see interpolation attribute).
+          </xs:documentation>
+          <xs:appinfo>name:age group;</xs:appinfo>
+        </xs:annotation>
         <xs:complexType>
           <xs:complexContent>
             <xs:extension base="inputValue">
@@ -1559,6 +1567,33 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute name="interpolation" default="linear">
+      <xs:annotation>
+        <xs:documentation>
+          Interpolation algorithm. Normally it is desirable for age-based
+          values to be continuous w.r.t. age. By default linear interpolation
+          is used.
+          
+          With all algorithms except "none", the age groups are converted to a
+          set of points centred within each age range when weighted by the
+          number of individuals within that age range (demography). Extra
+          points are added at each end (zero and infinity) to keep value
+          constant at both ends of the function.
+          
+          Algorithms:
+          1. none: input values are used directly
+          2. linear: straight lines (on an age vs. value graph) are used to
+          interpolate data points.
+        </xs:documentation>
+        <xs:appinfo>name:interpolation;units:none;</xs:appinfo>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="none" />
+          <xs:enumeration value="linear" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
   </xs:complexType>
   <xs:complexType name="HSEventScheduler">
     <xs:sequence>
@@ -2022,6 +2057,15 @@
       <xs:appinfo>name:Human;</xs:appinfo>
     </xs:annotation>
     <xs:sequence>
+      <xs:element name="availabilityToMosquitoes" type="AgeGroupValues">
+        <xs:annotation>
+          <xs:documentation>
+            By age group data on availability of humans to mosquitoes relative
+            to an adult.
+          </xs:documentation>
+          <xs:appinfo>name:Availability to mosquitoes;units:None;min:0;max:1;</xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="weight" minOccurs="0">
         <xs:annotation>
           <xs:documentation>

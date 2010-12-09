@@ -132,8 +132,7 @@ void TransmissionModel::updateAgeCorrectionFactor (std::list<Host::Human>& popul
     // etc., will have a mean of 1.0.
     double sumRelativeAvailability = 0.0;
     for (std::list<Host::Human>::iterator h = population.begin(); h != population.end(); ++h){
-	h->updateAgeGroupData();
-	sumRelativeAvailability += h->perHostTransmission.relativeAvailabilityAge (h->getAgeGroupData());
+	sumRelativeAvailability += h->perHostTransmission.relativeAvailabilityAge (h->getAgeInYears());
     }
     ageCorrectionFactor = populationSize / sumRelativeAvailability;	// 1 / mean-rel-avail
     if( sumRelativeAvailability == 0.0 )
@@ -152,7 +151,7 @@ void TransmissionModel::updateKappa (const std::list<Host::Human>& population, i
   numTransmittingHumans = 0;
   
   for (std::list<Host::Human>::const_iterator h = population.begin(); h != population.end(); ++h) {
-    double t = h->perHostTransmission.relativeAvailabilityHetAge(h->getAgeGroupData());
+    double t = h->perHostTransmission.relativeAvailabilityHetAge(h->getAgeInYears());
     sumWeight += t;
     t *= h->probTransmissionToMosquito();
     sumWt_kappa += t;
@@ -211,12 +210,12 @@ void TransmissionModel::updateKappa (const std::list<Host::Human>& population, i
   timeStepNumEntoInnocs = 0;
 }
 
-double TransmissionModel::getEIR (int simulationTime, PerHostTransmission& host, const AgeGroupData ageGroupData, Monitoring::AgeGroup ageGroup) {
+double TransmissionModel::getEIR (int simulationTime, OM::Transmission::PerHostTransmission& host, double ageYears, OM::Monitoring::AgeGroup ageGroup) {
   /* For the NonVector model, the EIR should just be multiplied by the
    * availability. For the Vector model, the availability is also required
    * for internal calculations, but again the EIR should be multiplied by the
    * availability. */
-  double EIR = calculateEIR (simulationTime, host, ageGroupData);
+  double EIR = calculateEIR (simulationTime, host, ageYears);
   
   timeStepEntoInnocs[ageGroup.i()] += EIR;
   timeStepNumEntoInnocs ++;

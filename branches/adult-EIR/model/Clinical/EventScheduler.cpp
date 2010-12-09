@@ -114,7 +114,6 @@ void ClinicalEventScheduler::doClinicalUpdate (
     WithinHost::WithinHostModel& withinHostModel,
     PerHostTransmission& hostTransmission,
     double ageYears,
-    const AgeGroupData ageGroupData,
     Monitoring::AgeGroup ageGroup
 ){
     // Run pathogenesisModel

@@ -59,7 +59,6 @@ protected:
     virtual void doClinicalUpdate (WithinHost::WithinHostModel& withinHostModel,
 				   PerHostTransmission& hostTransmission,
 				   double ageYears,
-				   const AgeGroupData ageGroupData,
 				   Monitoring::AgeGroup ageGroup);
   
   virtual void checkpoint (istream& stream);

@@ -35,14 +35,12 @@ class PerHostSuite : public CxxTest::TestSuite
 {
 public:
   void setUp () {
-    PerHostTransmission::initParameters();
+    PerHostTransmission::init();
   }
   
     void testRelativeAvailability () {
 	PerHostTransmission pht;
-	AgeGroupData agd;
-	agd.update( 7.0 );
-	TS_ASSERT_DELTA (pht.relativeAvailabilityAge( agd ), 0.51263046437755255, 0.00000000000000000);
+	TS_ASSERT_DELTA (pht.relativeAvailabilityAge( 7.0 ), 0.51263046437755255, 0.00000000000000000);
   }
 };
 

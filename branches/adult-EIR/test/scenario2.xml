@@ -506,7 +506,32 @@
       <option name="IPTI_SP_MODEL" value="true"/>
     </ModelOptions>
     <clinical healthSystemMemory="4"/>
-    <human/>
+    <human>
+      <availabilityToMosquitoes interpolation="none">
+        <group lowerbound="0.0" value="0.225940909648"/>
+        <group lowerbound="0.99" value="0.286173633441"/>
+        <group lowerbound="1.99" value="0.336898395722"/>
+        <group lowerbound="2.99" value="0.370989854675"/>
+        <group lowerbound="3.99" value="0.403114915112"/>
+        <group lowerbound="4.99" value="0.442585112522"/>
+        <group lowerbound="5.99" value="0.473839351511"/>
+        <group lowerbound="6.99" value="0.512630464378"/>
+        <group lowerbound="7.99" value="0.54487872702"/>
+        <group lowerbound="8.99" value="0.581527755812"/>
+        <group lowerbound="9.99" value="0.630257580698"/>
+        <group lowerbound="10.99" value="0.663063362714"/>
+        <group lowerbound="11.99" value="0.702417432755"/>
+        <group lowerbound="12.99" value="0.734605377277"/>
+        <group lowerbound="13.99" value="0.788908765653"/>
+        <group lowerbound="14.99" value="0.839587932303"/>
+        <group lowerbound="19.99" value="1.0"/>
+        <group lowerbound="24.99" value="1.0"/>
+        <group lowerbound="29.99" value="1.0"/>
+        <group lowerbound="39.99" value="1.0"/>
+        <group lowerbound="49.99" value="1.0"/>
+        <group lowerbound="59.99" value="1.0"/>
+      </availabilityToMosquitoes>
+    </human>
     <parameters interval="5" iseed="0" latentp="3">
       <parameter include="0" name="'-ln(1-Sinf)'" number="1" value="0.050736"/>
       <parameter include="0" name="Estar" number="2" value="0.03247"/>
