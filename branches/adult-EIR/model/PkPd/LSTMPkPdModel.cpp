@@ -27,12 +27,16 @@ namespace OM { namespace PkPd {
 
 LSTMPkPdModel::LSTMPkPdModel () {
     // TODO (LSTM): can add initialization, heterogeneity, etc., here
-    AgeGroupData agd;
+#ifndef NDEBUG
+    int counter = 0;
+#endif
     do {
         hetWeightMultiplier = util::random::gauss( 1.0, hetWeightMultStdDev );
-        // Make sure birth weight isn't less than 0.5 kg
-        // Convenient but not so optimal: we use AgeGroupData to calculate weight
-    } while( agd.ageToWeight( 0.0, hetWeightMultiplier ) < 0.5 );
+#ifndef NDEBUG
+        assert( counter < 100 );        // too many resamples: resamples should rarely be needed...
+        ++counter;
+#endif
+    } while( hetWeightMultiplier < minHetWeightMult );
 }
 LSTMPkPdModel::~LSTMPkPdModel () {}
 
@@ -59,7 +63,7 @@ void LSTMPkPdModel::checkpoint (ostream& stream) {
 
 // -----  non-static simulation time functions  -----
 
-void LSTMPkPdModel::medicate(string drugAbbrev, double qty, double time, const AgeGroupData ageGroupData, double ageYears) {
+void LSTMPkPdModel::medicate(string drugAbbrev, double qty, double time, double ageYears) {
   list<LSTMDrug>::iterator drug = _drugs.begin();
   while (drug != _drugs.end()) {
     if (drug->getAbbreviation() == drugAbbrev)
@@ -71,7 +75,7 @@ void LSTMPkPdModel::medicate(string drugAbbrev, double qty, double time, const A
   drug = _drugs.begin();	// the drug we just added
   
   medicateGotDrug:
-  drug->medicate (time, qty, ageToWeight (ageGroupData, ageYears, hetWeightMultiplier));
+  drug->medicate (time, qty, ageToWeight (ageYears, hetWeightMultiplier));
 }
 void LSTMPkPdModel::medicateIV(string drugAbbrev, double qty, double duration, double endTime) {
   list<LSTMDrug>::iterator drug = _drugs.begin();

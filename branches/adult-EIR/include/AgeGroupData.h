@@ -43,15 +43,6 @@ public:
 	return ageSpecificRelativeAvailability[_i];
     }
     
-    /** Calculates mass as a piecewise-linear function of age. Homogeneous with
-     * regards to humans (all humans considered the same at the same age).
-     *
-     * @param ageYears Person's age in years
-     * @param hetMult Multiplies age to introduce heterogeneity
-     * @returns Mass in kg (range approx 14 to 60 kg when hetMult==1).
-     */
-    double ageToWeight (double ageYears, double hetMult ) const;
-    
     /// Checkpointing
     template<class S>
     void operator& (S& stream) {
@@ -62,9 +53,8 @@ private:
     ///@brief Age-group variables for wtprop and ageSpecificRelativeAvailability
     //@{
     //! Number of age groups to use
-    static const size_t nages= 22;
+    static const size_t nages= 22+1;
     //! Maximum of each age category
-    static const double agemax[nages];
     static const double agemin[nages];
     
     /** Average number of bites for each age as a proportion of the maximum.
@@ -80,15 +70,6 @@ private:
     These values are retained here should they be required for future comparisons 
     */ 
     static const double bsa_prop[nages];
-    
-    //! Relative weights by age group
-    /** Relative weights, based on data in InputTables\wt_bites.csv 
-    The data are for Kilombero, Tanzania, taken from the Keiser et al (diploma
-    thesis). The original source was anthropometric studies by Inez Azevedo Reads
-    in weights by age group. The weights are expressed as proportions of 0.5*those
-    in the reference age group. */
-    static const double wtprop[nages];
-    static const double wtpropmin[nages];
     //@}
     
     /// Current age group

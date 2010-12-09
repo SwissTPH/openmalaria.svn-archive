@@ -1157,7 +1157,30 @@
     </ModelOptions>
     <clinical healthSystemMemory="28"/>
     <human>
-      <weight multStdDev="0"/>
+      <weight multStdDev="0">
+        <group lowerbound="0.0" value="13.9856718"/>
+        <group lowerbound="0.99" value="13.9856718"/>
+        <group lowerbound="1.99" value="18.30372108"/>
+        <group lowerbound="2.99" value="21.745749"/>
+        <group lowerbound="3.99" value="24.25753512"/>
+        <group lowerbound="4.99" value="26.06595444"/>
+        <group lowerbound="5.99" value="28.48868784"/>
+        <group lowerbound="6.99" value="30.84202788"/>
+        <group lowerbound="7.99" value="33.48638244"/>
+        <group lowerbound="8.99" value="35.20335432"/>
+        <group lowerbound="9.99" value="37.19394024"/>
+        <group lowerbound="10.99" value="40.1368962"/>
+        <group lowerbound="11.99" value="42.00539916"/>
+        <group lowerbound="12.99" value="44.53731348"/>
+        <group lowerbound="13.99" value="46.77769728"/>
+        <group lowerbound="14.99" value="49.48396092"/>
+        <group lowerbound="19.99" value="54.36"/>
+        <group lowerbound="24.99" value="60.0"/>
+        <group lowerbound="29.99" value="60.0"/>
+        <group lowerbound="39.99" value="60.0"/>
+        <group lowerbound="49.99" value="60.0"/>
+        <group lowerbound="59.99" value="60.0"/>
+      </weight>
     </human>
     <parameters interval="1" iseed="1" latentp="15">
       <parameter include="false" name="'-ln(1-Sinf)'" number="1" value="0.0507360000000001"/>

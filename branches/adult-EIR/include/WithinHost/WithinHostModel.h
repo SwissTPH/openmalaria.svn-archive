@@ -23,7 +23,6 @@
 
 #include "Global.h"
 #include "WithinHost/Infection/Infection.h"
-#include "AgeGroupData.h"
 #include "Monitoring/Survey.h"
 
 #include <list>
@@ -82,7 +81,7 @@ public:
    * @param ageGroupData	Age group of human (passed to avoid having to calculate later)
    * @param age		Age of human in years
    */
-  virtual void medicate(string drugAbbrev, double qty, double time, const AgeGroupData ageGroupData, double age) {}
+  virtual void medicate(string drugAbbrev, double qty, double time, double age) {}
 
   /** Medicate drugs via IV (wraps drug's medicate).
    *

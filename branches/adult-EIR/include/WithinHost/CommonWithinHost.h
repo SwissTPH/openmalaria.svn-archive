@@ -46,7 +46,7 @@ public:
     virtual void newInfection();
     virtual void clearAllInfections();
     
-    virtual void medicate (string drugName, double qty, double time, const AgeGroupData ageGroupData, double age);
+    virtual void medicate (string drugName, double qty, double time, double age);
     virtual void medicateIV (string drugName, double qty, double duration, double endTime);
     virtual void immuneSuppression();
     

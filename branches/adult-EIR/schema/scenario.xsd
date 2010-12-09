@@ -2022,20 +2022,30 @@
       <xs:appinfo>name:Human;</xs:appinfo>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="weight">
+      <xs:element name="weight" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            By age group data on human weight (mass).
+          </xs:documentation>
+          <xs:appinfo>name:Weight;units:kg;min:0</xs:appinfo>
+        </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="multStdDev" type="xs:double" use="required">
-            <xs:annotation>
-              <xs:documentation>
-                Each human is assigned a weight multiplier from a normal distribution
-                with mean 1 and this standard deviation at birth. His/her weight
-                is this multiplier times the mean from age distribution.
-                A standard deviation of zero for no heterogeneity is valid; a rough
-                value from Tanzania data is 0.14.
-              </xs:documentation>
-              <xs:appinfo>name:Standard deviation;units:None;min:0</xs:appinfo>
-            </xs:annotation>
-          </xs:attribute>
+          <xs:complexContent>
+            <xs:extension base="AgeGroupValues">
+              <xs:attribute name="multStdDev" type="xs:double" use="required">
+                <xs:annotation>
+                  <xs:documentation>
+                    Each human is assigned a weight multiplier from a normal distribution
+                    with mean 1 and this standard deviation at birth. His/her weight
+                    is this multiplier times the mean from age distribution.
+                    A standard deviation of zero for no heterogeneity is valid; a rough
+                    value from Tanzanian data is 0.14.
+                  </xs:documentation>
+                  <xs:appinfo>name:Standard deviation;units:None;min:0</xs:appinfo>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:extension>
+          </xs:complexContent>
         </xs:complexType>
       </xs:element>
     </xs:sequence>

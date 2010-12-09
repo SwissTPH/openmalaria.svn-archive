@@ -35,7 +35,6 @@ class LSTMPkPdSuite : public CxxTest::TestSuite
 {
 public:
     void setUp () {
-	agd.update( 21.0 );
 	UnittestUtil::PkPdSuiteSetup(PkPdModel::LSTM_PKPD);
 	proxy = new LSTMPkPdModel ();
 	proteome_ID = 0;		// 0 should work; we definitely don't want random allocation
@@ -50,32 +49,32 @@ public:
     }
     
     void testOral () {
-	proxy->medicate ("MF", 3000, 0, agd, 21);
+	proxy->medicate ("MF", 3000, 0, 21);
 	TS_ASSERT_APPROX (proxy->getDrugFactor (proteome_ID), 0.03564073617400945);
     }
     
     void testOralHalves () {	// the point being: check it can handle two doses at the same time-point correctly
-	proxy->medicate ("MF", 1500, 0, agd, 21);
-	proxy->medicate ("MF", 1500, 0, agd, 21);
+	proxy->medicate ("MF", 1500, 0, 21);
+	proxy->medicate ("MF", 1500, 0, 21);
 	TS_ASSERT_APPROX (proxy->getDrugFactor (proteome_ID), 0.03564073617400945);
     }
     
     void testOralSplit () {
-	proxy->medicate ("MF", 3000, 0, agd, 21);
-	proxy->medicate ("MF", 0, 0.5, agd, 21);	// insert a second dose half way through the day: forces drug calculation to be split into half-days but shouldn't affect result
+	proxy->medicate ("MF", 3000, 0, 21);
+	proxy->medicate ("MF", 0, 0.5, 21);	// insert a second dose half way through the day: forces drug calculation to be split into half-days but shouldn't affect result
 	TS_ASSERT_APPROX (proxy->getDrugFactor (proteome_ID), 0.03564073617400945);
     }
     
     void testOralDecayed () {
-	proxy->medicate ("MF", 3000, 0, agd, 21);
+	proxy->medicate ("MF", 3000, 0, 21);
 	proxy->decayDrugs ();
 	TS_ASSERT_APPROX (proxy->getDrugFactor (proteome_ID), 0.03601694155274731);
     }
     
     void testOral2Doses () {
-	proxy->medicate ("MF", 3000, 0, agd, 21);
+	proxy->medicate ("MF", 3000, 0, 21);
 	proxy->decayDrugs ();
-	proxy->medicate ("MF", 3000, 0, agd, 21);
+	proxy->medicate ("MF", 3000, 0, 21);
 	TS_ASSERT_APPROX (proxy->getDrugFactor (proteome_ID), 0.03245158219000328);
     }
     
@@ -95,11 +94,10 @@ public:
     
     void testCombined (){
         proxy->medicateIV ("MF", 50, 0.5, 0.5);
-        proxy->medicate ("MF", 1500, 0.5, agd, 21);
+        proxy->medicate ("MF", 1500, 0.5, 21);
         TS_ASSERT_APPROX (proxy->getDrugFactor(proteome_ID), 0.02714870841762252);
     }
     
-    AgeGroupData agd;
     LSTMPkPdModel *proxy;
     uint32_t proteome_ID;
 };

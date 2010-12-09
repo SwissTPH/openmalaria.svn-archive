@@ -297,7 +297,7 @@ void ClinicalEventScheduler::doClinicalUpdate (
 	    }
 	} else {
 	    if ( it->time < 1.0 ) { // Medicate today's medications
-	    withinHostModel.medicate (it->abbrev, it->qty, it->time, ageGroupData, ageYears);
+	    withinHostModel.medicate (it->abbrev, it->qty, it->time, ageYears);
 	    Monitoring::Surveys.current->report_Clinical_DrugUsage (it->abbrev, it->cost_qty);
 	    medicateQueue.erase (it);
 	    } else {   // and decrement treatment seeking delay for the rest
