@@ -13,7 +13,8 @@ OpenmalariaTools is currently in beta stage 4. It runs on both Linux and Windows
 The beta 4 release uses schema version 23 and has been packaged with an installer for windows. To use:
 
   * Make sure a [http://www.java.com/en/download/ Java run-time environment] is installed.
-  * Download and run the [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/win32/openMalariaTools_installer_v00.04.exe Windows (32-bit) openmalariaTools installer]
+  * On windows: Download and run the [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/win32/openMalariaTools_installer_v00.04.exe Windows (32-bit) openmalariaTools installer]
+  * On linux(64 bits): Download and run the [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/gnu64/openmalariaTools_00.04_amd64.deb (64 bits) openmalariaTools debian package]
 
 
 Alternatively, one can install from source (familiarity with [http://subversion.apache.org/ subversion] or [http://tortoisesvn.tigris.org/ TortoiseSVN] assumed).
