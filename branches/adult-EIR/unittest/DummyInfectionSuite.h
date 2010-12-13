@@ -23,6 +23,7 @@
 
 #include <cxxtest/TestSuite.h>
 #include "UnittestUtil.h"
+#include "ExtraAsserts.h"
 #include "WithinHost/Infection/DummyInfection.h"
 #include <limits>
 

@@ -1546,8 +1546,10 @@
         <xs:annotation>
           <xs:documentation>
             A series of values according to age groups, each specified with
-            a lower-bound and a value. Normally these are interpolated by a
-            continuous function (see interpolation attribute).
+            a lower-bound and a value. The first lower-bound specified must be
+            zero; a final upper-bound of infinity is added to complete the last
+            age group. At least one age group is required. Normally these are
+            interpolated by a continuous function (see interpolation attribute).
           </xs:documentation>
           <xs:appinfo>name:age group;</xs:appinfo>
         </xs:annotation>
@@ -1575,10 +1577,15 @@
           is used.
           
           With all algorithms except "none", the age groups are converted to a
-          set of points centred within each age range when weighted by the
-          number of individuals within that age range (demography). Extra
+          set of points centred within each age range. Extra
           points are added at each end (zero and infinity) to keep value
-          constant at both ends of the function.
+          constant at both ends of the function. A zero-length age group may
+          be used as a kind of barrier to adjust the distribution; e.g. with
+          age group boundaries at 15, 20 and 25 years, a (linear) spline would
+          be drawn between ages 17.5 and 22.5, whereas with boundaries at
+          15, 20 and 20 years, a spline would be drawn between ages 17.5 and 20
+          years (may be desired if individuals are assumed to reach adult size
+          at 20).
           
           Algorithms:
           1. none: input values are used directly

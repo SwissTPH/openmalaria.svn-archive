@@ -74,13 +74,19 @@ namespace OM { namespace util {
         const scnXml::AgeGroupValues& ageGroups,
         const char* eltName
     ){
+        if( ageGroups.getGroup().size() == 0 ){
+            throw util::xml_scenario_error( (
+                boost::format( "%1%: at least one age group required" ) %eltName
+            ).str() );
+        }
+        
         map<double,double>::iterator pos = dataPoints.begin();
         assert(pos == dataPoints.end());
         
         double greatestLbound = -1.0;
         BOOST_FOREACH( const scnXml::Group& group, ageGroups.getGroup() ){
             double lbound = group.getLowerbound();
-            if( lbound > greatestLbound ){
+            if( lbound >= greatestLbound ){
                 greatestLbound = lbound;
                 pos = dataPoints.insert( pos, make_pair( lbound, group.getValue() ) );
             } else {
@@ -125,30 +131,43 @@ namespace OM { namespace util {
         const scnXml::AgeGroupValues& ageGroups,
         const char* eltName
     ){
-        //TODO: shift points to centres of groups
-        map<double,double>::iterator pos = dataPoints.begin();
-        assert(pos == dataPoints.end());
+        // Our read iterator
+        typedef scnXml::AgeGroupValues::GroupConstIterator GroupIt;
+        GroupIt it = ageGroups.getGroup().begin();
         
-        double greatestLbound = -1.0;
-        BOOST_FOREACH( const scnXml::Group& group, ageGroups.getGroup() ){
-            double lbound = group.getLowerbound();
-            if( lbound > greatestLbound ){
-                greatestLbound = lbound;
-                pos = dataPoints.insert( pos, make_pair( lbound, group.getValue() ) );
-            } else {
-                throw util::xml_scenario_error( (
-                    boost::format("%3%: lower bound %1% not greater than previous %2%")
-                    %lbound %greatestLbound %eltName
-                ).str() );
-            }
+        if( it == ageGroups.getGroup().end() ){
+            throw util::xml_scenario_error( (
+                boost::format( "%1%: at least one age group required" ) %eltName
+            ).str() );
         }
-        
         // first lower-bound must be 0
-        if( dataPoints.begin()->first != 0.0 ){
+        if( it->getLowerbound() != 0.0 ){
             throw util::xml_scenario_error( (
                 boost::format("%1%: first lower-bound must be 0")
                 %eltName
             ).str() );
+        }
+        
+        // Our insert iterator (used for performance)
+        map<double,double>::iterator pos = dataPoints.begin();
+        assert(pos == dataPoints.end());
+        
+        // Add first point at zero
+        pos = dataPoints.insert( pos, make_pair( 0.0, it->getValue() ) );
+        
+        double greatestLbound = 0.0;    // also last lbound: distribution must be weakly monotonic
+        for( ; it!=ageGroups.getGroup().end(); ++it ){
+            double lbound = it->getLowerbound();
+            if( lbound >= greatestLbound ){
+                double insBound = 0.5*(greatestLbound + lbound);
+                pos = dataPoints.insert( pos, make_pair( insBound, it->getValue() ) );
+                greatestLbound = lbound;
+            } else {
+                throw util::xml_scenario_error( (
+                    boost::format("%3%: lower bound %1% less than previous %2%")
+                    %lbound %greatestLbound %eltName
+                ).str() );
+            }
         }
         
         dataPoints[ numeric_limits<double>::infinity() ] = dataPoints.rbegin()->second;
