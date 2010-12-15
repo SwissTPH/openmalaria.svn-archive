@@ -36,6 +36,9 @@ Within a simulation of a single setting, dubbed a _scenario_, there are a number
       ...
     </ModelOptions>
     <clinical healthSystemMemory="6"/>
+    <human>
+      ...
+    </human>
     <parameters interval="5" iseed="0" latentp="3">
       ...
     </parameters>
@@ -58,7 +61,7 @@ This will also determine which [ModelClinical clinical / health system model] ma
   * 5-day timestep model with simple cure/fail response to treatment and immediately determined clinical outcome
   * 1-day timestep model: treatments use full PKPD modelling with a daily effect on parasite densities; clinical outcome determined by both the parasite density and clinical decisions
 
-After selecting the within-host model to use, an appropriate `<model>...</model>` element should be copied. Note that while `ModelOptions` and `clinical` settings within the `model` element _can_ be changed, in theory they have an effect on the optimal paramerization(s), so changing them would result in an invalid model.
+After selecting the within-host model to use, an appropriate `<model>...</model>` element should be copied. Note that while the sub-elements of `model` (in particular `ModelOptions`) _can_ be changed, in theory they have an effect on the optimal paramerization(s), so changing them would result in an invalid model.
 
 TODO: add some parameterizations
 
