@@ -69,15 +69,13 @@ The `drugDescription` element is only required when a 1-day time-step is used, a
 
 == Health system ==
 
-Two [ModelClinical health system models] are available, depending on the length of time-step used. [ScenarioHealthSystem To configuration.]
+[ScenarioHealthSystem Health system configuration.] 2 models are available, depending on the length of time-step used ([ModelClinical descriptions]).
 
 == Transmission model ==
 
-Two [ModelTransmission Transmission models] are available (independent of the length of the time-step):
+[ScenarioTransmission Transmission model configuration.] Two transmission models are available, independent of the length of the time-step ([ModelTransmission descriptions]):
   * direct input of transmission intensity with (optional) response to human infectiousness
   * model of the transmission vector (_anopheles_ mosquito)'s feeding cycle; allows modelling of vector stage interventions
-
-Configuration of these is described [XmlScenario#Entomological_data:_entoData here].
 
 == Demography ==
 
