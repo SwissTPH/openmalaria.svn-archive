@@ -36,10 +36,8 @@ Graphs of this data, showing non-interpolated data in green and a linear interpo
 <wiki:comment>
 Graphs generated with the `trunk/unittest/AgeGroupInterpolationSuite.py` script.
 </wiki:comment>
-
-http://code.google.com/p/openmalaria/w/images/CFR_age.png
-
-http://code.google.com/p/openmalaria/w/images/prob_sequelae_age.png
+http://openmalaria.googlecode.com/svn/wiki/images/CFR_age.png
+http://openmalaria.googlecode.com/svn/wiki/images/prob_sequelae_age.png
 
 TODO <placeholder>
 
