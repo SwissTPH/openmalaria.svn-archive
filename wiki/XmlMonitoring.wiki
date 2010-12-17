@@ -45,60 +45,66 @@ The `SurveyOptions` element controls which survey measures are [OutputFiles#meas
 </SurveyOptions>
 }}}
 
-These tables come from [http://code.google.com/p/openmalaria/source/browse/trunk/include/Monitoring/Survey.h this file] in the code. The "cohort" column indicates whether, when cohort mode is enabled, this output is restricted to the cohort; if false, it is unaffected by the cohort mode.
+These tables come from
+[http://code.google.com/p/openmalaria/source/browse/trunk/include/Monitoring/Survey.h this file]
+in the code. The "second column" column indicates the meaning of the contents
+of the second column of [OutputFiles output files]. The "cohort" column
+indicates whether, when cohort mode is enabled, this output is restricted to
+the cohort; if false, it is unaffected by the cohort mode.
 
-|| id || measure || cohort || description ||
-||  0 || nHost  || y || Total number of humans. *Note*: when using the `IPTI_SP_MODEL` option, humans not at risk of a further episode due to having had a recent episode within the health-system-memory period are subtracted from this and several other outputs (only applies to the `IPTI_SP_MODEL`). ||
-||  1 || nInfect  || y || number of infected hosts  ||
-|| 2 || nExpectd  || y ||  expected number of infected hosts ||
-|| 3 || nPatent  || y || number of patent hosts ||
-|| 4 || sumLogPyrogenThres || y ||  Sum of the log of the pyrogen threshold ||
-|| 5 || sumlogDens  || y||  Sum of the logarithm of the parasite density ||
-|| 6 || totalInfs  || y|| Total infections ||
-|| 7 || nTransmit ||n|| Infectiousness of human population to mosquitoes. Number of hosts transmitting to mosquitoes (i.e. sum of proportion of mosquitoes that get infected). Single value, not per age-group. ||
-|| 8 || totalPatentInf  ||y||  Total patent infections ||
-|| 10 || sumPyrogenThresh  ||y||  Sum of the pyrogenic threshold ||
-|| 11 || nTreatments1  ||n|| 5-day timestep model: number of treatments (1st line) ||
-|| 12 || nTreatments2  ||n|| 5-day timestep model: number of treatments (2nd line) ||
-|| 13 || nTreatments3  ||n|| 5-day timestep model: number of treatments (inpatient) ||
-|| 14 || nUncomp  ||n||  number of episodes (uncomplicated) ||
-|| 15 || nSevere  ||n||  number of episodes (severe) ||
-|| 16 || nSeq  ||n||  cases with sequelae ||
-|| 17 || nHospitalDeaths  ||n||  deaths in hospital ||
-|| 18 || nIndDeaths  ||n||  number of deaths (indirect) ||
-|| 19 || nDirDeaths  ||n||  number of deaths (direct) ||
-|| 20 || nEPIVaccinations ||n ||  number of EPI vaccine doses given ||
-|| 21 || allCauseIMR || n || all cause infant mortality rate (returned as a single number over whole intervention period, instead of from a survey interval) ||
-|| 22 || nMassVaccinations  ||n||  number of Mass / Campaign vaccine doses given ||
-|| 23 || nHospitalRecovs  ||n||  recoveries in hospital ||
-|| 24 || nHospitalSeqs  ||n||  sequelae in hospital ||
-|| 25 || nIPTDoses  || n|| number of IPT Doses ||
-|| 26 || annAvgK   || n|| Annual Average Kappa. Calculated once a year as sum of human infectiousness divided by initial EIR summed over a year. Single value, not per age-group. ||
-|| 27 || nNMFever  || n ||  Number of episodes of non-malaria fever ||
-|| 28 || || || (removed) ||
-|| 29 || || || (removed) ||
-|| 30 || innoculationsPerAgeGroup ||n|| The total number of inoculations per age group, summed over the reporting period. ||
+|| id || measure || second column || cohort || description ||
+||  0 || nHost  || age group || y || Total number of humans. *Note*: when using the `IPTI_SP_MODEL` option, humans not at risk of a further episode due to having had a recent episode within the health-system-memory period are subtracted from this and several other outputs (only applies to the `IPTI_SP_MODEL`). ||
+||  1 || nInfect  || age group || y || number of infected hosts  ||
+|| 2 || nExpectd  || age group || y ||  expected number of infected hosts ||
+|| 3 || nPatent  || age group || y || number of patent hosts ||
+|| 4 || sumLogPyrogenThres || age group || y ||  Sum of the log of the pyrogen threshold ||
+|| 5 || sumlogDens  || age group || y||  Sum of the logarithm of the parasite density ||
+|| 6 || totalInfs  || age group || y|| Total infections ||
+|| 7 || nTransmit || (unused) ||n|| Infectiousness of human population to mosquitoes. Number of hosts transmitting to mosquitoes (i.e. sum of proportion of mosquitoes that get infected). Single value, not per age-group. ||
+|| 8 || totalPatentInf  || age group ||y||  Total patent infections ||
+|| 10 || sumPyrogenThresh  || age group ||y||  Sum of the pyrogenic threshold ||
+|| 11 || nTreatments1  || age group ||n|| 5-day timestep model: number of treatments (1st line) ||
+|| 12 || nTreatments2  || age group ||n|| 5-day timestep model: number of treatments (2nd line) ||
+|| 13 || nTreatments3  || age group ||n|| 5-day timestep model: number of treatments (inpatient) ||
+|| 14 || nUncomp  || age group ||n||  number of episodes (uncomplicated) ||
+|| 15 || nSevere  || age group ||n||  number of episodes (severe) ||
+|| 16 || nSeq  || age group ||n||  cases with sequelae ||
+|| 17 || nHospitalDeaths  || age group ||n||  deaths in hospital ||
+|| 18 || nIndDeaths  || age group ||n||  number of deaths (indirect) ||
+|| 19 || nDirDeaths  || age group ||n||  number of deaths (direct) ||
+|| 20 || nEPIVaccinations || age group ||n ||  number of EPI vaccine doses given ||
+|| 21 || allCauseIMR || (unused) || n || all cause infant mortality rate (returned as a single number over whole intervention period, instead of from a survey interval) ||
+|| 22 || nMassVaccinations  || age group ||n||  number of Mass / Campaign vaccine doses given ||
+|| 23 || nHospitalRecovs  || age group ||n||  recoveries in hospital ||
+|| 24 || nHospitalSeqs  || age group ||n||  sequelae in hospital ||
+|| 25 || nIPTDoses  || age group || n|| number of IPT Doses ||
+|| 26 || annAvgK   || (unused) || n|| Annual Average Kappa. Calculated once a year as sum of human infectiousness divided by initial EIR summed over a year. Single value, not per age-group. ||
+|| 27 || nNMFever  || age group || n ||  Number of episodes of non-malaria fever ||
+|| 28 || || || || (removed) ||
+|| 29 || || || || (removed) ||
+|| 30 || innoculationsPerAgeGroup || age group ||n|| The total number of inoculations per age group, summed over the reporting period. ||
 
 Vector model outputs. These were point-time outputs, but some (just EIR?) have been converted to output averages.
 
 The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single values.
 
-|| id || measure || cohort || description ||
-|| 31 || Vector_Nv0 || n || Mosquito emergence rate. ||
-|| 32 || Vector_Nv  || n ||  Mosquito population size ||
-|| 33 || Vector_Ov  || n ||  Number of infected mosquitoes ||
-|| 34 || Vector_Sv  || n ||  Number of infectious mosquitoes ||
-|| 35 || Vector_EIR_Input  || n ||  Input EIR (Expected EIR entered into scenario file). Units (from schema version 24): inoculations per adult per timestep. ||
-|| 36 || Vector_EIR_Simulated  || n ||  Simulated EIR (EIR output by the vector model). Units: inoculations per person per timestep. ||
-|| 37 || || || (removed) ||
-|| 38 || || || (removed) ||
-|| 39 || Clinical_RDTs  || n ||  Number of Rapid Diagnostic Tests used ||
-|| 40 || Clinical_DrugUsage  || n ||  Quantities of drugs used, per active ingredient abbreviation ||
-|| 41 || Clinical_FirstDayDeaths  || n ||  Direct death on first day of CM (before treatment takes effect) ||
-|| 42 || Clinical_HospitalFirstDayDeaths  || n ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
-|| 43 || nNewInfections || y || The number of infections introduced since the last survey, per age group. This counts super-infections without the usual limit of 21 concurrent infections, so in some ways is similar to introduction of infections in an infinite population. ||
-|| 44 || nMassITNs || n || The number of ITNs delivered by mass distribution since last survey. ||
-|| 45 || nEPI_ITNs || n || The number of ITNs delivered through EPI since last survey. ||
-|| 46 || nMassIRS || n || The number of people newly protected by IRS since last survey. ||
-|| 47 || nMassVA || n || The number of people newly protected by a vector-availability intervention since the last survey. ||
-|| 48 || Clinical_Microscopy  || n ||  Number of microscopy tests used ||
+|| id || measure || second column || cohort || description ||
+|| 31 || Vector_Nv0 || vector species || n || Mosquito emergence rate. ||
+|| 32 || Vector_Nv  || vector species || n ||  Mosquito population size ||
+|| 33 || Vector_Ov  || vector species || n ||  Number of infected mosquitoes ||
+|| 34 || Vector_Sv  || vector species || n ||  Number of infectious mosquitoes ||
+|| 35 || Vector_EIR_Input  || (unused) || n ||  Input EIR (Expected EIR entered into scenario file). Units (from schema version 24): inoculations per adult per timestep. ||
+|| 36 || Vector_EIR_Simulated  || (unused) || n ||  Simulated EIR (EIR output by the vector model). Units: inoculations per person per timestep. ||
+|| 37 || || || || (removed) ||
+|| 38 || || || || (removed) ||
+|| 39 || Clinical_RDTs  || (unused) || n ||  Number of Rapid Diagnostic Tests used ||
+|| 40 || Clinical_DrugUsage  || drug ID || n || Quantities of oral drugs used, per active ingredient abbreviation ||
+|| 41 || Clinical_FirstDayDeaths  || age group || n ||  Direct death on first day of CM (before treatment takes effect) ||
+|| 42 || Clinical_HospitalFirstDayDeaths  || age group || n ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
+|| 43 || nNewInfections || age group || y || The number of infections introduced since the last survey, per age group. This counts super-infections without the usual limit of 21 concurrent infections, so in some ways is similar to introduction of infections in an infinite population. ||
+|| 44 || nMassITNs || age group || n || The number of ITNs delivered by mass distribution since last survey. ||
+|| 45 || nEPI_ITNs || age group || n || The number of ITNs delivered through EPI since last survey. ||
+|| 46 || nMassIRS || age group || n || The number of people newly protected by IRS since last survey. ||
+|| 47 || nMassVA || age group || n || The number of people newly protected by a vector-availability intervention since the last survey. ||
+|| 48 || Clinical_Microscopy  || (unused) || n || Number of microscopy tests used ||
+|| 49 || Clinical_DrugUsageIV || drug ID || n || Quantities of intravenous drugs used, per active ingredient abbreviation ||
