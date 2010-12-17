@@ -4,7 +4,7 @@
 
 We have two different health system models implemented in OpenMalaria, one for a 1-day timestep and one for a 5-day timestep. These models include both health-system decisions such as treatment and outcomes including the probability of a death (thus they may also be referred to as clinical models). ([ModelClinical Read descriptions.])
 
-== Data common to both models ==
+== Common data ==
 
 Both models require input of the probability of a case fatality and of sequelae developing for severe malaria in inpatients. (Data for outpatients is simply estimated from these figures.) A template health-system element, including our standard data:
 
@@ -29,9 +29,13 @@ Both models require input of the probability of a case fatality and of sequelae 
   </pSequelaeInpatient>
 </healthSystem>
 }}}
-(This is for schema version 24. For compatibility with older versions, remove the `interpolation="none"` attribute.)
+The `...` should be replaced with either an `ImmediateOutcomes` or an `EventScheduler` element. (This is for schema version 24. For compatibility with older versions, remove the `interpolation="none"` attribute.)
 
-Graphs of this data, showing non-interpolated data in green and a linear interpolation in blue:
+The data here describes the case-fatality rates of hospitalised cases receiving successful treatment per age-group (or rather, a CFR-per-age function is constructed using step-wise linear interpolation of the (lowerbound, cfr) pairs).
+
+Since collecting fatality-rate data for cases outside of hospital, the "community death rate" (used for cases not receiving hospital care, or, in the `ImmediateOutcomes` model, ineffective treatment) is constructed from the hospital CFR data by multiplying the odds by a parameter (exp of the LOG_ODDS_RATIO_CF_COMMUNITY parameter).
+
+In practice, we always use the same data-set here. Some graphs, showing non-interpolated data in green and a linear interpolation in blue:
 
 <wiki:comment>
 Graphs generated with the `trunk/unittest/AgeGroupInterpolationSuite.py` script.
@@ -39,11 +43,33 @@ Graphs generated with the `trunk/unittest/AgeGroupInterpolationSuite.py` script.
 http://openmalaria.googlecode.com/svn/wiki/images/CFR_age.png
 http://openmalaria.googlecode.com/svn/wiki/images/prob_sequelae_age.png
 
-TODO <placeholder>
+== 5-day timestep: `ImmediateOutcomes` ==
 
-=== 5-day timestep: `ImmediateOutcomes` ===
+When the simulation uses a granularity of 5-day timesteps, fevers can be considered to occur entirely within a single timestep, and thus it is reasonable to decide parasitological, clinical and cost outcomes within a single timestep — hence this model was named the clinical immediate outcome model.
 
-When the simulation uses a granularity of 5-day timesteps, fevers can be considered too occur entirely within one timestep, and thus it is reasonable to decide parasitological, clinical and cost outcomes within a single timestep — hence this model was named the clinical immediate outcome model.
+Example XML element:
+{{{
+<ImmediateOutcomes name="example name">
+  <drugRegimen firstLine="ACT" inpatient="QN" secondLine="ACT"/>
+  <initialACR>
+    <ACT value="1.0"/>
+    <QN value="1.0"/>
+    <selfTreatment value="0.0"/>
+  </initialACR>
+  <compliance>
+    <ACT value="1.00"/>
+    <selfTreatment value="1.0"/>
+  </compliance>
+  <nonCompliersEffective>
+    <ACT value="0"/>
+    <selfTreatment value="0"/>
+  </nonCompliersEffective>
+  <pSeekOfficialCareUncomplicated1 value="0.04"/>
+  <pSelfTreatUncomplicated value="0.0"/>
+  <pSeekOfficialCareUncomplicated2 value="0.04"/>
+  <pSeekOfficialCareSevere value="0.48"/>
+</ImmediateOutcomes>
+}}}
 
 First, the drugs used for `firstLine`, `secondLine` and `inpatient` treatment are defined in the `drugRegimen` element. Drug codes may be one of `CQ`, `SP`, `AQ`, `SPAQ`, `ACT`, `QN`, or `selfTreatment`.
 
@@ -51,15 +77,118 @@ Then, `compliance` (adherence rate), `initialACR` (initial cure-rate for complie
 
 Additionally, the following (fairly self-explanetory) elements must be described: `pSeekOfficialCareUncomplicated1`, `pSelfTreatUncomplicated`, `pSeekOfficialCareUncomplicated2`, `pSeekOfficialCareSevere`, and `pSequelaeInpatient`.
 
-=== 1-day timestep: `EventScheduler` ==
+== 1-day timestep: `EventScheduler` ==
 
-The event-scheduler model encapsulates a case-management model and schedules sickness events (fever start/end, recovery/death outcomes).
+The event-scheduler model encapsulates a case-management model and schedules sickness events (fever start/end, recovery/death outcomes). An example XML element:
 
-==== Case management: `uncomplicated` and `complicated` ====
+{{{
+<EventScheduler>
+  <!-- Simple partially-realistic (poorly researched) health system description (DH). -->
+  <uncomplicated>
+    <decisions>
+      <decision depends="case,p" name="test" values="none,microscopy,RDT">
+        case(UC1){
+          p(.5): none
+          p(.3): microscopy
+          p(.2): RDT
+        }
+        case(UC2){
+          p(.4): none
+          p(.3): microscopy
+          p(.3): RDT
+        }
+      </decision>
+      <decision depends="result,p" name="treatment" values="MQ_treat,no_treat">
+        result(positive){
+          p(.9): MQ_treat
+          p(.1): no_treat
+        }
+        result(negative): no_treat
+        result(none) {
+          p(.5): MQ_treat
+          p(.5): no_treat
+        }
+      </decision>
+      <decision depends="age" name="bodyMass" values="5,20,60">
+        age(0-2): 5
+        age(2-6): 20
+        age(6-inf): 60
+      </decision>
+    </decisions>
+    <treatments>
+      <treatment name="MQ_treat">
+        <schedule>
+          <medicate drug="MQ" hour="0" mg="20"/>
+        </schedule>
+        <modifier decision="bodyMass">
+          <multiplyQty effect="MQ(5)" value="5"/>
+          <multiplyQty effect="MQ(20)" value="20"/>
+          <multiplyQty effect="MQ(60)" value="60"/>
+        </modifier>
+      </treatment>
+      <treatment name="no_treat">
+        <schedule/>
+      </treatment>
+    </treatments>
+  </uncomplicated>
+  <complicated>
+    <decisions>
+      <decision depends="result,p" name="treatment" values="AS_sev,none">
+        result(positive) {
+          p(.9): AS_sev
+          p(.1): none
+        }
+        result(negative): none
+        result(none): none
+      </decision>
+      <decision depends="" name="hospitalisation" values="none,delayed,immediate">
+        immediate
+      </decision>
+      <decision depends="p" name="test" values="none,microscopy,RDT">
+        p(.3): none
+        p(.5): RDT
+        p(.2): microscopy
+      </decision>
+      <decision depends="age" name="bodyMass" values="5,20,60">
+        age(0-2): 5
+        age(2-6): 20
+        age(6-inf): 60
+      </decision>
+    </decisions>
+    <treatments>
+      <treatment name="AS_sev">
+        <schedule>
+          <medicate drug="AS" hour="0" mg="2.4"/>
+          <medicate drug="AS" hour="18" mg="2.4"/>
+          <medicate drug="AS" hour="36" mg="2.4"/>
+          <medicate drug="AS" hour="54" mg="2.4"/>
+        </schedule>
+        <modifier decision="bodyMass">
+          <multiplyQty effect="AS(5)" value="5"/>
+          <multiplyQty effect="AS(20)" value="20"/>
+          <multiplyQty effect="AS(60)" value="60"/>
+        </modifier>
+      </treatment>
+      <treatment name="none">
+        <schedule/>
+      </treatment>
+    </treatments>
+  </complicated>
+  <ClinicalOutcomes>
+    <maxUCSeekingMemory>3</maxUCSeekingMemory>
+    <uncomplicatedCaseDuration>3</uncomplicatedCaseDuration>
+    <complicatedCaseDuration>6</complicatedCaseDuration>
+    <complicatedRiskDuration>6</complicatedRiskDuration>
+    <pImmediateUC>.8</pImmediateUC>
+  </ClinicalOutcomes>
+</EventScheduler>
+}}}
+
+=== Case management: `uncomplicated` and `complicated` ===
 
 The case-management part consists of decision trees and treatment schedules, split into two cases: `uncomplicated` for non-malarial and malarial fevers not requiring hospitalisation, and `complicated` for severe malarial fevers or those worsened through a further insult. Apart from a few decision rules, the `uncomplicated` and `complicated` elements have the same format: a `decisions` element and a `treatments` element.
 
-===== `decisions` =====
+==== `decisions` ====
 
 The `decisions` element describes a model of treatment-seeking and health-system decisions, using a list of `decision` sub-elements.
 
@@ -121,7 +250,7 @@ Besides the special "age" and "p" cases (see table below), this allows us to det
 || age-dependent || The tree must have exactly one dependency: `age`. Branches should be identified with the syntax `age(a-b)` where a and b are in the range `[0,inf]` (allowing the special value `inf`). In a branch-set these ranges must not overlap and must cover the entire range `[0,inf]` (i.e. lowest bound must be `0` and highest `inf` with matching boundaries). Age ranges are considered half-open, open at the top (i.e. an age on a boundary matches the higher age-group). ||
 || stochastic || A generic decision whose outcomes are determined by input decisions and/or random samples. Unless purely deterministic, `p` must be used as in input dependency and then probability branches may be specified using `p(x)` where `x` is the probability of the branch being chosen. All probabilities in a branch-set must add up to 1. ||
 
-===== `treatments` =====
+==== `treatments` ====
 
 The `treatments` element consists of a list of `treatment` elements. Each `treatment` element has a `name` attribute (which must correspond to one of the outcomes of the `treatments` decision), a `schedule` element and a list of zero-or-more `modifier` elements.
 
@@ -134,7 +263,7 @@ Since one base schedule may be well or poorly adhered to in several variations, 
 || `delay` || delays each dose by the given number of hours; can be used for delayed arrival to a health facility but this won't affect the start/end time of the bout of illness ||
 || `selectTimeRange` || Causes doses outside the time range given to be missed (also not costed unless `affectsCost` is set false). The range `x-y` is interpreted as a half-open interval; for dose at time `t` to be taken we must have `x <= t < y`. ||
 
-==== Severe-fever outcomes: `ClinicalOutcomes` ====
+=== Severe-fever outcomes: `ClinicalOutcomes` ===
 
 The `EventScheduler` element also has a `ClinicalOutcomes` element, describing:
 
@@ -144,12 +273,3 @@ The `EventScheduler` element also has a `ClinicalOutcomes` element, describing:
 || complicatedCaseDuration || int || Fixed length of a complicated/severe case of malaria (from treatment seeking until return to life-as-usual). ||
 || complicatedRiskDuration || int || Number of days for which humans are at risk of death during a severe or complicated case of malaria. Cannot be greater than the duration of a complicated case or less than 1 day. ||
 || pImmediateUC || double || Probability that UC treatment seeking will be done immediately when sick, on second day given that it wasn't done on first, etc. ||
-
-
-=== Case-fatality per age: `CFR` ===
-
-The data here describes the case-fatality rates of hospitalised cases receiving successful treatment per age-group (or rather, a CFR-per-age function is constructed using step-wise linear interpolation of the (lowerbound, cfr) pairs).
-
-Since collecting fatality-rate data for cases outside of hospital, the "community death rate" (used for cases not receiving hospital care, or, in the `ImmediateOutcomes` model, ineffective treatment) is constructed from the hospital CFR data by multiplying the odds by a parameter (exp of the LOG_ODDS_RATIO_CF_COMMUNITY parameter).
-
-In practice, we always use the same data-set here.
