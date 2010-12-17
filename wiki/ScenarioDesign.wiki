@@ -69,7 +69,7 @@ The `drugDescription` element is only required when a 1-day time-step is used, a
 
 == Health system ==
 
-Two [ModelClinical health system models] are available (listed above). Their configuration is described [http://code.google.com/p/openmalaria/wiki/XmlScenario#Health_system:_healthSystem here].
+Two [ModelClinical health system models] are available, depending on the length of time-step used. [ScenarioHealthSystem To configuration.]
 
 == Transmission model ==
 
