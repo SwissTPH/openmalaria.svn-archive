@@ -116,3 +116,7 @@ See [ModelInterventions this page].
 == Monitoring ==
 
 When designing a scenario, you will need to think about what kind of output is required. See [Monitoring] and the [XmlMonitoring list of available measures].
+
+== Drug library ==
+
+Scenarios running on a 1-day timestep require PK and PD parameters for each drug used. In general, we use the parameters provided by our collaborators from the Liverpool School of Tropical Medicine. One can copy the `drugDescription` element from [http://code.google.com/p/openmalaria/source/browse/trunk/test/valerieCM/scenarioBase.xml?r=1545 this XML file].
