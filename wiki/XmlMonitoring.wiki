@@ -50,7 +50,7 @@ These tables come from
 in the code. The "second column" column indicates the meaning of the contents
 of the second column of [OutputFiles output files]. The "cohort" column
 indicates whether, when cohort mode is enabled, this output is restricted to
-the cohort; if false, it is unaffected by the cohort mode.
+the cohort; if false, it is unaffected by the cohort mode. A number means that from this schema version output is restricted to the cohort.
 
 || id || measure || second column || cohort || description ||
 ||  0 || nHost  || age group || y || Total number of humans. *Note*: when using the `IPTI_SP_MODEL` option, humans not at risk of a further episode due to having had a recent episode within the health-system-memory period are subtracted from this and several other outputs (only applies to the `IPTI_SP_MODEL`). ||
@@ -63,21 +63,21 @@ the cohort; if false, it is unaffected by the cohort mode.
 || 7 || nTransmit || (unused) ||n|| Infectiousness of human population to mosquitoes. Number of hosts transmitting to mosquitoes (i.e. sum of proportion of mosquitoes that get infected). Single value, not per age-group. ||
 || 8 || totalPatentInf  || age group ||y||  Total patent infections ||
 || 10 || sumPyrogenThresh  || age group ||y||  Sum of the pyrogenic threshold ||
-|| 11 || nTreatments1  || age group ||n|| 5-day timestep model: number of treatments (1st line) ||
-|| 12 || nTreatments2  || age group ||n|| 5-day timestep model: number of treatments (2nd line) ||
-|| 13 || nTreatments3  || age group ||n|| 5-day timestep model: number of treatments (inpatient) ||
+|| 11 || nTreatments1  || age group ||24|| 5-day timestep model: number of treatments (1st line) ||
+|| 12 || nTreatments2  || age group ||24|| 5-day timestep model: number of treatments (2nd line) ||
+|| 13 || nTreatments3  || age group ||24|| 5-day timestep model: number of treatments (inpatient) ||
 || 14 || nUncomp  || age group ||n||  number of episodes (uncomplicated) ||
 || 15 || nSevere  || age group ||n||  number of episodes (severe) ||
 || 16 || nSeq  || age group ||n||  cases with sequelae ||
 || 17 || nHospitalDeaths  || age group ||n||  deaths in hospital ||
-|| 18 || nIndDeaths  || age group ||n||  number of deaths (indirect) ||
-|| 19 || nDirDeaths  || age group ||n||  number of deaths (direct) ||
-|| 20 || nEPIVaccinations || age group ||n ||  number of EPI vaccine doses given ||
+|| 18 || nIndDeaths  || age group ||24||  number of deaths (indirect) ||
+|| 19 || nDirDeaths  || age group ||24||  number of deaths (direct) ||
+|| 20 || nEPIVaccinations || age group ||24||  number of EPI vaccine doses given ||
 || 21 || allCauseIMR || (unused) || n || all cause infant mortality rate (returned as a single number over whole intervention period, instead of from a survey interval) ||
-|| 22 || nMassVaccinations  || age group ||n||  number of Mass / Campaign vaccine doses given ||
+|| 22 || nMassVaccinations  || age group ||24||  number of Mass / Campaign vaccine doses given ||
 || 23 || nHospitalRecovs  || age group ||n||  recoveries in hospital ||
 || 24 || nHospitalSeqs  || age group ||n||  sequelae in hospital ||
-|| 25 || nIPTDoses  || age group || n|| number of IPT Doses ||
+|| 25 || nIPTDoses  || age group ||24|| number of IPT Doses ||
 || 26 || annAvgK   || (unused) || n|| Annual Average Kappa. Calculated once a year as sum of human infectiousness divided by initial EIR summed over a year. Single value, not per age-group. ||
 || 27 || nNMFever  || age group || n ||  Number of episodes of non-malaria fever ||
 || 28 || || || || (removed) ||
@@ -97,14 +97,14 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 36 || Vector_EIR_Simulated  || (unused) || n ||  Simulated EIR (EIR output by the vector model). Units: inoculations per person per timestep. ||
 || 37 || || || || (removed) ||
 || 38 || || || || (removed) ||
-|| 39 || Clinical_RDTs  || (unused) || n ||  Number of Rapid Diagnostic Tests used ||
-|| 40 || Clinical_DrugUsage  || drug ID || n || Quantities of oral drugs used, per active ingredient abbreviation ||
+|| 39 || Clinical_RDTs  || (unused) || 24 ||  Number of Rapid Diagnostic Tests used ||
+|| 40 || Clinical_DrugUsage  || drug ID || 24 || Quantities of oral drugs used, per active ingredient abbreviation ||
 || 41 || Clinical_FirstDayDeaths  || age group || n ||  Direct death on first day of CM (before treatment takes effect) ||
 || 42 || Clinical_HospitalFirstDayDeaths  || age group || n ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
 || 43 || nNewInfections || age group || y || The number of infections introduced since the last survey, per age group. This counts super-infections without the usual limit of 21 concurrent infections, so in some ways is similar to introduction of infections in an infinite population. ||
-|| 44 || nMassITNs || age group || n || The number of ITNs delivered by mass distribution since last survey. ||
-|| 45 || nEPI_ITNs || age group || n || The number of ITNs delivered through EPI since last survey. ||
-|| 46 || nMassIRS || age group || n || The number of people newly protected by IRS since last survey. ||
-|| 47 || nMassVA || age group || n || The number of people newly protected by a vector-availability intervention since the last survey. ||
-|| 48 || Clinical_Microscopy  || (unused) || n || Number of microscopy tests used ||
-|| 49 || Clinical_DrugUsageIV || drug ID || n || Quantities of intravenous drugs used, per active ingredient abbreviation ||
+|| 44 || nMassITNs || age group ||24|| The number of ITNs delivered by mass distribution since last survey. ||
+|| 45 || nEPI_ITNs || age group || 24 || The number of ITNs delivered through EPI since last survey. ||
+|| 46 || nMassIRS || age group || 24 || The number of people newly protected by IRS since last survey. ||
+|| 47 || nMassVA || age group || 24 || The number of people newly protected by a vector-availability intervention since the last survey. ||
+|| 48 || Clinical_Microscopy  || (unused) || 24 || Number of microscopy tests used ||
+|| 49 || Clinical_DrugUsageIV || drug ID || 24 || Quantities of intravenous drugs used, per active ingredient abbreviation ||
