@@ -12,7 +12,7 @@ The following table lists interventions which have been implemented in OpenMalar
 
 == Change heath system ==
 
-This intervention updates the health-system by providing an entirely new description; e.g. it can be used to simulate the effects of improved access to treatment. The `changeHS` element takes exactly the same content as the [XmlScenario#Health_system:_healthSystem `healthSystem`] element used to describe the initial health system.
+This intervention updates the health-system by providing an entirely new description; e.g. it can be used to simulate the effects of improved access to treatment. The `changeHS` element takes exactly the same content as the [XmlScenario#Health_system:_healthSystem healthSystem] element used to describe the initial health system.
 
 
 == Vaccines ==
@@ -23,14 +23,43 @@ Three vaccine types are simulated; this intervention administers all of these wh
  * Blood-stage vaccine (vaccineType 2): acts as a killing factor on blood-stage parasites
  * Transmission-blocking vaccine (vaccineType 3): one minus this scales the probability of transmission to mosquitoes
 
-Use standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] descriptions.
+Vaccines need to be configured per-scenario with one or more `vaccineDescription` elements within the `descriptions` element (up to one per `vaccineType`):
+{{{
+<vaccineDescription vaccineType="3">
+  <halfLifeYrs value="10"/>
+  <efficacyB value="10"/>
+  <initialEfficacy value="0.512"/>
+  <initialEfficacy value="0.64"/>
+  <initialEfficacy value="0.8"/>
+</vaccineDescription>
+}}}
+Each vaccine type described is administered. One or more `initialEfficacy` elements can be given specifying the efficacy of each subsequent dose of the vaccine administered (at the time of administration). If further doses are given, the last listed `initialEfficacy` is repeated.
+
+Use standard [ModelInterventions#Continuous_descriptions continuous] description with name `vaccine` and [ModelInterventions#Timed_descriptions mass deployment] description with name `vaccinate`, although the interaction of the two deployment methods is not quite the same as with other continuously deployed interventions: if a dose has been received via mass deployment, it will not also be received via continuous deployment, and if a continuous dose is missed but later caught-up with through mass deployment, further continuous doses may also be received (continuous administration only treats individuals who have received all doses they should have through continuous programs).
+
 
 == Mass Drug Administration ==
 
 MDA simply gives humans drugs. In the 5-day timestep models, these drugs are simply modelled (drug kills 100% of parasites in all patients receiving it with no lasting effect), while with the 1-day time-step model a drug dosage must be specified.
-<placeholder>
 
-Uses standard [ModelInterventions#Timed_descriptions timed] descriptions.
+When used with a 1-day time-step, the `MDADescription` element must be present within the interventions' descriptions element (format is the same as for a [ScenarioHealthSystem#treatments treatment schedule). Deployment uses the standard [ModelInterventions#Timed_descriptions mass-deployment] description with name `MDA`.
+{{{
+  <interventions name="cohort selection">
+    <descriptions>
+      <MDADescription>
+        <schedule>
+          <medicate drug="MQ" hour="0" mg="1200"/>
+        </schedule>
+      </MDADescription>
+    </descriptions>
+    <timed>
+      <intervention time="730">
+        <MDA coverage="0.6"/>
+      </intervention>
+    </timed>
+  </interventions>
+}}}
+
 
 == Intermittent Preventive Treatment ==
 
@@ -38,4 +67,25 @@ IPTi and IPTc: Intermittent Preventative Treatment for infants/children. Somewha
 
 There is currently no equivalent for 1-day time-step models, since the PKPD model used for mass-drug administration already allows prophylactic effects.
 
-Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] descriptions.
+IPT must be described per scenario with an `IPTDescription` element. Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions mass-deployment] descriptions with name `ipti`.
+{{{
+<interventions name="IPT example">
+  <descriptions>
+    <iptiDescription iptiEffect="13">
+      <infGenotype ACR="1" atten="1" freq="0.8" name="wt" proph="10" tolPeriod="4"/>
+      <infGenotype ACR="1" atten="1" freq="0.1" name="108" proph="2" tolPeriod="4"/>
+      <infGenotype ACR="0.5" atten="1" freq="0.1" name="triples" proph="0" tolPeriod="4"/>
+    </iptiDescription>
+  </descriptions>
+  <continuous>
+    <ipti coverage="0.95" targetAgeYrs="0.17"/>
+    <ipti coverage="0.95" targetAgeYrs="0.25"/>
+    <ipti coverage="0.95" targetAgeYrs="0.75"/>
+  </continuous>
+  <timed>
+    <intervention time="7">
+      <ipti coverage="0.95"/>
+    </intervention>
+  </timed>
+</interventions>
+}}}
