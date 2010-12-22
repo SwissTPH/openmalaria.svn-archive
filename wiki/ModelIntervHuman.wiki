@@ -63,9 +63,12 @@ When used with a 1-day time-step, the `MDADescription` element must be present w
 
 == Intermittent Preventive Treatment ==
 
-IPTi and IPTc: Intermittent Preventative Treatment for infants/children. Somewhat similar to mass drug administration, but allows drugs to have a lasting (prophylactic) effect using the 5-day time-step model.
+IPTi and IPTc: Intermittent Preventive Treatment for infants or children. 
+Antimalarial drugs are given at specified ages in infants according to the routine vaccination schedule (IPTi) or at regular intervals in children for whom delivery may be timed to coincide with the malaria season (IPTc). IPTi is specified as a continuous intervention and IPTc can be via either continuous or mass deployment.
 
+IPT is compatible with the 5-day timestep model. The drug action is similar to that of the mass drug administration but can have a longer lasting (prophylactic) effect and can affect individual infections with different levels of drug resistance differently. 
 There is currently no equivalent for 1-day time-step models, since the PKPD model used for mass-drug administration already allows prophylactic effects.
+
 
 IPT must be described per scenario with an `IPTDescription` element. Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions mass-deployment] descriptions with name `ipti`.
 {{{
