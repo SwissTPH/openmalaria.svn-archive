@@ -88,6 +88,6 @@ IPT must be described per scenario with an `IPTDescription` element. Uses standa
   </interventions>
 }}}
 
-In this example, IPTi is given at 2, 3 and 9 months of age with a coverage of 95% for each dose. Infections have one of three specified genotypes ('wt','108','triples') which correspond to different degrees of drug resistance. The drug in this example is sulphadoxine-pyrimethamine. Existing wildtype infections (wt) are cleared with a cure rate (ACR) of 100%, and incoming wildtype infections are cleared for a prophylactic period (proph) of 10*5 days. The intervention can also be timed to simulate seasonal delivery. `iptieffect` refers to whether the IPT or placebo group should be simulated (>=10 are IPT groups) and the choice of treatment drug in those who present with malaria fevers. 
+In this example, IPTi is given at 2, 3 and 9 months of age with a coverage of 95% for each dose.  The drug in this example is sulphadoxine-pyrimethamine (SP) and new infections are randomly assigned one of three specified genotypes (`wt`,`108`,`triples`) which correspond to different degrees of SP resistance and have frequencies `freq`. Existing wildtype infections (wt) are cleared with a cure rate (ACR) of 100%, and incoming wildtype infections are cleared for a prophylactic period (proph) of 10*5 days. The intervention can also be timed to simulate seasonal delivery. `iptieffect` refers to whether the IPT or placebo group should be simulated (>=10 are IPT groups) and the choice of treatment drug in those who present with malaria fevers. 
 
  
