@@ -10,7 +10,7 @@ The following table lists interventions which have been implemented in OpenMalar
 || [ModelIntervVector#Indoor_Residual_Spraying IRS] || yes || no ||
 || [ModelIntervVector#Vector_Availability VectorAvailability] || yes || no ||
 || [ModelIntervVector#Larviciding larviciding] || yes || no ||
-|| [ModelIntervVector#Uninfect_Vectors `uninfectVectors`] || yes || no ||
+|| [ModelIntervVector#Uninfect_Vectors uninfectVectors] || yes || no ||
 
 Note: all but the changeEIR intervention depend on the vector transmission model.
 
