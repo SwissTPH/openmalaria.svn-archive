@@ -76,9 +76,9 @@ Attributes this can include:
 || `begin` || integer || The time-step of the intervention period at which this intervention becomes active (default: 0) ||
 || `end` || integer || The time-step of the intervention period at which this intervention becomes inactive (default: 2147483647) ||
 
-=== Timed descriptions ===
+=== Timed descriptions (mass deployment) ===
 
-Many timed interventions also use a standard type of description, `mass` (deployment), although several timed interventions use a different description. An example:
+Many timed interventions also use a standard type of description for mass deployment, although several timed interventions use a different description. An example:
 
 {{{
       <intervention time="13">
