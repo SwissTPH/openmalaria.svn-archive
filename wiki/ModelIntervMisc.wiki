@@ -6,16 +6,16 @@ The simulation description can include a number of actions that, while not techn
 The following table lists these pseudo-interventions and the deployment methods for them:
 
 || pseudo-intervention || mass-deployment || continuous-deployment ||
-|| [ModelIntervMisc#Import_Infections `ImportedInfectionsPerThousandHosts`] || yes || no ||
-|| [ModelIntervMisc#Insert_R_0_case `InsertR_0Case`] || yes || no ||
-|| [ModelIntervMisc#Immune_suppression `immuneSuppression`] || yes || no ||
-|| [ModelIntervMisc#Cohort_selection `cohort`] || yes || yes ||
+|| [ModelIntervMisc#Import_Infections ImportedInfectionsPerThousandHosts] || yes || no ||
+|| [ModelIntervMisc#Insert_R_0_case InsertR_0Case] || yes || no ||
+|| [ModelIntervMisc#Immune_suppression immuneSuppression] || yes || no ||
+|| [ModelIntervMisc#Cohort_selection cohort] || yes || yes ||
 
 == Import Infections ==
 
 This pseudo-intervention provides a way to model infections being imported into the simulated population. A value, x, is passed into the intervention:
 
-<placeholder>
+`<ImportedInfectionsPerThousandHosts>x</ImportedInfectionsPerThousandHosts>`
 
 Each human then has an x/1000 probability of being assigned a new (imported liver-stage) infection at this time-step. The number of imported infections at each time point thus varies stochastically with a Binomial distribution about the specified number.
 
@@ -27,12 +27,16 @@ This intervention then picks one human, removes his transmission-blocking vaccin
 
 Its purpose is to allow estimates of R,,0,,, along the following lines: if only one person is infected and is able to transmit infections, then the total number of infections received after this (reported by "new infections" output) is the number of secondary cases one primary infection has caused (within the simulator).
 
+XML description as a single element with no attributes: `<InsertR_0Case/>`.
+
 == Immune suppression ==
 
 The `immuneSuppression` intervention removes all natural immunity (though not vaccine effects) from humans. It does not prevent development of new immunity.
+
+It is described with a standard [ModelInterventions#Timed_descriptions mass-deployment element] with name `immuneSuppression`.
 
 == Cohort selection ==
 
 Field trials of interventions generally enroll only a defined sub-group of the human population (a cohort) into a study, and consider only data collected on those individuals.  Simulation of such cohorts can be achieved by marking a subset of the simulated population as [Monitoring#Cohort-mode cohort] members.  This restricts monitoring of outcomes to the marked individuals.
 
-This pseudo-intervention uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] descriptions, allowing configuration of either timed and continuous enrollment into the simulated cohort.
+This pseudo-intervention uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions mass-deployment] descriptions (name: `cohort`), allowing configuration of either timed and continuous enrollment into the simulated cohort.
