@@ -66,20 +66,20 @@ the cohort; if false, it is unaffected by the cohort mode. A number means that f
 || 11 || nTreatments1  || age group ||24|| 5-day timestep model: number of treatments (1st line) ||
 || 12 || nTreatments2  || age group ||24|| 5-day timestep model: number of treatments (2nd line) ||
 || 13 || nTreatments3  || age group ||24|| 5-day timestep model: number of treatments (inpatient) ||
-|| 14 || nUncomp  || age group ||n||  number of episodes (uncomplicated) ||
-|| 15 || nSevere  || age group ||n||  number of episodes (severe) ||
-|| 16 || nSeq  || age group ||n||  cases with sequelae ||
-|| 17 || nHospitalDeaths  || age group ||n||  deaths in hospital ||
+|| 14 || nUncomp  || age group ||24||  number of episodes (uncomplicated) ||
+|| 15 || nSevere  || age group ||24||  number of episodes (severe) ||
+|| 16 || nSeq  || age group ||24||  cases with sequelae ||
+|| 17 || nHospitalDeaths  || age group ||24||  deaths in hospital ||
 || 18 || nIndDeaths  || age group ||24||  number of deaths (indirect) ||
 || 19 || nDirDeaths  || age group ||24||  number of deaths (direct) ||
 || 20 || nEPIVaccinations || age group ||24||  number of EPI vaccine doses given ||
 || 21 || allCauseIMR || (unused) || n || all cause infant mortality rate (returned as a single number over whole intervention period, instead of from a survey interval) ||
 || 22 || nMassVaccinations  || age group ||24||  number of Mass / Campaign vaccine doses given ||
-|| 23 || nHospitalRecovs  || age group ||n||  recoveries in hospital ||
-|| 24 || nHospitalSeqs  || age group ||n||  sequelae in hospital ||
+|| 23 || nHospitalRecovs  || age group ||24||  recoveries in hospital ||
+|| 24 || nHospitalSeqs  || age group ||24||  sequelae in hospital ||
 || 25 || nIPTDoses  || age group ||24|| number of IPT Doses ||
 || 26 || annAvgK   || (unused) || n|| Annual Average Kappa. Calculated once a year as sum of human infectiousness divided by initial EIR summed over a year. Single value, not per age-group. ||
-|| 27 || nNMFever  || age group || n ||  Number of episodes of non-malaria fever ||
+|| 27 || nNMFever  || age group ||24||  Number of episodes of non-malaria fever ||
 || 28 || || || || (removed) ||
 || 29 || || || || (removed) ||
 || 30 || innoculationsPerAgeGroup || age group ||n|| The total number of inoculations per age group, summed over the reporting period. ||
@@ -99,8 +99,8 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 38 || || || || (removed) ||
 || 39 || Clinical_RDTs  || (unused) || 24 ||  Number of Rapid Diagnostic Tests used ||
 || 40 || Clinical_DrugUsage  || drug ID || 24 || Quantities of oral drugs used, per active ingredient abbreviation ||
-|| 41 || Clinical_FirstDayDeaths  || age group || n ||  Direct death on first day of CM (before treatment takes effect) ||
-|| 42 || Clinical_HospitalFirstDayDeaths  || age group || n ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
+|| 41 || Clinical_FirstDayDeaths  || age group || 24 ||  Direct death on first day of CM (before treatment takes effect) ||
+|| 42 || Clinical_HospitalFirstDayDeaths  || age group || 24 ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
 || 43 || nNewInfections || age group || y || The number of infections introduced since the last survey, per age group. This counts super-infections without the usual limit of 21 concurrent infections, so in some ways is similar to introduction of infections in an infinite population. ||
 || 44 || nMassITNs || age group ||24|| The number of ITNs delivered by mass distribution since last survey. ||
 || 45 || nEPI_ITNs || age group || 24 || The number of ITNs delivered through EPI since last survey. ||
