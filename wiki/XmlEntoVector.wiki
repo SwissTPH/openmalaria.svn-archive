@@ -12,7 +12,7 @@ The vector element consists of a list of at least one `anopheles` sub-element, f
 
 Each anopheles elements has the following sub-elements: either `eir` or `monthlyEir`, `mosq`, and a list of zero or more `nonHumanHosts`.
 
-=== Entomological Infection Rate ===
+=== Entomological Inoculation Rate ===
 
 EIR can be specified either via 5 Fourier coefficients and a rotation factor (`eir` element) or via 12 monthly values plus an annual level (`monthlyEir` element). Exactly one of these elements must appear.
 
