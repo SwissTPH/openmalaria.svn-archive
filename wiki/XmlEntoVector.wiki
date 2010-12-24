@@ -4,9 +4,9 @@
 
 = Vector parameters =
 
-The vector model is described by per-species interactions with hosts, where hosts may be humans or one of a few specified non-human populations (e.g. sprayed & unsprayed animals).
+The vector model allows simulation of any number of different vectors, each of which can have different interactions with hosts, where hosts may be humans or one of a few specified non-human populations (e.g. sprayed & unsprayed animals).
 
-The vector element consists of a list of at least one `anopheles` sub-element, followed by a list of zero or more `nonHumanHosts` sub-elements. Each has a name, which serves as an identifier for the anopheles-mosquito species or non-human-host category (for example, to match per-species vector intervention parameters specified elsewhere with the correct species).
+The vector element consists of a list of one `anopheles` sub-element for each vector taxon, followed by a list of zero or more `nonHumanHosts` sub-elements. Each has a name, which serves as an identifier for the Anopheles species or non-human-host category (for example, to match per-species vector intervention parameters specified elsewhere with the correct species).
 
 == Mosquito parameters ==
 
