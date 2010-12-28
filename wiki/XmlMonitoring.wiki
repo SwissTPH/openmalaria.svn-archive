@@ -63,9 +63,9 @@ the cohort; if false, it is unaffected by the cohort mode. A number means that f
 || 7 || nTransmit || (unused) ||n|| Infectiousness of human population to mosquitoes. Number of hosts transmitting to mosquitoes (i.e. sum of proportion of mosquitoes that get infected). Single value, not per age-group. ||
 || 8 || totalPatentInf  || age group ||y||  Total patent infections ||
 || 10 || sumPyrogenThresh  || age group ||y||  Sum of the pyrogenic threshold ||
-|| 11 || nTreatments1  || age group ||24|| 5-day timestep model: number of treatments (1st line) ||
-|| 12 || nTreatments2  || age group ||24|| 5-day timestep model: number of treatments (2nd line) ||
-|| 13 || nTreatments3  || age group ||24|| 5-day timestep model: number of treatments (inpatient) ||
+|| 11 || nTreatments1  || age group ||24|| number of treatments (1st line) ||
+|| 12 || nTreatments2  || age group ||24|| number of treatments (2nd line) ||
+|| 13 || nTreatments3  || age group ||24|| number of treatments (inpatient) ||
 || 14 || nUncomp  || age group ||24||  number of episodes (uncomplicated) ||
 || 15 || nSevere  || age group ||24||  number of episodes (severe) ||
 || 16 || nSeq  || age group ||24||  cases with sequelae ||
