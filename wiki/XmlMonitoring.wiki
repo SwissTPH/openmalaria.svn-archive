@@ -63,9 +63,9 @@ the cohort; if false, it is unaffected by the cohort mode. A number means that f
 || 7 || nTransmit || (unused) ||n|| Infectiousness of human population to mosquitoes. Number of hosts transmitting to mosquitoes (i.e. sum of proportion of mosquitoes that get infected). Single value, not per age-group. ||
 || 8 || totalPatentInf  || age group ||y||  Total patent infections ||
 || 10 || sumPyrogenThresh  || age group ||y||  Sum of the pyrogenic threshold ||
-|| 11 || nTreatments1  || age group ||24|| number of treatments (1st line) ||
-|| 12 || nTreatments2  || age group ||24|| number of treatments (2nd line) ||
-|| 13 || nTreatments3  || age group ||24|| number of treatments (inpatient) ||
+|| 11 || nTreatments1  || age group ||24|| number of treatments (1st line) (added to 1-day model in 24.1) ||
+|| 12 || nTreatments2  || age group ||24|| number of treatments (2nd line) (added to 1-day model in 24.1) ||
+|| 13 || nTreatments3  || age group ||24|| number of treatments (inpatient) (added to 1-day model in 24.1) ||
 || 14 || nUncomp  || age group ||24||  number of episodes (uncomplicated) ||
 || 15 || nSevere  || age group ||24||  number of episodes (severe) ||
 || 16 || nSeq  || age group ||24||  cases with sequelae ||
@@ -108,3 +108,5 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 47 || nMassVA || age group || 24 || The number of people newly protected by a vector-availability intervention since the last survey. ||
 || 48 || Clinical_Microscopy  || (unused) || 24 || Number of microscopy tests used ||
 || 49 || Clinical_DrugUsageIV || drug ID || 24 || Quantities of intravenous drugs used, per active ingredient abbreviation ||
+|| 50 || nAddedToCohort || age group || 24.1 || Number of individuals added to cohort ||
+|| 51 || nRemovedFromCohort || age group || 24.1 || Number of individuals added to cohort ||
