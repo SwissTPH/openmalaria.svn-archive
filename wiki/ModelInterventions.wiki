@@ -90,6 +90,15 @@ Attributes:
 
 || name || type || description ||
 || coverage || floating-point || Proportion of eligible candidates actually receiving the intervention (range [0-1]) ||
-|| minAge || floating-point || Minimum age at which humans are considered eligible in years ||
-|| maxAge || floating-point || Maximum age at which humans are considered eligible in years ||
-|| cohort || boolean || Restrict distribution to the current [Monitoring#Cohort-mode cohort] if true ||
+|| minAge || floating-point || Minimum age at which humans are considered eligible in years (defaults to 0) ||
+|| maxAge || floating-point || Maximum age at which humans are considered eligible in years (defaults to 100) ||
+|| cohort || boolean || Restrict distribution to the current [Monitoring#Cohort-mode cohort] if true (defaults to false) ||
+|| cumulativeWithMaxAge || int (optional) || If supplied, the cumulative coverage deployment mode (see below) is used according to the "max intervention age" parameter given by this attribute (units: time steps). ||
+
+==== Cumulative coverage deployment ====
+
+Without this option, the intervention deployment simply targets the proportion of eligible humans described by the coverage parameter. With it, the number of protected humans are first counted and unprotected humans targeted such that the total number of eligible humans reaches the proportion described by coverage.
+
+Humans are considered protected by an intervention when the last time they received this intervention was less than "max intervention age" (cumulativeWithMaxAge attribute) timesteps ago.
+
+Given that the existing proportion of humans protected, _p_, is less than the desired coverage level _c_, unprotected humans have chance (_c_-_p_) / (1-_p_) of receiving a new instance of the intervention (net/vaccine dose/house spraying etc.). This applies across all humans eligible for coverage (those within the given age range and within the cohort if applicable).
