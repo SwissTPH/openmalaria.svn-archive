@@ -97,8 +97,8 @@ Attributes:
 
 ==== Cumulative coverage deployment ====
 
-Without this option, the intervention deployment simply targets the proportion of eligible humans described by the coverage parameter. With it, the number of protected humans are first counted and unprotected humans targeted such that the total number of eligible humans reaches the proportion described by coverage.
+Without this option, the intervention deployment simply targets the proportion of eligible humans described by the coverage parameter. With it, the number of protected humans are first counted and unprotected humans targeted such that the total number of eligible humans reaches the proportion described by coverage. This option is available for vaccine, IPTi, ITN, IRS and VA interventions, and additionally cohort selection (special case where the "max intervention age" parameter doesn't do anything since humans are clearly either in the cohort or not).
 
 Humans are considered protected by an intervention when the last time they received this intervention was less than "max intervention age" (cumulativeWithMaxAge attribute) timesteps ago.
 
-Given that the existing proportion of humans protected, _p_, is less than the desired coverage level _c_, unprotected humans have chance (_c_-_p_) / (1-_p_) of receiving a new instance of the intervention (net/vaccine dose/house spraying etc.). This applies across all humans eligible for coverage (those within the given age range and within the cohort if applicable).
+Given that the existing proportion of humans protected, _p_, is less than the desired coverage level _c_, unprotected humans have chance (_c_-_p_)÷(1-_p_) of receiving a new instance of the intervention (net/vaccine dose/house spraying etc.). This applies across all humans eligible for coverage (those within the given age range and within the cohort if applicable).
