@@ -101,4 +101,4 @@ Without this option, the intervention deployment simply targets the proportion o
 
 Humans are considered protected by an intervention when the last time they received this intervention was less than "max intervention age" (cumulativeWithMaxAge attribute) timesteps ago.
 
-Given that the existing proportion of humans protected, _p_, is less than the desired coverage level _c_, unprotected humans have chance (_c_-_p_)÷(1-_p_) of receiving a new instance of the intervention (net/vaccine dose/house spraying etc.). This applies across all humans eligible for coverage (those within the given age range and within the cohort if applicable).
+Given that the existing proportion of humans protected, _p_, is less than the desired coverage level _c_, unprotected humans have chance [http://openmalaria.googlecode.com/svn/wiki/eqns/cum_deploy_cov.png] of receiving a new instance of the intervention (net/vaccine dose/house spraying etc.). This applies across all humans eligible for coverage (those within the given age range and within the cohort if applicable).

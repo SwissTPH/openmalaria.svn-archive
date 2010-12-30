@@ -22,7 +22,7 @@ This is the older method (only available before schema version 22).
 
 The `eir` element describes the Entomological Infection Rate for this mosquito species, which is used as a target when fitting the emergence rate of adult mosquitoes. The EIR is given via a [http://en.wikipedia.org/wiki/Fourier_series Fourier series] and a rotation offset; more accurately, the exposed EIR, in units of bites per day, is:
 
-http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier.png
+http://openmalaria.googlecode.com/svn/wiki/eqns/EIR_Fourier.png
 
 <wiki:comment>
 Above image rendered as latex from:
@@ -38,7 +38,7 @@ Here, Ξ,,t,, is the number of innoculations per person per day, where `t` is th
 
 If we introduce the function `f(t)` dependent on a,,n,, and b,,n,, for n≥1, we can reformulate Ξ,,t,, as
 
-http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier_f.png
+http://openmalaria.googlecode.com/svn/wiki/eqns/EIR_Fourier_f.png
 <wiki:comment>
 \begin{align*}
 \Xi_t &= e^{a_0 + f(t)} \\
@@ -46,9 +46,9 @@ http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier_f.png
 \end{align*}
 </wiki:comment>
 
-and thus show that the annual EIR is scaled by [http://openmalaria.googlecode.com/svn/wiki/images/exp_a0.png]:
+and thus show that the annual EIR is scaled by [http://openmalaria.googlecode.com/svn/wiki/eqns/exp_a0.png]:
 
-http://openmalaria.googlecode.com/svn/wiki/images/EIR_Fourier_annual.png
+http://openmalaria.googlecode.com/svn/wiki/eqns/EIR_Fourier_annual.png
 <wiki:comment>
 \begin{align*}
 \Xi &= \int_{t=0}^{365} e^{a_0} e^{f(t)} dt \\
