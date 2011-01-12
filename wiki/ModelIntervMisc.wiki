@@ -21,7 +21,7 @@ Each human then has an x/1000 probability of being assigned a new (imported live
 
 == Insert R_0 case ==
 
-The `InsertR_0Case` pseudo-intervention is used in estimating R,,0,,,. It is assumed before deployment that all infections have been removed from the population, and that all humans are completely protected with a transmission-blocking vaccine.
+The `InsertR_0Case` pseudo-intervention is used in estimating R,,0,,. It is assumed before deployment that all infections have been removed from the population, and that all humans are completely protected with a transmission-blocking vaccine.
 
 This intervention then picks one human, removes his transmission-blocking vaccine but gives him a pre-erythrocytic vaccine to prevent re-infection (bypassing the usual vaccine configuration to allow this person to have a PEV vaccine without the rest of the population), and finally infects this human.
 
