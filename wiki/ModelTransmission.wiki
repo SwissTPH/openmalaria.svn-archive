@@ -4,9 +4,11 @@
 
 The transmission models cover inter-human transmission of malaria, from measuring human infectiousness to mosquitoes to the point of describing each human's exposure (as inoculations per person per year, denoted EIR: Entomological Infection Rate), potentially taking the human's relative availability to mosquitoes into account in both cases.  The simulator is designed to simulate seasonally forced transmission, i.e. we assume that in the absence of interventions the EIR recurs annually with the same seasonal pattern.
 
-We currently have two transmission models: `NonVectorTransmission` and `VectorTransmission`.
+For simulating situations where there are no intervention effects on the mosquito vector, the initial rates of exposure of the human population can be input. OpenMalaria currently supports two models of transmission to humans: "non-vector" transmission and vector transmission.
 
 == Non-vector transmission ==
+
+When the non-vector model is used, initial exposure of humans to infectious mosquito bits is input and any intervention effects on transmission to the mosquito translate into proportionate effects on transmission back to the human.
 
 [http://www.ajtmh.org/cgi/content/abstract/75/2_suppl/11 Smith et al, 2005.]
 The 'Non-vector transmission' sub-model can be used only when there are no interventions affecting the vectorial capacity.  
@@ -22,6 +24,8 @@ where `pop` is the human population, `alpha_i` is the availability of human `i` 
 The Entomological Infection Rate can be calculated in three modes: `equilibriumMode`, where the daily EIR from the scenario file is used directly, `transientEIRknown`, where, similarly, EIR data from a `changeEIR` intervention in scenario file is used directly, and `dynamicEIR`. The `equilibriumMode` is always used for the initialisation phase, during which `kappa` data per day of year is collected and stored in `initialKappa`. When commencing the intervention phase of the simulation, the mode is usually switched to `dynamicEIR`, which uses the same EIR data as in `equilibriumMode` but scales this by `kappa_d / initialKappa_d` where `d` is the day-of-year.
 
 == Vector transmission ==
+
+The "vector transmission" model used by OpenMalaria extends the modelling of _P. falciparum_ parasites within vector mosquitoes such that vector-stage interventions on transmission can be modelled.
 
 Simulations that include non-periodic changes in the vectorial capacity use a seasonally forced version of the model for vector dynamics of [http://www.informaworld.com/smpp/content~content=a795158564&db=all Chitnis et al (2008)Journal of Biological Dynamics Vol. 2, No. 3, July 2008, 259–285].
 
