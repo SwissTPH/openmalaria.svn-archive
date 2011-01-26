@@ -28,14 +28,14 @@ Note: prior to schema version 25, the vaccine type codes were 1, 2, 3 instead of
 Vaccines need to be configured per-scenario with one or more `vaccineDescription` elements within the `descriptions` element (up to one per `vaccineType`):
 {{{
 <vaccineDescription vaccineType="TBV">
-  <halfLifeYrs value="10"/>
+  <decay L="10" function="exponential"/>
   <efficacyB value="10"/>
   <initialEfficacy value="0.512"/>
   <initialEfficacy value="0.64"/>
   <initialEfficacy value="0.8"/>
 </vaccineDescription>
 }}}
-Each vaccine type described is administered. One or more `initialEfficacy` elements can be given specifying the efficacy of each subsequent dose of the vaccine administered (at the time of administration). If further doses are given, the last listed `initialEfficacy` is repeated.
+Each vaccine type described is administered. The `decay` element has type `DecayFunction` ([ModelDecayFunction#Configuration configuration]). One or more `initialEfficacy` elements can be given specifying the efficacy of each subsequent dose of the vaccine administered (at the time of administration). If further doses are given, the last listed `initialEfficacy` is repeated.
 
 Use standard [ModelInterventions#Continuous_descriptions continuous] description with name `vaccine` and [ModelInterventions#Timed_descriptions mass deployment] description with name `vaccinate`, although the interaction of the two deployment methods is not quite the same as with other continuously deployed interventions: if a dose has been received via mass deployment, it will not also be received via continuous deployment, and if a continuous dose is missed but later caught-up with through mass deployment, further continuous doses may also be received (continuous administration only treats individuals who have received all doses they should have through continuous programs).
 
