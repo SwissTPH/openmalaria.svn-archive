@@ -23,3 +23,14 @@ Weibull, Hill and exponential functions never reach zero and have half their
 original efficacies at time L.
 
 http://openmalaria.googlecode.com/svn/wiki/graphs/decay-functions.png
+
+== Configuration ==
+
+Certain interventions have their efficacy decay described by an XML element of type `DecayFunction`, or by an element of type `DecayFunctionValue` which includes the initial value. These are of the form:
+
+{{{
+<eltName L="10.0" function="exponential"/>
+<eltName L="3" function="weibull" k="1.5" initial="0.44"/>
+}}}
+
+The `initial` attribute is only valid for `DecayFunctionValue` elements. In both cases, `function` and `L` must be specified, while `k` is optional (defaulting to 1 if not specified).
