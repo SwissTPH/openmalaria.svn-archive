@@ -1,0 +1,25 @@
+#summary Decay functions used as part of intervention descriptions
+
+= Decay functions =
+
+Several interventions, such as bed nets and vaccines, have an effectiveness which
+decays over time (at the population and possibly the individual level). To allow
+use of different decay functions, a generalized method of describing decay was
+added into schema version 25. The following set of functions are available:
+
+|| xml name || formula || ||
+|| constant || 1 || no decay ||
+|| linear || 1 - t/L || for t less than L, otherwise 0 ||
+|| exponential || exp( - t/L * log(2) ) || ||
+|| weibull || exp( -(t/L)^k * log(2) ) || equivalent to exponential when k = 1 ||
+|| hill || 1 / (1 + (t/L)^k) || ||
+|| chitnis || exp( k - k / (1 - (t/L)^2) ) || for t less than L, otherwise 0 ||
+
+where L is some description of the time-scale (dimension time) and k is a shape
+parameter (no dimension).
+
+Chitnis's function and the linear decay reach zero at time L, whereas the
+Weibull, Hill and exponential functions never reach zero and have half their
+original efficacies at time L.
+
+http://openmalaria.googlecode.com/svn/wiki/graphs/decay-functions.png
