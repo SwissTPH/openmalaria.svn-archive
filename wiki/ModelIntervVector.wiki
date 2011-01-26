@@ -20,38 +20,44 @@ This intervention is used to replace transmission settings. It can be used, for 
 
 The `changeEIR` element has the same type as the [http://code.google.com/p/openmalaria/wiki/XmlScenario#Non-vector_parameters:_nonVector nonVector] element.
 
-== Insecticide Treated Nets ==
+== Net / indoor spraying interventions ==
+
+The following interventions all work by multiplying [XmlEntoVector vector model] parameters affecting individual humans.
+
+Description of all effects uses the generic [ModelDecayFunctions decay functions framework] — see [ModelDecayFunctions#Configuration configuration] (`DecayFunctionValue` elements).
+
+=== Insecticide Treated Nets ===
 
 ITNs affect the availability of hosts to mosquitoes, and the chance of a mosquito successfully biting and fleeing an ITN-protected human. These properties are described per mosquito species, in the `interventions` `descriptions` section. For example:
 
 {{{
 <anopheles mosquito="gambiae_ss">
   <ITNDescription name="LLIN test">
-    <deterrency halflife="3" initial="0.44"/>
-    <preprandialKillingEffect halflife="3" initial="0.27"/>
-    <postprandialKillingEffect halflife="3" initial="0.27"/>
+    <deterrency L="3" function="exponential" initial="0.44"/>
+    <preprandialKillingEffect L="3" function="exponential" initial="0.27"/>
+    <postprandialKillingEffect L="3" function="exponential" initial="0.27"/>
   </ITNDescription>
 </anopheles>
 }}}
 
 Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] descriptions with name `ITN`.
 
-== Indoor Residual Spraying ==
+=== Indoor Residual Spraying ===
 
 IRS affects the availability of hosts to mosquitoes, and the chance of a mosquito surviving resting (egg incubation) after having fed on an IRS-protected human. Its effects should be described in the intervention `descriptions` element, for example:
 
 {{{
 <anopheles mosquito="gambiae_ss">
   <IRSDescription name="DDT test">
-    <deterrency halflife="0.5" initial="0.56"/>
-    <killingEffect halflife="0.5" initial="0.24"/>
+    <deterrency L="0.5" function="exponential" initial="0.56"/>
+    <killingEffect L="0.5" function="exponential" initial="0.24"/>
   </IRSDescription>
 </anopheles>
 }}}
 
 Uses standard [ModelInterventions#Timed_descriptions timed] descriptions with name `IRS`.
 
-== Vector Availability ==
+=== Vector Availability ===
 
 A theoretical `VectorAvailability` intervention functions similarly to ITN/IRS interventions, but only affects the availability of humans to mosquitoes. Its effectiveness must be described in the `descriptions` element, for example:
 
@@ -59,7 +65,7 @@ A theoretical `VectorAvailability` intervention functions similarly to ITN/IRS i
 {{{
 <anopheles mosquito="gambiae_ss">
   <VADescription name="hypothetical deterrency">
-    <deterrency halflife="4" initial="0.2"/>
+    <deterrency L="4" function="exponential" initial="0.2"/>
   </VADescription>
 </anopheles>
 }}}
