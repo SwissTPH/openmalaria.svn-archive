@@ -19,13 +19,15 @@ This intervention updates the health-system by providing an entirely new descrip
 
 Three vaccine types are simulated; this intervention administers all of these which have been configured to individuals (so changing the type of vaccine used during a simulation is not currently possible). Types of vaccine:
 
- * Pre-erythrocytic vaccine (vaccineType 1): prevents a proportion of infections from commencing.
- * Blood-stage vaccine (vaccineType 2): acts as a killing factor on blood-stage parasites
- * Transmission-blocking vaccine (vaccineType 3): one minus this scales the probability of transmission to mosquitoes
+ * Pre-erythrocytic vaccine (vaccineType `PEV`): prevents a proportion of infections from commencing.
+ * Blood-stage vaccine (vaccineType `BSV`): acts as a killing factor on blood-stage parasites
+ * Transmission-blocking vaccine (vaccineType `TBV`): one minus this scales the probability of transmission to mosquitoes
+
+Note: prior to schema version 25, the vaccine type codes were 1, 2, 3 instead of `PEV, BSV, TBV`.
 
 Vaccines need to be configured per-scenario with one or more `vaccineDescription` elements within the `descriptions` element (up to one per `vaccineType`):
 {{{
-<vaccineDescription vaccineType="3">
+<vaccineDescription vaccineType="TBV">
   <halfLifeYrs value="10"/>
   <efficacyB value="10"/>
   <initialEfficacy value="0.512"/>
