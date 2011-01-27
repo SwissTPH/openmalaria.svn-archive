@@ -172,4 +172,26 @@ When designing a scenario, you will need to think about what kind of output is r
 
 == Drug library ==
 
-Scenarios running on a 1-day timestep require PK and PD parameters for each drug used. In general, we use the parameters provided by our collaborators from the Liverpool School of Tropical Medicine. One can copy the `drugDescription` element from [http://code.google.com/p/openmalaria/source/browse/trunk/test/valerieCM/scenarioBase.xml?r=1545 this XML file].
+Scenarios running on a 1-day timestep require PK and PD parameters for each drug used, for example:
+{{{
+<drugDescription>
+  <drug abbrev="AR">
+    <PD>
+      <allele name="sensitive">
+        <initial_frequency>1</initial_frequency>
+        <max_killing_rate>4</max_killing_rate>
+        <IC50>0.0023</IC50>
+        <slope>4</slope>
+      </allele>
+    </PD>
+    <PK>
+      <negligible_concentration>0.000023</negligible_concentration>
+      <half_life>0.175</half_life>
+      <vol_dist>17.4</vol_dist>
+    </PK>
+  </drug>
+  <drug abbrev="XX" ...
+</drugDescription>
+}}}
+
+Our collaborators at the Liverpool School of Tropical Medicine are developing a library of drug parameters; one can copy their `drugDescription` element from [http://code.google.com/p/openmalaria/source/browse/trunk/test/valerieCM/scenarioBase.xml?r=1545 this XML file] (near the end).
