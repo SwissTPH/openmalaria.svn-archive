@@ -113,7 +113,7 @@ The `weight` data is only required for 1-day timestep models; the `availabilityT
 <wiki:comment>
 Graphs generated with the `trunk/unittest/AgeGroupInterpolationSuite.py` script.
 </wiki:comment>
-http://openmalaria.googlecode.com/svn/wiki/images/human_avail_and_mass_age.png
+http://openmalaria.googlecode.com/svn/wiki/graphs/human_avail_and_mass_age.png
 
 
 TODO: add some parameterizations

@@ -40,8 +40,8 @@ In practice, we always use the same data-set here. Some graphs, showing non-inte
 <wiki:comment>
 Graphs generated with the `trunk/unittest/AgeGroupInterpolationSuite.py` script.
 </wiki:comment>
-http://openmalaria.googlecode.com/svn/wiki/images/CFR_age.png
-http://openmalaria.googlecode.com/svn/wiki/images/prob_sequelae_age.png
+http://openmalaria.googlecode.com/svn/wiki/graphs/CFR_age.png
+http://openmalaria.googlecode.com/svn/wiki/graphs/prob_sequelae_age.png
 
 == 5-day timestep: `ImmediateOutcomes` ==
 
