@@ -1,8 +1,12 @@
 #summary Configuration of health-system models used by scenarios
 
-= Health Systems =
+= Clinical models and health systems =
 
-We have two different health system models implemented in OpenMalaria, one for a 1-day timestep and one for a 5-day timestep. These models include both health-system decisions such as treatment and outcomes including the probability of a death (thus they may also be referred to as clinical models). ([ModelClinical Read descriptions.])
+We have two different [ModelClinical clinical models] implemented in OpenMalaria, one for a 1-day timestep and one for a 5-day timestep. The clinical models encapsulate clinical fever, diagnosis and treatment (excluding drug action) of fevers, and clinical outcomes. Parameters unaffected by the health system along with the "healthSystemMemory" parameter (which affects reporting) are part of the [ScenarioDesign#Model "model" element] of the XML while all other clinical parameters are configured by the "healthSystem" element (and possibly reconfigured by "changeHS" intervention elements).
+
+Parameters unaffected by the health system include the [ModelPathogenesis incidence of malaria fevers] and the incidence and severity of non-malaria fevers (model to be documented).
+
+The "healthSystemMemory" parameter is the maximum age (units: time-steps) at which a previous bout of fever/sickness is considered part of the current episode. (This controls whether second-line treatment is used and whether a new episode is reported.)
 
 == Common data ==
 
