@@ -188,6 +188,10 @@ The event-scheduler model encapsulates a case-management model and schedules sic
 
 The case-management part consists of decision trees and treatment schedules, split into two cases: `uncomplicated` for non-malarial and malarial fevers not requiring hospitalisation, and `complicated` for severe malarial fevers or those worsened through a further insult. Apart from a few decision rules, the `uncomplicated` and `complicated` elements have the same format: a `decisions` element and a `treatments` element.
 
+==== Example: uncomplicated case treatment ====
+
+As an example of how these decision trees work, lets consider a patient with uncomplicated clinical malaria. The first decision we come to depends on "case" (first-line or second-line) and "p" (indicates a random decision). Assuming the patient has not had another malaria case in recent history, he will recieve first-line ("UC1") treatment, and thus has only a 50% chance of having a parasite test — lets assume has gets tested via microscopy. Like "case", the "result" decision is built-in and indicates the outcome of a malaria parasite diagnostic, based on the outcome of the "test" decision. Lets assume our guy's test came back positive; thus, according to the "treatment" decision he has a 90% chance of getting treated with MQ (mefloquine). Unlike these, "bodyMass" decision is deterministic — in fact "age" decisions may not depend on "p" or any other parameter (if necessary a second decision may do so). Having determined all decisions, we get to the treatments section. If our patient recieved "MQ_treat", he will immediately recieve a single oral dose including 20 times 5, 20 or 60 miligrams of MQ.
+
 ==== `decisions` ====
 
 The `decisions` element describes a model of treatment-seeking and health-system decisions, using a list of `decision` sub-elements.
