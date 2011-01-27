@@ -258,7 +258,12 @@ Besides the special "age" and "p" cases (see table below), this allows us to det
 
 The `treatments` element consists of a list of `treatment` elements. Each `treatment` element has a `name` attribute (which must correspond to one of the outcomes of the `treatments` decision), a `schedule` element and a list of zero-or-more `modifier` elements.
 
-The `schedule` element describes the base schedule of medications taken: a list of `medicate` elements describing each drug dose given (by `drug` code, dose in `mg`, and `hour` after start of case-management at which taken).
+The `schedule` element describes the base schedule of medications taken: a list of `medicate` elements describing each drug dose given, with a `drug` code and the `hour` at which it is given (from 0, start of timestep on which case management occurs). If `duration` is zero or not specified, the dose is assumed to be taken orally, and the size of the dose is given in `mg` of active ingredient. If a non-zero `duration` is specified (units: hours), the dose is administered via IV (uses different equation and separate costing from oral drugs), and the dose is instead specified as mg active ingredient per kg weight of the patient (again using the "mg" attribute). Example of IV drug:
+{{{
+medicate drug="XX" hour="0" mg="1" duration="8"/>
+}}}
+
+Drug codes available are those specified in the [ScenarioDesign#Drug_library drug library].
 
 Since one base schedule may be well or poorly adhered to in several variations, we have `modifier` elements. Each modifier corresponds to one `decision` and has one of three types (see table below). Each of these consists of a list of sub-elements, each of which have attributes `value` (the decision's outcome), `effect` (effect of the modifier per drug-code prescribed; of the form `DRUG1(x),DRUG2(y)` where x and y are effects as described below), and optionally the boolean attribute `affectsCost` (whether costs are modified in the same way as the doses administered; defaults to one if not present; can be used to simulate low-quality drugs at standard cost and vomited doses).
 
