@@ -37,7 +37,7 @@ A list of all outputs currently implemented can be found [XmlMonitoring#Survey_m
 
 === Cohort-mode ===
 
-By default, survey data comes from the whole simulated population. In order to restrict human measures of all surveys to only a cohort, add the attribute `cohortOnly="true"` to the `monitoring` element. Note that currently not all measures are restricted to the cohort as they should be; see the [XmlMonitoring list of measures] for exactly which measures are restricted to the cohort.
+By default, survey data comes from the whole simulated population. In order to restrict human measures of all surveys to only a cohort, add the attribute `cohortOnly="true"` to the `monitoring` element. Most measures are restricted to the cohort although not quite all; see the [XmlMonitoring list of measures] for details.
 
 A cohort must also be selected. To do this, (pseudo-)interventions have been added to select individuals either from a proportion of the population at some time point, and to continuously select some proportion of individuals as they reach a set age. See [ModelIntervMisc#Cohort_selection cohort-selecting pseudo interventions].
 
