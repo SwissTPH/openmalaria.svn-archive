@@ -42,25 +42,34 @@ Use standard [ModelInterventions#Continuous_descriptions continuous] description
 
 == Mass Drug Administration ==
 
-MDA simply gives humans drugs. In the 5-day timestep models, these drugs are simply modelled (drug kills 100% of parasites in all patients receiving it with no lasting effect), while with the 1-day time-step model a drug dosage must be specified.
+The MDA intervention models some type of mass deployment of drugs. In the 5-day timestep models, these drugs are simply modelled (drug kills 100% of parasites in all patients receiving it with no lasting effect). With the 1-day time-step model MDA interventions are more flexible and can, for example, be configured as short-action anti-malarial deployment, deployment of SP-like drugs with a long prophylactic effect and mass screen and treat.
 
-When used with a 1-day time-step, the `MDADescription` element must be present within the interventions' descriptions element (format is the same as for a [ScenarioHealthSystem#treatments treatment schedule). Deployment uses the standard [ModelInterventions#Timed_descriptions mass-deployment] description with name `MDA`.
+With the 5-day time-step model no additional configuration is needed. With the 1-day TS model, an MDADescription element must be included, as, for example, below:
 {{{
-  <interventions name="cohort selection">
-    <descriptions>
-      <MDADescription>
-        <schedule>
-          <medicate drug="MQ" hour="0" mg="1200"/>
-        </schedule>
-      </MDADescription>
-    </descriptions>
-    <timed>
-      <intervention time="730">
-        <MDA coverage="0.6"/>
-      </intervention>
-    </timed>
-  </interventions>
+<interventions name="cohort selection">
+  <descriptions>
+    <MDADescription>
+      <decisions>
+        <decision depends="" name="treatment" values="1">1</decision>
+        <decision depends="" name="test" values="none,microscopy,RDT">none</decision>
+      </decisions>
+      <treatments>
+        <treatment name="1">
+          <schedule>
+            <medicate drug="MQ" hour="0" mg="1200"/>
+          </schedule>
+        </treatment>
+      </treatments>
+    </MDADescription>
+  </descriptions>
+  <timed>
+    <intervention time="730">
+      <MDA coverage="0.6"/>
+    </intervention>
+  </timed>
+</interventions>
 }}}
+This has the same format as part of the [ScenarioHealthSystem#1-day_timestep:_EventScheduler EventScheduler complicated/uncomplicated trees]. The above example is fairly minimal: the `test` decision indicates that no malaria diagnostic is used, and the `treatment` decision indicates that the treatment schedule called `1` is used. Note that it may be preferable to specify dosing by age as with health-system treatment of uncomplicated malaria.
 
 
 == Intermittent Preventive Treatment ==
