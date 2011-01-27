@@ -286,3 +286,57 @@ The `EventScheduler` element also has a `ClinicalOutcomes` element, describing:
 || complicatedCaseDuration || int || Fixed length of a complicated/severe case of malaria (from treatment seeking until return to life-as-usual). ||
 || complicatedRiskDuration || int || Number of days for which humans are at risk of death during a severe or complicated case of malaria. Cannot be greater than the duration of a complicated case or less than 1 day. ||
 || pImmediateUC || double || Probability that UC treatment seeking will be done immediately when sick, on second day given that it wasn't done on first, etc. ||
+
+=== Non-malaria fevers ===
+
+By default, no Non-Malaria Fevers (NMFs) are modelled. If the option `NON_MALARIA_FEVERS` is enabled (1-day time-step model only), incidence, treatment and outcomes of non-malaria fevers are modelled. The only outcomes reported are the numbers of NMF deaths and of antibiotic treatments taken.
+
+Two categories of NMF are considered: bacterial/viral infections which are self-limiting, never fatal and therefore require no treatment, and bacterial infections which may lead to death and thus should be treated.
+
+Incidence of NMF and the probability that the NMF requires treatment are described within the [ScenarioDesign#Model "model" element]:
+{{{
+<model>
+  <clinical>
+    <NonMalariaFevers>
+<!-- rate of incidence of clinical fever per person per year by age -->
+      <incidence>
+        <group lowerbound="0" value="0.1"/>
+        <group lowerbound="1" value="0.1"/>
+      </incidence>
+<!-- probability that a case requires treatment by age -->
+      <prNeedTreatment>
+        <group lowerbound="0" value="0.1"/>
+        <group lowerbound="10" value="0.1"/>
+      </prNeedTreatment>
+    </NonMalariaFevers>
+  </clinical>
+  <ModelOptions>
+    <option name="NON_MALARIA_FEVERS"/>
+  </ModelOptions>
+  ...
+</model>
+}}}
+
+Treatment and outcomes of NMFs are described as part of the health-system model. The uncomplicated decision tree is followed as for uncomplicated malaria, the only difference being that malaria diagnostics are likely to give a negative result unless the patient also carries malaria parasites.
+
+Two additional decisions are made for NMFs: whether antibiotics are administered and whether the fever is fatal. (Antibiotics are never administered for malaria fevers.) These decisions are described by the parameters below. (TODO: describe parameters — model.)
+{{{
+<healthSystem>
+  <EventScheduler>
+    <uncomplicated ... />
+    <complicated ... />
+    <ClinicalOutcomes ... />
+    <NonMalariaFevers>
+      <prTreatment>0.7</prTreatment>
+      <effectNegativeTest>0</effectNegativeTest>
+      <effectPositiveTest>0</effectPositiveTest>
+      <effectNeed>0</effectNeed>
+      <CFR>
+        <group lowerbound="0" value="0.1"/>
+        <group lowerbound="10" value="0.1"/>
+      </CFR>
+      <TreatmentEfficacy>0.6</TreatmentEfficacy>
+    </NonMalariaFevers>
+  </EventScheduler>
+</healthSystem>
+}}}
