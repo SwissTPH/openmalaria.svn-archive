@@ -11,8 +11,8 @@ Within a simulation of a single setting, dubbed a _scenario_, there are a number
 {{{
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="0"
-    assimMode="0" name="template scenario" schemaVersion="23" wuID="0"
-    xsi:noNamespaceSchemaLocation="scenario_23.xsd">
+    assimMode="0" name="template scenario" schemaVersion="25" wuID="0"
+    xsi:noNamespaceSchemaLocation="scenario_25.xsd">
   <demography ...>
     ...
   </demography>
