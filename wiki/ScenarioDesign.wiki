@@ -127,7 +127,7 @@ The `drugDescription` element is only required when a 1-day time-step is used, a
 == Transmission model ==
 
 [ScenarioTransmission Transmission model configuration.] Two transmission models are available, independent of the length of the time-step ([ModelTransmission descriptions]):
-  * a simple model (allows response to human infectiousness and using a forced infection rate from mosquitoes)
+  * a simple model, termed "non vector" (model allows response to human infectiousness and using a forced infection rate from mosquitoes)
   * a more detailed model of vector transmission; allows modelling of vector stage interventions
 
 == Demography ==
