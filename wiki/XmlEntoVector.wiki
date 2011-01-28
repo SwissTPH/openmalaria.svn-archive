@@ -16,6 +16,8 @@ Each anopheles elements has the following sub-elements: either `eir` or `monthly
 
 EIR can be specified either via 5 Fourier coefficients and a rotation factor (`eir` element) or via 12 monthly values plus an annual level (`monthlyEir` element). Exactly one of these elements must appear.
 
+The user should be aware that the dynamic transmission modelled is not forced and often fluctuates to a greater or lesser extent (usually below the level input), particularly when close to the limit of sustainable transmission (e.g. with high case-management coverage). Running scenarios without interventions shows the dynamics of EIR and human infectiousness (the continuous output mode is convenient for viewing this).
+
 ==== EIR via Fourier coefficients ====
 
 This is the older method (only available before schema version 22).
