@@ -29,9 +29,9 @@ All options not otherwise specified are point-time outputs.
 || S_v || The number of infectious mosquitoes ||
 || input EIR || Total entomological infection rate input. This is a fixed periodic value, for comparison with simulated EIR. Units (from schema version 24): inoculations per adult per timestep. ||
 || simulated EIR || EIR actually acting on humans, as calculated by the transmission model. Units: inoculations per person per timestep. ||
-|| human infectiousness || Infectiousness of humans to mosquitoes, also known as kappa. This is the probability of a mosquito biting a human from becoming infected. ||
+|| human infectiousness || Infectiousness of humans to mosquitoes, also known as kappa. This is the probability that a mosquito becomes infected at any single feed on a human. ||
 || human availability || Mean availability of humans to mosquitoes over human population. ||
-|| immunity h || Average of `_cumulativeh` parameter across humans, which is the cumulative number of infections recieved since birth ||
+|| immunity h || Average of `_cumulativeh` parameter across humans, which is the cumulative number of infections received since birth ||
 || immunity Y || Average of `_cumulativeY` parameter across humans, which is the cumulative parasite density since birth ||
 || new infections || Number of new infections since last report, including super infections as with survey measure 43. ||
 
@@ -109,4 +109,4 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 48 || Clinical_Microscopy  || (unused) || 24 || Number of microscopy tests used ||
 || 49 || Clinical_DrugUsageIV || drug ID || 24 || Quantities of intravenous drugs used, per active ingredient abbreviation (mg) ||
 || 50 || nAddedToCohort || age group || n || Number of individuals added to cohort ||
-|| 51 || nRemovedFromCohort || age group || n || Number of individuals added to cohort ||
+|| 51 || nRemovedFromCohort || age group || n || Number of individuals removed from cohort ||
