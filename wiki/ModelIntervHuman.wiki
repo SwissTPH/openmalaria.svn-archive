@@ -46,7 +46,7 @@ The MDA intervention models some type of mass deployment of drugs. In the 5-day 
 
 With the 5-day time-step model no additional configuration is needed. With the 1-day TS model, an MDADescription element must be included, as, for example, below:
 {{{
-<interventions name="cohort selection">
+<interventions name="...">
   <descriptions>
     <MDADescription>
       <decisions>
