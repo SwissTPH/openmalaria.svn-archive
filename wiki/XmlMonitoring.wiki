@@ -8,6 +8,18 @@
 
 The monitoring system is described [Monitoring here] and within the [XmlScenario#Monitoring_element:_monitoring scenario configuration reference].
 
+== Units ==
+
+=== EIR ===
+
+Note that EIR can be reported in various units:
+
+  * inoculations or infectious bites
+  * as measured in adults or as measured across the population (all ages)
+  * per day, per timestep or per year
+
+Inputs to and outputs from the transmission part of the code generally use units of infectious bites per adult per timestep or year. Note that in the past, some of these outputs had been using units of infectious bites *across all ages*, and have in updates been converted to infectious bites *per adult*. The latter can be converted to the former by multiplying by the human availability.
+
 == Continuous measures ==
 
 This output format was introduced in schema version 19; some outputs were added later. There's no central list of these outputs in the code; instead search for calls to `Continuous::registerCallback` -- it's first argument should correspond to the output identifier in the table below.
@@ -28,9 +40,9 @@ All options not otherwise specified are point-time outputs.
 || O_v || The number of infected mosquitoes ||
 || S_v || The number of infectious mosquitoes ||
 || input EIR || Total entomological infection rate input. This is a fixed periodic value, for comparison with simulated EIR. Units (from schema version 24): inoculations per adult per timestep. ||
-|| simulated EIR || EIR actually acting on humans, as calculated by the transmission model. Units: inoculations per person per timestep. ||
+|| simulated EIR || EIR actually acting on humans, as calculated by the transmission model. Units: from schema version 26, infectious bites per adult per timestep, previously inoculations per person per timestep. ||
 || human infectiousness || Infectiousness of humans to mosquitoes, also known as kappa. This is the probability that a mosquito becomes infected at any single feed on a human. ||
-|| human availability || Mean availability of humans to mosquitoes over human population. ||
+|| human availability || Mean availability of humans to mosquitoes compared to a human adult. ||
 || immunity h || Average of `_cumulativeh` parameter across humans, which is the cumulative number of infections received since birth ||
 || immunity Y || Average of `_cumulativeY` parameter across humans, which is the cumulative parasite density since birth ||
 || new infections || Number of new infections since last report, including super infections as with survey measure 43. ||
@@ -94,7 +106,7 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 33 || Vector_Ov  || vector species || n ||  Number of infected mosquitoes ||
 || 34 || Vector_Sv  || vector species || n ||  Number of infectious mosquitoes ||
 || 35 || Vector_EIR_Input  || (unused) || n ||  Input EIR (Expected EIR entered into scenario file). Units (from schema version 24): inoculations per adult per timestep. ||
-|| 36 || Vector_EIR_Simulated  || (unused) || n ||  Simulated EIR (EIR output by the vector model). Units: inoculations per person per timestep. ||
+|| 36 || Vector_EIR_Simulated  || (unused) || n ||  Simulated EIR (EIR output by the vector model). Units: from schema version 26, infectious bites per adult per timestep, previously inoculations per person per timestep. ||
 || 37 || || || || (removed) ||
 || 38 || || || || (removed) ||
 || 39 || Clinical_RDTs  || (unused) || 24 ||  Number of Rapid Diagnostic Tests used ||
