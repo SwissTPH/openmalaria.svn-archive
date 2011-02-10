@@ -296,7 +296,7 @@ Two categories of NMF are considered: bacterial/viral infections which are self-
 Incidence of NMF and the probability that the NMF requires treatment are described within the [ScenarioDesign#Model "model" element]:
 {{{
 <model>
-  <clinical>
+  <clinical healthSystemMemory="14">
     <NonMalariaFevers>
 <!-- rate of incidence of clinical fever per person per year by age -->
       <incidence>
