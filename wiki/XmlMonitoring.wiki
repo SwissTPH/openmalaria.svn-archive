@@ -12,13 +12,9 @@ The monitoring system is described [Monitoring here] and within the [XmlScenario
 
 === EIR ===
 
-Note that EIR can be reported in various units:
+The units we generally use for EIR are _entomological inoculations per time period as measured in adults_ where the time period may be days, years, or the model's time step (currently 1 or 5 days).
 
-  * inoculations or infectious bites
-  * as measured in adults or as measured across the population (all ages)
-  * per day, per timestep or per year
-
-Inputs to and outputs from the transmission part of the code generally use units of infectious bites per adult per timestep or year. Note that in the past, some of these outputs had been using units of infectious bites *across all ages*, and have in updates been converted to infectious bites *per adult*. The latter can be converted to the former by multiplying by the human availability.
+Since children are smaller than adults our model assumes they are less likely to be bitten by mosquitoes. Since EIR only tends to be measured in adults, we try to make our units equivalent, either by only considering bites in adults or by dividing by the mean availability of people in the population compared to an adult (this mean relative availability is the "human availability" output available in continuous-reporting mode).
 
 == Continuous measures ==
 
@@ -40,7 +36,7 @@ All options not otherwise specified are point-time outputs.
 || O_v || The number of infected mosquitoes ||
 || S_v || The number of infectious mosquitoes ||
 || input EIR || Total entomological infection rate input. This is a fixed periodic value, for comparison with simulated EIR. Units (from schema version 24): inoculations per adult per timestep. ||
-|| simulated EIR || EIR actually acting on humans, as calculated by the transmission model. Units: from schema version 26, infectious bites per adult per timestep, previously inoculations per person per timestep. ||
+|| simulated EIR || EIR actually acting on humans, as calculated by the transmission model. Units: from schema version 26, inoculations per adult per timestep, previously inoculations per person per timestep. ||
 || human infectiousness || Infectiousness of humans to mosquitoes, also known as kappa. This is the probability that a mosquito becomes infected at any single feed on a human. ||
 || human availability || Mean availability of humans to mosquitoes compared to a human adult. ||
 || immunity h || Average of `_cumulativeh` parameter across humans, which is the cumulative number of infections received since birth ||
@@ -94,7 +90,7 @@ the cohort; if false, it is unaffected by the cohort mode. A number means that f
 || 27 || nNMFever  || age group ||24||  Number of episodes of non-malaria fever ||
 || 28 || || || || (removed) ||
 || 29 || || || || (removed) ||
-|| 30 || innoculationsPerAgeGroup || age group ||n|| The total number of inoculations per age group, summed over the reporting period. ||
+|| 30 || innoculationsPerAgeGroup || age group ||n|| The total number of inoculations per age group, summed over the reporting period. (Units are not adjusted to account for reduced child availability to mosquitoes.) ||
 
 Vector model outputs. These were point-time outputs, but some (just EIR?) have been converted to output averages.
 
@@ -106,7 +102,7 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 33 || Vector_Ov  || vector species || n ||  Number of infected mosquitoes ||
 || 34 || Vector_Sv  || vector species || n ||  Number of infectious mosquitoes ||
 || 35 || Vector_EIR_Input  || (unused) || n ||  Input EIR (Expected EIR entered into scenario file). Units (from schema version 24): inoculations per adult per timestep. ||
-|| 36 || Vector_EIR_Simulated  || (unused) || n ||  Simulated EIR (EIR output by the vector model). Units: from schema version 26, infectious bites per adult per timestep, previously inoculations per person per timestep. ||
+|| 36 || Vector_EIR_Simulated  || (unused) || n ||  Simulated EIR (EIR output by the vector model). Units: from schema version 26, inoculations per adult per timestep, previously inoculations per person per timestep. ||
 || 37 || || || || (removed) ||
 || 38 || || || || (removed) ||
 || 39 || Clinical_RDTs  || (unused) || 24 ||  Number of Rapid Diagnostic Tests used ||
