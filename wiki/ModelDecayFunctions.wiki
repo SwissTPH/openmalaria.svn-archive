@@ -7,15 +7,16 @@ decays over time (at the population and possibly the individual level). To allow
 use of different decay functions, a generalized method of describing decay was
 added into schema version 25. The following set of functions are available:
 
-|| xml name    || formula || ||
+|| function    || formula || ||
 || constant    || `1` || no decay ||
+|| step        || `1` || for `t < L`, otherwise 0 ||
 || linear      || `1 - t/L` || for `t < L`, otherwise 0 ||
 || exponential || `exp( - t/L * log(2) )` || ||
 || weibull     || `exp( -(t/L)^k * log(2) )` || equivalent to exponential when `k = 1` ||
 || hill        || `1 / (1 + (t/L)^k)` || ||
 || chitnis     || `exp( k - k / (1 - (t/L)^2) )` || for `t < L`, otherwise 0 ||
 
-where L is some description of the time-scale (dimension time) and k is a shape
+where `L` is some description of the time-scale (dimension time) and `k` is a shape
 parameter (no dimension).
 
 Chitnis's function and the linear decay reach zero at time L, whereas the
@@ -26,11 +27,16 @@ http://openmalaria.googlecode.com/svn/wiki/graphs/decay-functions.png
 
 == Configuration ==
 
+In some 
 Certain interventions have their efficacy decay described by an XML element of type `DecayFunction`, or by an element of type `DecayFunctionValue` which includes the initial value. These are of the form:
+
+Examples for "eltName":
 
 {{{
 <eltName L="10.0" function="exponential"/>
 <eltName L="3" function="weibull" k="1.5" initial="0.44"/>
 }}}
 
-The `initial` attribute is only valid for `DecayFunctionValue` elements. In both cases, `function` and `L` must be specified, while `k` is optional (defaulting to 1 if not specified).
+In some uses, such as to describe the effects of bed nets, the decay-function's value must be multiplied by a parameter describing the level of effect before any decay; this is done by the `initial` attribute.
+
+The `function`, `L` and `k` attributes act as described above, with `k` optional (defaults to `1` if not specified).
