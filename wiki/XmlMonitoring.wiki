@@ -12,7 +12,7 @@ The monitoring system is described [Monitoring here] and within the [XmlScenario
 
 === EIR ===
 
-The units we generally use for EIR are _entomological inoculations per time period as measured in adults_ where the time period may be days, years, or the model's time step (currently 1 or 5 days).
+The units we generally use for EIR are _entomological inoculations per time period as measured in adults_ where the time period may be days, years, or the model's time step (currently 1 or 5 days). Note: if there are no adults, reported simulated EIR will be "nan" since it cannot be measured.
 
 Since children are smaller than adults our model assumes they are less likely to be bitten by mosquitoes. Since EIR only tends to be measured in adults, we try to make our units equivalent, either by only considering bites in adults or by dividing by the mean availability of people in the population compared to an adult (this mean relative availability is the "human availability" output available in continuous-reporting mode).
 
