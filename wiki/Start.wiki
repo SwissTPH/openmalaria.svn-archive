@@ -1,5 +1,7 @@
 Welcome to the OpenMalaria wiki on google-code.
 
+<wiki:toc max_depth="1" />
+
 = Applications & Usage =
 
 The applications of OpenMalaria are:
@@ -42,3 +44,9 @@ OpenMalaria is being developed by a team from the [http://www.swisstph.ch/resear
 and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine] with financial support from the [http://www.gatesfoundation.org/Pages/home.aspx Bill & Melinda Gates Foundation]
 
 For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.
+
+= Offline Documentation =
+
+In case you wish to have access to the documentation on this wiki without an internet connection, you can download and extract the following:
+
+  * [http://openmalaria.googlecode.com/svn/download/wiki-dumps/OM_wiki_dump_2011_02_17.zip OM_wiki_dump_2011_02_17.zip]
