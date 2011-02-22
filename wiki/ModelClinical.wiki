@@ -29,7 +29,7 @@ The Crowell et al model (paper not yet published; implemented by the ClinicalEve
 
 Moving to a one-day time step implied the need for a clinical scheduler to mediate between the [ModelPathogenesis Pathogenesis], clinical decisions and severe outcomes models. The clinical scheduler decides and tracks the clinical state of the individual, based on the state as determined by the pathogenesis model and recent treatment history, allocates individuals to the clinical decisions and severe outcomes models as necessary, and determines final clinical outcomes.
 
-The clinical decisions component of the model (implemented in the ESCaseManagement class) consists of stochastic decision trees concerned with determining the treatments given (including the actual schedule followed and dose sizes taken), along with whether the patient was hospitalized and whether treatment or hospitalization delays occurred. The decision trees also provide costing data, derived from the drugs administered, diagnostic tests used and time in hospital.
+The clinical decisions component of the model (implemented in the ESCaseManagement class) consists of stochastic decision trees concerned with determining the treatments given (including the actual schedule followed and dose sizes taken), along with whether the patient was hospitalized and whether treatment or hospitalization delays occurred. The decision trees also provide information necessary for calculating costs, derived from the drugs administered, diagnostic tests used and time in hospital.
 
 ===Clinical scheduler===
 
