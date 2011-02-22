@@ -285,7 +285,7 @@ The `EventScheduler` element also has a `ClinicalOutcomes` element, describing:
 || uncomplicatedCaseDuration || int || Fixed length of an uncomplicated case of malarial/non-malarial sickness (from treatment seeking until return to life-as-usual). Usually 3. ||
 || complicatedCaseDuration || int || Fixed length of a complicated/severe case of malaria (from treatment seeking until return to life-as-usual). ||
 || complicatedRiskDuration || int || Number of days for which humans are at risk of death during a severe or complicated case of malaria. Cannot be greater than the duration of a complicated case or less than 1 day. ||
-|| pImmediateUC || double || Probability that UC treatment seeking will be done immediately when sick, on second day given that it wasn't done on first, etc. ||
+|| pImmediateUC || double || Probability that, when sick with uncomplicated fever, treatment seeking will be done immediately, on the second, or on the third day when sick. ||
 
 === Non-malaria fevers ===
 
