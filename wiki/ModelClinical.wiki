@@ -75,7 +75,7 @@ The following costs are considered:
  
  • parasite (RDT and microscopy) diagnostics used
  
- • outpatient health center visits
+ • outpatient visits
 
  • patient hospital days, using fixed average lengths for stays resulting in recovery and stays ending with mortality 
 
