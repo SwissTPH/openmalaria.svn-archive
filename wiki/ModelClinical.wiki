@@ -59,7 +59,7 @@ If a bout of uncomplicated fever (whether malarial or not) occurs in an individu
 
 ====Severe malaria====
 
-In the case of severe malaria, the path through the case management decision tree is determined at the start of the episode. The tree may determine that a one-day travel-time delay occurs, in which case in-hospital decisions are not determined until the next day. However, since currently, decisions do not depend on parasite densities, determining these decisions on the day of entry to a severe state has the same result, ignoring the one-day difference in age. 
+In the case of severe malaria, the path through the case management decision tree is determined at the start of the episode. The tree may determine that a one-day travel-time delay occurs, in which case in-hospital decisions are not determined until the next day. 
 
 Individuals can initially either seek treatment from a lower-level source, in hospital, or not at all. There is a possibility of pre-referral treatment with referral to hospital on the same or next day; pre-referral treatment reduces parasite densities on the first day of illness. Diagnostic testing is considered for costing purposes but is assumed not to affect treatment received. Treatment schedule is found and applied in the same way as with an uncomplicated case. Entry to hospital temporarily removes the individual from the transmission cycle.
 
