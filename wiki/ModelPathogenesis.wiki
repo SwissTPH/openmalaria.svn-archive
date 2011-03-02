@@ -20,3 +20,10 @@ Openmalaria's pathogenesis models determines the onset of sickness bouts (the st
 || 60 yrs +|| 8.6|| 8.6|| 0.890269|| 5.41|| 
 
 _Table 1: Estimated incidence of non-malarial fevers. Source: Incidence of non-malarial fever in various age-groups and epidemiological settings, Allan Schapira, 8/12/2009._
+
+To model age-based incidence of non-malarial fever, we currently use the data shown in table 1. In order to transform this into a continuous function for frequency given age, we interpolate linearly on the data-points generated as follows:
+1.	For each age group, add a data point centred on the age axis with frequency as given in the age group.
+2.	Add data points at ages 0 and infinity, taking frequency from that of the youngest and oldest age groups.
+We model the incidence of non-malarial fever as an interpolated linear function. Non-malarial fevers can only start at a given time point if it has been determined that a malarial fever is not starting at that time point. If both a non-malarial fever and a malarial fever occur within the health system memory, only the malaria episode is reported. 
+
+Each non-malarial fever has a certain age-based probability of needing antibiotic treatment, which we assume to be independent of parasitological status.
