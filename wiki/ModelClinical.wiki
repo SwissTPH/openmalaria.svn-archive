@@ -70,13 +70,13 @@ In both severe and uncomplicated cases, the relevant case management decision tr
 The treatment schedule is applied to the individual as a list of pending medications that are given over the next time points. Any previously pending medications are cancelled when new treatments are prescribed, and drugs are only costed when taken, so that if an individual progresses to severe after receiving treatments for an uncomplicated case, remained unconsumed medications are not costed.
 
 
-====Non-malarial fever (NMF)====
+===Non-malarial fever (NMF)===
 
 We assume that each individual has a probability of antibiotic administration, Pr(AB), according to whether s(he) has a NMF or a malarial fever and according to treatment-seeking location:
 
 For NMF:
 
-*No treatment-seeking: Pr(AB) = 0.
+* No treatment-seeking: Pr(AB) = 0
 
 * Health facility: Pr(AB) is a function of the average probability of being prescribed an antibiotic in the absence of a malaria test, P0; whether the individual had a negative or a positive malaria diagnostic test result, and whether the individual needs or does not need an antibiotic (this latter captures signs and symptoms that would indicate to a health worker need for antibiotics, in the absence of knowledge of malaria parasitological status). Thus:
 
