@@ -15,7 +15,7 @@ Openmalaria's pathogenesis models determines the onset of sickness bouts (the st
 || 0-11 mo.|| 9.1||9.66|| 1|| 6.08|| 
 || 12-59 mos|| 9.8|| 			
 || 5-9 vrs.|| 6.06|| 6.06|| 0.627329|| 3.81|| 
-|| 10-14 yrs.|| 4.16|| 4.16|| 0.430642|| 2.62
-|| 15-59 yrs.|| 6.43|| 6.43|| 0.665631|| 4.05
+|| 10-14 yrs.|| 4.16|| 4.16|| 0.430642|| 2.62|| 
+|| 15-59 yrs.|| 6.43|| 6.43|| 0.665631|| 4.05|| 
 || 60 yrs +|| 8.6|| 8.6|| 0.890269|| 5.41|| 
 _Table 1: Estimated incidence of non-malarial fevers. Source: Incidence of non-malarial fever in various age-groups and epidemiological settings, Allan Schapira, 8/12/2009._
