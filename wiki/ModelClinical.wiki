@@ -70,7 +70,7 @@ In both severe and uncomplicated cases, the relevant case management decision tr
 The treatment schedule is applied to the individual as a list of pending medications that are given over the next time points. Any previously pending medications are cancelled when new treatments are prescribed, and drugs are only costed when taken, so that if an individual progresses to severe after receiving treatments for an uncomplicated case, remained unconsumed medications are not costed.
 
 
-====Non-malarial fever (NMF)====
+====Antibiotic administration====
 
 We assume that each individual has a probability of antibiotic administration, Pr(AB), according to whether s(he) has a NMF or a malarial fever and according to treatment-seeking location:
 
