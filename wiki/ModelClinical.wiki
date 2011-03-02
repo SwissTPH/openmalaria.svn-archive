@@ -8,9 +8,7 @@ In openmalaria, the [ModelPathogenesis Pathogenesis models] determine if an indi
 Due to confusion of terms while adapting the clinical model for a one-day timestep, we have developed the following notation:
 
  * event -- an occurrence without measurable duration. This can be a bout in the five-day time step model since the whole bout occurs on a single time step, but in the one-day time step model an event is strictly a state-change.
-
  * bout -- a "bout of sickness" describes a fever, malarial or otherwise, or period of severe illness, usually lasting no more than five days.
-
  * episode -- the health-system's reporting unit; each bout is either considered the start of a new episode, or, if occurring within the health system memory (currently 30 days) of the start of the last episode, considered part of that episode. Thus, at least in low transmission settings, an episode should roughly correspond to one malaria infection (which can cause multiple bouts). An episode's severity (non-malarial, malarial or severe) is considered to be that of its worst bout. 
 
 == Five-day timestep ==
