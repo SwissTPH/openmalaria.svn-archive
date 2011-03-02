@@ -74,7 +74,7 @@ The treatment schedule is applied to the individual as a list of pending medicat
 
 We assume that each individual has a probability of antibiotic administration, Pr(AB), according to whether s(he) has a NMF or a malarial fever and according to treatment-seeking location:
 
-For NMF:
+_For NMF:_
 
 - No treatment-seeking: Pr(AB) = 0
 
@@ -93,10 +93,9 @@ Logit(Pr(AB)= β0 + β4
 where exp(β4) is the effect of seeking treatment in the informal sector on the odds of getting antibiotics. In general, we do not know how the chance of getting an antibiotic depends on health facility attendance. Therefore, for the purposes of this model, we set β4 to 0, assuming that the overall probability of getting an antibiotic is not affected by seeking in the informal sector but targeting of antibiotics to those in need is improved in health facilities both by malaria diagnosis and additional diagnostic procedures (e.g. measuring respiratory rates, examining for symptoms of viral infection, etc).
 
 - Community health workers:
-# Trained to administer only presumptive treatment for malaria:  Pr(AB)= 0 
-# Trained in malaria diagnostic testing and management of non-malarial fevers: Pr(AB) as in formal sector
+If they are trained to administer only presumptive treatment for malaria, then we assume Pr(AB)= 0. If they are trained in malaria diagnostic testing and management of non-malarial fevers, then Pr(AB) is assumed to be as in the formal sector.
 
-For malarial fever:
+_For malarial fever:_
 
 β0= logit (P0) - β3 x Pr(malarial fever needs antibiotics)
 and
