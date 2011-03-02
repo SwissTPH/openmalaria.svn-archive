@@ -74,7 +74,7 @@ The treatment schedule is applied to the individual as a list of pending medicat
 
 We assume that each individual has a probability of antibiotic administration, Pr(AB), according to whether s(he) has a NMF or a malarial fever and according to treatment-seeking location:
 
-_For NMF:_
+===== For NMF: =====
 
 - No treatment-seeking: Pr(AB) = 0
 
@@ -95,14 +95,14 @@ where exp(β4) is the effect of seeking treatment in the informal sector on the 
 - Community health workers:
 If they are trained to administer only presumptive treatment for malaria, then we assume Pr(AB)= 0. If they are trained in malaria diagnostic testing and management of non-malarial fevers, then Pr(AB) is assumed to be as in the formal sector.
 
-_For malarial fever:_
+===== For malarial fever: =====
 
 β0= logit (P0) - β3 x Pr(malarial fever needs antibiotics)<br>
 and<br>
 Logit(Pr(AB)= β0 + β1 x I (MD-) + β2 x I(MD+) + β3 (need)
 
 
-_Case fatality rates_
+===== Case fatality rates =====
 
 The CFR of fevers that do not need antibiotics is assumed to be 0. 
 
@@ -110,16 +110,14 @@ CFR(a)¦ need= γ0(a) (1-εAB x I(AB))
 Where γ0(a) is the CFR(a) in absence of antibiotic, given need, and εAB is the efficacy of the antibiotic on CFR. I(AB) takes the value 1 if the individual receives an antibiotic and 0 if s(he) does not. 
 
 ===Costing===
-The following costs are considered: 
- • drugs medicated, including vomited doses but not doses skipped due to poor adherence
- 
- • parasite (RDT and microscopy) diagnostics used
- 
- • outpatient visits
 
- • patient hospital days, using fixed average lengths for stays resulting in recovery and stays ending with mortality 
+The following costs are considered:
 
- • patient direct costs, including travel, medical and non-medical supplies
+ * drugs medicated, including vomited doses but not doses skipped due to poor adherence
+ * parasite (RDT and microscopy) diagnostics used
+ * outpatient visits
+ * patient hospital days, using fixed average lengths for stays resulting in recovery and stays ending with mortality 
+ * patient direct costs, including travel, medical and non-medical supplies
 
 A rough diagram of the model processes is below (states and state choices in blue). The diagram ignores the time component (most notably: change in parasite density over a severe bout is what input the parasite density has on chance of death). 
 
