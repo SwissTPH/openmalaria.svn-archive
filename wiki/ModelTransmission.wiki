@@ -27,6 +27,6 @@ The Entomological Infection Rate can be calculated in three modes: `equilibriumM
 
 The "vector transmission" model used by OpenMalaria extends the modelling of _P. falciparum_ parasites within vector mosquitoes such that vector-stage interventions on transmission can be modelled.
 
-Simulations that include non-periodic changes in the vectorial capacity use a seasonally forced version of the model for vector dynamics of [http://www.informaworld.com/smpp/content~content=a795158564&db=all Chitnis et al (2008)Journal of Biological Dynamics Vol. 2, No. 3, July 2008, 259–285].
+Simulations that include non-periodic changes in the vectorial capacity use a seasonally forced version of the model for vector dynamics of [http://www.informaworld.com/smpp/content~content=a795158564&db=all Chitnis et al (2008)Journal of Biological Dynamics Vol. 2, No. 3, July 2008, 259–285], further described in [http://www.ajtmh.org/cgi/content/full/83/2/230 Chitnis et al (2010) American Journal of Tropical Medicine and Hygiene Vol. 83, No. 2, 230--240].
 
 XML parameters for vector transmission are described [XmlEntoVector here].
