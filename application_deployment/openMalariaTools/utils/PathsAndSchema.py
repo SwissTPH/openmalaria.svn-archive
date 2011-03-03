@@ -24,6 +24,9 @@ import string
 import sys
 import tempfile
 
+# this needs to be replaced when installed:
+install_path = '@INSTALL_PATH@'
+
 '''
 PathsAndSchema:
 This class is used for setting important paths and the schema version.
@@ -37,14 +40,15 @@ class PathsAndSchema():
     _temp_path = _base_path
     _home_path = _base_path
     
-    if not sys.platform == 'win32':
-        _temp_path = tempfile.gettempdir()
-        _home_path = os.getenv("HOME") 
-    	_base_path = '/usr/local/openmalariaTools'
-    else:
+    if sys.platform == 'win32':
         _temp_path = os.getenv("TEMP")
         _home_path = os.getenv("USERPROFILE") 
-        
+    else:
+        _temp_path = tempfile.gettempdir()
+        _home_path = os.getenv("HOME") 
+        if install_path[0] != '@':
+            _base_path = install_path
+    
     _application_folder = os.path.join(_base_path, 'application')
     _common_folder = os.path.join(_base_path, 'application', 'common')
     
@@ -61,7 +65,7 @@ class PathsAndSchema():
         
     _icon_path = os.path.join(_base_path, 'application', 'common', 'om.ico')
     
-    _actual_schema_version = '23'
+    _actual_schema_version = '26'
     
     @staticmethod
     def get_application_folder():
