@@ -20,7 +20,7 @@ The user should be aware that the dynamic transmission modelled is not forced an
 
 ==== EIR via Fourier coefficients ====
 
-This is the older method (only available before schema version 22).
+This is the older method (the only available method before schema version 22).
 
 The `eir` element describes the Entomological Infection Rate for this mosquito species, which is used as a target when fitting the emergence rate of adult mosquitoes. The EIR is given via a [http://en.wikipedia.org/wiki/Fourier_series Fourier series] and a rotation offset; more accurately, the exposed EIR, in units of bites per day, is:
 
