@@ -78,12 +78,16 @@ A larviciding intervention is currently also available, but very simple in that 
 
 Example timed-deployment description:
 {{{
-<intervention time="100">
+<intervention time="173">
   <larviciding>
-    <anopheles duration="1825" effectiveness="0.75" mosquito="gambiae_ss"/>
+    <anopheles duration="12" effectiveness="0.75" mosquito="gambiae_ss"/>
+    <anopheles duration="12" effectiveness="0.75" mosquito="funestus"/>
+    <anopheles duration="12" effectiveness="0.75" mosquito="arabiensis"/>
   </larviciding>
 </intervention>
 }}}
+
+Here, the `duration` parameter specifies how long the larviciding is effective for. `effectiveness` gives the proportion of larvae killed by the larviciding. The `mosquito` parameter specifies which species is affected — this must be described for all species (it will have no effect on species not explicitly listed).
 
 == Uninfect Vectors ==
 
