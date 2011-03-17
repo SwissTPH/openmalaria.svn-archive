@@ -109,7 +109,7 @@ Attributes:
 Where multiple interventions occur at the same time-point, they must appear in the XML in the following order:
 
 {{{
-<intervention time="6">
+<intervention time="0">
   <changeHS> ... </changeHS>
   <changeEIR> ... </changeEIR>
   <importedInfectionsPerThousandHosts>0.01</importedInfectionsPerThousandHosts>
@@ -124,6 +124,11 @@ Where multiple interventions occur at the same time-point, they must appear in t
   <uninfectVectors/>
   <larviciding> ... </larviciding>
   <cohort coverage="0.6" ... />
+</intervention>
+<intervention time="1">
+  ...
+</intervention>
+...
 }}}
 
 (Of course, any of these may be left out.)
