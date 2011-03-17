@@ -76,6 +76,15 @@ Attributes this can include:
 || `begin` || integer || The time-step of the intervention period at which this intervention becomes active (default: 0) ||
 || `end` || integer || The time-step of the intervention period at which this intervention becomes inactive (default: 2147483647) ||
 
+==== Order ====
+
+The XML elements describing continuous intervention deployment must appear in the following order:
+
+ # all `vaccine` elements
+ # all `ITN` elements
+ # all `ipti` elements
+ # all `cohort` elements
+
 === Timed descriptions ===
 
 Many timed interventions also use a standard type of description for *mass deployment*, although several timed interventions use a different description. An example:
@@ -94,6 +103,30 @@ Attributes:
 || maxAge || floating-point || Maximum age at which humans are considered eligible in years (defaults to 100) ||
 || cohort || boolean || Restrict distribution to the current [Monitoring#Cohort-mode cohort] if true (defaults to false) ||
 || cumulativeWithMaxAge || int (optional) || If supplied, the cumulative coverage deployment mode (see below) is used according to the "max intervention age" parameter given by this attribute (units: time steps). ||
+
+==== Order ====
+
+Where multiple interventions occur at the same time-point, they must appear in the XML in the following order:
+
+{{{
+<intervention time="6">
+  <changeHS> ... </changeHS>
+  <changeEIR> ... </changeEIR>
+  <importedInfectionsPerThousandHosts>0.01</importedInfectionsPerThousandHosts>
+  <MDA coverage="0.6" ... />
+  <vaccinate coverage="0.6" ... />
+  <ITN coverage="0.6" ... />
+  <IRS coverage="0.6" ... />
+  <VectorAvailability coverage="0.6" ... />
+  <ipti coverage="0.6" ... />
+  <immuneSuppression coverage="0.6" ... />
+  <insertR_0Case/>
+  <uninfectVectors/>
+  <larviciding> ... </larviciding>
+  <cohort coverage="0.6" ... />
+}}}
+
+(Of course, any of these may be left out.)
 
 ==== Cumulative coverage deployment ====
 
