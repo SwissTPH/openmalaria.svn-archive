@@ -287,7 +287,7 @@ class FileList(gtk.Frame):
     the toggle button state (False, because the file isn't selected...)'''
     def add_file(self, path, name):
         pb = None
-        self.liststore.append([path, name, pb , False])
+        self.liststore.append([path, name, pb , True])
     
     '''
     close_scenarios:

@@ -41,17 +41,18 @@ class OMFrontend:
     destroy:
     Kills the actual window'''
     def destroy(self, widget, data=None):
-        if sys.platform == 'win32':
-            gtk.main_quit()
-            sys.exit()
-        else:
-            os.kill(os.getpid(),signal.SIGTERM)
-        
+        if sys.platform != 'win32':
+            # is this still necessary?
+            #os.kill(os.getpid(),signal.SIGTERM)
+            pass
+        gtk.main_quit()
+        sys.exit()
+    
     def __init__(self):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.connect("delete_event", self.delete_event)
         self.window.connect("destroy", self.destroy)
-        self.window.set_border_width(10)
+        #self.window.set_border_width(10)
         self.window.set_title("openMalaria Tools")
         self.window.set_gravity(gtk.gdk.GRAVITY_NORTH_WEST)
         icon_path = PathsAndSchema.get_icon_path()

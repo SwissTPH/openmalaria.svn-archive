@@ -46,10 +46,10 @@ class OpenMalariaRun():
     #import compareCtsout
     
     
-    def findFile (self, *names):
+    def findFile (self, execName):
         
         execs=set()
-        for name in names:
+        for name in [execName]:
             path=os.path.join(PathsAndSchema.get_application_folder(),name)
             if os.path.isfile (path):
                 execs.add (path)
@@ -74,7 +74,7 @@ class OpenMalariaRun():
     '''
     runScenario:
     runs a Scenario using the openmalaria executable.
-    TODO: Add comparison to existing outputs'''
+    '''
     def runScenario(self, terminal, livegraph, path, name, simDir, only_one_folder, custom_pop_size=0, use_custom_pop_size=False, checkpointing=False, nocleanup=False, runLiveGraph=False, newBuffer=False):
         
         if newBuffer:
@@ -82,8 +82,10 @@ class OpenMalariaRun():
         
         scenarioSrc = path
         
-        openMalariaExec=os.path.abspath(self.findFile (*["openMalaria","openMalaria.exe"]))
-        
+        if sys.platform in ['win32','cygwin']:
+            openMalariaExec=os.path.abspath(self.findFile ("openMalaria.exe"))
+        else:
+            openMalariaExec=os.path.abspath(self.findFile ("openMalaria"))
         success = False
         
         arglist = list()
