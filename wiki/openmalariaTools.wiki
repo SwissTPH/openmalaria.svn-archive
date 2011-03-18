@@ -13,14 +13,19 @@ OpenmalariaTools is currently in beta stage 4. It runs on both Linux and Windows
 The beta 4 release uses schema version 23 and has been packaged with an installer for windows and debian packages for linux. To use:
 
   * Make sure a [http://www.java.com/en/download/ Java run-time environment] is installed.
-  * On windows: Download and run the [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/win32/openMalariaTools_installer_v00.04.exe Windows (32-bit) openmalariaTools installer]
-  * On linux(64 bits): Download and run the [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/gnu64/openmalariaTools_00.04_amd64.deb (64 bits) openmalariaTools debian package]
-  * On linux(32 bits): Download and run the [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/gnu32/openmalariaTools_00.04_i386.deb (32 bits) openmalariaTools debian package]
+  * Install [http://www.python.org/download/ Python] (version 2.6 or 2.7) and [http://www.pygtk.org/downloads.html PyGTK]. (The older installer should do this for you, but the latest archive won't.)
+  * Install [http://7-zip.org/ 7-zip] if you don't already have it (it's a worthy replacement for zip files)
+  * Download and install one of the following:
+      * (Windows 7-zip archive) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.05/win32/openMalariaTools_schema26_v00.05.7z]
+      * (Windows installer) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/win32/openMalariaTools_installer_v00.04.exe]
+      * (linux 64-bit .deb) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/gnu64/openmalariaTools_00.04_amd64.deb]
+  * (linux 32-bit .deb) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/gnu32/openmalariaTools_00.04_i386.deb]
 
+Note that the latest (Windows) version does not have an installer. Just extract the archive somewhere, and run the `start_gui.py` file. (This archive will also work on other platforms, if a suitable `application/openMalaria` binary is added.)
 
 Alternatively, one can install from source (familiarity with [http://subversion.apache.org/ subversion] or [http://tortoisesvn.tigris.org/ TortoiseSVN] assumed).
 
-  * Make sure a Java run-time environment, python and PyGTK are installed.
+  * Make sure a Java run-time environment, python and PyGTK are installed (as above).
   * Check out the sources:
     {{{
 svn checkout http://openmalaria.googlecode.com/svn/application_deployment OpenmalariaTools
