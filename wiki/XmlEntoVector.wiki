@@ -88,6 +88,7 @@ Other per-species mosquito parameters (except non-human-host interaction) are de
 || name || type || unit || description ||
 || mosqRestDuration || int || days || Duration of the resting period of the vector ||
 || extrinsicIncubationPeriod || int || days || Extrinsic incubation period (time required for sporozoite development) ||
+|| minInfectedThreshold || int || number || Number of infected mosquitos below which the values for proportion of infected mosquitoes and proportion of infectious mosquitoes are set to zero. Used in order to simulate interruption of transmission within the deterministic model. ||
 || mosqLaidEggsSameDayProportion || double || proportion || Proportion of mosquitoes host seeking on same day as ovipositing ||
 || mosqSeekingDuration || double || days || Maximum proportion of day spent host-seeking by the vector ||
 || mosqSurvivalFeedingCycleProbability || double || probability || Probability that the mosquito survives the feeding cycle||
