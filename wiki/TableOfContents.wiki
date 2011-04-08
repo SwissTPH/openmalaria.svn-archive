@@ -24,7 +24,7 @@
       * [XmlScenario Scenario XML]
       * [XmlMonitoring Monitoring measures]
       * [Terminology]
-      * [How to apply OpenMalaria to field sites]
+      * [Instructions How to apply OpenMalaria to field sites]
   * *[ModelsOverview Model descriptions]*
     * [ModelDemography Human demography]
     * [ModelTransmission Transmission models]
