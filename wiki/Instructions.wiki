@@ -19,11 +19,11 @@ A description of how to download OpenMalaria for a PC can be found
 
 *2.	Decide on what you will be simulating
 
-Before doing anything else, collaborate with the research team and/or control program managers in the study area (if possible) to ensure field data is available for what you want to simulate. For example, if the field study is a cohort where people are tested for malaria using RDTs, you will be simulating patent infections. If the field study is an entomological study where mosquitoes are trapped, dissected and analyzed for sporozoites, you will be simulating number of infectious mosquitoes. Try to keep the number of outputs limited to 3 or 4 max for ease of analysis. EIR is considered the main measure of transmission so this should ideally be one of the outputs. 
+Before doing anything else, collaborate with the research team and/or control program managers in the study area (if possible) to ensure field data is available for what you want to simulate. For example, if the field study is a cohort where people are tested for malaria using RDTs, you will be simulating patent infections. If the field study is an entomological study where mosquitoes are trapped, dissected and analyzed for sporozoites, you will be simulating number of infectious mosquitoes. Try to keep the number of outputs limited to 3 or 4 maximum for ease of analysis. EIR is considered the main measure of transmission so this should ideally be one of the outputs. 
 
 It is important for this step to happen early on because you don’t want to get to the end of running simulations and find out your analysis is not relevant in the field. It will help immensely if everyone is on the same page at the beginning with what you are simulating and why.
 
-The full list of outputs that OpenMalaria is able to simulate can be found 
+The full list of outputs OpenMalaria is able to simulate can be found 
 [http://code.google.com/p/openmalaria/wiki/XmlMonitoring here].
 
 
@@ -64,8 +64,6 @@ In general, the types of information include:
 
 -Human availability
 
--Parameters
-
 A full list of these parameters as well as their definitions can be found [http://code.google.com/p/openmalaria/wiki/ScenarioDesign here].
 
 A description of the XML syntax required for the scenario files can be found
@@ -74,7 +72,7 @@ A description of the XML syntax required for the scenario files can be found
 
 *5.	Gather data 
 
-The next step is to gather the necessary data to include in the scenario file to describe the situation in your study area as closely as possible to reality. There are more or less 90 separate pieces of data that need to go into the model. As many inputs as possible should come from MTC field studies in the particular study area, but realistically the overall proportion of inputs that come from site-specific data will be rather low (about 1/3rd). A sizeable number of inputs will come from previously published literature at the district, national or regional level through a literature review. There will be a number of inputs that will remain the same as the initial model parameterization ((Smith, Maire et al. 2006), (Maire, Smith et al. 2006), (Chitnis, Smith et al. 2008), (Ross, Penny et al. 2008),(Penny, Maire et al. 2008),(Chitnis, Schapira et al. 2010)) depending on which model(s) you choose, particularly data on the vector life cycle and drug action. It is helpful to document the source of the data you choose for each parameter and if there are multiple sources why you chose the value that will go into the model.
+The next step is to gather the necessary data to include in the scenario file to describe the situation in your study area as closely as possible to reality. There are more or less 90 separate pieces of data that need to go into the model. As many inputs as possible should come from studies in your particular study area, but realistically the overall percentage of inputs that come from site-specific data will be rather modest (about 30%). A sizeable number of inputs will come from previously published literature at the district, national or regional level through a literature review. There will be a number of inputs that will remain the same as the initial model parameterization (1-2)(4-7) depending on which model(s) you choose, particularly data on the vector life cycle and drug action. It is helpful to document the source of the data you choose for each parameter and if there are multiple sources why you chose the value that will go into the model.
 
 
 *6.	Create XML scenario file
@@ -99,7 +97,7 @@ Creating graphs that overlay observed field data onto the simulations will give 
 
 *9.	Conduct experiments – evaluate uncertainty with a sensitivity analysis and examining a mix of intervention options
 
-By running simulations with multiple seed values you are addressing stochasticity of the model. However, once you have your fitted model, conducting a sensitivity analysis of parameters can address parameter uncertainty. Choose parameters that you believe are important to the model but have input values you are not completely certain about. For example, measures of EIR can vary in the same location when different methods for measuring sporozoites and biting rate are applied (Kelly-Hope and McKenzie 2009), so this parameter is a good candidate for a sensitivity analysis.  Choose a range of values for the parameter that makes sense given your study area context – usually a minimum, maximum and median value.  Using the EIR example, if your estimated EIR for the study area is 4, for your range you may want to choose a lower value (0.4), a slightly higher value (10) and an extremely high value (40). Using the scenario file of the “best fit” model from your simulations above, only change the value you are conducting the sensitivity analysis with and create as many new scenario files as you have values (i.e. one file for the minimum EIR, one for the maximum EIR, etc). 
+By running simulations with multiple seed values you are addressing stochasticity of the model. However, once you have your fitted model, conducting a sensitivity analysis of parameters can address parameter uncertainty. Choose parameters that you believe are important to the model but have input values you are not completely certain about. For example, measures of EIR can vary in the same location when different methods for measuring sporozoites and biting rate are applied (3), so this parameter is a good candidate for a sensitivity analysis.  Choose a range of values for the parameter that makes sense given your study area context – usually a minimum, maximum and median value.  Using the EIR example, if your estimated EIR for the study area is 4, for your range you may want to choose 0.4 as a lower value, 10 as a slightly higher value, and 40 and an extremely high value. Using the scenario file of the “best fit” model from your simulations above, only change the value you are conducting the sensitivity analysis with and create as many new scenario files as you have values (i.e. one file for the minimum EIR, one for the maximum EIR, etc). 
 
 To explore the effects of different interventions, take your “best fit” model and update the scenario file to simulate different coverage levels, timing, and target age groups. Set the scenario to run for an extended period time over the whole population of the study area to see the impact. 
 
@@ -111,16 +109,16 @@ Once you are satisfied that the syntax in your scenario file is working and you 
 
 *References
 
-Chitnis, N., A. Schapira, et al. (2010). "Comparing the effectiveness of malaria vector-control interventions through a mathematical model." The American journal of tropical medicine and hygiene 83(2): 230-240.
+1. Chitnis, N., A. Schapira, et al. (2010). "Comparing the effectiveness of malaria vector-control interventions through a mathematical model." The American journal of tropical medicine and hygiene 83(2): 230-240.
 
-Chitnis, N., T. Smith, et al. (2008). "A mathematical model for the dynamics of malaria in mosquitoes feeding on a heterogeneous host population." Journal of Biological Dynamics 2(3): 259 - 285.
+2. Chitnis, N., T. Smith, et al. (2008). "A mathematical model for the dynamics of malaria in mosquitoes feeding on a heterogeneous host population." Journal of Biological Dynamics 2(3): 259 - 285.
 
-Kelly-Hope, L. A. and F. E. McKenzie (2009). "The multiplicity of malaria transmission: a review of entomological inoculation rate measurements and methods across sub-Saharan Africa." Malaria journal 8: 19.
+3. Kelly-Hope, L. A. and F. E. McKenzie (2009). "The multiplicity of malaria transmission: a review of entomological inoculation rate measurements and methods across sub-Saharan Africa." Malaria journal 8: 19.
 
-Maire, N., T. Smith, et al. (2006). "A model for natural immunity to asexual blood stages of Plasmodium falciparum malaria in endemic areas." Am J Trop Med Hyg 75(2 Suppl): 19-31.
+4. Maire, N., T. Smith, et al. (2006). "A model for natural immunity to asexual blood stages of Plasmodium falciparum malaria in endemic areas." Am J Trop Med Hyg 75(2 Suppl): 19-31.
 
-Penny, M. A., N. Maire, et al. (2008). "What should vaccine developers ask? Simulation of the effectiveness of malaria vaccines." PLoS One 3(9): e3193.
+5. Penny, M. A., N. Maire, et al. (2008). "What should vaccine developers ask? Simulation of the effectiveness of malaria vaccines." PLoS One 3(9): e3193.
 
-Ross, A., M. Penny, et al. (2008). "Modelling the epidemiological impact of intermittent preventive treatment against malaria in infants." PLoS One 3(7): e2661.
+6. Ross, A., M. Penny, et al. (2008). "Modelling the epidemiological impact of intermittent preventive treatment against malaria in infants." PLoS One 3(7): e2661.
 
-Smith, T., N. Maire, et al. (2006). "Relationship between the entomologic inoculation rate and the force of infection for Plasmodium falciparum malaria." Am J Trop Med Hyg 75(2 Suppl): 11-18.
+7. Smith, T., N. Maire, et al. (2006). "Relationship between the entomologic inoculation rate and the force of infection for Plasmodium falciparum malaria." Am J Trop Med Hyg 75(2 Suppl): 11-18.
