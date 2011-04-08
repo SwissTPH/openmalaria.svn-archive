@@ -4,7 +4,7 @@
 
 Individuals interested in simulating malaria in a particular location may find this a useful starting point for downloading and using OpenMalaria, building scenario files, and analyzing results.
 
-= Details =
+= How to apply OpenMalaria to field sites =
 
 A glossary of useful terms related to the OpenMalaria wiki can be found [http://code.google.com/p/openmalaria/wiki/Terminology here].
 
