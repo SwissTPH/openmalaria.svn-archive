@@ -112,9 +112,15 @@ Once you are satisfied that the syntax in your scenario file is working and you 
 *References
 
 Chitnis, N., A. Schapira, et al. (2010). "Comparing the effectiveness of malaria vector-control interventions through a mathematical model." The American journal of tropical medicine and hygiene 83(2): 230-240.
+
 Chitnis, N., T. Smith, et al. (2008). "A mathematical model for the dynamics of malaria in mosquitoes feeding on a heterogeneous host population." Journal of Biological Dynamics 2(3): 259 - 285.
+
 Kelly-Hope, L. A. and F. E. McKenzie (2009). "The multiplicity of malaria transmission: a review of entomological inoculation rate measurements and methods across sub-Saharan Africa." Malaria journal 8: 19.
+
 Maire, N., T. Smith, et al. (2006). "A model for natural immunity to asexual blood stages of Plasmodium falciparum malaria in endemic areas." Am J Trop Med Hyg 75(2 Suppl): 19-31.
+
 Penny, M. A., N. Maire, et al. (2008). "What should vaccine developers ask? Simulation of the effectiveness of malaria vaccines." PLoS One 3(9): e3193.
+
 Ross, A., M. Penny, et al. (2008). "Modelling the epidemiological impact of intermittent preventive treatment against malaria in infants." PLoS One 3(7): e2661.
+
 Smith, T., N. Maire, et al. (2006). "Relationship between the entomologic inoculation rate and the force of infection for Plasmodium falciparum malaria." Am J Trop Med Hyg 75(2 Suppl): 11-18.
