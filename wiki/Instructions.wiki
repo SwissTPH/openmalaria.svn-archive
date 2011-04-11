@@ -113,7 +113,7 @@ Collaborators of the !OpenMalaria development team can send the scenario files i
 
 2. Chitnis, N., T. Smith, et al. (2008). "A mathematical model for the dynamics of malaria in mosquitoes feeding on a heterogeneous host population." Journal of Biological Dynamics 2(3): 259 - 285.
 
-3. Kelly-Hope, L. A. and F. E. McKenzie (2009). "The multiplicity of malaria transmission: a review of entomological inoculation rate measurements and methods across sub-Saharan Africa." Malaria journal 8: 19.
+3. Kelly-Hope, L. A. and F. E. !McKenzie (2009). "The multiplicity of malaria transmission: a review of entomological inoculation rate measurements and methods across sub-Saharan Africa." Malaria journal 8: 19.
 
 4. Maire, N., T. Smith, et al. (2006). "A model for natural immunity to asexual blood stages of Plasmodium falciparum malaria in endemic areas." Am J Trop Med Hyg 75(2 Suppl): 19-31.
 
