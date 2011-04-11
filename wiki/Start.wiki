@@ -1,10 +1,10 @@
-Welcome to the OpenMalaria wiki on google-code.
+Welcome to the !OpenMalaria wiki on google-code.
 
 <wiki:toc max_depth="1" />
 
 = Applications & Usage =
 
-The applications of OpenMalaria are:
+The applications of !OpenMalaria are:
 
 ==Optimizing models of malaria epidemiology and control==
 
@@ -20,7 +20,7 @@ There are several envisaged methods of carrying out predictive simulations:
 
 The outputs from these simulations can be linked to cost data from endemic countries to analyse the economics of malaria interventions.  
 
-For first-time users, an overview of how to set up and use OpenMalaria to simulate malaria in a particular field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
+For first-time users, an overview of how to set up and use !OpenMalaria to simulate malaria in a particular field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
 
 == Uncertainty analysis ==
 
@@ -42,7 +42,7 @@ Instructions for compiling the code can be found [BuildSystem here].
 
 = Team =
 
-OpenMalaria is being developed by a team from the [http://www.swisstph.ch/research/epidemiology-and-public-health-eph/biostatistics-and-computational-sciences/modelling-of-malaria.html Swiss Tropical and Public Health Institute (Swiss TPH)], the [http://ndssl.vbi.vt.edu/index.php Network Dynamics and Simulation Science Laboratory at Virginia Bioinformatics Institute] 
+!OpenMalaria is being developed by a team from the [http://www.swisstph.ch/research/epidemiology-and-public-health-eph/biostatistics-and-computational-sciences/modelling-of-malaria.html Swiss Tropical and Public Health Institute (Swiss TPH)], the [http://ndssl.vbi.vt.edu/index.php Network Dynamics and Simulation Science Laboratory at Virginia Bioinformatics Institute] 
 and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine] with financial support from the [http://www.gatesfoundation.org/Pages/home.aspx Bill & Melinda Gates Foundation]
 
 For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.
