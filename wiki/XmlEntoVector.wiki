@@ -8,6 +8,12 @@ The vector model allows simulation of any number of different vectors, each of w
 
 The vector element consists of a list of one `anopheles` sub-element for each vector taxon, followed by a list of zero or more `nonHumanHosts` sub-elements. Each has a name, which serves as an identifier for the Anopheles species or non-human-host category (for example, to match per-species vector intervention parameters specified elsewhere with the correct species).
 
+Located within the `anopheles` sub-element, the initial conditions to start the simulation (actual values do not impact the results) include the `propInfected` and `propInfectious` per-species mosquito parameters. 
+
+|| name || type || unit || description ||
+|| propInfected || int || proportion || Proportion of vectors infected (oocysts identified in midgut or would develop oocysts if kept alive - usually called the delayed oocyst rate in entomological literature) in the month the simulation starts||
+|| propInfected || int || proportion || Proportion of vectors infectious (sporozoites identified in salivary glands) in the month the simulation starts ||
+
 == Mosquito parameters ==
 
 Each anopheles elements has the following sub-elements: either `eir` or `monthlyEir`, `mosq`, and a list of zero or more `nonHumanHosts`.
