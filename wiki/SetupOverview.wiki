@@ -1,5 +1,9 @@
 #summary Overview of building and installation methods
 
+= Overview of how to use OpenMalaria for simulating a field site =
+
+  * [Instructions simulating field sites]
+
 = Installing =
 
 Interested in the openmalaria project? Assuming you want to do more than join the volunteer computing effort (at [http://www.malariacontrol.net]), you have the following options:
