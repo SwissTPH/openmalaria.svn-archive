@@ -107,8 +107,8 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 38 || || || || (removed) ||
 || 39 || Clinical_RDTs  || (unused) || 24 ||  Number of Rapid Diagnostic Tests used ||
 || 40 || Clinical_DrugUsage  || drug ID || 24 || Quantities of oral drugs used, per active ingredient abbreviation (mg) ||
-|| 41 || Clinical_FirstDayDeaths  || age group || 24 ||  Direct death on first day of CM (before treatment takes effect) ||
-|| 42 || Clinical_HospitalFirstDayDeaths  || age group || 24 ||  Direct death on first day of CM (before treatment takes effect); hospital only ||
+|| 41 || Clinical_FirstDayDeaths  || age group || 24 ||  Direct death before treatment takes effect ||
+|| 42 || Clinical_HospitalFirstDayDeaths  || age group || 24 ||  Direct death before treatment takes effect; hospital only ||
 || 43 || nNewInfections || age group || y || The number of infections introduced since the last survey, per age group. This counts super-infections without the usual limit of 21 concurrent infections, so in some ways is similar to introduction of infections in an infinite population. ||
 || 44 || nMassITNs || age group ||24|| The number of ITNs delivered by mass distribution since last survey. ||
 || 45 || nEPI_ITNs || age group || 24 || The number of ITNs delivered through EPI since last survey. ||
