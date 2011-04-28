@@ -76,15 +76,15 @@ the cohort; if false, it is unaffected by the cohort mode. A number means that f
 || 13 || nTreatments3  || age group ||24|| number of treatments (inpatient) (added to 1-day model in 24.1) ||
 || 14 || nUncomp  || age group ||24||  number of episodes (uncomplicated) ||
 || 15 || nSevere  || age group ||24||  number of episodes (severe) ||
-|| 16 || nSeq  || age group ||24||  cases with sequelae ||
+|| 16 || nSeq  || age group ||24||  recovered cases with sequelae ||
 || 17 || nHospitalDeaths  || age group ||24||  deaths in hospital ||
 || 18 || nIndDeaths  || age group ||24||  number of deaths (indirect) ||
 || 19 || nDirDeaths  || age group ||24||  number of deaths (direct) ||
 || 20 || nEPIVaccinations || age group ||24||  number of EPI vaccine doses given ||
 || 21 || allCauseIMR || (unused) || n || all cause infant mortality rate (returned as a single number over whole intervention period, instead of from a survey interval) ||
 || 22 || nMassVaccinations  || age group ||24||  number of Mass / Campaign vaccine doses given ||
-|| 23 || nHospitalRecovs  || age group ||24||  recoveries in hospital ||
-|| 24 || nHospitalSeqs  || age group ||24||  sequelae in hospital ||
+|| 23 || nHospitalRecovs  || age group ||24||  recoveries in hospital without sequelae ||
+|| 24 || nHospitalSeqs  || age group ||24||  recoveries in hospital with sequelae  ||
 || 25 || nIPTDoses  || age group ||24|| number of IPT Doses ||
 || 26 || annAvgK   || (unused) || n|| Annual Average Kappa. Calculated once a year as sum of human infectiousness divided by initial EIR summed over a year. Single value, not per age-group. ||
 || 27 || nNMFever  || age group ||24||  Number of episodes of non-malaria fever ||
