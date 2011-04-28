@@ -22,3 +22,69 @@ The OpenMalaria simulator is designed for simulating individual scenarios. To si
 We are assembling a collection of many different models or parameterizations designed to take account of model uncertainties.
 
 Since OpenMalaria simulations are stochastic, we usually use a number of random seeds (say 2-50) to provide estimates of the contributions of random variation to the results.
+
+
+== Experiment creator ==
+
+In order to facilitate the creation of a set of scenarios from an experiment description we developed a tool called "experiment creator" (at the moment it's fairly minimalist). This takes a description of sweeps and arms from a bunch of files and folders, described below.
+
+Running the experiment creator without any command-line arguments shows some usage instructions:
+
+{{{
+> java ExpcreatorStandalone
+Usage:
+        CombineSweeps [options] INPUT_DIR OUTPUT_DIR
+        CombineSweeps --stddirs PATH [options]
+
+Options:
+  --stddirs PATH        Assume a standard setup: INPUT_DIR is PATH/description,
+                 OUTPUT_DIR is PATH/scenarios, and a list of what the
+                 scenarios are is written to PATH/scenarios.csv
+  --seeds N             Add a sweep of N random seeds
+  --unique-seeds        Force all seeds to be unique (overwrite)
+  --patches             Write out arms as patches instead of resulting
+                        combined XML files. (Currently broken.)
+  --no-validation               Turn off validation.
+
+Non-DB mode options:
+  --name NAME           Name of experiment; for use when not in DB mode.
+  --sce-ID-start J      Enumerate the output scenarios starting from J instead
+                        of 0 (in DB mode numbers come from DB).
+
+DB-mode options:
+  --db jdbc:mysql://SERVER:3306/DATABASE
+                        Enable DB mode: read and update DATABASE at address SERVER.
+  --dbuser USER         Log in as USER. Password will be read from command prompt.
+  --desc DESC           Enter a description for database update.
+}}}
+
+Usually I create a directory for the experiment and put the description of sweeps and arms in a sub-directory called "description"; then I can just run the experiment creator like:
+
+{{{
+java ExpcreatorStandalone --stddirs path/to/experiment --seeds 10 --name exp-name
+}}}
+
+(Note: we prefer not to have underscores (`_`) in the experiment name, and it must not have spaces.) The "description" sub-directory should contain:
+
+ * `base.xml`, a complete scenario describing all interventions, etc., with a parameter for each factor (preferably a reference parameter)
+ * `scenario_VV.xsd`, a schema description
+ * a sub-directory for each sweep
+ * a sub-directory for the models/parameterizations
+
+The `base.xml` must have the same model parameters as one of the model parameterizations — it may be sensible to use one of these as a template for the design of the base scenario. All scenario files must use the same schema version, and this schema file is required for validity checking.
+
+Each sweep should consist of a directory containing one XML file for each arm; each of these files should itself be a complete and valid OpenMalaria scenario. If, for example, an experiment has two sweeps, A and B, and each sweep has two arms, A1 and A2, and B1 and B2, and the parameters of A1 and B1 are used in the `base.xml` scenario, then the description should contain directories `A` and `B`. `A` should contain `A1.xml` and `A2.xml` files, where `A1.xml` is identical to `base.xml` (except that you may wish to give it a name by changing the `name` attribute of the `scenario` element), and `A2.xml` differs from `A1.xml` only in the changed parameters of this sweep. Similarly `B` should contain `B1.xml` and `B2.xml`, each of which would use the A1 parameters of the first sweep together with the B1 or B2 parameters for the second sweep. If you wish to specify which arm is the reference rather than let the experiment creator choose any of them, rename one arm (in each sweep) to `reference.xml`. None of the arms should be named `base.xml` (see below).
+
+=== Models ===
+
+The models/parameterizations are added in a similar way to sweeps. Download files for the appropriate time-step and schema version from [http://code.google.com/p/openmalaria/source/browse/#svn%2Fdownload%2Fexperiments the repository] and extract (requires [http://7-zip.org/ 7-zip]). Rename the extracted folder "models" if you like and put it in the experiment description directory. Now find out which of these models most resembles your `base.xml` file (the parameters at the end must be identical), and rename this to `base.xml` (still within the `models` directory). This last step is important: it tells the experiment creator that it shouldn't carry over all the differences between these model arm XML files and your `base.xml` file (in the above directory) — which would remove all the interventions, etc., that you added into your `base.xml` file — but, instead, only carry over the differences between the model arm (`models/R0000.xml`, etc.) and the base model (the `base.xml` file within the `models` directory).
+
+=== Testing ===
+
+You're now set to generate your experiment scenarios, using the experiment creator from a command line as above.
+
+If you want to create test versions with a smaller population size, this is quite easy so long as none of your existing sweeps change the population size. Create a new sweep in your description directory (e.g. a sub-dir called "pop-size") and copy the experiment `base.xml` into there (but make sure you rename it). Then just change the population size within this arm — you have a one-sweep arm which changes all other files.
+
+=== Clashes ===
+
+Only one sweep may adjust an attribute or an element/element list relative to your base scenario. If this is not the case, you'll get an error message stating that some elements clash — you need to work out which parts exactly clash, and how to redesign your description to avoid this clash. Is changing the arms used in the base enough (note that changing the base means you'll probably have to change most of your other files too)? Or maybe you'll have to combine two sweeps into one, creating all combinations of their two arms manually.
