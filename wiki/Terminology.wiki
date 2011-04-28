@@ -55,7 +55,7 @@ Syntax:
   <dt>Severe malaria</dt>
   <dd>Clinical malaria illness that is life-threatening if left untreated.</dd>
   <dt>Study</dt>
-  <dd>A simulation _study_ comprises a set of scenarios used to make a specific set of comparisons between settings or interventions.  The word _study_ is also used to refer to field studies used for parameterizing models.</dd>
+  <dd>A simulation *study* comprises a set of scenarios used to make a specific set of comparisons between settings or interventions.  The word *study* is also used to refer to field studies used for parameterizing models.</dd>
   <dt>Sweep</dt>
   <dd>A *sweep* is one or more covarying factors, and the set of all arms of this sweep.</dd>
 </dl>
