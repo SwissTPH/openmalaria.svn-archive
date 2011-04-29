@@ -118,6 +118,6 @@ The Nv0, Nv, Ov and Sv outputs are per-species; the EIR outputs are single value
 || 49 || Clinical_DrugUsageIV || drug ID || 24 || Quantities of intravenous drugs used, per active ingredient abbreviation (mg) ||
 || 50 || nAddedToCohort || age group || n || Number of individuals added to cohort ||
 || 51 || nRemovedFromCohort || age group || n || Number of individuals removed from cohort ||
-|| 52 || nMDAs || age group || y || Number of mass vaccination doses given (where configured as screen&treat, etc., this only reports treatments actually prescribed) ||
+|| 52 || nMDAs || age group || y || Number of drug doses given via mass deployment (MDA or screen&treat) (where configured as screen&treat, etc., this only reports treatments actually prescribed) ||
 || 53 || nNmfDeaths || age group || y || Direct deaths due to non-malaria fevers ||
 || 54 || nAntibioticTreatments || age group || y || Report number of antibiotic treatments administered ||
