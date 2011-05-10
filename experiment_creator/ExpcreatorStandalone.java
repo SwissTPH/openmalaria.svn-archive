@@ -26,7 +26,7 @@ public class ExpcreatorStandalone {
         String inputPath = null, outputPath = null;
         String scnListPath = null;
         int nSeeds = -1;
-        boolean uniqueSeeds = false;
+        boolean uniqueSeeds = true;
         boolean patches = false, doValidation = true;
         String expName = "EXPERIMENT";
         int sceIdStart = 0;
@@ -57,7 +57,7 @@ public class ExpcreatorStandalone {
                 } else if (args[i].equals("--seeds")) {
                         nSeeds = Integer.parseInt(args[ ++i ] );
                 } else if( args[i].equals( "--unique-seeds")) {
-                    uniqueSeeds = true;
+                    uniqueSeeds = Boolean.parseBoolean(args[ ++i ]);
                 } else if( args[i].equals( "--patches")) {
                     patches = true;
                 } else if( args[i].equals( "--no-validation")) {
@@ -153,7 +153,7 @@ public class ExpcreatorStandalone {
         + "                 OUTPUT_DIR is PATH/scenarios, and a list of what the\n"
         + "                 scenarios are is written to PATH/scenarios.csv\n"
         + "  --seeds N		Add a sweep of N random seeds\n"
-	    + "  --unique-seeds	Force all seeds to be unique (overwrite)\n"
+	    + "  --unique-seeds B	If B is true (default), give every scenario a unique seed\n"
 	    + "  --patches		Write out arms as patches instead of resulting\n"
 	    + "			combined XML files. (Currently broken.)\n"
 	    + "  --no-validation		Turn off validation.\n"
