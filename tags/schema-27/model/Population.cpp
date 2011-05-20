@@ -335,7 +335,7 @@ void Population::implementIntervention (TimeStep time)
         massCumIntervention (interv->getVaccinate().get(), &Host::Human::hasVaccineProtection, &Host::Human::massVaccinate);
     }
     if (interv->getMDA().present()) {
-	massIntervention (interv->getMDA().get().getCoverage(), &Host::Human::massDrugAdministration);
+	massIntervention (interv->getMDA().get(), &Host::Human::massDrugAdministration);
     }
     if (interv->getIpti().present()) {
         massCumIntervention (interv->getIpti().get(), &Host::Human::hasIPTiProtection, &Host::Human::IPTiTreatment);
