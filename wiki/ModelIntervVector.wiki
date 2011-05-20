@@ -20,6 +20,8 @@ This intervention is used to replace transmission settings. It can be used, for 
 
 The `changeEIR` element has the same type as the [http://code.google.com/p/openmalaria/wiki/XmlScenario#Non-vector_parameters:_nonVector nonVector] element.
 
+The new EIR is always applied from the _beginning_ of the intervention period, _not_ the step of deployment. It must thus always contain enough daily entries for the entire intervention period.
+
 == Net / indoor spraying interventions ==
 
 The following interventions all work by multiplying [XmlEntoVector vector model] parameters affecting individual humans.
