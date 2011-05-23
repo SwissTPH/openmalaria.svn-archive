@@ -13,7 +13,7 @@ OpenmalariaTools is currently in beta stage 4. It runs on both Linux and Windows
 The beta 4 release uses schema version 23 and has been packaged with an installer for windows and debian packages for linux. To use:
 
   * Make sure a [http://www.java.com/en/download/ Java run-time environment] is installed.
-  * Install [http://www.python.org/download/ Python] (version 2.6 or 2.7) and [http://www.pygtk.org/downloads.html PyGTK]. (The older installer should do this for you, but the latest archive won't.)
+  * Install [http://www.python.org/download/ Python] (version 2.6 or 2.7; the 3.x series won't work) and [http://www.pygtk.org/downloads.html PyGTK]. (The older installer should do this for you, but the latest archive won't.)
   * Install [http://7-zip.org/ 7-zip] if you don't already have it (it's a worthy replacement for zip files)
   * Download and install one of the following:
       * (Windows 7-zip archive) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.05/win32/openMalariaTools_schema26_v00.05.7z openMalariaTools_schema26_v00.05.7z]
