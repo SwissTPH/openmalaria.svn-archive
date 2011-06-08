@@ -7,16 +7,16 @@ decays over time (at the population and possibly the individual level). To allow
 use of different decay functions, a generalized method of describing decay was
 added into schema version 25. The following set of functions are available:
 
-|| function    || formula || ||
-|| constant    || `1` || no decay ||
-|| step        || `1` || for `t < L`, otherwise 0 ||
-|| linear      || `1 - t/L` || for `t < L`, otherwise 0 ||
-|| exponential || `exp( - t/L * log(2) )` || ||
-|| weibull     || `exp( -(t/L)^k * log(2) )` || equivalent to exponential when `k = 1` ||
-|| hill        || `1 / (1 + (t/L)^k)` || ||
-|| smooth-compact || `exp( k - k / (1 - (t/L)^2) )` || for `t < L`, otherwise 0 ||
+|| function    || formula || L is time to || ||
+|| constant    || `1` || || no decay ||
+|| step        || `1` || full decay || for `t < L`, otherwise 0 ||
+|| linear      || `1 - t/L` || full decay || for `t < L`, otherwise 0 ||
+|| exponential || `exp( - t/L * log(2) )` || half decay || ||
+|| weibull     || `exp( -(t/L)^k * log(2) )` || half decay || equivalent to exponential when `k = 1` ||
+|| hill        || `1 / (1 + (t/L)^k)` || half decay || ||
+|| smooth-compact || `exp( k - k / (1 - (t/L)^2) )` || full decay || for `t < L`, otherwise 0 ||
 
-where `L` is some description of the time-scale (dimension time) and `k` is a shape
+where `L` is a description of the rate of decay, either the time until half decay or the time until full decay (see above) in years, and `k` is a shape
 parameter (no dimension).
 
 The smooth compact and linear decay functions reach zero at time L, whereas the
