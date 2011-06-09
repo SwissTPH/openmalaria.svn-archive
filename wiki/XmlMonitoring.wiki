@@ -30,19 +30,23 @@ The following outputs are currently available, and can be enabled by adding a su
 All options not otherwise specified are point-time outputs.
 
 || output || description ||
-|| recent births || Number of new humans since last report ||
 || N_v0 || The mosquito emergence rate ||
 || N_v || The number of mosquitoes ||
 || O_v || The number of infected mosquitoes ||
 || S_v || The number of infectious mosquitoes ||
 || input EIR || Requested entomological infection rate. This is a fixed periodic value, for comparison with simulated EIR. Units (from schema version 24): inoculations per adult per timestep. ||
 || simulated EIR || EIR acting on simulated humans. Units: from schema version 26, inoculations per adult per timestep, previously inoculations per person per timestep. ||
+|| hosts || Total number of human hosts (fixed) ||
+|| host demography || Number of humans less than 1, 5, 10, 15, and 25 years of age respectively ||
+|| recent births || Number of new humans since last report ||
+|| patent hosts || Number of humans with detectible parasite density ||
 || human infectiousness || Infectiousness of humans to mosquitoes, also known as kappa. This is the probability that a mosquito becomes infected at any single feed on a human. ||
 || human availability || Mean availability of humans to mosquitoes compared to a human adult. ||
 || immunity h || Average of `_cumulativeh` parameter across humans, which is the cumulative number of infections received since birth ||
 || immunity Y || Average (mean) of `_cumulativeY` parameter across humans, which is the cumulative parasite density since birth ||
 || median immunity Y || Average (median) of `_cumulativeY` parameter across humans, which is the cumulative parasite density since birth ||
 || new infections || Number of new infections since last report, including super infections as with survey measure 43. ||
+|| num transmitting humans || Number of humans who are infectious to mosquitoes ||
 
 == Survey measures ==
 
