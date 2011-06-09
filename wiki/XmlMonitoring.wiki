@@ -47,6 +47,7 @@ All options not otherwise specified are point-time outputs.
 || median immunity Y || Average (median) of `_cumulativeY` parameter across humans, which is the cumulative parasite density since birth ||
 || new infections || Number of new infections since last report, including super infections as with survey measure 43. ||
 || num transmitting humans || Number of humans who are infectious to mosquitoes ||
+|| nets owned || Number of nets currently owned by the population ||
 
 == Survey measures ==
 
