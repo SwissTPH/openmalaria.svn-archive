@@ -41,7 +41,7 @@ All options not otherwise specified are point-time outputs.
 || recent births || Number of new humans since last report ||
 || patent hosts || Number of humans with detectible parasite density ||
 || human infectiousness || Infectiousness of humans to mosquitoes, also known as kappa. This is the probability that a mosquito becomes infected at any single feed on a human. ||
-|| human availability || Mean availability of humans to mosquitoes compared to a human adult. ||
+|| human age availability || Mean age-based availability of humans to mosquitoes relative to a human adult (doesn't include any other availability factors, such as vector-model rate or intervention protections). ||
 || immunity h || Average of `_cumulativeh` parameter across humans, which is the cumulative number of infections received since birth ||
 || immunity Y || Average (mean) of `_cumulativeY` parameter across humans, which is the cumulative parasite density since birth ||
 || median immunity Y || Average (median) of `_cumulativeY` parameter across humans, which is the cumulative parasite density since birth ||
