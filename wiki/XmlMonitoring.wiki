@@ -48,6 +48,8 @@ All options not otherwise specified are point-time outputs.
 || new infections || Number of new infections since last report, including super infections as with survey measure 43. ||
 || num transmitting humans || Number of humans who are infectious to mosquitoes ||
 || nets owned || Number of nets currently owned by the population ||
+|| mean hole index || Average hole-index of all nets (will be not-a-number when no nets are owned) ||
+|| mean insecticide content || Average insecticide content of all nets in mg/m² (will be not-a-number when no nets are owned) ||
 
 == Survey measures ==
 
