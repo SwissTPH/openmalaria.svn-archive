@@ -6,9 +6,9 @@ While the malaria parasite cycle within humans is modelled by using an agent-bas
 
 == Common entomological data ==
 
-Entomological data are described by the `entoData` element, containing either a `vector` or a `nonVector` sub-element. For example:
+Entomological data are described by the `entomology` element, containing either a `vector` or a `nonVector` sub-element. For example:
 {{{
-<entoData mode="4" name="a name">
+<entomology mode="4" name="a name">
   <nonVector eipDuration="10">
     <EIRDaily origin="monthly">0.0738</EIRDaily>
     <EIRDaily origin="monthly">0.0738</EIRDaily>
@@ -18,10 +18,10 @@ Entomological data are described by the `entoData` element, containing either a 
     <EIRDaily origin="monthly">0.0738</EIRDaily>
     ...
   </nonVector>
-</entoData>
+</entomology>
 }}}
 
-Attributes of the `entoData` element:
+Attributes of the `entomology` element:
 || name || type || description ||
 || name || text || A user-friendly name for the transmission settings ||
 || mode || integer || Can be 2 (static — EIR humans are exposed to is fixed to the annual cycle given) or 4 (dynamic — transmission is affected by human infectiousness) ||
