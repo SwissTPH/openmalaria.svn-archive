@@ -25,12 +25,12 @@ Within a simulation of a single setting, dubbed a _scenario_, there are a number
   <healthSystem>
     ...
   </healthSystem>
-  <entoData ...>
+  <entomology ...>
     ...
-  </entoData>
-  <drugDescription>
+  </entomology>
+  <pharmacology>
     ...
-  </drugDescription>
+  </pharmacology>
   <model>
     <ModelOptions>
       ...
@@ -118,7 +118,7 @@ http://openmalaria.googlecode.com/svn/wiki/graphs/human_avail_and_mass_age.png
 
 TODO: add some parameterizations
 
-The `drugDescription` element is only required when a 1-day time-step is used, and is essentially a library of parameters for the drug model. It should therefore not need to be edited (just copied from a source).
+The `pharmacology` element is only required when a 1-day time-step is used, and is essentially a library of parameters for the drug model. It should therefore not need to be edited (just copied from a source).
 
 == Health system ==
 
@@ -174,7 +174,7 @@ When designing a scenario, you will need to think about what kind of output is r
 
 Scenarios running on a 1-day timestep require PK and PD parameters for each drug used, for example:
 {{{
-<drugDescription>
+<pharmacology>
   <drug abbrev="AR">
     <PD>
       <allele name="sensitive">
@@ -191,7 +191,7 @@ Scenarios running on a 1-day timestep require PK and PD parameters for each drug
     </PK>
   </drug>
   <drug abbrev="XX" ...
-</drugDescription>
+</pharmacology>
 }}}
 
-Our collaborators at the Liverpool School of Tropical Medicine are developing a library of drug parameters; one can copy their `drugDescription` element from [http://code.google.com/p/openmalaria/source/browse/trunk/test/valerieCM/scenarioBase.xml?r=1545 this XML file] (near the end).
+Our collaborators at the Liverpool School of Tropical Medicine are developing a library of drug parameters; one can copy their `pharmacology` element from [http://code.google.com/p/openmalaria/source/browse/trunk/test/valerieCM/scenarioBase.xml?r=1545 this XML file] (near the end).
