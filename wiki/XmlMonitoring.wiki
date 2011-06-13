@@ -10,9 +10,16 @@ The monitoring system is described [Monitoring here] and within the [XmlScenario
 
 == Units ==
 
+=== Special output values ===
+
+Some outputs are the result of averaging some measure across individual somethings. If there are no individuals there is no valid value to give, so an output value of "nan" (or "-nan" or similar, short for Not A Number) is given.
+However, to make detection of computation errors easier, we try to avoid outputting nan values in survey outputs. (The same is not true for continuous outputs: several of these may output nan values at the beginning of the simulation or other times.)
+
+For the drug costing measures no value is listed at all for drugs never prescribed since the last survey.
+
 === EIR ===
 
-The units we generally use for EIR are _entomological inoculations per time period as measured in adults_ where the time period may be days, years, or the model's time step (currently 1 or 5 days). Note: if there are no adults, reported simulated EIR will be "nan" since it cannot be measured.
+The units we generally use for EIR are _entomological inoculations per time period as measured in adults_ where the time period may be days, years, or the model's time step (currently 1 or 5 days).
 
 Since children are smaller than adults our model assumes they are less likely to be bitten by mosquitoes. Since EIR only tends to be measured in adults, we try to make our units equivalent, either by only considering bites in adults or by dividing by the mean availability of people in the population compared to an adult (this mean relative availability is the "human availability" output available in continuous-reporting mode).
 
