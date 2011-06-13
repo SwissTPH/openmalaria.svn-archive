@@ -22,18 +22,23 @@ Building the schema translator from sources:
 
 == Usage ==
 
-You need to put the scenarios to be converted in the scenarios folder and then start the program from terminal or command line with the command {{{java SchemaTranslator}}} or if you want to start the Schema Translator from another location then you have to use {{{java -classpath path_to_schematranslator_folder SchemaTranslator}}}. If everything is working fine, then you should find the updated scenarios in the folder translatedScenarios.
+  # Put the scenarios to be converted in the `scenarios` folder (sub-folders are fine too — directory structures are preserved)
+  # Run the program from terminal or command line with the command `java SchemaTranslator`
+     * If running from another location, use `java -classpath path_to_schematranslator_folder SchemaTranslator`
+     * other options can be used if necessary, as below
+  # Check warning/error messages in the program's output
+  # Use updated scenarios from the `translatedScenarios` folder
 
 If you don't add any options, then the scenarios will be converted to the latest schema version.
 
-== Options ==
+=== Options ===
 
-(Note that this list may not always be up-to-date. You can see all options by running with --help.)
+Below are some of the most useful options. To see a full list, run the schema translator with the help option: `java SchemaTranslator --help`
 
-   * --required_version XX: The version number to update the scenarios to. By default, the latest schema version will be used.
-   * --no-validation: The scenarios are converted and written without any validation against the schema
-   * --no-translation: The scenarios are not written, but still converted for validation
-   * --maxDensCorrection BOOL: Update 12->13 requires this sometimes: set true to include bug fix, false to explicitly exclude it.
-   * --iptiSpOptionWithoutInterventions: For scenarios with iptiDescription but without interventions, assume usage of the IPTI model was (t) intended or (f) a mistake.
+   * `--required_version XX`: The version number to update the scenarios to. By default, the latest schema version will be used.
+   * `--current-schema --schema-folder ../../build/schema`: update to the latest development schema, which is at `../../build/schema/scenario_current.xsd`
+   * `--no-validation`: if no xsd file is available, scenarios can still be translated with this option but standard XML schema checks can't be done
+   * `--maxDensCorrection BOOL`: Update 12->13 requires this sometimes: set true to include bug fix, false to explicitly exclude it.
+   * `--iptiSpOptionWithoutInterventions`: For scenarios with iptiDescription but without interventions, assume usage of the IPTI model was (t) intended or (f) a mistake.
 
  
