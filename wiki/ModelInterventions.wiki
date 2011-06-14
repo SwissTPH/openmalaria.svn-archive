@@ -31,42 +31,55 @@ Deployment of vaccines uses these basic methods, but is a special case. Each hum
 Interventions are configured within the `interventions` element in the [ScenarioDesign scenario XML document]. A sample element:
 
 {{{
-<interventions name="Full Set">
-  <descriptions>
-    <MDADescription ... />
-    <vaccineDescription ... />
-    <iptiDescription ... />
-    <anopheles mosquito="gambiae_ss">
-      <ITNDescription ... />
-      <IRSDescription ... />
-      <VADescription ... />
-    </anopheles>
-  </descriptions>
-  <continuous>
-    ...
-  </continuous>
-  <timed>
-    <intervention time="1">
-      ...
-    </intervention>
-    ...
-  </timed>
-</interventions>
+  <interventions name="cohort selection">
+    <MDA>
+      <description>
+        <decisions>
+          <decision depends="" name="treatment" values="1">1</decision>
+          <decision depends="" name="test" values="none,microscopy,RDT">none</decision>
+        </decisions>
+        <treatments>
+          <treatment name="1">
+            <schedule>
+              <medicate drug="MQ" hour="0" mg="1200"/>
+            </schedule>
+          </treatment>
+        </treatments>
+      </description>
+      <timed coverage="0.6" time="730"/>
+    </MDA>
+    <cohort>
+      <continuous coverage="0.05" targetAgeYrs="1.0"/>
+      <timed coverage="0.4" time="0"/>
+    </cohort>
+  </interventions>
 }}}
 
-Note that the `descriptions` element is the only required element.
+Here two interventions are used: `MDA` and `cohort` [selection]. Intervention elements (`changeHS`, `MDA`, `ITN` and so on) may be listed in any order, either occurring once or being omitted. Within the element description sub-elements come first, then continuous deployment descriptions, and finally timed deployment descriptions; the orders of sub-elements are fixed (although many sub-elements are optional and some can be listed multiple times).
 
 === Continuous descriptions ===
 
-All continuous deployments are described by elements of type `ageSpecific`; for example, three vaccine doses at ages 1, 2 and 3 months:
+All continuous deployments are described by elements of type `ageSpecific`; for example, a vaccine schedule starting with doses at 1, 2, 3 and 15 months of age:
 
 {{{
-    <continuous>
-      <vaccine coverage="0.95" targetAgeYrs="0.0833"/>
-      <vaccine coverage="0.95" targetAgeYrs="0.17"/>
-      <vaccine coverage="0.95" targetAgeYrs="0.25"/>
-    </continuous>
+    <vaccine>
+      <description vaccineType="TBV">
+        <decay L="0.5" function="exponential"/>
+        <efficacyB value="10"/>
+        <initialEfficacy value="0.4"/>
+        <initialEfficacy value="0.46"/>
+        <initialEfficacy value="0.52"/>
+      </description>
+      <continuous coverage="0.95" targetAgeYrs="0.0833"/>
+      <continuous coverage="0.95" targetAgeYrs="0.17"/>
+      <continuous coverage="0.99" targetAgeYrs="0.25"/>
+      <continuous coverage="0.99" targetAgeYrs="1.25"/>
+      <continuous coverage="0.99" targetAgeYrs="2.25"/>
+      <continuous coverage="0.99" targetAgeYrs="3.25"/>
+      <continuous coverage="0.99" targetAgeYrs="4.25"/>
+    </vaccine>
 }}}
+
 Attributes this can include:
 
 || name || type || description ||
@@ -76,62 +89,23 @@ Attributes this can include:
 || `begin` || integer || The time-step of the intervention period at which this intervention becomes active (default: 0) ||
 || `end` || integer || The time-step of the intervention period at which this intervention becomes inactive (default: 2147483647) ||
 
-==== Order ====
-
-The XML elements describing continuous intervention deployment must appear in the following order:
-
- # all `vaccine` elements
- # all `ITN` elements
- # all `ipti` elements
- # all `cohort` elements
-
 === Timed descriptions ===
 
-Many timed interventions also use a standard type of description for *mass deployment*, although several timed interventions use a different description. An example:
+Many timed interventions also use a standard type of description for *mass deployment*, although several timed interventions use a different description. From the `MDA` element of the above example, we have deployment to 60% of the population at time step 730:
 
 {{{
-      <intervention time="13">
-        <vaccinate coverage="0.95"/>
-      </intervention>
+      <timed coverage="0.6" time="730"/>
 }}}
 
 Attributes:
 
 || name || type || description ||
+|| time || integer || Time of deployment ||
 || coverage || floating-point || Proportion of eligible candidates actually receiving the intervention (range [0-1]) ||
 || minAge || floating-point || Minimum age at which humans are considered eligible in years (defaults to 0) ||
 || maxAge || floating-point || Maximum age at which humans are considered eligible in years (defaults to 100) ||
 || cohort || boolean || Restrict distribution to the current [Monitoring#Cohort-mode cohort] if true (defaults to false) ||
 || cumulativeWithMaxAge || int (optional) || If supplied, the cumulative coverage deployment mode (see below) is used according to the "max intervention age" parameter given by this attribute (units: time steps). ||
-
-==== Order ====
-
-Where multiple interventions occur at the same time-point, they must appear in the XML in the following order:
-
-{{{
-<intervention time="0">
-  <changeHS> ... </changeHS>
-  <changeEIR> ... </changeEIR>
-  <importedInfectionsPerThousandHosts>0.01</importedInfectionsPerThousandHosts>
-  <MDA coverage="0.6" ... />
-  <vaccinate coverage="0.6" ... />
-  <ITN coverage="0.6" ... />
-  <IRS coverage="0.6" ... />
-  <VectorAvailability coverage="0.6" ... />
-  <ipti coverage="0.6" ... />
-  <immuneSuppression coverage="0.6" ... />
-  <insertR_0Case/>
-  <uninfectVectors/>
-  <larviciding> ... </larviciding>
-  <cohort coverage="0.6" ... />
-</intervention>
-<intervention time="1">
-  ...
-</intervention>
-...
-}}}
-
-(Of course, any of these may be left out.)
 
 ==== Cumulative coverage deployment ====
 
