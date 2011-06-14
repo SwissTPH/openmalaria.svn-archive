@@ -27,13 +27,36 @@ Note: prior to schema version 25, the vaccine type codes were 1, 2, 3 instead of
 
 Vaccines need to be configured per-scenario with one or more `vaccineDescription` elements within the `descriptions` element (up to one per `vaccineType`):
 {{{
-<vaccineDescription vaccineType="TBV">
-  <decay L="10" function="exponential"/>
-  <efficacyB value="10"/>
-  <initialEfficacy value="0.512"/>
-  <initialEfficacy value="0.64"/>
-  <initialEfficacy value="0.8"/>
-</vaccineDescription>
+    <vaccine>
+      <description vaccineType="TBV">
+        <decay L="0.5" function="exponential"/>
+        <efficacyB value="10"/>
+        <initialEfficacy value="0.4"/>
+        <initialEfficacy value="0.46"/>
+        <initialEfficacy value="0.52"/>
+      </description>
+      <description vaccineType="BSV">
+        <decay L="0.5" function="exponential"/>
+        <efficacyB value="10"/>
+        <initialEfficacy value="0.4"/>
+        <initialEfficacy value="0.46"/>
+        <initialEfficacy value="0.52"/>
+      </description>
+      <description vaccineType="PEV">
+        <decay L="0.5" function="exponential"/>
+        <efficacyB value="10"/>
+        <initialEfficacy value="0.4"/>
+        <initialEfficacy value="0.46"/>
+        <initialEfficacy value="0.52"/>
+      </description>
+      <continuous coverage="0.95" targetAgeYrs="0.0833"/>
+      <continuous coverage="0.95" targetAgeYrs="0.17"/>
+      <continuous coverage="0.99" targetAgeYrs="0.25"/>
+      <continuous coverage="0.99" targetAgeYrs="1.25"/>
+      <continuous coverage="0.99" targetAgeYrs="2.25"/>
+      <continuous coverage="0.99" targetAgeYrs="3.25"/>
+      <continuous coverage="0.99" targetAgeYrs="4.25"/>
+    </vaccine>
 }}}
 Each vaccine type described is administered. The `decay` element has type `DecayFunction` ([ModelDecayFunctions#Configuration configuration]). One or more `initialEfficacy` elements can be given specifying the efficacy of each subsequent dose of the vaccine administered (at the time of administration). If further doses are given, the last listed `initialEfficacy` is repeated.
 
@@ -46,28 +69,36 @@ The MDA intervention models some type of mass deployment of drugs. In the 5-day 
 
 With the 5-day time-step model no additional configuration is needed. With the 1-day TS model, an MDADescription element must be included, as, for example, below:
 {{{
-<interventions name="...">
-  <descriptions>
-    <MDADescription>
-      <decisions>
-        <decision depends="" name="treatment" values="1">1</decision>
-        <decision depends="" name="test" values="none,microscopy,RDT">none</decision>
-      </decisions>
-      <treatments>
-        <treatment name="1">
-          <schedule>
-            <medicate drug="MQ" hour="0" mg="1200"/>
-          </schedule>
-        </treatment>
-      </treatments>
-    </MDADescription>
-  </descriptions>
-  <timed>
-    <intervention time="730">
-      <MDA coverage="0.6"/>
-    </intervention>
-  </timed>
-</interventions>
+    <MDA>
+      <description>
+        <decisions>
+          <decision depends="result" name="treatment" values="MQ,none">
+            result(negative): none
+            result(none): none
+            result(positive): MQ
+          </decision>
+          <decision depends="" name="test" values="none,microscopy,RDT">
+            RDT
+          </decision>
+        </decisions>
+        <treatments>
+          <treatment name="MQ">
+            <schedule>
+              <medicate drug="MQ" hour="0" mg="1200"/>
+            </schedule>
+          </treatment>
+          <treatment name="none">
+            <schedule/>
+          </treatment>
+        </treatments>
+      </description>
+      <timed coverage="0.6" time="160"/>
+      <timed coverage="0.6" time="860"/>
+      <timed coverage="0.6" time="870"/>
+      <timed coverage="0.6" time="1580"/>
+      <timed coverage="0.6" time="1595"/>
+      <timed coverage="0.6" time="1610"/>
+    </MDA>
 }}}
 This has the same format as part of the [ScenarioHealthSystem#1-day_timestep:_EventScheduler EventScheduler complicated/uncomplicated trees]. The above example is fairly minimal: the `test` decision indicates that no malaria diagnostic is used, and the `treatment` decision indicates that the treatment schedule called `1` is used. Note that it may be preferable to specify dosing by age as with health-system treatment of uncomplicated malaria.
 
@@ -80,23 +111,19 @@ Antimalarial drugs are given at specified ages in infants according to the routi
 IPT is compatible with the 5-day timestep model. The drug action is similar to that of the mass drug administration but can have a longer lasting (prophylactic) effect and can affect individual infections with different levels of drug resistance differently. 
 There is currently no equivalent for 1-day time-step models, since the PKPD model used for mass-drug administration already allows prophylactic effects and the 1-day within-host models allow more sophisticated effects of the drugs on parasite dynamics.
 
-
-IPT must be described per scenario with an `IPTDescription` element. Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions mass-deployment] descriptions with name `ipti`.
 {{{
-<interventions name="IPT example">
-  <descriptions>
-    <iptiDescription iptiEffect="13">
-      <infGenotype ACR="1" atten="1" freq="0.8" name="wt" proph="10" tolPeriod="4"/>
-      <infGenotype ACR="1" atten="1" freq="0.1" name="108" proph="2" tolPeriod="4"/>
-      <infGenotype ACR="0.5" atten="1" freq="0.1" name="triples" proph="0" tolPeriod="4"/>
-    </iptiDescription>
-  </descriptions>
-   <continuous>
-    <ipti coverage="0.95" targetAgeYrs="0.17"/>
-    <ipti coverage="0.95" targetAgeYrs="0.25"/>
-    <ipti coverage="0.95" targetAgeYrs="0.75"/>
-   </continuous>
-  </interventions>
+    <IPT>
+      <description iptiEffect="18">
+        <infGenotype ACR="1.0" atten="1" freq="0.8" name="wt" proph="10" tolPeriod="4"/>
+        <infGenotype ACR="1.0" atten="1" freq="0.1" name="double" proph="2" tolPeriod="4"/>
+        <infGenotype ACR="0.5" atten="1" freq="0.1" name="triple" proph="0" tolPeriod="4"/>
+      </description>
+      <continuous coverage="0.95" targetAgeYrs="0.25"/>
+      <continuous coverage="0.95" targetAgeYrs="0.33"/>
+      <continuous coverage="0.95" targetAgeYrs="0.75"/>
+      <timed time="7" coverage=".8"/>
+      <timed time="79" coverage=".8"/>
+    </IPT>
 }}}
 
 In this example, IPTi is given at 2, 3 and 9 months of age with a coverage of 95% for each dose.  The drug in this example is sulphadoxine-pyrimethamine (SP) and new infections are randomly assigned one of three specified genotypes (`wt`,`108`,`triples`) which correspond to different degrees of SP resistance and have frequencies `freq`. Existing wildtype infections (`wt`) are cleared with a cure rate (`ACR`) of 100%, and incoming wildtype infections are cleared for a prophylactic period (`proph`) of 10*5 days. The intervention can also be timed to simulate seasonal delivery. `iptieffect` refers to whether the IPT or placebo group should be simulated (>=10 are IPT groups) and the choice of treatment drug in those who present with malaria fevers. `atten` and `tolperiod` are not used except with alternative models for IPT described in Ross et al, 2008 PLoS ONE e2661. 
