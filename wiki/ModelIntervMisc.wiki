@@ -13,11 +13,29 @@ The following table lists these pseudo-interventions and the deployment methods 
 
 == Import Infections ==
 
-This pseudo-intervention provides a way to model infections being imported into the simulated population. A value, x, is passed into the intervention:
+This pseudo-intervention provides a way to model infections being imported into the simulated population. It is based on an importation rate, x(t), and forcibly importing cases according to the Bernoulli distribution (that is, assuming an importation rate of r cases per person per time-step, for each simulated human and for each time-step the probability of that person receiving an imported infection is r).
 
-`<ImportedInfectionsPerThousandHosts>x</ImportedInfectionsPerThousandHosts>`
+The importation rate is actually specified with units of imported cases per 1000 people per year. In the following example, 5 cases per 1000 people per year are imported for the first 10 years, after which the importation rate doubles:
 
-Each human then has an x/1000 probability of being assigned a new (imported liver-stage) infection at this time-step. The number of imported infections at each time point thus varies stochastically with a Binomial distribution about the specified number.
+{{{
+    <importedInfections>
+      <timed>
+        <rate time="0" value="5"/>
+        <rate time="3650" value="5"/>
+      </timed>
+    </importedInfections>
+}}}
+
+Periodically varying importation rates can also be specified:
+{{{
+    <importedInfections>
+      <timed name="annually varying rates" period="365">
+        <rate time="0" value="1"/>
+        <rate time="100" value="5"/>
+        <rate time="200" value="2"/>
+      </timed>
+    </importedInfections>
+}}}
 
 == Insert R_0 case ==
 
@@ -27,16 +45,32 @@ This intervention then picks one human, removes his transmission-blocking vaccin
 
 Its purpose is to allow estimates of R,,0,,, along the following lines: if only one person is infected and is able to transmit infections, then the total number of infections received after this (reported by "new infections" output) is the number of secondary cases one primary infection has caused (within the simulator).
 
-XML description as a single element with no attributes: `<InsertR_0Case/>`.
+XML description accepts no configuration other than time:
+{{{
+    <insertR_0Case>
+      <timed time="146"/>
+    </insertR_0Case>
+}}}
 
 == Immune suppression ==
 
 The `immuneSuppression` intervention removes all natural immunity (though not vaccine effects) from humans. It does not prevent development of new immunity.
 
-It is described with a standard [ModelInterventions#Timed_descriptions mass-deployment element] with name `immuneSuppression`.
+It is described with standard [ModelInterventions#Timed_descriptions timed deployment]:
+{{{
+    <immuneSuppression>
+      <timed coverage="1" time="78"/>
+    </immuneSuppression>
+}}}
 
 == Cohort selection ==
 
 Field trials of interventions generally enroll only a defined sub-group of the human population (a cohort) into a study, and consider only data collected on those individuals.  Simulation of such cohorts can be achieved by marking a subset of the simulated population as [Monitoring#Cohort-mode cohort] members.  This restricts monitoring of outcomes to the marked individuals.
 
-This pseudo-intervention uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions mass-deployment] descriptions (name: `cohort`), allowing configuration of either timed and continuous enrollment into the simulated cohort.
+This pseudo-intervention uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions mass-deployment] deployment, allowing both timed and continuous enrollment into the simulated cohort:
+{{{
+    <cohort>
+      <continuous coverage="0.05" targetAgeYrs="1.0"/>
+      <timed coverage="0.4" time="0"/>
+    </cohort>
+}}}
