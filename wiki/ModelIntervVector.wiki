@@ -20,6 +20,17 @@ This intervention is used to replace transmission settings. It can be used, for 
 
 The `changeEIR` element has the same type as the [http://code.google.com/p/openmalaria/wiki/XmlScenario#Non-vector_parameters:_nonVector nonVector] element.
 
+{{{
+    <changeEIR>
+      <timed eipDuration="10" time="0">
+        <EIRDaily origin="interpolate">0.00219</EIRDaily>
+        <EIRDaily origin="interpolate">0.00210</EIRDaily>
+        <EIRDaily origin="interpolate">0.00202</EIRDaily>
+        ...
+      </timed>
+    </changeEIR>
+}}}
+
 The new EIR is always applied from the _beginning_ of the intervention period, _not_ the step of deployment. It must thus always contain enough daily entries for the entire intervention period.
 
 == Net / indoor spraying interventions ==
@@ -29,6 +40,8 @@ The following interventions all work by multiplying [XmlEntoVector vector model]
 Description of all effects uses the generic [ModelDecayFunctions decay functions framework] — see [ModelDecayFunctions#Configuration configuration] (`DecayFunctionValue` elements).
 
 === Insecticide Treated Nets ===
+
+NOTE: ITN model will be changed in the next release
 
 ITNs affect the availability of hosts to mosquitoes, and the chance of a mosquito successfully biting and fleeing an ITN-protected human. These properties are described per mosquito species, in the `interventions` `descriptions` section. For example:
 
@@ -42,39 +55,52 @@ ITNs affect the availability of hosts to mosquitoes, and the chance of a mosquit
 </anopheles>
 }}}
 
-Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] descriptions with name `ITN`.
+Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] deployment.
 
 === Indoor Residual Spraying ===
 
 IRS affects the availability of hosts to mosquitoes, and the chance of a mosquito surviving resting (egg incubation) after having fed on an IRS-protected human. Its effects should be described in the intervention `descriptions` element, for example:
 
 {{{
-<anopheles mosquito="gambiae_ss">
-  <IRSDescription name="DDT test">
-    <deterrency L="0.5" function="exponential" initial="0.56"/>
-    <killingEffect L="0.5" function="exponential" initial="0.24"/>
-  </IRSDescription>
-</anopheles>
+    <IRS name="DDT test">
+      <decay L="0.5" function="exponential"/>
+      <anophelesParams mosquito="gambiae_ss">
+        <deterrency value="0.56"/>
+        <killingEffect value="0.24"/>
+      </anophelesParams>
+      <anophelesParams mosquito="funestus">
+        <deterrency value="0.56"/>
+        <killingEffect value="0.24"/>
+      </anophelesParams>
+      <anophelesParams mosquito="arabiensis">
+        <deterrency value="0.56"/>
+        <killingEffect value="0.24"/>
+      </anophelesParams>
+      <timed coverage="0.95" time="7"/>
+    </IRS>
 }}}
 
-Uses standard [ModelInterventions#Timed_descriptions timed] descriptions with name `IRS`.
+Uses standard [ModelInterventions#Timed_descriptions timed deployment].
 
 === Vector Availability ===
 
-A theoretical `VectorAvailability` intervention functions similarly to ITN/IRS interventions, but only affects the availability of humans to mosquitoes. Its effectiveness must be described in the `descriptions` element, for example:
-
+A vector deterrent intervention functions similarly to ITN/IRS interventions, but affecting only the availability of humans to mosquitoes. Example:
 
 {{{
-<anopheles mosquito="gambiae_ss">
-  <VADescription name="hypothetical deterrency">
-    <deterrency L="4" function="exponential" initial="0.2"/>
-  </VADescription>
-</anopheles>
+    <vectorDeterrent name="hypothetical deterrency">
+      <decay L="4" function="exponential"/>
+      <anophelesParams mosquito="gambiae_ss">
+        <deterrency value="0.2"/>
+      </anophelesParams>
+      <timed coverage="0.7" time="7"/>
+    </vectorDeterrent>
 }}}
 
-Uses standard [ModelInterventions#Timed_descriptions timed] descriptions with name `VectorAvailability`.
+Uses standard [ModelInterventions#Timed_descriptions timed deployment].
 
 == Larviciding ==
+
+NOTE: Old larviciding implementation was removed in schema 28. New implementation due to be added soonish, probably in version 30.
 
 A larviciding intervention is currently also available, but very simple in that there is no feedback effect of reduction in the number of adult mosquitoes on the number of larvae, nor any concept of saturation. The implementation will likely be improved in the future.
 
@@ -95,10 +121,22 @@ Here, the `duration` parameter specifies how long the larviciding is effective f
 
 A special intervention which instantly uninfects all mosquitoes of malarial parasites (though doesn't prevent reinfection). If combining with mass drug administration to eliminate malaria from a scenario, note that humans can harbour gametocytes up to 20 days following "parasite clearance", hence vectors will need to be uninfected multiple times.
 
-Timed deployment uses a single XML element:
+Example, clearing vector infections multiple times in line with above note about eliminating malaria:
 {{{
-<intervention time="73">
-  <!-- clear past & current mosquito infections -->
-  <uninfectVectors/>
-</intervention>
+    <MDA>
+      <timed coverage="1" time="73"/>
+      <timed coverage="1" time="74"/>
+      <timed coverage="1" time="75"/>
+      <timed coverage="1" time="76"/>
+      <timed coverage="1" time="77"/>
+      <timed coverage="1" time="78"/>
+    </MDA>
+    <uninfectVectors>
+      <timed time="73"/>
+      <timed time="74"/>
+      <timed time="75"/>
+      <timed time="76"/>
+      <timed time="77"/>
+      <timed time="78"/>
+    </uninfectVectors>
 }}}
