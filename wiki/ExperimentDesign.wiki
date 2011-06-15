@@ -79,6 +79,8 @@ Each sweep should consist of a directory containing one XML file for each arm; e
 
 A simple example experiment description: [http://code.google.com/p/openmalaria/source/browse/download/experiments/EC-example-schema-28.7z EC-example-schema-28.7z]
 
+(This is a [http://7-zip.org/ 7-zip] archive. Right-click on "View raw file" and choose "save as ...".)
+
 === Models ===
 
 The models/parameterizations are added in a similar way to sweeps. Download files for the appropriate time-step and schema version from [http://code.google.com/p/openmalaria/source/browse/#svn%2Fdownload%2Fexperiments the repository] and extract (requires [http://7-zip.org/ 7-zip]). Rename the extracted folder "models" if you like and put it in the experiment description directory. Now find out which of these models most resembles your `base.xml` file (the parameters at the end must be identical), and rename this to `base.xml` (still within the `models` directory). This last step is important: it tells the experiment creator that it shouldn't carry over all the differences between these model arm XML files and your `base.xml` file (in the above directory) — which would remove all the interventions, etc., that you added into your `base.xml` file — but, instead, only carry over the differences between the model arm (`models/R0000.xml`, etc.) and the base model (the `base.xml` file within the `models` directory).
