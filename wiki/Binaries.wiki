@@ -15,3 +15,14 @@ We can also make packages with just the OpenMalaria simulator and few examples a
 Note that, for windows, you may well have to install the .net framework (if trying to run OpenMalaria as above gives you an error message like "reinstall the application", try this). You can download this from the [http://www.microsoft.com/net/ Microsoft .net page].
 
 If this doesn't help, please contact us (or better, open an [http://code.google.com/p/openmalaria/issues/list issue]) with the error message.
+
+
+= Experiment creator =
+
+The experiment creator tool is/will be ...
+
+An example experiment can be found [http://code.google.com/p/openmalaria/source/browse/download/experiments/EC-example-schema-28.7z here].
+
+= Schema translator =
+
+The scenario updater tool, SchemaTranslator, is integrated into OpenMalariaTools. Alternatively it can be used by ...
