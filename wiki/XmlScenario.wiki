@@ -91,7 +91,7 @@ Timed interventions correspond to mass deployment at a specific time point. The 
 || `vaccinate` || Mass vaccination campaign ||
 || `ITN` || Mass ITN-deployment ||
 || `IRS` || IRS spray round ||
-|| `VectorAvailability` || Mass mosquito-repellent deployment (e.g. house spraying) ||
+|| `VectorAvailability` (VectorDeterrent) || Mass mosquito-repellent deployment (e.g. house spraying) ||
 || `ipti` || Mass IPTi campaign ||
 || `larviciding` || Mosquito emergence-rate reduction intervention. Has an `anopheles` sub-element for each mosquito sub-species, containing the attributes: `mosquito` (name of sub-species), `effectiveness` (proportional reduction in mosquito emergence), `duration` (number of days the intervention is effective for). ||
 
