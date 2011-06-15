@@ -1,33 +1,17 @@
-#summary Installation packages for windows, macosx and linux.
+#summary Downloads: OpenMalaria and various other tools
 
-= Introduction =
+= OpenMalaria simulator =
 
-A GUI for running OpenMalaria simulations and analysing results — [openmalariaTools OpenMalariaTools] — is under development. This should provide the easiest method of using OpenMalaria on a PC (it is currently usable, though still under development).
+The simulator itself can be:
 
-The OpenMalaria executable can also be downloaded here (or [BuildSystem compiled from source]). These executables can be used with OpenMalariaTools or standalone (run from a shell script or the command-line).
+  * [openmalariaTools installed and used with OpenMalariaTools] (easiest to use)
+  * [BuildSystem compiled from source]
+  * run over BOINC ([http://malariacontrol.net/ join our volunteer computing effort])
 
-== Compiled executables ==
+We can also make packages with just the OpenMalaria simulator and few examples available for win32/OS X/linux 32/64-bit platforms. Please ask if none of the links above provide what you need (because you're using a Mac or need a newer version).
 
-OpenMalaria executables available (currently only old releases are available here; newer ones are included in the OpenMalariaTools package):
-
- * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-649/win32/openmalaria-649.zip win32]
- * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-649/macosx/openmalaria-649.zip macosx]
- * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-649/gnu32/openmalaria-649.tar.gz gnu32]
- * [http://openmalaria.googlecode.com/svn/download/openmalariaApps/openmalaria-649/gnu64/openmalaria-649.tar.gz gnu64]
-
-Extract whichever you download into your openmalaria folder and then run the openmalaria executable from a command line (see [SetupOverview Getting Started]).
-
-== Errors ==
+== Troubleshooting ==
 
 Note that, for windows, you may well have to install the .net framework (if trying to run OpenMalaria as above gives you an error message like "reinstall the application", try this). You can download this from the [http://www.microsoft.com/net/ Microsoft .net page].
 
 If this doesn't help, please contact us (or better, open an [http://code.google.com/p/openmalaria/issues/list issue]) with the error message.
-
-== What's what (files) ==
-
-A quick overview of the files included in the download:
-
-|| openMalaria[.exe]|| binary files (executable)||
-|| scenario_VER.xsd || schema file (formally describes what the xml files may contain) of version VER ||
-|| scenario.xml || An example scenario document (this one is simply a copy of examples/scenarioVecFullTestII.xml) ||
-|| autoRegressionParameters.csv, densities.csv || auxiliary data files for openmalaria ||
