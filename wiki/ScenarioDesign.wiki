@@ -115,8 +115,7 @@ Graphs generated with the `trunk/unittest/AgeGroupInterpolationSuite.py` script.
 </wiki:comment>
 http://openmalaria.googlecode.com/svn/wiki/graphs/human_avail_and_mass_age.png
 
-
-TODO: add some parameterizations
+Our set of 14 parameterisations can be downloaded here: [http://code.google.com/p/openmalaria/source/browse/#svn%2Fdownload%2Fexperiments%2Fmodels-5-day http://code.google.com/p/openmalaria/source/browse/#svn/download/experiments/models-5-day]
 
 The `pharmacology` element is only required when a 1-day time-step is used, and is essentially a library of parameters for the drug model. It should therefore not need to be edited (just copied from a source).
 
