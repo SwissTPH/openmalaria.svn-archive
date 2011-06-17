@@ -48,7 +48,7 @@ public class ArmTxt extends Arm{
 			br = new BufferedReader(fr);
 
 			// and match regular expression : @\w+@:\w+ (e.g. @IIR@:0.60)
-			Pattern pattern = Pattern.compile("(@\\w+@):(\\S+)");
+			Pattern pattern = Pattern.compile("(@\\w+@):([\\S \\t]+)");
 			Matcher matcher = null;
 
 			String strLine = null;
@@ -60,9 +60,11 @@ public class ArmTxt extends Arm{
 					String param_name = matcher.group(1);
 					String param_value = matcher.group(2);
 					parameters.put(param_name, param_value);
-				} else {
-					System.err.println(" the line " + strLine + " doesn't match the expression @[parameter_name]@:[value]");
-
+				} else if ( strLine.equals("\n") || strLine.equals("\r\n") ) {
+					// nothing to do empty line
+				}
+				else {
+					System.err.println( "Error in file " + tname + " : '" + strLine + "' doesn't match the expression @[parameter_name]@:[value]");
 				}
 			}
 

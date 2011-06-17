@@ -232,7 +232,10 @@ public class CombineSweeps {
         		}
         		unionOfPatches = PTBase.union(unionOfPatches, cov);
         		nScenarios *= sweep.getLength();
+        	} else if ( sweep instanceof SweepTxt ) {
+        		nScenarios *=sweep.getLength();
         	}
+        	
         }
         //TODO: sort and allow clashes where elements are invariant in all but one case
         
