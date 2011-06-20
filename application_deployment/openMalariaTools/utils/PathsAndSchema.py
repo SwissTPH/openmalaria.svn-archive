@@ -48,6 +48,8 @@ class PathsAndSchema():
         _home_path = os.getenv("HOME") 
         if install_path[0] != '@':
             _base_path = install_path
+	else:
+	    _base_path = '/usr/local/openmalariaTools'	   
     
     _application_folder = os.path.join(_base_path, 'application')
     _common_folder = os.path.join(_base_path, 'application', 'common')
