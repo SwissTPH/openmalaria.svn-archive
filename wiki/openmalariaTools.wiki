@@ -14,12 +14,9 @@ The beta 4 release uses schema version 23 and has been packaged with an installe
 
   * Make sure a [http://www.java.com/en/download/ Java run-time environment] is installed.
   * Install [http://www.python.org/download/ Python] (version 2.6 or 2.7; the 3.x series won't work) and [http://www.pygtk.org/downloads.html PyGTK]. (The older installer should do this for you, but the latest archive won't.)
-  * Install [http://7-zip.org/ 7-zip] if you don't already have it (it's a worthy replacement for zip files)
-  * Download and install one of the following:
-      * (Windows 7-zip archive) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.05/win32/openMalariaTools_schema26_v00.05.7z openMalariaTools_schema26_v00.05.7z]
-      * (Windows installer) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/win32/openMalariaTools_installer_v00.04.exe openMalariaTools_installer_v00.04.exe]
-      * (linux 64-bit .deb) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/gnu64/openmalariaTools_00.04_amd64.deb openmalariaTools_00.04_amd64.deb]
-      * (linux 32-bit .deb) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.04/gnu32/openmalariaTools_00.04_i386.deb openmalariaTools_00.04_i386.deb]
+      * (Windows installer) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.06/win32/openMalariaTools_installer_v00.06.exe openMalariaTools_installer_v00.06.exe]
+      * (linux 64-bit .deb) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.06/gnu64/openmalariaTools_00.06_i386.deb openmalariaTools_00.06_i386.deb]
+      * (linux 32-bit .deb) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.06/gnu32/openmalariaTools_00.06_i386.deb openmalariaTools_00.06_i386.deb]
 
 Note that the latest (Windows) version does not have an installer. Just extract the archive somewhere, and run the `start_gui.py` file. (This archive will also work on other platforms, if a suitable `application/openMalaria` binary is added.)
 
