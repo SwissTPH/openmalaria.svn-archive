@@ -7,7 +7,7 @@ The following table lists interventions which have been implemented in OpenMalar
 || intervention || mass-deployment || continuous-deployment ||
 || [ModelIntervHuman#Change_health_system changeHS] || yes || no ||
 || [ModelIntervHuman#Vaccines vaccine] || yes || yes (see deployment notes) ||
-|| [ModelIntervHuman#Mass_drug_administration MDA] || yes || no ||
+|| [ModelIntervHuman#Mass_Drug_Administration MDA] || yes || no ||
 || [ModelIntervHuman#Intermittent_Preventative_Treatment IPT] || yes || yes ||
 
 == Change heath system ==
@@ -67,7 +67,7 @@ Use standard [ModelInterventions#Continuous_descriptions continuous] description
 
 The MDA intervention models some type of mass deployment of drugs. In the 5-day timestep models, these drugs are simply modelled (drug kills 100% of parasites in all patients receiving it with no lasting effect). With the 1-day time-step model MDA interventions are more flexible and can, for example, be configured as short-action anti-malarial deployment, deployment of SP-like drugs with a long prophylactic effect and mass screen and treat.
 
-With the 5-day time-step model no additional configuration is needed:
+With the 5-day time-step model no additional configuration is needed for administration without diagnostic:
 {{{
     <MDA>
       <timed coverage="1" maxAge="999" minAge="0" time="0"/>
@@ -75,6 +75,25 @@ With the 5-day time-step model no additional configuration is needed:
       <timed coverage="1" maxAge="999" minAge="0" time="28"/>
     </MDA>
 }}}
+From schema version 29, a diagnostic can be used with the 5-day time-step model to simulate mass screen-and-treat. For example, the below uses a diagnostic simulating an RDT for Plasmodium falciparum in Africa [data source: Murray et al (Clinical Microbiological Reviews, Jan. 2008)]:
+{{{
+    <MDA>
+      <diagnostic>
+        <stochastic dens_50="50" specificity="0.942"/>
+      </diagnostic>
+      <timed coverage="1" maxAge="999" minAge="0" time="0"/>
+      <timed coverage="1" maxAge="999" minAge="0" time="14"/>
+      <timed coverage="1" maxAge="999" minAge="0" time="28"/>
+    </MDA>
+}}}
+Some parameters for simulating microscopy (source: expert opinion): dens_50=20, specificity=0.75. Deterministic tests are also supported:
+{{{
+<diagnostic>
+  <deterministic minDensity="40"/>
+</diagnostic>
+}}}
+Here the test outcome is positive if the density is at least the minimum given (in parasites/µL, relative to malaria theropy data rather than densities estimated from Garki/non-Garki slides). If a minimum density of 0 is given, the test outcome is always positive.
+
 With the 1-day TS model, an MDADescription element must be included, as, for example, below:
 {{{
     <MDA>
