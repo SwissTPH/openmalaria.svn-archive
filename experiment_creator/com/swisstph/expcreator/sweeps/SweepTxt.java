@@ -29,13 +29,15 @@ public class SweepTxt extends Sweep {
             String armName = arms.get(i).getName();
             if (armName.equals("comparator")) {
                 if (refArm != -1) {
-                    throw new RuntimeException("Sweep " + name + ": multiple reference arms (reference.xml/comparator.xml/base.xml)!");
+                    System.out.println("Sweep " + name + ": multiple reference arms (reference.xml/comparator.xml/base.xml)!");
+                    throw new RuntimeException("multiple reference arms");
                 }
                 refArm = cmpArm = i;
                 System.out.print("\t[reference and comparator]");
             } else if (armName.equals("reference") || armName.equals("base")) {
                 if (refArm != -1) {
-                    throw new RuntimeException("Sweep " + name + ": multiple reference arms (reference.xml/comparator.xml/base.xml)!");
+                    System.out.println("Sweep " + name + ": multiple reference arms (reference.xml/comparator.xml/base.xml)!");
+                    throw new RuntimeException("multiple reference arms");
                 }
                 refArm = i;
                 System.out.print("\t[reference]");

@@ -79,13 +79,14 @@ public class ArmXml extends Arm {
                 CombineSweeps.getValidator().validate(new DOMSource(document));
             }
         } catch (SAXException e) {
-            System.out.println("While reading: " + xml.getName());
+            System.out.println("Validation failure reading" + xml.getName()+":");
             System.out.println(e.getMessage());
             throw new RuntimeException("validation failure");
         }
 
         if (!base.getNodeName().equals(elt.getNodeName())) {
-            throw new RuntimeException("root element name differs: " + base.getNodeName() + ", " + elt.getNodeName());
+            System.out.println("root element name differs: " + base.getNodeName() + ", " + elt.getNodeName());
+            throw new RuntimeException("root element name mismatch");
         }
 
         System.out.print("ArmXml:\t" + name);
@@ -130,6 +131,7 @@ public class ArmXml extends Arm {
         if (rs.next()) {
             id = rs.getInt(1);	// get generated ID
         } else {
+            System.out.println("DB error: unable to get generated key");
             throw new RuntimeException("unable to get generated key");
         }
     }
@@ -174,7 +176,8 @@ public class ArmXml extends Arm {
 
         short nodeType = armNode.getNodeType();
         if (nodeType != baseNode.getNodeType()) {
-            throw new RuntimeException("elements " + armNode.getNodeName() + " have different type!");
+            System.out.println("elements " + armNode.getNodeName() + " have different type!");
+            throw new RuntimeException("elements type mismatch");
         }
         switch (nodeType) {
             case Node.ELEMENT_NODE:
@@ -189,7 +192,8 @@ public class ArmXml extends Arm {
                     return null;
                 }
             default:
-                throw new RuntimeException("unexpected element type: " + nodeType + " (named " + armNode.getNodeName() + ")");
+                System.out.println("unexpected element type: " + nodeType + " (named " + armNode.getNodeName() + ")");
+                throw new RuntimeException("unexpected element");
         }
 
         if (armNode.getAttributes().getLength() != baseNode.getAttributes().getLength()) {

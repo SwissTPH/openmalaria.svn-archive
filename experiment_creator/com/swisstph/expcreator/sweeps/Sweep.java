@@ -42,11 +42,14 @@ public abstract class Sweep {
 		return cmpArm;
 	}
 	
-    public void writeNamePair(Writer w, int index, PrintStream scnListOut) throws Exception {
+    public void writeName(Writer w, int index) throws Exception {
+        String armName = arms.get(index).getName();
+        w.append(",").append(armName);
+    }
+    
+    public void writeNamePair(Writer w, int index) throws Exception {
         String armName = arms.get(index).getName();
         w.append(",").append(name).append(":").append(armName);
-        scnListOut.print(",");
-        scnListOut.print(armName);
     }
     
     public abstract PTBase getPatchCoverage();

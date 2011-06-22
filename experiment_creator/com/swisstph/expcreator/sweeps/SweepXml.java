@@ -60,7 +60,8 @@ public class SweepXml extends Sweep {
                 base.setAttribute("name", ""); // make sure this Attr isn't patched
                 
                 if (!CombineSweeps.getBaseElement().getNodeName().equals(base.getNodeName())) {
-                    throw new RuntimeException("root element name differs: " + CombineSweeps.getBaseElement().getNodeName() + ", " + base.getNodeName());
+                    System.out.println("root element name differs: " + CombineSweeps.getBaseElement().getNodeName() + ", " + base.getNodeName());
+                    throw new RuntimeException("root element name mismatch");
                 }
                 
                 // Reformat: remove all whitespace nodes
@@ -71,7 +72,7 @@ public class SweepXml extends Sweep {
                     if( CombineSweeps.getValidator() != null )
                         CombineSweeps.getValidator().validate(new DOMSource(CombineSweeps.getBaseDocument()));
                 } catch (SAXException e) {
-                    System.out.println("While reading: " + file.getName());
+                    System.out.println("Validation error reading " + file.getName()+":");
                     System.out.println(e.getMessage());
                     throw new RuntimeException("validation failure");
                 }
@@ -87,13 +88,15 @@ public class SweepXml extends Sweep {
             String armName = arms.get(i).getName();
             if (armName.equals("comparator")) {
                 if (refArm != -1) {
-                    throw new RuntimeException("Sweep " + name + ": multiple reference arms (reference.xml/comparator.xml/base.xml)!");
+                    System.out.println("Sweep " + name + ": multiple reference arms (reference.xml/comparator.xml/base.xml)!");
+                    throw new RuntimeException("multiple reference arms");
                 }
                 refArm = cmpArm = i;
                 System.out.print("\t[reference and comparator]");
             } else if (armName.equals("reference") || armName.equals("base")) {
                 if (refArm != -1) {
-                    throw new RuntimeException("Sweep " + name + ": multiple reference arms (reference.xml/comparator.xml/base.xml)!");
+                    System.out.println("Sweep " + name + ": multiple reference arms (reference.xml/comparator.xml/base.xml)!");
+                    throw new RuntimeException("multiple reference arms");
                 }
                 refArm = i;
                 System.out.print("\t[reference]");
@@ -112,7 +115,8 @@ public class SweepXml extends Sweep {
         super(fName);    	
     	
         if (nSeeds < 1) {
-            throw new RuntimeException("--seeds: must have at least one seed");
+            System.out.println("--seeds: must have at least one seed");
+            throw new RuntimeException("commandline error");
         }
     	
         System.out.println("Sweep: " + name);
@@ -153,6 +157,7 @@ public class SweepXml extends Sweep {
         if (rs.next()) {
             id = rs.getInt(1);	// get generated ID
         } else {
+            System.out.println("DB error: unable to get generated key");
             throw new RuntimeException("unable to get generated key");
         }
 

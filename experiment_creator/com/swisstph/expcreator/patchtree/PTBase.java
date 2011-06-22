@@ -181,7 +181,8 @@ public abstract class PTBase {
 	    }
 	    return;
 	} else {
-	    throw new RuntimeException("unexpected element type: " + lhs);
+            System.out.println("unexpected element type: " + lhs);
+	    throw new RuntimeException("unexpected element type");
 	}
    }catch( PatchConflictException e ){
            if( !( lhs instanceof PTNodeList || lhs instanceof PTReplaceNodeList ) )

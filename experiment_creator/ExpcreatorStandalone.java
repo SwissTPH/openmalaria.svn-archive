@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
-import java.io.File;
+import java.io.*;
 import com.swisstph.expcreator.CombineSweeps;
 
 public class ExpcreatorStandalone {
@@ -32,6 +32,8 @@ public class ExpcreatorStandalone {
         int sceIdStart = 0;
         String expDescription = null;
         String dbUrl = null, dbUser = null;
+        boolean writeListOnly = false;
+        boolean readList = false;
 
         for (int i = 0; i < args.length; i++) {
             if (args[i].startsWith("--")) {
@@ -44,7 +46,7 @@ public class ExpcreatorStandalone {
                         if( !outp.isDirectory() ){
                             // Not a directory
                             if( !outp.mkdir() ){        // presumably something else (exception on permission error?)
-                                System.err.println( "Error: unable to create "+outputPath );
+                                System.out.println( "Error: unable to create "+outputPath );
                                 System.exit(1);
                             }
                         }
@@ -72,23 +74,26 @@ public class ExpcreatorStandalone {
                     dbUrl = args[ ++i ];
                 } else if( args[i].equals( "--dbuser")) {
                     dbUser = args[ ++i ];
+                } else if( args[i].equals( "--write-list-only")) {
+                    writeListOnly = true;
+                } else if( args[i].equals( "--read-list")) {
+                    readList = true;
                 } else {
                 	System.out.println( "Unrecognised option: "+args[i] );
                     printHelp();
                 }
             } else {
-                if (inputPath == null) {
-                    inputPath = args[i];
-                } else if (outputPath == null) {
-                    outputPath = args[i];
-                } else {
-                    printHelp();
-                }
+                printHelp();
             }
         }
 
+        if( readList && writeListOnly ){
+            System.out.println("Cannot use both --read-list and --write-list-only");
+            System.exit(1);
+        }
+        
         if (inputPath == null || outputPath == null) {
-            System.out.println("Required arguments: INPUT_DIR OUTPUT_DIR");
+            System.out.println("Required arguments: --stddirs PATH");
             printHelp();
         }
         if (dbUrl == null ){	// non-DB mode
@@ -117,26 +122,41 @@ public class ExpcreatorStandalone {
 
             mainObj.sweepChecks();
 
-            if (patches) {
-                mainObj.writePatches(outputPath);
-            } else {
-                File outputDir = mainObj.genCombinationList(sceIdStart, outputPath);
-
-                if (dbUrl != null) {
-                    if (mainObj.updateDb(dbUrl, dbUser)) {
-                        System.out.println("Database connection error.");
-                        System.exit(1);
-                    }
-                }
-
-                mainObj.combine(outputDir, uniqueSeeds, scnListPath);
+            // Check outputDir now, so we don't do DB updates and then realise we can't output files
+            File outputDir = new File(outputPath);
+            if (!outputDir.isDirectory() || outputDir.list().length != 0 || !outputDir.canWrite()) {
+                System.out.println(outputPath+" is not a writable empty directory");
+                System.exit(1);
             }
-        } catch (RuntimeException e) {
-            System.out.println("Exception: " + e.getMessage());
-            e.printStackTrace(System.out);
-            System.exit(1);
+            
+            if (patches) {
+                mainObj.writePatches(outputDir);
+            } else {
+                mainObj.genCombinationList(sceIdStart, scnListPath, readList);
+
+                if( !writeListOnly ){
+                    if (dbUrl != null) {
+                        if (mainObj.updateDb(dbUrl, dbUser)) {
+                            System.out.println("Database connection error.");
+                            System.exit(1);
+                        }
+                    }
+
+                    mainObj.combine(outputDir, uniqueSeeds);
+                }
+            }
         } catch (Exception e) {
-            e.printStackTrace(System.out);
+            // An error message was already printed, so a stack trace isn't that important
+            try{
+                OutputStream fout = new FileOutputStream( "debug.log", true );
+                OutputStream bout = new BufferedOutputStream( fout );
+                PrintWriter w = new PrintWriter( bout );
+                e.printStackTrace(w);
+                w.close();
+            }catch(Exception f){
+                e.printStackTrace(System.err);
+            }
+            System.out.println("terminating on error (stack trace written to debug.log)");
             System.exit(1);
         }
     // Done.
@@ -145,18 +165,23 @@ public class ExpcreatorStandalone {
     public static void printHelp() {
         System.out.println(
 	    "Usage:\n"
-	    + "\tCombineSweeps [options] INPUT_DIR OUTPUT_DIR\n"
-        + "\tCombineSweeps --stddirs PATH [options]\n"
+            + "\tCombineSweeps --stddirs PATH [options]\n"
 	    + "\n"
 	    + "Options:\n"
-        + "  --stddirs PATH\tAssume a standard setup: INPUT_DIR is PATH/description,\n"
-        + "                 OUTPUT_DIR is PATH/scenarios, and a list of what the\n"
-        + "                 scenarios are is written to PATH/scenarios.csv\n"
-        + "  --seeds N		Add a sweep of N random seeds\n"
+            + "  --stddirs PATH	Assume a standard setup: input dir is PATH/description,\n"
+            + "			output dir is PATH/scenarios, and a list of what the\n"
+            + "			scenarios are is written to PATH/scenarios.csv\n"
+            + "  --seeds N		Add a sweep of N random seeds\n"
 	    + "  --unique-seeds B	If B is true (default), give every scenario a unique seed\n"
 	    + "  --patches		Write out arms as patches instead of resulting\n"
 	    + "			combined XML files. (Currently broken.)\n"
 	    + "  --no-validation		Turn off validation.\n"
+            + "  --write-list-only	Stop after writing PATH/scenarios.csv without doing DB\n"
+            + "			updates or generating scenario files.\n"
+            + "  --read-list		Read list in PATH/scenarios.csv and only generate scenario\n"
+            + "			files listed. Due to limited capability of program, a full list\n"
+            + "			for the current description should be generated and unwanted\n"
+            + "			lines deleted; other edits may cause problems.\n"
 	    + "\n"
 	    + "Non-DB mode options:\n"
 	    + "  --name NAME		Name of experiment; for use when not in DB mode.\n"
@@ -169,16 +194,11 @@ public class ExpcreatorStandalone {
 	    + "  --dbuser USER		Log in as USER. Password will be read from command prompt.\n"
 	    + "  --desc DESC		Enter a description for database update.\n"
 	    + "\n"
-	    + "INPUT_DIR should contain one XML file named base.xml and a set of\n"
+	    + "PATH/description should contain one XML file named base.xml and a set of\n"
 	    + "sub-directories. Each sub-directory containing any XML files is\n"
 	    + "considered a sweep. Each XML file within each sweep's directory is\n"
 	    + "considered an arm. See comment at the top of CombineSweeps.java\n"
 	    + "for more information.\n"
-	    + "\n"
-	    + "Error and status messages are printed to stdout, and a list of created\n"
-	    + "scenario files to stderr (which you may wish to redirect: 2>scenarios.txt).\n"
-	    + "\n"
-	    + "TODO: some mechanism for substituting variables, such as vaccine efficacy.\n"
         );
         System.exit(1);
     }

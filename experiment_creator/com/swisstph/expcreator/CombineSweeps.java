@@ -31,15 +31,13 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.*;
 import java.sql.*;
 
-
-
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import com.swisstph.expcreator.sweeps.Sweep;
 import com.swisstph.expcreator.sweeps.SweepTxt;
 import com.swisstph.expcreator.sweeps.SweepXml;
-import com.swisstph.expcreator.arms.ScenarioArmAssociation;
+import com.swisstph.expcreator.ScenarioArmAssociation;
 import com.swisstph.expcreator.exceptions.PatchConflictException;
 import com.swisstph.expcreator.patchtree.PTBase;
 import com.swisstph.expcreator.utils.TXTFileFilter;
@@ -161,14 +159,14 @@ public class CombineSweeps {
 
         File inputDir = new File(inputPath);
         if (!inputDir.isDirectory()) {
-            System.out.println("INPUT_DIR is not a directory: " + inputPath);
+            System.out.println("Require input directory: " + inputPath);
             System.exit(1);
         }
 
         // Read base XML file
         File[] baseXMLs = inputDir.listFiles(new XMLFileFilter(true));
         if (baseXMLs.length != 1) {
-            System.out.println("Expected base.xml file in INPUT_DIR.");
+            System.out.println("Expected base.xml file in "+inputPath);
             System.exit(1);
         }
         baseDocument = builder.parse(baseXMLs[0]);
@@ -185,7 +183,8 @@ public class CombineSweeps {
 
             File xsdFile = new File(inputDir, schemaName);
             if (!xsdFile.isFile()) {
-                throw new RuntimeException("Unable to find schema " + xsdFile.getCanonicalPath() + "; required for validation.");
+                System.out.println("Unable to find schema " + xsdFile.getCanonicalPath() + "; required for validation.");
+                throw new RuntimeException("schema not found");
             }
 
             SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
@@ -228,7 +227,8 @@ public class CombineSweeps {
         			PTBase.checkConflicts(unionOfPatches, cov);
         		}catch( PatchConflictException e ){
         			System.out.println( "Conflict in sweep "+sweep.getName() );
-        			throw e;
+                                System.out.println( e.getMessage() );
+        			throw new RuntimeException("patch conflict");
         		}
         		unionOfPatches = PTBase.union(unionOfPatches, cov);
         		nScenarios *= sweep.getLength();
@@ -244,8 +244,18 @@ public class CombineSweeps {
         //TODO: get survey times and age groups elements
         // like this?: Node scenario = PTBase.getChildNodes (cov, "scenario").get(0);
     }
-
-    public File genCombinationList(int sceIdStart, String outputPath) {
+    
+    /** Create a list of all combinations of arms and write it to a file.
+     * 
+     * sceIdStart: number to start numerating scenarios from (usually 0)
+     * 
+     * scnListPath: path of file to write list of scenarios to
+     * 
+     * readList: if true, the scnListPath file is read from instead of written to,
+     * and scenarios corresponding to lines in the file are generated. File
+     * must not be reordered or reformatted other than the deletion of lines.
+     */
+    public void genCombinationList(int sceIdStart,String scnListPath, boolean readList) throws Exception{
         int combinations = 1;
         int[] lengths = new int[sweeps.size()];
         for (int i = 0; i < lengths.length; ++i) {
@@ -255,19 +265,91 @@ public class CombineSweeps {
 
         scenarios = new ScenarioArmAssociation[combinations];
 
+        int idCounter = sceIdStart;
         for (int c = 0; c < combinations; ++c) {
-            scenarios[c] = new ScenarioArmAssociation(c,c+sceIdStart, lengths);
+            scenarios[c] = new ScenarioArmAssociation(c,idCounter, lengths);
+            idCounter += 1;
         }
-
-        // Also check outputDir now, so we don't do DB updates and then realise we can't output files
-        File outputDir = new File(outputPath);
-        if (!outputDir.isDirectory() || outputDir.list().length != 0 || !outputDir.canWrite()) {
-            System.out.println("OUTPUT_DIR is not a writable empty directory: " + outputPath);
-            System.exit(1);
+        
+        if( !readList ){
+            PrintStream scnListOut = System.err;
+            if( scnListPath != null ){
+                OutputStream fout = new FileOutputStream( scnListPath );
+                OutputStream bout = new BufferedOutputStream( fout );
+                scnListOut = new PrintStream( bout );
+            }
+            scnListOut.print("file");
+            for (Sweep sweep : sweeps) {
+                scnListOut.print(",");
+                scnListOut.print(sweep.getName());
+            }
+            scnListOut.println();
+            
+            PrintWriter pw = new PrintWriter(scnListOut);
+            for (int c = 0; c < scenarios.length; ++c) {
+                scenarios[c].writeDescription(pw, sweeps);
+                pw.println();
+            }
+            pw.flush();
+            
+            if( scnListOut != System.err ){
+                scnListOut.flush();
+                scnListOut.close();
+            }
+        }else/* read from file */{
+            final FileReader fr = new FileReader( scnListPath );
+            final BufferedReader br = new BufferedReader( fr, 24576 /* 24K chars (48K bytes), 75% of allocation is optimal */ );
+            
+            String line = br.readLine();
+            if( line == null ){
+                System.out.println("expected a list of scenarios in: "+scnListPath);
+                throw new RuntimeException("file not found");
+            }
+            StringWriter headerW = new StringWriter(256);
+            headerW.append("file");
+            for (Sweep sweep : sweeps) {
+                headerW.append(",");
+                headerW.append(sweep.getName());
+            }
+            if( !line.equals(headerW.toString()) ){
+                System.out.println("Error: in "+scnListPath+" expected header:");
+                System.out.println("\t"+headerW.toString());
+                System.out.println("not:\t"+line);
+                throw new RuntimeException("incompatible header");
+            }
+            
+            line = br.readLine();
+            for (int c = 0; c < scenarios.length; ++c) {
+                if( line != null ){
+                    StringWriter lineW = new StringWriter(256);
+                    scenarios[c].writeDescription(new PrintWriter(lineW), sweeps);
+                    if( line.equals(lineW.toString()) ){
+                        line = br.readLine();
+                        continue;       // don't set scenarios[c] to null
+                    }
+                }
+                scenarios[c] = null;
+            }
+            
+            if( line != null ){
+                System.out.println("Error: file has lines not matching an arm combination (or in the wrong order):");
+                int c = 0;
+                while( line != null ){
+                    if( c > 10 ){
+                        System.out.println("...");
+                        break;
+                    }
+                    c+=1;
+                    System.out.println(line);
+                    line = br.readLine();
+                }
+                throw new RuntimeException("unmatched lines in scenario list");
+            }
+            
+            br.close();
         }
-        return outputDir;
     }
-
+    
     /** Gets IDs from database and enters new experiment data.
      *
      * Returns true on failure. */
@@ -286,8 +368,10 @@ public class CombineSweeps {
             System.out.println("Attempting connection to " + dbUrl + " as " + dbUser);
             // Get password
 	    Console cons = System.console();
-	    if( cons == null )
-	    throw new RuntimeException( "unable to read password from console" );
+	    if( cons == null ){
+                System.out.println("unable to read password from console");
+                throw new RuntimeException( "console error" );
+            }
 	    char[] passwd = cons.readPassword( "[%s]", "Password for "+dbUser );
 	    String dbPwd = new String( passwd );	// We need a string. This copies password in memory and doesn't erase though :(
 	    java.util.Arrays.fill( passwd, ' ' );	// erase password from memory
@@ -314,6 +398,7 @@ public class CombineSweeps {
                 expId = rs.getInt(1);	// get generated ID
                 expName = Integer.toString(expId);
             } else {
+                System.out.println("DB error: unable to get generated key");
                 throw new RuntimeException("unable to get generated key");
             }
             System.out.println("Inserted into experiments table");
@@ -377,24 +462,18 @@ public class CombineSweeps {
         return false;
     }
 
-    public void writePatches(String outputPath) throws Exception {
+    public void writePatches(File outputDir) throws Exception {
         transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-
-        File outputDir = new File(outputPath);
-        if (!outputDir.isDirectory() || outputDir.list().length != 0 || !outputDir.canWrite()) {
-            System.out.println("OUTPUT_DIR is not a writable empty directory: " + outputPath);
-            System.exit(1);
-        }
 
         for (Sweep sweep : sweeps) {
             sweep.writePatches(outputDir);
         }
     }
 
-    public void combine(File outputDir,boolean uniqueSeeds,String scnListPath) throws Exception {
+    public void combine(File outputDir,boolean uniqueSeeds) throws Exception {
         transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
@@ -402,25 +481,12 @@ public class CombineSweeps {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         
-        PrintStream scnListOut = System.err;
-        if( scnListPath != null ){
-            OutputStream fout = new FileOutputStream( scnListPath );
-            OutputStream bout = new BufferedOutputStream( fout );
-            scnListOut = new PrintStream( bout );
-        }
-        scnListOut.print("file");
-        for (Sweep sweep : sweeps) {
-            scnListOut.print(",");
-            scnListOut.print(sweep.getName());
-        }
-        scnListOut.println();
-            
         for (int c = 0; c < scenarios.length; ++c) {
             // Clone our base
             DOMResult cloneResult = new DOMResult();
             transformer.transform(new DOMSource(baseDocument), cloneResult);
             Document wu = (Document) cloneResult.getNode();
-            wu = scenarios[c].applyArms(wu,uniqueSeeds,scnListOut,sweeps);
+            wu = scenarios[c].applyArms(wu,uniqueSeeds,sweeps);
 
 
             // Write out result
@@ -439,15 +505,10 @@ public class CombineSweeps {
                     validator.validate(source);
                 }
             } catch (SAXException e) {
-                System.out.println("in " + file.getCanonicalPath());
+                System.out.println("Validation failure in " + file.getCanonicalPath()+":");
                 System.out.println(e.getMessage());
                 throw new RuntimeException("validation failure");
             }
-        }
-        
-        if( scnListOut != System.err ){
-            scnListOut.flush();
-            scnListOut.close();
         }
     }
 

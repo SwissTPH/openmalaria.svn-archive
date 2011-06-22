@@ -88,6 +88,7 @@ public abstract class Arm {
         if (rs.next()) {
             id = rs.getInt(1);	// get generated ID
         } else {
+            System.out.println("DB error: unable to get generated key");
             throw new RuntimeException("unable to get generated key");
         }
     }
