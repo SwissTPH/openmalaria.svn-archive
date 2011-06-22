@@ -18,7 +18,7 @@
 import java.io.*;
 import com.swisstph.expcreator.CombineSweeps;
 
-public class ExpcreatorStandalone {
+public class ExperimentCreator {
 	
 	public static void main(String[] args) {
         ClassLoader.getSystemClassLoader().setDefaultAssertionStatus(true);
