@@ -352,8 +352,8 @@ public class CombineSweeps {
     
     /** Gets IDs from database and enters new experiment data.
      *
-     * Returns true on failure. */
-    public boolean updateDb(String dbUrl, String dbUser) throws Exception {
+     * Throws on failure. */
+    public void updateDb(String dbUrl, String dbUser) throws Exception {
         if (expDescription == null) {
             throw new RuntimeException("DESC required for DB update");
         }
@@ -414,7 +414,9 @@ public class CombineSweeps {
                     Statement.RETURN_GENERATED_KEYS);
             scenariosSt.setInt(1, expId);
             for (int i = 0; i < scenarios.length; ++i) {
-                scenarios[i].dbScenarios(scenariosSt);
+                if( scenarios[i] != null ){
+                    scenarios[i].dbScenarios(scenariosSt);
+                }
             }
             System.out.println("Inserted into scenarios table");
 
@@ -428,7 +430,9 @@ public class CombineSweeps {
                     Statement.RETURN_GENERATED_KEYS);
             scenarios_sweepsSt.setInt(1, expId);
             for (int i = 0; i < scenarios.length; ++i) {
-                scenarios[i].dbScenariosSweeps(scenarios_sweepsSt, sweeps);
+                if( scenarios[i] != null ){
+                    scenarios[i].dbScenariosSweeps(scenarios_sweepsSt, sweeps);
+                }
                 if (i%1000==0)
                     System.out.println("inserting: "+Integer.toString(i));
             }
@@ -443,7 +447,9 @@ public class CombineSweeps {
             PreparedStatement updateCmpIdSt = conn.prepareStatement(
                     "UPDATE scenarios SET cmp_id=? WHERE sce_id=?");
             for (int i = 0; i < scenarios.length; ++i) {
-                scenarios[i].dbUpdateCmpId(updateCmpIdSt, lengths, sweeps, scenarios);
+                if( scenarios[i] != null ){
+                    scenarios[i].dbUpdateCmpId(updateCmpIdSt, lengths, sweeps, scenarios);
+                }
             }
             updateCmpIdSt.executeBatch();
             System.out.println("Updated scenarios table");
@@ -451,15 +457,14 @@ public class CombineSweeps {
             System.out.println("experiment " + expName + ": " + expDescription);
         } catch (Exception e) {
             conn.rollback();	// Failure somewhere: don't want any changes to be committed
-            e.printStackTrace(System.out);
-            return true;
+            System.out.println("Error while updating database.");
+            throw e;
         } finally {
             if (conn != null) {
                 conn.setAutoCommit(true);	// OK, now we commit everything
                 conn.close();
             }
         }
-        return false;
     }
 
     public void writePatches(File outputDir) throws Exception {
@@ -482,6 +487,10 @@ public class CombineSweeps {
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         
         for (int c = 0; c < scenarios.length; ++c) {
+            if( scenarios[c] == null ){
+                continue;
+            }
+            
             // Clone our base
             DOMResult cloneResult = new DOMResult();
             transformer.transform(new DOMSource(baseDocument), cloneResult);

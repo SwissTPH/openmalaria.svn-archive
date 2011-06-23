@@ -42,14 +42,6 @@ public class ExperimentCreator {
                         String basePath=args[++i];
                         inputPath=basePath+File.separator+"description";
                         outputPath=basePath+File.separator+"scenarios";
-                        File outp=new File(outputPath);
-                        if( !outp.isDirectory() ){
-                            // Not a directory
-                            if( !outp.mkdir() ){        // presumably something else (exception on permission error?)
-                                System.out.println( "Error: unable to create "+outputPath );
-                                System.exit(1);
-                            }
-                        }
                         scnListPath=basePath+File.separator+"scenarios.csv";
                     }
                     else
@@ -96,18 +88,33 @@ public class ExperimentCreator {
             System.out.println("Required arguments: --stddirs PATH");
             printHelp();
         }
-        if (dbUrl == null ){	// non-DB mode
+        if (dbUrl != null && !writeListOnly ){
+            // DB mode
+            if ( expDescription == null || dbUser == null ) {
+                System.out.println("--db requires --dbuser and --desc arguments");
+                printHelp();
+            }
+            if( !expName.equals("EXPERIMENT") || sceIdStart != 0 ){
+                System.out.println("--name and --sce-ID-start cannot be used in DB mode");
+                printHelp();
+            }
+            if( readList ){
+                System.out.println("Warning: DB mode and partial-factorial experiments have not been tested");
+                System.out.println("together. The analysis framework and/or DB export may not work as expected.");
+            }
         }
-        else
-        {	// DB mode
-        	if ( expDescription == null || dbUser == null ) {
-        			System.out.println("--db requires --dbuser and --desc arguments");
-        			printHelp();
-        	}
-        	if( !expName.equals("EXPERIMENT") || sceIdStart != 0 ){
-        		System.out.println("--name and --sce-ID-start cannot be used in DB mode");
-        		printHelp();
-        	}
+        
+        // Check outputDir now, so we don't do DB updates or other work only to find we can't output files
+        File outputDir = new File(outputPath);
+        if( !writeListOnly ){
+            if( !outputDir.isDirectory() ){
+                try{ outputDir.mkdir(); }
+                catch(Exception e) {}
+            }
+            if (!outputDir.isDirectory() || outputDir.list().length != 0 || !outputDir.canWrite()) {
+                System.out.println(outputPath+" is not a writable empty directory and can't be created as such");
+                System.exit(1);
+            }
         }
 
         CombineSweeps mainObj = new CombineSweeps(expName, expDescription);
@@ -121,13 +128,6 @@ public class ExperimentCreator {
             }
 
             mainObj.sweepChecks();
-
-            // Check outputDir now, so we don't do DB updates and then realise we can't output files
-            File outputDir = new File(outputPath);
-            if (!outputDir.isDirectory() || outputDir.list().length != 0 || !outputDir.canWrite()) {
-                System.out.println(outputPath+" is not a writable empty directory");
-                System.exit(1);
-            }
             
             if (patches) {
                 mainObj.writePatches(outputDir);
@@ -136,10 +136,7 @@ public class ExperimentCreator {
 
                 if( !writeListOnly ){
                     if (dbUrl != null) {
-                        if (mainObj.updateDb(dbUrl, dbUser)) {
-                            System.out.println("Database connection error.");
-                            System.exit(1);
-                        }
+                        mainObj.updateDb(dbUrl, dbUser);
                     }
 
                     mainObj.combine(outputDir, uniqueSeeds);
@@ -182,6 +179,7 @@ public class ExperimentCreator {
             + "			files listed. Due to limited capability of program, a full list\n"
             + "			for the current description should be generated and unwanted\n"
             + "			lines deleted; other edits may cause problems.\n"
+            + "			Comparators of all included scenarios should be included.\n"
 	    + "\n"
 	    + "Non-DB mode options:\n"
 	    + "  --name NAME		Name of experiment; for use when not in DB mode.\n"

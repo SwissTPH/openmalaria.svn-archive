@@ -98,6 +98,25 @@ public class ScenarioArmAssociation {
             assert (armIndex == sweeps.get(i).getComparator()) || (armIndex == armIndecies[i]);
             div *= lengths[i];
         }
+        // check comparator scenario has not been removed by --read-list option:
+        if( scenarios[n] == null ){
+            PrintWriter pw = new PrintWriter(System.out);
+            pw.print("Error: comparator for scenario ");
+            writeDescription(pw,sweeps);
+            pw.println();
+            pw.println("has been omitted, but is required. This was:");
+            pw.append("wu").append(CombineSweeps.getExpName()).append("_").append(Integer.toString(n)).append(".xml");
+            for (int i = 0; i < armIndecies.length; ++i) {
+                int armIndex = sweeps.get(i).getComparator();       // returns -1 if no comparator
+                if (armIndex < 0) {
+                    armIndex = armIndecies[i];
+                }   // use this scenario's arm
+                sweeps.get(i).writeName(pw,armIndex);
+            }
+            pw.println();
+            pw.flush();
+            throw new RuntimeException("comparator omitted");
+        }
 
         // Update the comparator now that all scenarios have the correct sceId.
         pstmt.setInt(1, scenarios[n].sceId /* DB ID of comparator */);
