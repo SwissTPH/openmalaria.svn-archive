@@ -21,12 +21,12 @@ The importation rate is actually specified with units of imported cases per 1000
     <importedInfections>
       <timed>
         <rate time="0" value="5"/>
-        <rate time="3650" value="5"/>
+        <rate time="3650" value="10"/>
       </timed>
     </importedInfections>
 }}}
 
-Periodically varying importation rates can also be specified:
+If you only need a constant case-importation rate, only include one `<rate>` element with time 0. Periodically varying importation rates can also be specified:
 {{{
     <importedInfections>
       <timed name="annually varying rates" period="365">
