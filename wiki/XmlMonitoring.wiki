@@ -83,7 +83,7 @@ the cohort; if false, it is unaffected by the cohort mode. A number means that f
 || 4 || sumLogPyrogenThres || age group || y ||  Sum of the log of the pyrogen threshold ||
 || 5 || sumlogDens  || age group || y||  Sum of the logarithm of the parasite density ||
 || 6 || totalInfs  || age group || y|| Total infections ||
-|| 7 || nTransmit || (unused) ||n|| Infectiousness of human population to mosquitoes: sum(p(transmit_i)) across humans i. Single value, not per age-group. ||
+|| 7 || nTransmit || (unused) ||n|| Infectiousness of human population to mosquitoes: sum(p(transmit_i)) across humans i, weighted by availability to mosquitoes. Single value, not per age-group. ||
 || 8 || totalPatentInf  || age group ||y||  Total patent infections ||
 || 10 || sumPyrogenThresh  || age group ||y||  Sum of the pyrogenic threshold ||
 || 11 || nTreatments1  || age group ||24|| number of treatments (1st line) (added to 1-day model in 24.1) ||
