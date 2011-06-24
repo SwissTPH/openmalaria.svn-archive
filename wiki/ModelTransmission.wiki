@@ -23,6 +23,10 @@ where `pop` is the human population, `alpha_i` is the availability of human `i` 
 
 The Entomological Infection Rate can be calculated in three modes: `equilibriumMode`, where the daily EIR from the scenario file is used directly, `transientEIRknown`, where, similarly, EIR data from a `changeEIR` intervention in scenario file is used directly, and `dynamicEIR`. The `equilibriumMode` is always used for the initialisation phase, during which `kappa` data per day of year is collected and stored in `initialKappa`. When commencing the intervention phase of the simulation, the mode is usually switched to `dynamicEIR`, which uses the same EIR data as in `equilibriumMode` but scales this by `kappa_d / initialKappa_d` where `d` is the day-of-year.
 
+==== Notes ====
+
+Simulated EIR is delayed relative to changes in `kappa_d / initialKappa_d` by the entomological innoculation duration, usually parameterised in our simulations with the non-vector model as 10 days. However, a bug introduced in schema version 26 reduced this lag to 1 time-step (5-days for the 5-day time-step model). This bug should be fixed in version 30.
+
 == Vector transmission ==
 
 The "vector transmission" model used by OpenMalaria extends the modelling of _P. falciparum_ parasites within vector mosquitoes such that vector-stage interventions on transmission can be modelled.
