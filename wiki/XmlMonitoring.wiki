@@ -101,7 +101,7 @@ the cohort; if false, it is unaffected by the cohort mode. A number means that f
 || 23 || nHospitalRecovs  || age group ||24||  recoveries in hospital without sequelae ||
 || 24 || nHospitalSeqs  || age group ||24||  recoveries in hospital with sequelae  ||
 || 25 || nIPTDoses  || age group ||24|| number of IPT Doses ||
-|| 26 || annAvgK   || (unused) || n|| Annual Average Kappa. Calculated once a year as sum of human infectiousness divided by initial EIR summed over a year. Single value, not per age-group. ||
+|| 26 || annAvgK   || (unused) || n|| Annual Average Kappa. Calculated once a year as sum of human infectiousness weighted by initial EIR for that time of year. ||
 || 27 || nNMFever  || age group ||24||  Number of episodes of non-malaria fever ||
 || 28 || || || || (removed) ||
 || 29 || || || || (removed) ||
