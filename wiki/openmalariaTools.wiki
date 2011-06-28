@@ -8,7 +8,7 @@ OpenmalariaTools is developed as a cross-platform application using [http://www.
 
 = Downloads =
 
-OpenmalariaTools is currently in beta stage 4. It runs on both Linux and Windows, but currently not on the Mac OS due to the unavailability of PyGTK natively on the Mac.
+OpenmalariaTools is currently in beta stage 6. It runs on both Linux and Windows, but currently not on the Mac OS due to the unavailability of PyGTK natively on the Mac.
 
 The beta 6 release uses schema version 28 and has been packaged with an installer for windows and debian packages for linux. To use:
 
