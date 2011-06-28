@@ -103,6 +103,8 @@ java -jar ExperimentCreator.jar --stddirs path/to/experiment --seeds 10 --name e
 
 The `base.xml` must have the same model parameters as one of the model parameterizations — it may be sensible to use one of these as a template for the design of the base scenario. All scenario files must use the same schema version, and this schema file is required for validity checking.
 
+==== XML Sweep ====
+
 Each sweep should consist of a directory containing one XML file for each arm; each of these files should itself be a complete and valid OpenMalaria scenario. If, for example, an experiment has two sweeps, A and B, and each sweep has two arms, A1 and A2, and B1 and B2, and the parameters of A1 and B1 are used in the `base.xml` scenario, then the description should contain directories `A` and `B`. `A` should contain `A1.xml` and `A2.xml` files, where `A1.xml` is identical to `base.xml` (except that you may wish to give it a name by changing the `name` attribute of the `scenario` element), and `A2.xml` differs from `A1.xml` only in the changed parameters of this sweep. Similarly `B` should contain `B1.xml` and `B2.xml`, each of which would use the A1 parameters of the first sweep together with the B1 or B2 parameters for the second sweep. If you wish to specify which arm is the reference rather than let the experiment creator choose any of them, rename one arm (in each sweep) to `reference.xml`. None of the arms should be named `base.xml` (see below).
 
 ==== Example ====
@@ -110,6 +112,35 @@ Each sweep should consist of a directory containing one XML file for each arm; e
 A simple example experiment description: [http://code.google.com/p/openmalaria/source/browse/download/experiments/EC-example-schema-28.7z EC-example-schema-28.7z]
 
 (This is a [http://7-zip.org/ 7-zip] archive. Right-click on "View raw file" and choose "save as ...".)
+
+==== TXT Sweep ====
+
+It happens that's for a sweep only one value of a xml parameter has to vary. In this case, it will me most appropriate to use TXT sweep instead of XML Sweep. This type of sweep avoids to copy/paste the xml file for each arm. The value which have to vary in the basel.xml file will be replaced by a variable name and the sweep directory will contains txt files. The variable name in the base.xml have to be defined using the following naming convention @[variable_name]@ ( e.g. @IIR@), each variable name are unique. Each TXT file in the sweep represent an arm. A TXT files contains the variable name and value for the given arms. In the file, the syntax for the declaration is : @[variable_name]@:[variable_value] ( e.g. @IIR@:7.2 ).
+
+=== Example ===
+
+In the xml, propInfected have to take differents value. A sweep infected is created with two differents arms.
+
+base.xml:
+{{{
+....
+    <vector>
+      <anopheles mosquito="gambiae_ss" propInfected="@population_infect@" propInfectious="0.015">
+        <monthlyEir annualEIR="0.32">
+          <item>0.076</item>
+...
+}}}
+
+In the "infected" sweep :
+
+infected_low.txt:
+{{{
+@population_infect@:0.061
+}}}
+infected_high.txt:
+{{{
+@population_infect@:0.18
+}}}
 
 === Models ===
 
