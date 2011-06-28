@@ -18,7 +18,7 @@ You can also create a malariacontrol/lib dir and put dependency libraries there.
  * [UnixBuildXercesC] [http://packages.debian.org/search?keywords=libxerces-c2-dev libxerces-c2-dev]
  * xsd − Install the [http://packages.debian.org/search?keywords=xsdcxx xsdcxx] package or manually install from: http://codesynthesis.com/products/xsd/download.xhtml
  * gsl − Install the [http://packages.debian.org/search?keywords=libgsl0-dev libgsl0-dev] package or manually install... For older linux distributions, please check that you are using gsl version >= 13, otherwise you will have some failing black box tests.
- *TODO: some boost libraries
+ * TODO: some boost libraries
 
 == Compiling ==
 
