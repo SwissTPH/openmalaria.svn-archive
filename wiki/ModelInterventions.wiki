@@ -102,10 +102,12 @@ Attributes:
 || name || type || description ||
 || time || integer || Time of deployment ||
 || coverage || floating-point || Proportion of eligible candidates actually receiving the intervention (range [0-1]) ||
-|| minAge || floating-point || Minimum age at which humans are considered eligible in years (defaults to 0) ||
-|| maxAge || floating-point || Maximum age at which humans are considered eligible in years (defaults to 100) ||
+|| minAge || floating-point || Minimum age (inclusive) at which humans are considered eligible in years (defaults to 0) ||
+|| maxAge || floating-point || Maximum age (exclusive) at which humans are considered eligible in years (defaults to 100) ||
 || cohort || boolean || Restrict distribution to the current [Monitoring#Cohort-mode cohort] if true (defaults to false) ||
 || cumulativeWithMaxAge || int (optional) || If supplied, the cumulative coverage deployment mode (see below) is used according to the "max intervention age" parameter given by this attribute (units: time steps). ||
+
+To clarify age based constraints, they are met if minAge ≤ age < maxAge.
 
 ==== Cumulative coverage deployment ====
 
