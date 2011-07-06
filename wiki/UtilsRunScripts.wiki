@@ -14,7 +14,7 @@ The first of these is used by [http://cmake.org/ ctest] to [http://code.google.c
 
 = run.py =
 
-Source: [http://code.google.com/p/openmalaria/source/browse/trunk/test/run.py test/run.py]
+Code: [http://code.google.com/p/openmalaria/source/browse/trunk/test/run.py test/run.py]
 
 This script can run one or more scenarios in a temporary directory with various options and test the output is as expected. It is designed for running the built-in test scenarios and aiding further analysis when these do not work as expected, and thus is sometimes more convenient than [UtilsRunning running scenarios directly].
 
@@ -66,7 +66,7 @@ After running scenarios, the generated output ([http://code.google.com/p/openmal
 
 == compareOutput.py ==
 
-Source: [http://code.google.com/p/openmalaria/source/browse/trunk/util/compareOutput.py util/compareOutput.py]
+Code: [http://code.google.com/p/openmalaria/source/browse/trunk/util/compareOutput.py util/compareOutput.py]
 
 This script is designed to test whether two output.txt files are identical, similar or completely different. It is used in testing, usually through `run.py`.
 
@@ -90,12 +90,54 @@ V.
 
 If abs(U) is much less than 1 (say under 0.1, or 10%) it indicates X and Y are similar: the total of the measure (across age groups and time points) is similar. If V is also small it gives a stronger indication: that the values at each (age) group and time-point are similar. Of course if measuring low frequency discrete random events and 2 occur in one simulation while none occur in another, it doesn't indicate there's much difference between scenarios. Similarly if 200 random events are reported in the whole simulation but split between 100 per-group, per-time-point records, it shouldn't be surprising if V is large even if U is small and the scenarios are very similar. It is therefore not really possible to conclude that two scenarios are similar based on their outputs unless the population size is quite large.
 
+As summary, this script reports the "total relative diff". This is the some of a difference metric for each pair of values which can never be greater than 1 (assuming no special values like infinity are input) and will be less than the relative precision (typically 10¯⁶<wiki:comment>10^(-6)</wiki:comment>) for each pair considered approximately equal.
 
-= compareCtsout.py =
 
-Source: [http://code.google.com/p/openmalaria/source/browse/trunk/util/compareCtsout.py util/compareCtsout.py]
+== compareCtsout.py ==
 
+Code: [http://code.google.com/p/openmalaria/source/browse/trunk/util/compareCtsout.py util/compareCtsout.py]
+
+This functions similarly to compareOutput.py but reads the ctsout.txt files. It needs [http://matplotlib.sourceforge.net/ matplotlib] installed to work.
 
 = plotResult.py =
 
-Source: [http://code.google.com/p/openmalaria/source/browse/trunk/util/plotResult.py util/plotResult.py]
+Code: [http://code.google.com/p/openmalaria/source/browse/trunk/util/plotResult.py util/plotResult.py]
+
+This is a script designed to produce rapid visualisations of output.txt files. An example (normally labels are added, but on a small plot like this they hide the graphs):
+
+http://openmalaria.googlecode.com/svn/wiki/graphs/plot-scenario-cohort.svg
+
+Options:
+
+{{{
+$ util/plotResult.py -h
+Usage: plotResult.py [options] FILES
+
+Plots results from an OpenMalaria (surveys) output file by time. Currently no
+support for simultaeneously handling multiple files or plotting according to
+age group.  Valid targets for plotting keys are: none (key is aggregated),
+x-axis, plot, line. If no key is set to the x-axis, the first unassigned of
+survey, group, file will be assigned to the x-axis.
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -e FILTEREXPR, --filter=FILTEREXPR
+                        Filter entries read according to this rule (i.e.
+                        values are included when this returns true).
+                        Parameters available: f, m, s, g. Examples: 'True',
+                        'm!=0' (default), 'm in [11,12,13]', 's > 73 and
+                        m!=0'.
+  --debug-filter        Each time FILTEREXPR is called, print input values and
+                        output. Warning: will print a lot of data!
+  -a, --no-auto-measures
+                        Don't automatically put similar measures on the same
+                        plot.
+  -s S, --survey=S      How to plot surveys
+  -g G, --group=G       How to plot (age) groups
+  -f F, --file=F        How to plot outputs from different files
+  -n, --file-names      Use full file names instead of replacing with short
+                        versions
+  -l, --no-legends      Turn off legends (sometimes they hide parts of the
+                        plots)
+}}}
