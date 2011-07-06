@@ -141,3 +141,9 @@ Options:
   -l, --no-legends      Turn off legends (sometimes they hide parts of the
                         plots)
 }}}
+
+Note that this script can be useful when comparing outputs for significant differences, as in:
+{{{
+util/plotResult.py outputA.txt outputB.txt -e 'm in [11,12,13]' -g x-axis -f line -a
+util/plotResult.py outputA.txt outputB.txt -e 'm in [11,12,13]' -s x-axis -f line -a
+}}}
