@@ -4,8 +4,8 @@
 
 We have developed a few scripts to ease running and analysing the output of individual or small numbers of scenarios:
 
-  * [http://code.google.com/p/openmalaria/source/browse/trunk/test/run.py run.py]
-  * [http://code.google.com/p/openmalaria/source/browse/trunk/util/compareOutput.py compareOutput.py]
+  * [UtilsRunScripts#run.py run.py]
+  * [UtilsRunScripts#compareOutput.py compareOutput.py]
   * [http://code.google.com/p/openmalaria/source/browse/trunk/util/compareCtsout.py compareCtsout.py]
   * [http://code.google.com/p/openmalaria/source/browse/trunk/util/plotResult.py plotResult.py]
 
@@ -14,7 +14,9 @@ The first of these is used by [http://cmake.org/ ctest] to [http://code.google.c
 
 = run.py =
 
-This script can run one or more scenarios in a temporary directory with various options and test the output is as expected. It is designed for running the built-in test scenarios and aiding further analysis when these do not work as expected.
+Source: [http://code.google.com/p/openmalaria/source/browse/trunk/test/run.py test/run.py]
+
+This script can run one or more scenarios in a temporary directory with various options and test the output is as expected. It is designed for running the built-in test scenarios and aiding further analysis when these do not work as expected, and thus is sometimes more convenient than [UtilsRunning running scenarios directly].
 
 Scenarios to be run must be in the `test` directory and named `scenarioX.xml` for some `X`. Passing run.py the argument `ABC` will then run `scenarioABC.xml` etc. — multiple names may be passed, or none, in which case run.py will attempt to run all XML files of this form in the `test` dir.
 
@@ -35,3 +37,7 @@ test/run.py 1 -- --checkpoint
 In the last case, openMalaria exits after each checkpoint is written, and run.py starts openMalaria again (until either output.txt is written or no new checkpoints appear to have been written).
 
 After running scenarios, the generated output ([http://code.google.com/p/openmalaria/wiki/OutputFiles#Surveys output.txt] and [http://code.google.com/p/openmalaria/wiki/OutputFiles#Continuous_monitoring ctsout.txt]) is compared against that in [http://code.google.com/p/openmalaria/source/browse/#svn%2Ftrunk%2Ftest%2Fexpected `OMROOT/test/expected`] using the compareOutput.py and compareCtsout.py scripts in `OMROOT/util`. See below for how to interpret their output.
+
+== compareOutput.py ==
+
+Source: [http://code.google.com/p/openmalaria/source/browse/trunk/util/compareOutput.py util/compareOutput.py]
