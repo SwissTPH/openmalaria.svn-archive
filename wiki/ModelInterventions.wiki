@@ -89,6 +89,9 @@ Attributes this can include:
 || `begin` || integer || The time-step of the intervention period at which this intervention becomes active (default: 0) ||
 || `end` || integer || The time-step of the intervention period at which this intervention becomes inactive (default: 2147483647) ||
 
+Note that before schema 30, the youngest age at which continuous interventions can be deployed is 1 time-step old (1 over time-steps-per-year), though they are still efficacious on the first update. From schema 30 interventions can be deployed from age 0, but have their first effect on the following time-step (since it is inappropriate to let interventions have an instant effect).
+
+
 === Timed descriptions ===
 
 Many timed interventions also use a standard type of description for *mass deployment*, although several timed interventions use a different description. From the `MDA` element of the above example, we have deployment to 60% of the population at time step 730:
