@@ -105,7 +105,7 @@ Code: [http://code.google.com/p/openmalaria/source/browse/trunk/util/plotResult.
 
 This is a script designed to produce rapid visualisations of output.txt files. An example (normally labels are added, but on a small plot like this they hide the graphs):
 
-http://openmalaria.googlecode.com/svn/wiki/graphs/plot-scenario-cohort.svg
+http://openmalaria.googlecode.com/svn/wiki/graphs/plot-scenario-cohort.png
 
 Options:
 
