@@ -68,7 +68,7 @@ http://openmalaria.googlecode.com/svn/wiki/eqns/EIR_Fourier_annual.png
 
 As of schema version 22 this method of entering EIR was added to simplify entry of field data. Fourier coefficients are still used within the code (for smoothing), but are calculated internally.
 
-The `monthlyEIR` element requires one attribute: `annualEIR`, specifying the total annual EIR as infectious bites per person per year. It should have a sequence of 12 child elements, named `item`, specifying the EIR in terms of infectious bites per person per month, in the months of January through December. An (unrealistic) example:
+The `monthlyEIR` element requires one attribute: `annualEIR`, specifying the total annual EIR as infectious bites per person per year. It should have a sequence of 12 child elements, named `item`, specifying the relative in terms of infectious bites per person per month (which might be approximated by densities of  mosquito densities, with an appropriate lag), in the months of January through December. The overall EIR is scaled to the annualEIR value indicated at the top of the element. An (unrealistic) example:
 
 {{{
         <monthlyEIR annualEIR="20">
