@@ -18,12 +18,13 @@
     * [OutputFiles Output formats]
     * Tools
       * [UtilsWindows Useful utilities on Windows]
-      * [UtilsRunning Running tests and scenarios]
+      * [UtilsRunScripts Scripts for running and analysing scenarios]
       * [XmlUpdateScenario Updating schema version]
       * LiveGraph
     * References
       * [XmlScenario Scenario XML]
       * [XmlMonitoring Monitoring measures]
+      * [UtilsRunning Running scenarios]
       * [Terminology]
       * [Instructions How to apply OpenMalaria to field sites]
   * *[ModelsOverview Model descriptions]*
