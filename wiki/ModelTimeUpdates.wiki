@@ -14,7 +14,7 @@ The simulation is run with enforced transmission until _t_=_tWL_ (that is, the s
 
 _tWL_ is calculated to be:
 
- * at least as long as the human life span (given as an attribute to the scenario's `<demography>` element)
+ * at least as long as the human life span (`maximumAgeYrs` attribute of the scenario's `<demography>` element)
  * at least as long as the warmup length requested by the transmission model
  * a whole number of years
 
@@ -43,6 +43,26 @@ Next `Population::update1` is called to calculate the new state.
 Any continuous and survey-based monitoring configured to happen at this _tI_ happens next.
 
 Finally, any interventions configured for deployment at time _tI_ (both timed and continuous for humans at their current age) are deployed.
+
+== `Population::update1` ==
+
+ * neonatal mortality is updated based on the previous time-step's patent hosts
+ * the transmission model is updated based on previous infectiousness of humans
+ * `Human::update` is called for each human
+ * population age structure is maintained by outmigrating some humans
+ * population size is maintained by adding new-borns
+ * transmission-specific summary statistics are updated
+
+== `Human::update` ==
+
+ * those humans older than the human life span (see _tWL_ above) are killed
+ * number of _P.f._ inoculations is calculated and new infections are started
+ * infections' parasite densities are updated
+ * indirect deaths (neonatal and otherwise) occur
+ * pathogenesis state is updated (i.e. new illnesses start)
+ * diagnosis, medication and (only in the 5-day time-step model) treatment occurs
+ * infant death statistics are updated
+ * infectiousness of human is calculated
 
 = Terminology =
 
