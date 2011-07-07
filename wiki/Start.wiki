@@ -2,10 +2,8 @@
 
 Welcome to the !OpenMalaria wiki on google-code.
 
-OpenMalaria is an open source C++ program for simulating malaria epidemiology and interventions against malaria.  It is based on microsimulations of _Plasmodium falciparum_ malaria in humans, originally developed for simulating malaria vaccines and described  
-[http://www.ajtmh.org/content/75/2_suppl here].
-
-Other publications of the project are listed below:
+!OpenMalaria is an open source C++ program for simulating malaria epidemiology and interventions against malaria.  It is based on microsimulations of _Plasmodium falciparum_ malaria in humans, originally developed for simulating malaria vaccines and described  
+[http://www.ajtmh.org/content/75/2_suppl here]. The models simulate the dynamics of malaria parasitaemia in the course of an infection, of transmission, of immunity, and of the processes leading to illness and death.  They also simulate interventions against malaria (both by controlling the mosquito vector, or by acting against malaria in humans (e.g. by chemotherapy, or vaccines).    
 
 = Applications & Usage =
 
@@ -13,7 +11,7 @@ The applications of !OpenMalaria are:
 
 ==Optimizing models of malaria epidemiology and control==
 
-The software implements models of individual-based stochastic simulations of malaria epidemiology, health systems, and malaria interventions.  The project makes use of a general platform for comparing, fitting, and evaluating different models.
+!OpenMalaria makes use of a is a general platform for comparing, fitting, and evaluating different malaria models.  
 
 ==Prediction of the effects of different interventions and control programs==
 
@@ -32,11 +30,11 @@ For first-time users, an overview of how to set up and use !OpenMalaria to simul
 The project also analyzes the uncertainty associated with sets of model predictions. 
 
 = Development =
-== [Models] ==
+== [ModelsOverview Models] ==
 
 Each simulation requires implementation of various components, from transmission to within-host parasite dynamics to drug action.
 
-For an overview of the model-components represented, see (TODO). For a list of papers describing some part of the model, see (TODO).
+For an overview of the model-components represented, see [ModelsOverview here]. 
 
 == [Code] ==
 
@@ -54,7 +52,11 @@ For public discussion, please use the [http://groups.google.com/group/openmalari
 
 = Publications =
 
-[http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=2657312]
+== Descriptions of the original models for malaria in humans ==
+[http://www.ajtmh.org/content/75/2_suppl AJTMH 75 supplement 2, 2006]
+
+
+[http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=2657312 ]
 
 = Offline Documentation =
 
