@@ -55,14 +55,16 @@ Finally, any interventions configured for deployment at time _tI_ (both timed an
 
 == `Human::update` ==
 
- * those humans older than the human life span (see _tWL_ above) are killed
+ * those humans older than the human life span (see calculation of _tWL_ above) are killed
  * number of _P.f._ inoculations is calculated and new infections are started
- * infections' parasite densities are updated
+ * infections' parasite densities are updated: this is when drugs from the 1-day time-step model have their effect
  * indirect deaths (neonatal and otherwise) occur
- * pathogenesis state is updated (i.e. new illnesses start)
+ * pathogenesis state is updated based on the new parasite densities (i.e. new illnesses start)
  * diagnosis, medication and (only in the 5-day time-step model) treatment occurs
  * infant death statistics are updated
  * infectiousness of human is calculated
+
+Note that effects of disease, diagnosis, and medication all occur based on the parasite density of the same time-step, whereas in the 1-day time-step models medications don't actually have an effect until the next time-step. In the 5-day time-step model if treatment is administered (and efficacious) it has immediate and complete effect, thus the presumably high parasite densities triggering the fever can never be recorded.
 
 = Terminology =
 
