@@ -2,6 +2,8 @@
 
 = Simulation phases =
 
+The simulation has the following phases. They take place sequentially as ordered below.
+
 == Set-up ==
 
 At time _t_=0, the human and (if using the vector model) mosquito populations are created.
@@ -16,10 +18,37 @@ _tWL_ is calculated to be:
  * at least as long as the warmup length requested by the transmission model
  * a whole number of years
 
+== Transmission initialisation iteration ==
+
+At this point, the transmission model's `initIterate()` method is called. This either specifies that the transmission model is sufficiently well initialised (in which case the next phase is immediately started) or gives a length of time to continue the simulation for before this method is called again.
+
+In the [ModelTransmission#Non-vector_transmission non-vector model], this prepares the model to switch to dynamic transmission mode (if enabled) and indicates the next phase should be started.
+
+In the [XmlEntoVector vector transmission model], `initIterate()` checks whether or not the simulated EIR could significantly better reproduce the EIR requested in the scenario file or not. If so, it makes some adjustments and indicates the simulation should continue for six years before calling `initIterate` again (unless this has already been tried 10 times, in which case it halts the simulation with an error). Once the model is satisfied the simulated EIR sufficiently well approximates the requested EIR, it indicates the simulation should be run for another year (to let mosquito parameters stabilise after their final tweaks) before switching on dynamic transmission and indicating that the next phase may begin.
+
+== Intervention period ==
+
+Finally, the so called "intervention period" starts: the period during which interventions may be deployed and measurements of the simulation may be taken.
+
+Only once this starts are the values of _tI₀_ and _tEnd_ known for certain. At this point the _tI_ time measure starts being useful.
+
 = Timestep updates =
+
+The state of the simulation is of course calculated iteratively: the state at time _t_ depends on the state before time _t_.
+
+To calculate the state at time _t_, first the variables `TimeStep::simulation` and `TimeStep::interventionPeriod` are updated (to _t_ and _tI_). If _t_=_tI₀_, _tI_ is set to 0 (note: this is described differently to what happens in the code, but is be equivalent since _tI_ has no effect in Population::update1() when its value is less than 1).
+
+Next `Population::update1` is called to calculate the new state.
+
+Any continuous and survey-based monitoring configured to happen at this _tI_ happens next.
+
+Finally, any interventions configured for deployment at time _tI_ (both timed and continuous for humans at their current age) are deployed.
 
 = Terminology =
 
 || variable || name in code || description ||
 || _t_ || TimeStep::simulation || Timestep being updated or last complete (see [#Timestep_updates]) ||
-|| _tWL_ || Simulation::humanWarmupLength || Length of first phase and time of its end ||
+|| _tI_ || TimeStep::interventionPeriod || Before the intervention period, _tI_<0; during this period _tI_=_t_+_tI0_ ||
+|| _tWL_ || humanWarmupLength || Length of first phase and time of its end ||
+|| _tI₀_ || (none) || _t_ at the start of the intervention period (only known when _t_ ≥ _tI₀_ ||
+|| _tEnd_ || (totalSimDuration) || Time at which the simulation ends (only known when _t_ ≥ _tI₀_ ||
