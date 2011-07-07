@@ -1,0 +1,25 @@
+#summary Explanation of simulation phases and updates with respect to times
+
+= Simulation phases =
+
+== Set-up ==
+
+At time _t_=0, the human and (if using the vector model) mosquito populations are created.
+
+== Warm-up ==
+
+The simulation is run with enforced transmission until _t_=_tWL_ (that is, the simulation's state at times _t_=1 through to _t_=_tWL_ are calculated).
+
+_tWL_ is calculated to be:
+
+ * at least as long as the human life span (given as an attribute to the scenario's `<demography>` element)
+ * at least as long as the warmup length requested by the transmission model
+ * a whole number of years
+
+= Timestep updates =
+
+= Terminology =
+
+|| variable || name in code || description ||
+|| _t_ || TimeStep::simulation || Timestep being updated or last complete (see [#Timestep_updates]) ||
+|| _tWL_ || Simulation::humanWarmupLength || Length of first phase and time of its end ||
