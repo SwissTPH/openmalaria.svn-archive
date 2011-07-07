@@ -28,6 +28,7 @@
       * [Terminology]
       * [Instructions How to apply OpenMalaria to field sites]
   * *[ModelsOverview Model descriptions]*
+    * [ModelTimeUpdates Orders of updates]
     * [ModelDemography Human demography]
     * [ModelTransmission Transmission models]
     * [ModelWithinHost Within-host models]
