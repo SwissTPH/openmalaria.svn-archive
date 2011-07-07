@@ -1,4 +1,5 @@
-#summary Transmission models
+
+= Transmission models =
 
 The transmission sub-models within OpenMalaria cover inter-human transmission of malaria, taking modeled values of human infectiousness to mosquitoes as input and translating this into subsequent human exposure to infectious mosquitoes (as inoculations per person per year, denoted EIR: Entomological Infection Rate).  The human's relative availability to mosquitoes is taken into account in both cases.  The simulator is designed to simulate seasonally forced transmission, i.e. we assume that in the absence of interventions the EIR recurs annually with the same seasonal pattern.
 
