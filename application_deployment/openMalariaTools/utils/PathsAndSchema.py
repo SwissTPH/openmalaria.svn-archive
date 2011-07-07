@@ -67,7 +67,7 @@ class PathsAndSchema():
         
     _icon_path = os.path.join(_base_path, 'application', 'common', 'om.ico')
     
-    _actual_schema_version = '26'
+    _actual_schema_version = '29'
     
     @staticmethod
     def get_application_folder():

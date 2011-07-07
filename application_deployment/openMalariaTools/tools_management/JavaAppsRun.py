@@ -221,6 +221,7 @@ class SchemaTranslatorRun():
         arglist.append('java')
         arglist.append('-jar')
         arglist.append(PathsAndSchema.get_schema_translator_path())
+        arglist.append('--ITN-description')
         arglist.append('--schema_folder')
         arglist.append(PathsAndSchema.get_common_folder()+'/')
         arglist.append('--input_folder')
@@ -272,6 +273,8 @@ class SchemaTranslatorRun():
         wrong_version_not_translatable_scenarios = list()
         wrong_version_translatable_scenarios = list()
         not_found_scenarios = list()
+        
+        
         
         for scenario_infos in scenario_infos_list:
             scenario_check = self.check_scenario_version(scenario_infos[1])
