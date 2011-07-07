@@ -221,7 +221,6 @@ class SchemaTranslatorRun():
         arglist.append('java')
         arglist.append('-jar')
         arglist.append(PathsAndSchema.get_schema_translator_path())
-        arglist.append('--ITN-description')
         arglist.append('--schema_folder')
         arglist.append(PathsAndSchema.get_common_folder()+'/')
         arglist.append('--input_folder')
