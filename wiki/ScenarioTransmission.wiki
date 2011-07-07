@@ -35,6 +35,10 @@ Note that prior to schema 24, the vector model used EIR in units of infectious b
 
 === Non-vector parameters: `nonVector` ===
 
-The `nonVector` element primarily consists of a list of daily EIR (_Entomological Inoculation Rate_) parameters (`EIRDaily` elements) specifying the annual EIR (thus 365 values are expected). In theory the first value should correspond to January 1st (though if not, it simply means timestep 0 will correspond to the same day of year as the first value here). These are averaged per timestep resulting in the EIR per timestep of the year for the pre-intervention equilibrium state. Where data for more than one year are provided, the data is assumed to wrap into the next year and all values for the same timestep of the year are averaged.
+The `nonVector` element primarily consists of a list of daily EIR (_Entomological Inoculation Rate_) parameters (`EIRDaily` elements) specifying the annual EIR (thus 365 values are expected). Assuming the first value is the EIR for January 1st, time 0 corresponds to the beginning of the year (since this is the only input affecting seasonality it can be rotated as desired).
+
+Values in this list are averaged per timestep to calculate the EIR per timestep of the year for the pre-intervention equilibrium state. Where data for more than one year are provided, the data is assumed to wrap into the next year and all values for the same timestep of the year are averaged.
+
+When mode=2 this same data is used as the transmission during the intervention period; when mode=4 it is scaled by the human infectiousness relative to infectiousness near the end of the warmup phase.
 
 `nonVector` also has an `eipDuration` attribute: the _extrinsic incubation period_ (sporozoite development time, in days), which determines the delay before changes in human infectiousness affect the EIR (in dynamic mode only).
