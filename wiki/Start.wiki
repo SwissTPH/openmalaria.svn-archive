@@ -1,4 +1,4 @@
-= OpenMalaria =
+= !OpenMalaria =
 
 Welcome to the !OpenMalaria wiki on google-code.
 
