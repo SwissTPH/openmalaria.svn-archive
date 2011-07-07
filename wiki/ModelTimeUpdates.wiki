@@ -1,5 +1,8 @@
 #summary Explanation of simulation phases and updates with respect to times
 
+<wiki:toc max_depth="2" />
+
+
 = Simulation phases =
 
 The simulation has the following phases. They take place sequentially as ordered below.
