@@ -1,4 +1,8 @@
+= OpenMalaria =
+
 Welcome to the !OpenMalaria wiki on google-code.
+
+OpenMalaria is an open source C++ program for simulating malaria epidemiology and interventions against malaria.  It is based on microsimulations of _Plasmodium falciparum_ malaria in humans, originally developed for simulating malaria vaccines.
 
 <wiki:toc max_depth="1" />
 
@@ -12,7 +16,7 @@ The software implements models of individual-based stochastic simulations of mal
 
 ==Prediction of the effects of different interventions and control programs==
 
-There are several envisaged methods of carrying out predictive simulations:
+There are several methods of carrying out predictive simulations:
 
  * as a [SetupOverview stand-alone program], capable of simulating a few hand-crafted scenarios and producing results analyzable with spread-sheets or simple scripts
  * via the [http://boinc.berkeley.edu/ BOINC] volunteer computing platform [http://www.malariacontrol.net/] and a semi-automated experiment design and analysis platform (under development), capable of handling entire experiments of 10000-100000 scenarios
