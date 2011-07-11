@@ -39,18 +39,19 @@ The outputs from predictive simulations can be linked to cost data from endemic 
 
 The project also analyzes different components of uncertainty associated with sets of model predictions, considering stochastic uncertainty, parameter uncertainty, model uncertainty. 
 
-= Development =
+= Software =
+
+== [Code] ==
+
+The core program is now entirely written in C++ with a [http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU GPL 2 licence]. TODO: an overview of the code. This code can be found e openmalaria project now has a [https://www.ohloh.net/p/openmalaria considerable code base]. 
+
+Instructions for compiling the code can be found [BuildSystem here].
+
 == [ModelsOverview Models] ==
 
 Each simulation requires implementation of various components, from transmission to within-host parasite dynamics to drug action.
 
-For an overview of the model-components represented, see [ModelsOverview here]. 
-
-== [Code] ==
-
-The openmalaria project now has a [https://www.ohloh.net/p/openmalaria considerable code base]. The core program is now entirely written in C++, having Fortran roots. TODO: an overview of the code.
-
-Instructions for compiling the code can be found [BuildSystem here].
+For an overview of these model components see [ModelsOverview here]. 
 
 = Team =
 
