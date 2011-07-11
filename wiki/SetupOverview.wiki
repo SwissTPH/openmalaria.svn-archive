@@ -1,6 +1,6 @@
 #summary Overview of building and installation methods
 
-= Overview of how to use OpenMalaria for simulating a field site =
+= Overview of how to use !OpenMalaria for simulating a field site =
 
   * [Instructions simulating field sites]
 
