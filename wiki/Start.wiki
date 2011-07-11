@@ -54,4 +54,4 @@ and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine] w
 
 For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.
 
-== [References] ==
+= [References] =
