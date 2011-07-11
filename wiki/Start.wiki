@@ -19,19 +19,27 @@ Outputs from !OpenMalaria can be linked to costing data as part of economic eval
 
 = Usage =
 
+== Simulation of current malariological situations ==
+
+Simulations of _status quo_ malaria situations can be used for estimating parameters that have not been measured, from field data.  For instance, the models can be used to predict mortality rates from entomological data. Such simulations are also useful for validating models.
+
+For first-time users, an overview of how to set up and use !OpenMalaria to simulate malaria in a particular field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
+
+== Prediction of epidemiological impacts of interventions ==
+
 There are several methods of carrying out predictive simulations:
 
  * as a [SetupOverview stand-alone program], capable of simulating a few hand-crafted scenarios and producing results analyzable with spread-sheets or simple scripts
  * via the [http://boinc.berkeley.edu/ BOINC] volunteer computing platform [http://www.malariacontrol.net/] and a semi-automated experiment design and analysis platform (under development), capable of handling entire experiments of 10000-100000 scenarios
  * via a GUI-driven job submission system (under development), capable of deploying simulations on different computer resources.
 
-The outputs from these simulations can be linked to cost data from endemic countries to analyse the economics of malaria interventions.  
+== Economic (cost-effectiveness) analyses ==
 
-For first-time users, an overview of how to set up and use !OpenMalaria to simulate malaria in a particular field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
+The outputs from predictive simulations can be linked to cost data from endemic countries to analyse the economics of malaria interventions.  
 
 == Uncertainty analysis ==
 
-The project also analyzes the uncertainty associated with sets of model predictions. 
+The project also analyzes different components of uncertainty associated with sets of model predictions, considering stochastic uncertainty, parameter uncertainty, model uncertainty. 
 
 = Development =
 == [ModelsOverview Models] ==
