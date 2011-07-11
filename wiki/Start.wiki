@@ -7,7 +7,7 @@ Welcome to the !OpenMalaria wiki on google-code.
 
 !OpenMalaria can be used to simulate interventions against malaria (both interventions against the mosquito vector, and interventions that acting against malaria in humans (e.g. by chemotherapy, or vaccines).   
 
-!OpenMalaria makes use of a is a general platform for comparing, fitting, and evaluating different malaria models, to ensure that the models reproduce patterns of infection and disease observed in the field in malaria endemic areas. 
+!OpenMalaria is a general platform for comparing, fitting, and evaluating different malaria models, to ensure that the models reproduce patterns of infection and disease observed in the field in malaria endemic areas. 
 
 = Applications =
 
