@@ -5,6 +5,11 @@
 == Descriptions of the original models for malaria in humans ==
 [http://www.ajtmh.org/content/75/2_suppl AJTMH 75 supplement 2, 2006]
 
+== Descriptions of the models for malaria in mosquitoes ==
+[http://tandfprod.literatumonline.com/doi/abs/10.1080/17513750701769857 A mathematical model for the dynamics of malaria in mosquitoes feeding on a heterogeneous host population]
+
+[http://www.ajtmh.org/content/83/2/230.long Comparing the Effectiveness of Malaria Vector-Control Interventions Through a Mathematical Model]
+
 == Overall summary of the project ==
 [http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=2657312 Parasitology (2008), 135: 1507-1516 ]
 
@@ -18,11 +23,6 @@
 [http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0002661 Modelling the Epidemiological Impact of Intermittent Preventive Treatment against Malaria in Infants]
 
 [http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0018391 Determinants of the Cost-Effectiveness of Intermittent Preventive Treatment for Malaria in Infants and Children]
-
-[http://tandfprod.literatumonline.com/doi/abs/10.1080/17513750701769857 A mathematical model for the dynamics of malaria in mosquitoes feeding on a heterogeneous host population]
-
-[http://www.ajtmh.org/content/83/2/230.long Comparing the Effectiveness of Malaria Vector-Control Interventions Through a Mathematical Model]
-
 
 = Offline Documentation =
 
