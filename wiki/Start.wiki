@@ -62,4 +62,6 @@ and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine] w
 
 For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.
 
-= [References] =
+= References =
+
+The project publishes descriptions of the models and their use in the scientific literature (mostly open access).  Selected publications can be found [References here]. 
