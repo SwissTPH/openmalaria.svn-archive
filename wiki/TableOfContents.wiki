@@ -18,7 +18,7 @@
     * [OutputFiles Output formats]
     * [XmlMonitoring Monitoring measures]
     * Tools
-      * [UtilsWindows Useful utilities on Windows]
+      * [UtilsWindows Windows utilities]
       * [UtilsRunScripts Scripts for running and analysing scenarios]
       * [XmlUpdateScenario Updating schema version]
       * LiveGraph
@@ -28,19 +28,19 @@
       * [Terminology]
       * [Instructions How to apply OpenMalaria to field sites]
   * *[ModelsOverview Model descriptions]*
-    * [ModelTimeUpdates Orders of updates]
+    * [ModelTimeUpdates Sequencing and time steps]
     * [ModelDemography Human demography]
     * [ModelTransmission Transmission models]
     * [ModelWithinHost Within-host models]
       * [ModelDrug Drug (PKPD) action & resistance models]
-    * [ModelClinical Clinical (sickness) models]
+    * [ModelClinical Clinical (illness) models]
       * [ModelPathogenesis Morbidity (pathogenesis) models]
       * [ModelNeonatal Neonatal mortality]
     * [ModelInterventions Interventions]
       * [ModelIntervHuman Human-stage]
       * [ModelIntervVector Mosquito-stage]
       * [ModelIntervMisc Special interventions]
-      * [ModelDecayFunctions Decays for interventions]
+      * [ModelDecayFunctions Decay of intervention effects]
   * *Code development*
     * [Code#Source_code Source code]
       * [Code#Doxygen_documentation doxygen-generated documentation]
