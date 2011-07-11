@@ -12,7 +12,7 @@ Located within the `anopheles` sub-element, the initial conditions to start the 
 
 || name || type || unit || description ||
 || propInfected || int || proportion || Proportion of vectors infected (oocysts identified in midgut or would develop oocysts if kept alive - usually called the delayed oocyst rate in entomological literature) in the month the simulation starts||
-|| propInfected || int || proportion || Proportion of vectors infectious (sporozoites identified in salivary glands) in the month the simulation starts ||
+|| propInfectious || int || proportion || Proportion of vectors infectious (sporozoites identified in salivary glands) in the month the simulation starts ||
 
 == Mosquito parameters ==
 
@@ -22,7 +22,7 @@ Each anopheles elements has the following sub-elements: either `EIR` or `monthly
 
 EIR can be specified either via 5 Fourier coefficients and a rotation factor (`EIR` element) or via 12 monthly values plus an annual level (`monthlyEIR` element). Exactly one of these elements must appear.
 
-The user should be aware that the dynamic transmission modelled is not forced and often fluctuates to a greater or lesser extent (usually below the level input), particularly when close to the limit of sustainable transmission (e.g. with high case-management coverage). Running scenarios without interventions shows the dynamics of EIR and human infectiousness (the continuous output mode is convenient for viewing this).
+The user should be aware that the dynamic transmission modelled (mode="4") is not forced after the warm-up period and often fluctuates to a greater or lesser extent (usually below the level input), particularly when close to the limit of sustainable transmission (e.g. with high case-management coverage). After the warm-up period, with dynamic transmission (mode="4"), the seasonality of the mosquito emergence rate (N_v0) is equal to the seasonality specified under the EIR element plus a delay (about 20 days in the 5 day time step model), and, as a result, the seasonality of the simulated EIR (which is close to that of S_v) may differ from the seasonality of the input EIR substantially. Even if the annualEIR is equal before and after the end of the warm-up period, the switch in seasonality may alter the annual number of new infections. Running scenarios without interventions shows the dynamics of EIR and human infectiousness (the continuous output mode with duringInit="true" is convenient for viewing this). With static transmission (mode="2") the phenomenon described above does not occur.
 
 ==== EIR via Fourier coefficients ====
 
