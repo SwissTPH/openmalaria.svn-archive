@@ -11,21 +11,22 @@ Welcome to the !OpenMalaria wiki on google-code.
 
 The main applications of !OpenMalaria are:
 
-- Prediction of the effects of novel interventions to inform the development of target product profiles
-
-- Prediction of the effects of different deployment strategies for existing interventions, to help in planning malaria control programs. 
 
 Outputs from !OpenMalaria can be linked to costing data as part of economic evaluations (e.g. cost-effectiveness analyses)
 
-= Usage =
+= Applications =
 
 == Simulation of current malariological situations ==
 
 Simulations of _status quo_ malaria situations can be used for estimating parameters that have not been measured from field data.  For instance, the models can be used to predict mortality rates from entomological data. Such simulations are also useful for validating models.
 
-For first-time users, an overview of how to set up and use !OpenMalaria to simulate malaria in a particular field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
+An overview of how to set up and use !OpenMalaria to simulate malaria in a particular field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
 
 == Prediction of epidemiological impacts of interventions ==
+
+Prediction of epidemiological impacts of interventions has two main uses:
+- analysis of novel interventions to inform the development of target product profiles
+- analysis of the effects of different deployment strategies for existing interventions, to help in planning malaria control programs. 
 
 There are several methods of carrying out predictive simulations:
 
