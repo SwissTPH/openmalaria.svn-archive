@@ -4,9 +4,7 @@
 
 == Simulation phases ==
 
-Prior to simulating the outcomes of an intervention or steady-state scenario in what we term the *intervention phase*, our code runs at least one initialisation phase. In all cases, a warm-up phase one human lifespan long (according to maximum age allowed by demography model) is run before the intervention phase to ensure that each simulated individual has acquired the expected natural immunity for their age (this phase takes the majority of the computation time).
-
-Additionally, when the vector model is used, a vector-fitting phase is added _before_ the one-lifespan phase. This vector phase is run several times in order to fit mosquito emergence rates to EIR data: once for initialisation, and then as many times as necessary to fit emergence rate parameters.
+Prior to simulating the outcomes of an intervention or steady-state scenario in what we term the *intervention phase*, our code runs through a warm-up phase. See [ModelTimeUpdates] for details.
 
 == Diagrams ==
 
