@@ -22,7 +22,7 @@
       * [UtilsRunScripts Scripts for running and analysing scenarios]
       * [XmlUpdateScenario Updating schema version]
       * LiveGraph
-    * References
+    * Technical details
       * [XmlScenario Scenario XML]
       * [UtilsRunning Running scenarios]
       * [Terminology]
