@@ -54,30 +54,4 @@ and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine] w
 
 For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.
 
-= Selected Publications =
-
-== Descriptions of the original models for malaria in humans ==
-[http://www.ajtmh.org/content/75/2_suppl AJTMH 75 supplement 2, 2006]
-
-== Overall summary of the project ==
-[http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=2657312 Parasitology (2008), 135: 1507-1516 ]
-
-== Applications ==
-[http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0003193 What Should Vaccine Developers Ask? Simulation of the Effectiveness of Malaria Vaccines]
-
-[http://www.malariajournal.com/content/8/1/127 Simulation of the cost-effectiveness of malaria vaccines]
-
-[http://www.sciencedirect.com/science/article/pii/S147149221100002X Uses of mosquito-stage transmission-blocking vaccines against Plasmodium falciparum]
-
-[http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0002661 Modelling the Epidemiological Impact of Intermittent Preventive Treatment against Malaria in Infants]
-
-[http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0018391 Determinants of the Cost-Effectiveness of Intermittent Preventive Treatment for Malaria in Infants and Children]
-
-[http://www.ajtmh.org/content/83/2/230.long Comparing the Effectiveness of Malaria Vector-Control Interventions Through a Mathematical Model]
-
-
-= Offline Documentation =
-
-In case you wish to have access to the documentation on this wiki without an internet connection, you can download and extract the following:
-
-  * [http://openmalaria.googlecode.com/svn/download/wiki-dumps/OM_wiki_dump_2011_02_17.zip OM_wiki_dump_2011_02_17.zip]
+== [References] ==
