@@ -9,12 +9,9 @@ Welcome to the !OpenMalaria wiki on google-code.
 
 !OpenMalaria makes use of a is a general platform for comparing, fitting, and evaluating different malaria models, to ensure that the models reproduce patterns of infection and disease observed in the field in malaria endemic areas. 
 
-The main applications of !OpenMalaria are:
-
-
-Outputs from !OpenMalaria can be linked to costing data as part of economic evaluations (e.g. cost-effectiveness analyses)
-
 = Applications =
+
+The main applications of !OpenMalaria are:
 
 == Simulation of current malariological situations ==
 
@@ -54,7 +51,6 @@ For an overview of the model-components represented, see [ModelsOverview here].
 The openmalaria project now has a [https://www.ohloh.net/p/openmalaria considerable code base]. The core program is now entirely written in C++, having Fortran roots. TODO: an overview of the code.
 
 Instructions for compiling the code can be found [BuildSystem here].
-
 
 = Team =
 
