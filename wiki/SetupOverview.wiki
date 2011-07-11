@@ -1,16 +1,15 @@
 #summary Overview of building and installation methods
 
-= Overview of how to use !OpenMalaria for simulating a field site =
+= Participation in the volunteer computing effort
 
-  * [Instructions simulating field sites]
+If you want to help the project by offering down-time on your computer to run simulations, you can join up at: [http://www.malariacontrol.net malariacontrol.net]
 
 = Installing =
 
-Interested in the openmalaria project? Assuming you want to do more than join the volunteer computing effort (at [http://www.malariacontrol.net]), you have the following options:
+If you want to run your own simulations, you have the following options:
   * install [openmalariaTools] (recommended)
   * install [Binaries pre-compiled executables] and run via scripts/command line
   * [BuildSystem build the executables from source]
-
 
 = Running =
 
