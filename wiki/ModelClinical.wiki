@@ -11,6 +11,14 @@ Due to confusion of terms while adapting the clinical model for a one-day timest
  * bout -- a "bout of sickness" describes a fever, malarial or otherwise, or period of severe illness, usually lasting no more than five days.
  * episode -- the health-system's reporting unit; each bout is either considered the start of a new episode, or, if occurring within the health system memory (currently 30 days) of the start of the last episode, considered part of that episode. Thus, at least in low transmission settings, an episode should roughly correspond to one malaria infection (which can cause multiple bouts). An episode's severity (non-malarial, malarial or severe) is considered to be that of its worst bout. 
 
+== Shared components ==
+
+=== Parasite diagnostics ===
+
+This was designed for the 1-day time-step model, but should be equally applicable to other models and may in the future be used for monitoring outputs like the number of patent hosts (`nPatent`).
+
+TODO: add documentation of model
+
 == Five-day timestep ==
 
 [http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al, 2006] (implemented by the ClinicalImmediateOutcomes class) presented a clinical model for the case management of malaria. In this model there are three entry points to the decision trees: uncomplicated clinical malaria with no recent history of treatment, uncomplicated clinical malaria with recent history of treatment, and severe malaria. “Recent history” is defined as within the last 30 days.
