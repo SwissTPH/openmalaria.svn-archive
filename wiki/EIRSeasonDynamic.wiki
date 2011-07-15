@@ -19,7 +19,7 @@ The table contains suggestions for what might be the approximate lag periods bet
 
 == Seasonality in the static transmission mode (mode="2") ==
 
-With static transmission the seasonality pattern during the intervention phase of the simulation, reproduces that input.
+With static transmission the seasonality pattern during the intervention phase of the simulation, reproduces the input pattern of seasonality.
 
 == Seasonality in the dynamic transmission mode (mode="4") ==
 
