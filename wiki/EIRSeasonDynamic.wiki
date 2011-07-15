@@ -1,6 +1,6 @@
 #summary seasonality in EIR in dynamic transmission models.
 
-= Specification of seasonality of transmission in !OpenMalaria =
+= Specification of level and seasonality of transmission =
 
 Data on seasonality of malaria transmission for driving models might be available in the form of seasonality in any of a number of malariological indices.  The models, however, expect the seasonality in the entomological inoculation rate (EIR) as the input.  If the data are available in the form of a different measure of seasonality, they need to be transformed before being used to drive the models, by introducing a lag period.
 
@@ -17,7 +17,7 @@ The table contains suggestions for what might be the approximate lag periods bet
 || Incidence of clinical malaria || -15 ||
 || Incidence of severe malaria || -20 ||
 
-== Ways of specifying seasonality in EIR ==
+== Ways of specifying level and seasonality in EIR ==
 
 EIR can be specified either via 5 Fourier coefficients and a rotation factor (`EIR` element) or via 12 monthly values plus an annual level (`monthlyEIR` element). Exactly one of these elements must appear.
 
