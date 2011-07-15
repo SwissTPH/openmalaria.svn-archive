@@ -2,7 +2,7 @@
 
 = Specification of seasonality of transmission in !OpenMalaria =
 
-Information on seasonality of malaria transmission for parameterising models might be available in the form of seasonality in any of a number of malariological indices.  The models, however, expect the seasonality in the entomological inoculation rate (EIR) as the input.  If the data are available in the form of a different measure of seasonality, they need to be transformed before being used to drive the models, by introducing a lag period.
+Data on seasonality of malaria transmission for driving models might be available in the form of seasonality in any of a number of malariological indices.  The models, however, expect the seasonality in the entomological inoculation rate (EIR) as the input.  If the data are available in the form of a different measure of seasonality, they need to be transformed before being used to drive the models, by introducing a lag period.
 
 The table contains suggestions for what might be the approximate lag periods between different measures of seasonality.  A positive value (Lx) for the lag for measure x implies that the EIR seasonality reflects the value of x, Lx days previously.  This table provides only a very approximate guide with values rounded to multiples of 5 days.  The actual average lag periods in the simulations are model dependent and will vary somewhat from these.  The lag periods in the field also vary and, in the case of quantities measured in the vector population, are dependent on the environmental temperature.  Note that it is a considerable simplification to assume proportionality between any of these measures and the lagged values of preceding measures in the table. 
 
@@ -16,6 +16,71 @@ The table contains suggestions for what might be the approximate lag periods bet
 || Incidence of patent infection || -10 ||
 || Incidence of clinical malaria || -15 ||
 || Incidence of severe malaria || -20 ||
+
+EIR can be specified either via 5 Fourier coefficients and a rotation factor (`EIR` element) or via 12 monthly values plus an annual level (`monthlyEIR` element). Exactly one of these elements must appear.
+
+==== EIR via Fourier coefficients ====
+
+This is the older method (the only available method before schema version 22).
+
+The `EIR` element describes the Entomological Infection Rate for this mosquito species, which is used as a target when fitting the emergence rate of adult mosquitoes. The EIR is given via a [http://en.wikipedia.org/wiki/Fourier_series Fourier series] and a rotation offset; more accurately, the exposed EIR, in units of bites per day, is:
+
+http://openmalaria.googlecode.com/svn/wiki/eqns/EIR_Fourier.png
+
+<wiki:comment>
+Above image rendered as latex from:
+{{{ \Xi_t = \exp \left( a_0 + \sum_{n=1}^2 \left[ a_n \cos \left(n (w t - \theta) \right) + b_n \sin \left(n (w t - \theta) \right) \right] \right) }}}
+(Use, for example, [http://sciencesoft.at/latex/?lang=en] with the AMS maths formula template.)
+
+MathML version (not so nice and less compatible):
+<wiki:gadget url="http://mathml-gadget.googlecode.com/svn/trunk/mathml-gadget.xml" border="0" up_content="eir_t = exp ( a_0 + sum_(n=1)^2 { a_n cos(n (w t - theta)) + b_n sin(n (w t - theta)) } )"/>
+
+(Formula uses MathML. For IE, a [http://www.dessci.com/en/products/mathplayer/ plugin] is needed.)</wiki:comment>
+
+Here, Ξ,,t,, is the number of innoculations per person per day, where `t` is the day of year (from 0 to 364), `w = 2π / 365`, `θ` is the `EIRRotateAngle` attribute and a,,0,, to a,,2,,, b,,1,, and b,,2,, are the corresponding attributes of the `EIR` element.
+
+If we introduce the function `f(t)` dependent on a,,n,, and b,,n,, for n≥1, we can reformulate Ξ,,t,, as
+
+http://openmalaria.googlecode.com/svn/wiki/eqns/EIR_Fourier_f.png
+<wiki:comment>
+\begin{align*}
+\Xi_t &= e^{a_0 + f(t)} \\
+      &= e^{a_0} \cdot e^{f(t)}
+\end{align*}
+</wiki:comment>
+
+and thus show that the annual EIR is scaled by [http://openmalaria.googlecode.com/svn/wiki/eqns/exp_a0.png]:
+
+http://openmalaria.googlecode.com/svn/wiki/eqns/EIR_Fourier_annual.png
+<wiki:comment>
+\begin{align*}
+\Xi &= \int_{t=0}^{365} e^{a_0} e^{f(t)} dt \\
+    &= e^{a_0} \int_{t=0}^{365} e^{f(t)} dt
+\end{align*}
+</wiki:comment>
+
+==== EIR via monthly values ====
+
+As of schema version 22 this method of entering EIR was added to simplify entry of field data. Fourier coefficients are still used within the code (for smoothing), but are calculated internally.
+
+The `monthlyEIR` element requires one attribute: `annualEIR`, specifying the total annual EIR as infectious bites per person per year. It should have a sequence of 12 child elements, named `item`, specifying the relative in terms of infectious bites per person per month (which might be approximated by densities of  mosquito densities, with an appropriate lag), in the months of January through December. The overall EIR is scaled to the annualEIR value indicated at the top of the element. An (unrealistic) example:
+
+{{{
+        <monthlyEIR annualEIR="20">
+          <item>10</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+          <item>1</item>
+        </monthlyEIR>
+}}}
 
 == Seasonality in the static transmission mode (mode="2") ==
 
