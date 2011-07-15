@@ -18,74 +18,9 @@ Located within the `anopheles` sub-element, the initial conditions to start the 
 
 Each anopheles elements has the following sub-elements: either `EIR` or `monthlyEIR`, `mosq`, and a list of zero or more `nonHumanHosts`.
 
-=== Entomological Inoculation Rate ===
+=== Entomological Inoculation Rate (EIR) ===
 
-EIR can be specified either via 5 Fourier coefficients and a rotation factor (`EIR` element) or via 12 monthly values plus an annual level (`monthlyEIR` element). Exactly one of these elements must appear.
-
-==== EIR via Fourier coefficients ====
-
-This is the older method (the only available method before schema version 22).
-
-The `EIR` element describes the Entomological Infection Rate for this mosquito species, which is used as a target when fitting the emergence rate of adult mosquitoes. The EIR is given via a [http://en.wikipedia.org/wiki/Fourier_series Fourier series] and a rotation offset; more accurately, the exposed EIR, in units of bites per day, is:
-
-http://openmalaria.googlecode.com/svn/wiki/eqns/EIR_Fourier.png
-
-<wiki:comment>
-Above image rendered as latex from:
-{{{ \Xi_t = \exp \left( a_0 + \sum_{n=1}^2 \left[ a_n \cos \left(n (w t - \theta) \right) + b_n \sin \left(n (w t - \theta) \right) \right] \right) }}}
-(Use, for example, [http://sciencesoft.at/latex/?lang=en] with the AMS maths formula template.)
-
-MathML version (not so nice and less compatible):
-<wiki:gadget url="http://mathml-gadget.googlecode.com/svn/trunk/mathml-gadget.xml" border="0" up_content="eir_t = exp ( a_0 + sum_(n=1)^2 { a_n cos(n (w t - theta)) + b_n sin(n (w t - theta)) } )"/>
-
-(Formula uses MathML. For IE, a [http://www.dessci.com/en/products/mathplayer/ plugin] is needed.)</wiki:comment>
-
-Here, Ξ,,t,, is the number of innoculations per person per day, where `t` is the day of year (from 0 to 364), `w = 2π / 365`, `θ` is the `EIRRotateAngle` attribute and a,,0,, to a,,2,,, b,,1,, and b,,2,, are the corresponding attributes of the `EIR` element.
-
-If we introduce the function `f(t)` dependent on a,,n,, and b,,n,, for n≥1, we can reformulate Ξ,,t,, as
-
-http://openmalaria.googlecode.com/svn/wiki/eqns/EIR_Fourier_f.png
-<wiki:comment>
-\begin{align*}
-\Xi_t &= e^{a_0 + f(t)} \\
-      &= e^{a_0} \cdot e^{f(t)}
-\end{align*}
-</wiki:comment>
-
-and thus show that the annual EIR is scaled by [http://openmalaria.googlecode.com/svn/wiki/eqns/exp_a0.png]:
-
-http://openmalaria.googlecode.com/svn/wiki/eqns/EIR_Fourier_annual.png
-<wiki:comment>
-\begin{align*}
-\Xi &= \int_{t=0}^{365} e^{a_0} e^{f(t)} dt \\
-    &= e^{a_0} \int_{t=0}^{365} e^{f(t)} dt
-\end{align*}
-</wiki:comment>
-
-==== EIR via monthly values ====
-
-As of schema version 22 this method of entering EIR was added to simplify entry of field data. Fourier coefficients are still used within the code (for smoothing), but are calculated internally.
-
-The `monthlyEIR` element requires one attribute: `annualEIR`, specifying the total annual EIR as infectious bites per person per year. It should have a sequence of 12 child elements, named `item`, specifying the relative in terms of infectious bites per person per month (which might be approximated by densities of  mosquito densities, with an appropriate lag), in the months of January through December. The overall EIR is scaled to the annualEIR value indicated at the top of the element. An (unrealistic) example:
-
-{{{
-        <monthlyEIR annualEIR="20">
-          <item>10</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-        </monthlyEIR>
-}}}
-
-These methods lead to approximations to the seasonal pattern of annual EIR described in detail [EIRSeasonDynamic here]
+The level and seasonality of transmission are input via a description of the approximate seasonal pattern of the EIR.  EIR can be specified either via 5 Fourier coefficients and a rotation factor (`EIR` element) or via 12 monthly values plus an annual level (`monthlyEIR` element). Exactly one of these elements must appear. Details are given [EIRSeasonDynamic here]
 
 === Mosquito lifecycle and human-interaction parameters ===
 
