@@ -103,9 +103,10 @@ This functions similarly to compareOutput.py but reads the ctsout.txt files. It 
 
 Code: [http://code.google.com/p/openmalaria/source/browse/trunk/util/plotResult.py util/plotResult.py]
 
-This is a script designed to produce rapid visualisations of output.txt files. An example (normally labels are added, but on a small plot like this they hide the graphs):
+This is a script designed to produce rapid visualisations of output.txt files. A couple of examples:
 
-http://openmalaria.googlecode.com/svn/wiki/graphs/plotResults-example1.png`
+http://openmalaria.googlecode.com/svn/wiki/graphs/plotResults-example1.png
+
 http://openmalaria.googlecode.com/svn/wiki/graphs/plotResults-example2.png
 
 Options:
