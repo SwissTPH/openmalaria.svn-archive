@@ -1,6 +1,30 @@
 #summary seasonality in EIR in dynamic transmission models.
 
-= Introduction =
+= Specification of seasonality of transmission in !OpenMalaria =
 
-The user should be aware that the dynamic transmission modelled (mode="4") is not forced after the warm-up period and often fluctuates to a greater or lesser extent (usually below the level input), particularly when close to the limit of sustainable transmission (e.g. with high case-management coverage). After the warm-up period, with dynamic transmission (mode="4"), the seasonality of the mosquito emergence rate (N_v0) is equal to the seasonality specified under the EIR element plus a delay (about 20 days in the 5 day time step model), and, as a result, the seasonality of the simulated EIR (which is close to that of S_v) may differ from the seasonality of the input EIR substantially. Even if the annualEIR is equal before and after the end of the warm-up period, the switch in seasonality may alter the annual number of new infections. Running scenarios without interventions shows the dynamics of EIR and human infectiousness (the continuous output mode with duringInit="true" is convenient for viewing this). With static transmission (mode="2") the phenomenon described above does not occur.
+Information on seasonality of malaria transmission for parameterising models might be available in the form of seasonality in any of a number of malariological indices.  The models, however, expect the seasonality in the entomological inoculation rate (EIR) as the input.  If the data are available in the form of a different measure of seasonality, they need to be transformed before being used to drive the models, by introducing a lag period.
 
+The table contains suggestions for what might be the approximate lag periods between different measures of seasonality.  A positive value (Lx) for the lag for measure x implies that the EIR seasonality reflects the value of x, Lx days previously.  This table provides only a very approximate guide with values rounded to multiples of 5 days.  The actual average lag periods in the simulations are model dependent and will vary somewhat from these.  The lag periods in the field also vary and, in the case of quantities measured in the vector population, are dependent on the environmental temperature.  Note that it is a considerable simplification to assume proportionality between any of these measures and the lagged values of preceding measures in the table. 
+
+*Table: Approximate lag periods between different seasonality measures*
+|| *Transmission measure* || *Lag period (days)* ||
+|| Rainfall ||+30 ||
+|| Emergence rate of vector || +20 ||
+|| Density of host-seeking vectors || +10 ||
+|| _Entomological inoculation rate_ || 0 ||
+|| Incidence of infection || -5 ||
+|| Incidence of patent infection || -10 ||
+|| Incidence of clinical malaria || -15 ||
+|| Incidence of severe malaria || -20 ||
+
+== Seasonality in the static transmission mode (mode="2") ==
+
+With static transmission the seasonality pattern during the intervention phase of the simulation, reproduces that input.
+
+== Seasonality in the dynamic transmission mode (mode="4") ==
+
+If the simulation is run using the dynamic transmission mode (mode="4") then the simulated EIR is not constrained to be exactly the same as the input EIR after the warm-up period.  It often fluctuates to a greater or lesser extent.  Particularly when close to the limit of sustainable transmission (e.g. with high case-management coverage) the simulated EIR will usually be somewhat below the level input. 
+
+During the warm-up period, the entomological parameters are adjusted to try to ensure that the output EIR corresponds as closely as possible to that input.  An exact match, consistent with the emergence rate (N_v0) being positive, is in general impossible. The seasonality of the simulated EIR (which is close to that of S_v plus the delay due to the lag) may differ from the seasonality of the input EIR substantially
+
+In versions before 30 of !OpenMalaria the change from the static to dynamic generation of the EIR is at the end of the warm-up period.  In these simulations, even if the annualEIR is equal before and after the end of the warm-up period, the switch in seasonality may alter the annual number of new infections. Running scenarios without interventions shows the dynamics of EIR and human infectiousness (the continuous output mode with duringInit="true" is convenient for viewing this). 
