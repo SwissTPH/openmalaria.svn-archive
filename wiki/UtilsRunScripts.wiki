@@ -105,7 +105,8 @@ Code: [http://code.google.com/p/openmalaria/source/browse/trunk/util/plotResult.
 
 This is a script designed to produce rapid visualisations of output.txt files. An example (normally labels are added, but on a small plot like this they hide the graphs):
 
-http://openmalaria.googlecode.com/svn/wiki/graphs/plot-scenario-cohort.png
+http://openmalaria.googlecode.com/svn/wiki/graphs/plotResults-example1.png`
+http://openmalaria.googlecode.com/svn/wiki/graphs/plotResults-example2.png
 
 Options:
 
@@ -140,6 +141,14 @@ Options:
                         versions
   -l, --no-legends      Turn off legends (sometimes they hide parts of the
                         plots)
+  -L LABELS, --labels=LABELS
+                        Show [t]itle, [x]-axis and/or [y]-axis labels: txy tx
+                        ty t xy x y or (none); default is xy
+  -b, --vertical-stack  Where bar-plots need sub-divisions, use a vertical
+                        stack instead of horizontal sub-bars
+  --scale=SCALE         Set y-axis scale to linear, log or auto (currently
+                        auto does nothing)
+
 }}}
 
 Note that this script can be useful when comparing outputs for significant differences, as in:
