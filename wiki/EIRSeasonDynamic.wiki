@@ -2,12 +2,12 @@
 
 = Specification of level and seasonality of transmission =
 
-Data on seasonality of malaria transmission for driving models might be available in the form of seasonality in any of a number of malariological indices.  The models, however, expect the seasonality in the entomological inoculation rate (EIR) as the input.  If the data are available in the form of a different measure of seasonality, they need to be transformed before being used to drive the models, by introducing a lag period.
+Data on seasonality of malaria transmission for driving models might be available in the form of seasonality in any of a number of malariological indices (see Table below).  The models, however, expect the seasonality in the entomological inoculation rate (EIR) as the input.  If the data are available in the form of a different measure of seasonality, they need to be transformed before being used to drive the models.  The simplest approximation is to introduce a fixed lag period, depending on which measure is used.  While this is a considerable simplification, because it assumes proportionality between different measures, this may be reasonable approximation, especially if the data relate to mosquito densities or emergence rates.
 
-The table contains suggestions for what might be the approximate lag periods between different measures of seasonality.  A positive value (Lx) for the lag for measure x implies that the EIR seasonality reflects the value of x, Lx days previously.  This table provides only a very approximate guide with values rounded to multiples of 5 days.  The actual average lag periods in the simulations are model dependent and will vary somewhat from these.  The lag periods in the field also vary and, in the case of quantities measured in the vector population, are dependent on the environmental temperature.  Note that it is a considerable simplification to assume proportionality between any of these measures and the lagged values of preceding measures in the table. 
+The table contains suggestions for what might be the approximate lag periods between different measures of seasonality.  A positive value (Lx) for the lag for measure x implies that the EIR seasonality reflects the value of x, Lx days previously.  This table provides only a very approximate guide with values rounded to multiples of 5 days.  The actual average lag periods in the simulations are model dependent and will vary somewhat from these.  The lag periods in the field also vary and, in the case of quantities measured in the vector population, are dependent on the environmental temperature.  
 
 *Table: Approximate lag periods between different seasonality measures*
-|| *Transmission measure* || *Lag period (days)* ||
+|| *Transmission measure* || *Lag period (Lx) (days)* ||
 || Rainfall ||+30 ||
 || Emergence rate of vector || +20 ||
 || Density of host-seeking vectors || +10 ||
