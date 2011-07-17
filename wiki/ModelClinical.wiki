@@ -21,7 +21,7 @@ As part of the case management model, we need to simulate outcomes of parasitolo
 
 *Source data*  We used the data in Table 4 in [http://www.ncbi.nlm.nih.gov/pubmed/18202438 Murray et al, 2008] to model the outcome of RDTs for <i>Plasmodium falciparum</i>. This table shows the percent sensitivity (and the 95% confidence interval) found for the RDT BinaxNOW Malaria in a rigorous field trial, at different levels of parasitaemia. This assay is based on detection of the antigens HRP-2 for <i>P. falciparum</i> and aldolase for generic <i>Plasmodium</i>.  We associate the sensitivities listed for <i>P. falciparum</i> with the mid-points of the parasite density ranges listed, and one minus the specificity for a density of 0 parasites.
 
-To model microscopy, we assume the data shown in Table 1. This is sourced from expert opinion (Allan Schapira), backed by the observation that microscopy diagnostic errors are noted more commonly for low-density parasitemias of 10 to 100 parasites/µL([http://www.ncbi.nlm.nih.gov/pubmed/10672199 Kilian et al, 2000]).
+To model microscopy, we assume the data shown in Table 1. This is sourced from expert opinion (A. Schapira), backed by the observation that microscopy diagnostic errors are noted more commonly for low-density parasitemias of 10 to 100 parasites/µL([http://www.ncbi.nlm.nih.gov/pubmed/10672199 Kilian et al, 2000]).
 
 Table 1:
 
