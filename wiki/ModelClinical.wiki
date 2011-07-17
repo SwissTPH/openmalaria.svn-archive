@@ -32,7 +32,7 @@ Table 1:
 
 *Model* We found a sigmoidal function a good match for this data. Note that since the probability of obtaining a positive outcome when testing a sample with no parasites is non-zero, we need to scale the sigmoidal. With a parasite density of Y, probability of a positive outcome with zero parasites α, and parameter β, this gives us the probability of a positive test outcome as a function of parasite density:
 
-f(Y)=(1-α) + α * Y/(Y+β)
+f(Y)=(1-α) + αx Y/Y+β
 
 and thus the diagnostic test’s output can be modelled as Bernoulli (f(Y)).
 
