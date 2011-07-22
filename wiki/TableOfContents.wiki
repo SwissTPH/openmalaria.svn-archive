@@ -42,6 +42,7 @@
       * [ModelIntervMisc Special interventions]
       * [ModelDecayFunctions Decay of intervention effects]
   * *Code development*
+    * [Changelog]
     * [Code#Source_code Source code]
       * [Code#Doxygen_documentation doxygen-generated documentation]
     * [BuildSystem Building and Testing]
