@@ -2,6 +2,7 @@
 
 = OpenMalaria releases =
 
+Below is a list of the most significant changes in each release, together with the date and revision number of initial release. Releases are available as tags in the subversion repository: [http://code.google.com/p/openmalaria/source/browse/#svn%2Ftags http://openmalaria.googlecode.com/svn/tags]
 == Schema Version 30 ==
 
 Yet to be released. Planned changes:
@@ -54,3 +55,46 @@ Released on 6th May 2011 as r1811.
   * descriptions of vector interventions are no longer required in cases where the  intervention is never deployed
   * bug fix: initialize microscopy count
   * made transmission warm-up fitting problems interrupt the program again
+
+
+== Schema Version 26 ==
+
+Released on 23rd February 2011 as r1704.
+
+  * Transmission model's initialization strategies updated.
+  * Simulated EIR outputs changed to only be outputs from adults.
+  * Implementation of Penny infection model and unittest against Matlab densities.
+  * Decay functions updated with "step" function and optional heterogeneity.
+  * 1-day time-step case-management: treatment-seeking delays for UC cases has new description.
+  * Non-malaria morbidity: separate P(need antibiotic treatment) for fevers classified as malarial.
+
+
+== Schema Version 25 ==
+
+Released on 24th Janruary 2011 as r1622.
+
+  * Non-malaria fever modelling implemented
+  * Cumulative intervention deployment: bring coverage up to a target level
+  * MDA intervention may now be configured as "screen & treat" (1-day time-step)
+  * Some IV-drug corrections and (hopefullly) a speed-up
+  * Decay of vector-stage interventions and vaccines can now be modelled using several different functions
+  * Vaccine codes are now PEV/BSV/TBV instead of 1/2/3
+  * Deterministic case management trees no longer make an unnecessary random-number generator call
+  * Time-steps encapsulated in a new class for added type-saftey
+
+
+== Schema Version 24 ==
+
+Released on 27th December 2010 as r1578.
+
+  * units of EIR input changed to be adult-averaged in all cases
+  * vector fitting revision: use a single 5-year period
+  * drug code for intravenous administration of drugs (where duration of administration is significant)
+  * proposed cohort implementation completed: options for removal and all outputs restricted to cohorts
+  * generic handling of data per age-group and interpolation methods
+  * heterogeneity in human weight included
+
+
+== Schema Version 23 ==
+
+Released on November 4th 2010 as r1420, tagged openmalaria-649.
