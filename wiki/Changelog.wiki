@@ -11,7 +11,7 @@ Yet to be released. Planned changes:
   * Bug fix in REPORT_ONLY_AT_RISK: after a case at time 0, times 2-5 were considered not-at-risk. This corrects those timesteps to 1-4.
   * `mode` parameter of `<entomology>` element now takes keyword value: `dynamic` or `forced`.
   * Vector model XML parameters now largely use elements instead of being one long string of attributes.
-  * Vector parameters α_i, P_B_i, P_C_i and P_D_i (rate of encountering hosts and probabilities of biting, escaping and resting respectively) may now vary across humans to simulate human heterogeneity.
+  * Vector parameters `α_i`, `P_B_i`, `P_C_i` and `P_D_i` (rate of encountering hosts and probabilities of biting, escaping and resting respectively) may now vary across humans to simulate human heterogeneity.
 
 
 == Schema Version 29 ==
