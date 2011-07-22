@@ -1,0 +1,56 @@
+#summary Log of most significant changes between releases over time
+
+= OpenMalaria releases =
+
+== Schema Version 30 ==
+
+Yet to be released. Planned changes:
+
+  * Renamed Vector_EIR_Input and Vector_EIR_Simulated to inputEIR and simulatedEIR respectively.
+  * Increased delay in human infectiousness model from the perspective of the non-vector model and several summaries: it appears it was one time-step short.
+  * Bug fix in REPORT_ONLY_AT_RISK: after a case at time 0, times 2-5 were considered not-at-risk. This corrects those timesteps to 1-4.
+  * `mode` parameter of `<entomology>` element now takes keyword value: `dynamic` or `forced`.
+  * Vector model XML parameters now largely use elements instead of being one long string of attributes.
+  * Vector parameters α_i, P_B_i, P_C_i and P_D_i (rate of encountering hosts and probabilities of biting, escaping and resting respectively) may now vary across humans to simulate human heterogeneity.
+
+
+== Schema Version 29 ==
+
+Released on 21st June as r1902.
+
+  * New ITN model
+  * MSAT for 5-day timestep.
+
+
+== Schema Version 28 ==
+
+Released on 24th May 2011 as r1836.
+
+Big rearrangements of interventions content, moving from grouping by description
+and deployment type to grouping by intervention. This should make experiment
+design easier. Each intervention can optionally have a name attribute.
+
+Changed some names:
+  * drugDescription -> pharmacology
+  * entoData -> entomology
+  * eir -> EIR
+  * monthlyEir -> monthlyEIR
+
+Added optional name attributes to intervention descriptions.
+
+New implementation of imported infections "intervention".
+
+Larviciding intervention removed; it will be replaced by a more accurate model
+later.
+
+
+== Schema Version 27 ==
+
+Released on 6th May 2011 as r1811.
+
+  * Fix for Penny's infection model (code)
+  * There should no longer be NaNs in output files when the model runs successfully
+  * new continuous reporting option: median immunity Y
+  * descriptions of vector interventions are no longer required in cases where the  intervention is never deployed
+  * bug fix: initialize microscopy count
+  * made transmission warm-up fitting problems interrupt the program again
