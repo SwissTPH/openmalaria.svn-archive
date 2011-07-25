@@ -17,7 +17,6 @@ package ch.swisstph.expcreator.arms;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
-
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,24 +29,25 @@ import org.w3c.dom.Element;
 
 import ch.swisstph.expcreator.CombineSweeps;
 
-
-
-/** An Arm represents a patch against the base document, and is
- * one option of a sweep. */
+/**
+ * An Arm represents a patch against the base document, and is one option of a
+ * sweep.
+ */
 public abstract class Arm {
     // The differences represented by this branch. null if no differences.
-    protected int id = -1;		// arm's DB ID
-    protected final String name;	// file name
-    protected final String label;	// label; called 'value' in database; from scenario's 'name' attribute
+    protected int id = -1; // arm's DB ID
+    protected final String name; // file name
+    protected final String label; // label; called 'value' in database; from
+                                  // scenario's 'name' attribute
     protected final Element base;
 
     /** Constructor; generates a patch from passed document and base. */
     public Arm(Element base, File file) {
-    	
-		String tname = file.getName();
-		this.base=base;
-		this.name = tname.substring(0,tname.length() - 4 );
-		this.label = this.name;
+
+        String tname = file.getName();
+        this.base = base;
+        this.name = tname.substring(0, tname.length() - 4);
+        this.label = this.name;
     }
 
     /** Constructor setting random seed to n. */
@@ -57,8 +57,16 @@ public abstract class Arm {
         Document document = CombineSweeps.getBuilder().newDocument();
         Attr seed = document.createAttribute("iseed");
         seed.setValue(name);
-        
+
         base = null;
+    }
+
+    /** Constructor that just sets the name and label for dummy arms */
+
+    public Arm(String name) {
+        this.name = name;
+        this.label = name;
+        this.base = null;
     }
 
     public int getId() {
@@ -72,12 +80,15 @@ public abstract class Arm {
         return name;
     }
 
-    public void updateDb(Connection conn, int sweepId, boolean isComparator) throws Exception {
+    public void updateDb(Connection conn, int sweepId, boolean isComparator)
+            throws Exception {
         // arms TABLE: arm_id(auto key), exp_id, swe_id, value, name, comparator
         // Details arm names, associated sweep and comparator.
-        // Value is "label" of plots; taken from scenario's name attribute; name is file-name
+        // Value is "label" of plots; taken from scenario's name attribute; name
+        // is file-name
         String sql = "INSERT INTO arms (exp_id,swe_id,value,name,comparator) VALUES (?,?,?,?,?)";
-        PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pstmt = conn.prepareStatement(sql,
+                Statement.RETURN_GENERATED_KEYS);
         pstmt.setInt(1, CombineSweeps.getExpId());
         pstmt.setInt(2, sweepId);
         pstmt.setString(3, label);
@@ -86,7 +97,7 @@ public abstract class Arm {
         pstmt.executeUpdate();
         ResultSet rs = pstmt.getGeneratedKeys();
         if (rs.next()) {
-            id = rs.getInt(1);	// get generated ID
+            id = rs.getInt(1); // get generated ID
         } else {
             System.out.println("DB error: unable to get generated key");
             throw new RuntimeException("unable to get generated key");
@@ -94,6 +105,7 @@ public abstract class Arm {
     }
 
     public abstract void writePatch(File dir) throws Exception;
+
     public abstract Document apply(Document document) throws Exception;
-    
+
 }
