@@ -22,24 +22,25 @@ import java.util.LinkedList;
 /** Two patches overlap. Special handling to improve error reporting. */
 public class PatchConflictException extends RuntimeException {
 
-    public static final long serialVersionUID = 1L;	// avoid a warning (we don't need serialization...)
+    public static final long serialVersionUID = 1L; // avoid a warning (we don't
+                                                    // need serialization...)
     private LinkedList<String> path;
 
     public PatchConflictException(String msg) {
         super(msg);
-    path = new LinkedList<String>();
+        path = new LinkedList<String>();
     }
-    
-    public void pushPath( String str ){
-    path.addFirst( str );
-}
-    
+
+    public void pushPath(String str) {
+        path.addFirst(str);
+    }
+
     public String getMessage() {
-    StringBuilder msg = new StringBuilder( "Patch conflict: " );
-    for( String str : path ){
-	msg.append( str );
-    }
-    msg.append( super.getMessage() );
+        StringBuilder msg = new StringBuilder("Patch conflict: ");
+        for (String str : path) {
+            msg.append(str);
+        }
+        msg.append(super.getMessage());
         return msg.toString();
-}
+    }
 }

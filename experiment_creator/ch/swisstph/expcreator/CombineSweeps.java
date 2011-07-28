@@ -437,9 +437,10 @@ public class CombineSweeps {
             System.out.println("Inserted into experiments table");
 
             for (int i = 0; i < sweeps.size(); ++i) {
-                //Problem with zero as sweep group id in the visualization software
-                //therefore start sweep group ids at one instead of zero
-                sweeps.get(i).updateDb(conn, i+1);
+                // Problem with zero as sweep group id in the visualization
+                // software
+                // therefore start sweep group ids at one instead of zero
+                sweeps.get(i).updateDb(conn, i + 1);
             }
             System.out.println("Inserted into sweeps and arms tables");
 

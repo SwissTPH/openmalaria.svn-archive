@@ -39,7 +39,8 @@ public class PTReplaceNode extends PTBase {
         return child.getNodeName();
     }
 
-    public int write(Transformer transformer, StreamResult result, String path) throws Exception {
+    public int write(Transformer transformer, StreamResult result, String path)
+            throws Exception {
         Writer out = result.getWriter();
         out.write(path + "->" + child.getNodeName());
         out.write('\n');
@@ -52,7 +53,8 @@ public class PTReplaceNode extends PTBase {
         // In most cases current node is worked out. Here it can't be,
         // because it may one of a list of nodes, but doesn't know which.
         if (node == null) {
-            throw new RuntimeException("PTReplaceNode.apply(): I need to know current node!");
+            throw new RuntimeException(
+                    "PTReplaceNode.apply(): I need to know current node!");
         }
 
         Node imported = document.importNode(child, true);

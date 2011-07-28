@@ -28,26 +28,33 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-/** A leaf node containing a list of differing sub-elements with the same
- * name.
+/**
+ * A leaf node containing a list of differing sub-elements with the same name.
  * 
- * The list may be empty, meaning the patch removes other elements of the
- * same name. There need not exist other elements of the same name, meaning
- * the patch inserts elements. */
+ * The list may be empty, meaning the patch removes other elements of the same
+ * name. There need not exist other elements of the same name, meaning the patch
+ * inserts elements.
+ */
 public class PTReplaceNodeList extends PTBase {
 
     private final String name;
     private final String nextElement;
     private final List<Node> childList;
 
-    /** Create a patch to replace one list of nodes with another.
+    /**
+     * Create a patch to replace one list of nodes with another.
      * 
-     * @param name Name of element list
-     * @param nextElement Name of expected next element, or null if no next
-     * element. Used as a hint for the insert position when there was no old list.
-     * @param elements The new elements to insert.
+     * @param name
+     *            Name of element list
+     * @param nextElement
+     *            Name of expected next element, or null if no next element.
+     *            Used as a hint for the insert position when there was no old
+     *            list.
+     * @param elements
+     *            The new elements to insert.
      */
-    public PTReplaceNodeList(String name, String nextElement, List<Node> elements) {
+    public PTReplaceNodeList(String name, String nextElement,
+            List<Node> elements) {
         this.name = name;
         this.nextElement = nextElement;
         childList = Collections.unmodifiableList(elements);
@@ -57,7 +64,8 @@ public class PTReplaceNodeList extends PTBase {
         return name;
     }
 
-    public int write(Transformer transformer, StreamResult result, String path) throws Exception {
+    public int write(Transformer transformer, StreamResult result, String path)
+            throws Exception {
         Writer out = result.getWriter();
         out.write(path + "->" + name + "\n");
         for (Node child : childList) {
@@ -69,24 +77,24 @@ public class PTReplaceNodeList extends PTBase {
 
     public int apply(Document document, Node parent, Node node_unused) {
         List<Node> nodes = getChildNodes(parent, name);
-        
+
         // A marker for where to insert our nodes.
         // We make a guess using nextElement (if null, means at end).
         Node refNode = null;
-        if( nodes.size() > 0 ){
-            refNode = nodes.get( nodes.size() - 1 ).getNextSibling();
-        }else{
+        if (nodes.size() > 0) {
+            refNode = nodes.get(nodes.size() - 1).getNextSibling();
+        } else {
             if (nextElement != null) {
-                refNode = getChildNodes( parent, nextElement ).get(0);
+                refNode = getChildNodes(parent, nextElement).get(0);
             }
         }
-        
+
         for (Node child : childList) {
             Node imported = document.importNode(child, true);
             parent.insertBefore(imported, refNode);
         }
-        for( Node old : nodes ){
-            parent.removeChild( old );
+        for (Node old : nodes) {
+            parent.removeChild(old);
         }
         return childList.size();
     }

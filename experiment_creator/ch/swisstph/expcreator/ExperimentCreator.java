@@ -35,7 +35,7 @@ public class ExperimentCreator {
         String dbUrl = null, dbUser = null;
         boolean writeListOnly = false;
         boolean readList = false;
-        boolean min3Sweeps = false;
+        boolean min3Sweeps = true;
 
         for (int i = 0; i < args.length; i++) {
             if (args[i].startsWith("--")) {
@@ -72,8 +72,8 @@ public class ExperimentCreator {
                     writeListOnly = true;
                 } else if (args[i].equals("--read-list")) {
                     readList = true;
-                } else if (args[i].equals("--min-3-sweeps")) {
-                    min3Sweeps = true;
+                } else if (args[i].equals("--lt-3-sweeps")) {
+                    min3Sweeps = false;
                 } else {
                     System.out.println("Unrecognised option: " + args[i]);
                     printHelp();
@@ -132,7 +132,8 @@ public class ExperimentCreator {
             }
         }
 
-        CombineSweeps mainObj = new CombineSweeps(expName, expDescription,min3Sweeps);
+        CombineSweeps mainObj = new CombineSweeps(expName, expDescription,
+                min3Sweeps);
 
         try {
             // Find all sweeps
@@ -197,6 +198,9 @@ public class ExperimentCreator {
                         + "			for the current description should be generated and unwanted\n"
                         + "			lines deleted; other edits may cause problems.\n"
                         + "			Comparators of all included scenarios should be included.\n"
+                        + "  --lt-3-sweeps Do not add dummy sweeps if the number of sweeps is less than 3.\n"
+                        + "         By default we add dummy sweeps because the analysis framework expects\n"
+                        + "         experiments with 3 or more sweeps.\n"
                         + "\n"
                         + "Non-DB mode options:\n"
                         + "  --name NAME		Name of experiment; for use when not in DB mode.\n"

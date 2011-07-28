@@ -21,12 +21,11 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 public class TXTFileFilter implements FilenameFilter {
-	
-	public TXTFileFilter(){
-	}
 
+    public TXTFileFilter() {
+    }
 
-	public boolean accept(File dir, String name) {
-    		return name.endsWith(".txt");
-	}
+    public boolean accept(File dir, String name) {
+        return name.endsWith(".txt");
+    }
 }

@@ -31,48 +31,44 @@ import org.w3c.dom.NodeList;
 
 public class Utils {
 
-	// Helper function to strip old white-space.
-	// Source: http://forums.sun.com/thread.jspa?threadID=5201482
-	public static void stripWhitespace(Node node, short nodeType, String name) {
-		NodeList list = node.getChildNodes();
-		for (int i = 0; i < list.getLength(); i++) {
-			// Get child node
-			Node childNode = list.item(i);
-			if (childNode.getNodeType() == nodeType &&
-					(name == null ||
-							childNode.getNodeName().trim().equals(name) &&
-							childNode.getNodeValue().trim().equals(""))) {
-				childNode.getParentNode().removeChild(childNode);
-				// child was removed so list invalid; easiest is to start again:
-				stripWhitespace(node, nodeType, name);
-				break;
-			}
+    // Helper function to strip old white-space.
+    // Source: http://forums.sun.com/thread.jspa?threadID=5201482
+    public static void stripWhitespace(Node node, short nodeType, String name) {
+        NodeList list = node.getChildNodes();
+        for (int i = 0; i < list.getLength(); i++) {
+            // Get child node
+            Node childNode = list.item(i);
+            if (childNode.getNodeType() == nodeType
+                    && (name == null || childNode.getNodeName().trim()
+                            .equals(name)
+                            && childNode.getNodeValue().trim().equals(""))) {
+                childNode.getParentNode().removeChild(childNode);
+                // child was removed so list invalid; easiest is to start again:
+                stripWhitespace(node, nodeType, name);
+                break;
+            }
             stripWhitespace(childNode, nodeType, name);
-		}
-	}
+        }
+    }
 
-	public static String toXMLString(Document documentNode) {
-		String xmlString = null;
-		try
-		{
-			TransformerFactory tFactory = TransformerFactory.newInstance();
-			Transformer transformer = tFactory.newTransformer();
-			//transformer.setOutputProperty("omit-xml-declaration", "yes");
+    public static String toXMLString(Document documentNode) {
+        String xmlString = null;
+        try {
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            Transformer transformer = tFactory.newTransformer();
+            // transformer.setOutputProperty("omit-xml-declaration", "yes");
 
-			StringWriter sw = new StringWriter();
-			StreamResult result = new StreamResult(sw);
+            StringWriter sw = new StringWriter();
+            StreamResult result = new StreamResult(sw);
 
-			DOMSource source = new DOMSource( documentNode );
-			transformer.transform( source, result );
+            DOMSource source = new DOMSource(documentNode);
+            transformer.transform(source, result);
 
-			xmlString = sw.getBuffer().toString();
-		}
-		catch (TransformerException exception)
-		{
-			xmlString = null;
-		}
-		return xmlString;
-	}
-
+            xmlString = sw.getBuffer().toString();
+        } catch (TransformerException exception) {
+            xmlString = null;
+        }
+        return xmlString;
+    }
 
 }

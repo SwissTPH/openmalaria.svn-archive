@@ -28,20 +28,23 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-/** A node representing a list of nodes of the same name
- * (elements or text nodes).
- *
- * This is an intermediate type, since given a list of XML nodes with the
- * same name (elements or text nodes) we need to handle them as one entity.
+/**
+ * A node representing a list of nodes of the same name (elements or text
+ * nodes).
+ * 
+ * This is an intermediate type, since given a list of XML nodes with the same
+ * name (elements or text nodes) we need to handle them as one entity.
  */
 public class PTNodeList extends PTBase {
     private final String name;
-    private final List<PTBase> nodes;   // nodes may be null: not all in list may need patching
+    private final List<PTBase> nodes; // nodes may be null: not all in list may
+                                      // need patching
 
     public PTNodeList(String n, PTBase[] c) {
         name = n;
         nodes = Collections.unmodifiableList(Arrays.asList(c));
     }
+
     // Convenience constructor for a single child node
     public PTNodeList(String n, PTBase c) {
         name = n;
@@ -54,10 +57,11 @@ public class PTNodeList extends PTBase {
         return name;
     }
 
-    public int write(Transformer transformer, StreamResult result, String path) throws Exception {
+    public int write(Transformer transformer, StreamResult result, String path)
+            throws Exception {
         int n = 0;
         for (PTBase node : nodes) {
-            if( node != null )
+            if (node != null)
                 n += node.write(transformer, result, path);
         }
         return n;
@@ -71,13 +75,13 @@ public class PTNodeList extends PTBase {
         }
         int n = 0;
         for (int i = 0; i < this.nodes.size(); ++i) {
-            if( this.nodes.get(i) != null )
+            if (this.nodes.get(i) != null)
                 n += this.nodes.get(i).apply(document, parent, nodes.get(i));
         }
         return n;
     }
-    
-    public List<PTBase> getNodes(){
-    	return this.nodes;
+
+    public List<PTBase> getNodes() {
+        return this.nodes;
     }
 }

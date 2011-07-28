@@ -35,14 +35,16 @@ public class PTReplaceAttr extends PTBase {
 
     public PTReplaceAttr(Attr n) {
         child = n;
-    // 		System.out.println( "new Attr: "+child.getNodeName()+"="+child.getNodeValue() );
+        // System.out.println(
+        // "new Attr: "+child.getNodeName()+"="+child.getNodeValue() );
     }
 
     public String getName() {
         return child.getName();
     }
 
-    public int write(Transformer transformer, StreamResult result, String path) throws Exception {
+    public int write(Transformer transformer, StreamResult result, String path)
+            throws Exception {
         Writer out = result.getWriter();
         out.write(path + "->" + child.getNodeName());
         out.write('\n');
@@ -57,9 +59,11 @@ public class PTReplaceAttr extends PTBase {
             throw new RuntimeException("document shouldn't have attributes");
         }
         Attr old = parElt.getAttributeNode(child.getNodeName());
-        if (old == null) // Patching works on the basis of replacing one element with another.
+        if (old == null) // Patching works on the basis of replacing one element
+                         // with another.
         {
-            throw new RuntimeException("error resolving base attribute " + child.getNodeName());
+            throw new RuntimeException("error resolving base attribute "
+                    + child.getNodeName());
         }
         old.setValue(child.getValue());
         return 1;
