@@ -6,9 +6,10 @@ If you want to help the project by offering down-time on your computer to run si
 
 = Installing =
 
+See also the [Binaries] page for information on installing OpenMalaria.
+
 If you want to run your own simulations, you have the following options:
   * install [openmalariaTools] (recommended)
-  * install [Binaries pre-compiled executables] and run via scripts/command line
   * [BuildSystem build the executables from source]
 
 = Running =
