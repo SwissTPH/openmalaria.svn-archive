@@ -51,6 +51,8 @@ Table 2:
 
 Figure 1:
 
+http://openmalaria.googlecode.com/svn/wiki/graphs/RDT_model_correlation.png
+
 == Five-day timestep ==
 
 [http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al, 2006] (implemented by the ClinicalImmediateOutcomes class) presented a clinical model for the case management of malaria. In this model there are three entry points to the decision trees: uncomplicated clinical malaria with no recent history of treatment, uncomplicated clinical malaria with recent history of treatment, and severe malaria. “Recent history” is defined as within the last 30 days.
