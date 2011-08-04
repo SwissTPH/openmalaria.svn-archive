@@ -51,7 +51,7 @@ Table 2:
 
 Figure 1:
 
-http://openmalaria.googlecode.com/svn/wiki/graphs/RDT_model_correlation.png
+http://openmalaria.googlecode.com/svn/wiki/graphs/RDT_model_correlation.PNG
 
 == Five-day timestep ==
 
