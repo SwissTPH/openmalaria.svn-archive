@@ -1,8 +1,10 @@
 #summary Experiments: design, etc.
 
-= Simulating experiments =
+= Simulation experiments =
 
-The OpenMalaria simulator is designed for simulating individual scenarios. To simulate a study covering variations in several factors, we usually design a fully factorial experiment. Terminology:
+The OpenMalaria simulator is designed for simulating individual scenarios. To simulate a study covering variations in several factors, we often design a fully factorial experiment. 
+
+Terminology:
 
 <dl>
   <dt>Sweep</dt>
@@ -115,11 +117,11 @@ A simple example experiment description: [http://code.google.com/p/openmalaria/s
 
 ==== TXT Sweep ====
 
-It happens that's for a sweep only one value of a xml parameter has to vary. In this case, it will me most appropriate to use TXT sweep instead of XML Sweep. This type of sweep avoids to copy/paste the xml file for each arm. The value which have to vary in the basel.xml file will be replaced by a variable name and the sweep directory will contains txt files. The variable name in the base.xml have to be defined using the following naming convention @[variable_name]@ ( e.g. @IIR@), each variable name are unique. Each TXT file in the sweep represent an arm. A TXT files contains the variable name and value for the given arms. In the file, the syntax for the declaration is : @[variable_name]@:[variable_value] ( e.g. @IIR@:7.2 ).
+It happens that's for a sweep only one value of a xml parameter has to vary. In this case, it will me most appropriate to use TXT sweep instead of XML Sweep. This type of sweep avoids the need to copy/paste the xml file for each arm. The value which has to vary in the basel.xml file is replaced by a variable name and the sweep directory contains txt files. The variable name in the base.xml must be defined using the following naming convention @[variable_name]@ ( e.g. @IIR@), each variable is unique. Each TXT file in the sweep represents an arm and contains the variable name and value for the given arms. In the file, the syntax for the declaration is : @[variable_name]@:[variable_value] ( e.g. @IIR@:7.2 ).
 
 ==== Example ====
 
-In the xml, propInfected have to take differents value. A sweep infected is created with two differents arms.
+In the xml, propInfected must take different values. A sweep named _infected_ is created with two different arms.
 
 base.xml:
 {{{
@@ -131,7 +133,7 @@ base.xml:
 ...
 }}}
 
-In the "infected" sweep :
+In the _infected_ sweep :
 
 infected_low.txt:
 {{{
