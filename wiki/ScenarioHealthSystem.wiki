@@ -77,7 +77,7 @@ Example XML element:
 
 First, the drugs used for `firstLine`, `secondLine` and `inpatient` treatment are defined in the `drugRegimen` element. Drug codes may be one of `CQ`, `SP`, `AQ`, `SPAQ`, `ACT`, `QN`, or `selfTreatment`.
 
-Then, `compliance` (adherence rate), `initialACR` (initial cure-rate for compliers) and `nonCompliersEffective` (effective cure-rate for non-compliers) are specified per drug (must be described for self-treatment but optional for other drugs; values default to 0).
+Then, `compliance` (adherence rate), `initialACR` (initial cure-rate for compliers) and `nonCompliersEffective` (effective cure-rate for non-compliers) are specified per drug (must be described for self-treatment but optional for other drugs; values default to 0). Setting 'compliance' does not affect 'inpatient' treatment.
 
 Additionally, the following (fairly self-explanetory) elements must be described: `pSeekOfficialCareUncomplicated1`, `pSelfTreatUncomplicated`, `pSeekOfficialCareUncomplicated2`, `pSeekOfficialCareSevere`, and `pSequelaeInpatient`.
 
