@@ -15,7 +15,7 @@ The beta 6 release uses schema version 28 and has been packaged with an installe
   * Make sure a [http://www.java.com/en/download/ Java run-time environment] is installed.
   * Install [http://www.python.org/download/ Python] (version 2.6 or 2.7; the 3.x series won't work) and [http://www.pygtk.org/downloads.html PyGTK]. (The older installer should do this for you, but the latest archive won't.)
   * Download and install one of the following:
-      * (Windows installer) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.06/win32/openMalariaTools_installer_v00.06.exe openMalariaTools_installer_v00.06.exe]
+      * (Windows installer) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.08/win32/openMalariaTools_installer_v00.08.exe openMalariaTools_installer_v00.08.exe]
       * (linux 64-bit .deb) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.06/gnu64/openmalariaTools_00.06_i386.deb openmalariaTools_00.06_i386.deb]
       * (linux 32-bit .deb) [http://openmalaria.googlecode.com/svn/download/openmalariaTools/openmalariaTools-V00.06/gnu32/openmalariaTools_00.06_i386.deb openmalariaTools_00.06_i386.deb]
 
