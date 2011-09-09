@@ -436,8 +436,8 @@ class ExperimentCreatorDialog(gtk.Dialog):
             if not os.path.exists(experiment_folder):
                 os.mkdir(experiment_folder)
             
-            input_folder = os.path.join(experiment_folder, 'input')
-            output_folder = os.path.join(experiment_folder, 'output')
+            input_folder = os.path.join(experiment_folder, 'description')
+            output_folder = os.path.join(experiment_folder, 'scenarios')
             os.mkdir(input_folder)
             os.mkdir(output_folder)
             
@@ -495,7 +495,7 @@ class ExperimentCreatorDialog(gtk.Dialog):
                 self.status_label.set_text("The experiment's files are now generated... Please wait...")
                 time.sleep(.2)
                 experimentCreator = ExperimentCreatorRun()
-                experimentCreator.start_experimentCreator(input_folder, output_folder, self.mainFileList, experiment_name_nodate, self.get_seeds_nbr(), self.validate_checkbox.get_active())
+                experimentCreator.start_experimentCreator(experiment_folder, self.mainFileList, experiment_name_nodate, self.get_seeds_nbr(), self.validate_checkbox.get_active())
         
         
             self.status_label.set_text('')    

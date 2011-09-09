@@ -55,7 +55,7 @@ class ExperimentCreatorRun():
     '''
     start_experimentCreator:
     Starts the java program'''
-    def start_experimentCreator(self, input_folder, output_folder, mainFileList, name, seeds_nr=0,validation=True ,db_login = None, db_passwd = None, db_address = None):
+    def start_experimentCreator(self, experiment_folder, mainFileList, name, seeds_nr=0,validation=True ,db_login = None, db_passwd = None, db_address = None):
         
         arglist = list()
         arglist.append('java')
@@ -79,16 +79,16 @@ class ExperimentCreatorRun():
             arglist.append(db_login)
             arglist.append('--dbpasswdb')
             
-            
-        arglist.append(input_folder)
-        arglist.append(output_folder)
-        
-        
+        arglist.append('--stddirs')
+        arglist.append(experiment_folder)
+                
         sub = subprocess.Popen (arglist)
         self.pid = sub.pid
         
         while(sub.poll()==None):
             time.sleep(.1)
+            
+        output_folder = os.path.join(experiment_folder, 'scenarios')
         
         if os.path.exists(output_folder) and os.path.isdir(output_folder):
             files = os.listdir(output_folder)
