@@ -228,6 +228,9 @@ class SchemaTranslatorRun():
         arglist.append('--output_folder')
         arglist.append(temp_output_folder_path)
         
+        for arg in arglist:
+            print arg
+        
         sub = subprocess.Popen (arglist, stderr=subprocess.PIPE)
         
         while(sub.poll()==None):
