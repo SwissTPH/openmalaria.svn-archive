@@ -16,6 +16,7 @@ Yet to be released. Planned changes:
   * NC has extended the vector model with simulation of the egg, larval and pupal life-stages.
   * A larviciding using the vector life-cycle model will be included.
   * *Vector-model inputs will be changed:* transmission input will be in the form of a seasonality profile and IBPAPA (infectious bites per adult per annum), where the seasonality profile can be that of transmission (as before) or that of vector densities. Fitting of internal parameters to reproduce this seasonality _should_ be better than before (in progress).
+  * SchemaTranslator is now compiled by cmake (output is _build_/util/SchemaTranslator/SchemaTranslator.jar)
 
 
 == Schema Version 29 ==
