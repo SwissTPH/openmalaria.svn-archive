@@ -3,6 +3,7 @@
 = OpenMalaria releases =
 
 Below is a list of the most significant changes in each release, together with the date and revision number of initial release. Releases are available as tags in the subversion repository: [http://code.google.com/p/openmalaria/source/browse/#svn%2Ftags http://openmalaria.googlecode.com/svn/tags]
+
 == Schema Version 30 ==
 
 Yet to be released. Planned changes:
@@ -17,6 +18,7 @@ Yet to be released. Planned changes:
   * A larviciding using the vector life-cycle model will be included.
   * *Vector-model inputs will be changed:* transmission input will be in the form of a seasonality profile and IBPAPA (infectious bites per adult per annum), where the seasonality profile can be that of transmission (as before) or that of vector densities. Fitting of internal parameters to reproduce this seasonality _should_ be better than before (in progress).
   * SchemaTranslator is now compiled by cmake (output is _build_/util/SchemaTranslator/SchemaTranslator.jar)
+  * Seasonality parameterisation of per-vector transmission is now input differently to allow other data sources to be used as seasonality inputs in the future.
 
 
 == Schema Version 29 ==
