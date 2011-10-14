@@ -92,7 +92,9 @@ With static transmission the seasonality pattern during the intervention phase o
 
 == Seasonality in the dynamic transmission mode (mode="4") ==
 
-If the simulation is run using the dynamic transmission mode (mode="4") then the simulated EIR is not constrained to be exactly the same as the input EIR after the warm-up period.  It often fluctuates to a greater or lesser extent.  Particularly when close to the limit of sustainable transmission (e.g. with high case-management coverage) the simulated EIR will usually be somewhat below the level input. 
+If the simulation is run using the dynamic transmission mode (mode="4") then the simulated EIR is not constrained to repeat the same seasonal pattern as the input EIR after the warm-up period.  
+
+The simulated EIR will vary because of the effects of interventions.  In addition, there may be stochastic variations or fluctuations even in the absence of interventions.  This is particularly the case with small simulated populations or when the simulation is close to the limit of sustainable transmission (e.g. with high case-management coverage) the simulated EIR will usually be somewhat below the level input. 
 
 During the warm-up period, the entomological parameters are adjusted to try to ensure that the output EIR corresponds as closely as possible to that input.  An exact match, consistent with the emergence rate (N_v0) being positive, is in general impossible. The seasonality of the simulated EIR (which is close to that of S_v plus the delay due to the lag) may differ from the seasonality of the input EIR substantially
 
