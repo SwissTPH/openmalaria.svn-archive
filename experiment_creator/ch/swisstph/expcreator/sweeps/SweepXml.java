@@ -54,9 +54,9 @@ public class SweepXml extends Sweep {
         for (int i = 0; i < armXmls.length; ++i) {
             File file = armXmls[i];
             if (file.getName().equals("base.xml")
-                    || file.getName().equals("comparatorBase.xml")) {
+                    || file.getName().endsWith("comparatorBase.xml")) {
                 // Sweep has its own base to compare against.
-                if (file.getName().equals("comparatorBase.xml")) {
+                if (file.getName().endsWith("comparatorBase.xml")) {
                     cmpArm = i;
                 }
                 Document baseDoc = CombineSweeps.getBuilder().parse(file);
@@ -107,7 +107,7 @@ public class SweepXml extends Sweep {
                 refArm = cmpArm = i;
                 System.out.print("\t[reference and comparator]");
             } else if (armName.equals("reference") || armName.equals("base")
-                    || armName.equals("comparatorBase")) {
+                    || armName.endsWith("comparatorBase")) {
                 if (refArm != -1) {
                     System.out
                             .println("Sweep "
