@@ -132,10 +132,13 @@ class OpenMalariaRun():
         # directory. We copy it anyway.
         scenario_xsd=os.path.join(simDir,'scenario_'+PathsAndSchema.get_actual_schema()+'.xsd')
         densities_csv=os.path.join(simDir, 'densities.csv')
+        autoRegressionParam_csv=os.path.join(simDir, 'autoRegressionParameters.csv')
         if not os.path.exists(scenario_xsd):
             shutil.copy2(os.path.join(PathsAndSchema.get_common_folder() ,'scenario_'+PathsAndSchema.get_actual_schema()+'.xsd'), scenario_xsd)
         if not os.path.exists(densities_csv):
             shutil.copy2(os.path.join(PathsAndSchema.get_common_folder(), 'densities.csv'), densities_csv)
+        if not os.path.exists(autoRegressionParam_csv):
+            shutil.copy2(os.path.join(PathsAndSchema.get_common_folder(), 'autoRegressionParameters.csv'), autoRegressionParam_csv)
         
         terminal.feed_command(time.strftime("%a, %d %b %Y %H:%M:%S")+"   %s.xml" % name, terminal.GOLD)
             

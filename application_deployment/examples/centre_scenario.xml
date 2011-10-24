@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- "encoding" text encoding, use "UTF-8" -->
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="0" name="centre_scenario.xml,annualEIR:annualEIR16,attritionOfNetsHL:attritionOfNetsHL4,holeRatemean:holeRatemean180,holeRatesigma:holeRatesigma080,holeScalingFactor:holeScalingFactor010,insecticideDecayL:insecticideDecayL15,insecticideDecaymusigma:insecticideDecaymusigma080,insecticideScalingFactor:insecticideScalingFactor010,MassDelivery:ITNReceiptProp70,models:base,ripFactor:ripFactor03,seed:1" schemaVersion="29" wuID="0" xsi:noNamespaceSchemaLocation="scenario_29.xsd">
+  <!-- "xmlns:xsi" specifies the Schema encoding standard, use "http://www.w3.org/2001/XMLSchema-instance" -->
+  <!-- "name" user-friendly name for the scenario -->
+  <!-- "schemaVersion" Version of XSD schema to use -->
+  <!-- "wuID" BOINC workunit number (automatically set when needed) -->
+  <demography maximumAgeYrs="90" name="Ifakara" popSize="1000">
+    <!-- Note that with increasing popSize, the proportion of individuals in the first age group (upperbound="1") decreases exponentially to the specified value -->
+    <!-- E.g. at popSize="100", it is 5.71, at popSize="1000", it is 4.53 and at popSize="5000", it is 4.11  -->
+    <!-- This might be due to rounding up to integers when calculating the amount of people to be outmigrated, and thus replaced -->
+    <!-- Thus, the larger the popSize, the more accurately the agestructure as specified below is simulated   -->
+    <ageGroup lowerbound="0">
+      <group poppercent="3.474714994" upperbound="1"/>
+      <group poppercent="12.76004028" upperbound="5"/>
+      <group poppercent="14.52151394" upperbound="10"/>
+      <group poppercent="12.75565434" upperbound="15"/>
+      <group poppercent="10.8363237399" upperbound="20"/>
+      <group poppercent="8.393312454" upperbound="25"/>
+      <group poppercent="7.001421452" upperbound="30"/>
+      <group poppercent="5.800587654" upperbound="35"/>
+      <group poppercent="5.102136612" upperbound="40"/>
+      <group poppercent="4.182561874" upperbound="45"/>
+      <group poppercent="3.339409351" upperbound="50"/>
+      <group poppercent="2.986112356" upperbound="55"/>
+      <group poppercent="2.555766582" upperbound="60"/>
+      <group poppercent="2.332763433" upperbound="65"/>
+      <group poppercent="1.77400255" upperbound="70"/>
+      <group poppercent="1.008525491" upperbound="75"/>
+      <group poppercent="0.74167341" upperbound="80"/>
+      <group poppercent="0.271863401" upperbound="85"/>
+      <group poppercent="0.161614642" upperbound="90"/>
+      <!-- The poppercent of upperbound="1" (the proportion of the first age group, up to 1 year old) here equals the proportion of  the population outmigrated in one year, rendering the structure stable. Note that the number of births is much higher, due to excess outmigration / mortality in the first months of life -->
+    </ageGroup>
+  </demography>
+  <monitoring cohortOnly="false" name="Surveys">
+    <!-- if cohortOnly="true" (default="false"), for those measures applicable (see WIKI), only the values for those in the cohort are given. The cohort must be specified in the "Interventions section" -->
+    <continuous period="1">
+      <!-- length of period between continuous monitoring surveys (unit: time steps) -->
+      <option name="N_v0" value="false"/>      <!-- Output is species specific  -->
+      <option name="N_v" value="true"/>      <!-- Output is species specific  -->
+      <option name="O_v" value="false"/>      <!-- Output is species specific  -->
+      <option name="S_v" value="true"/>      <!-- Output is species specific  -->
+      <option name="input EIR" value="false"/>
+      <option name="simulated EIR" value="true"/>
+      <option name="hosts" value="false"/>
+      <option name="host demography" value="false"/>
+      <option name="recent births" value="false"/>
+      <!-- Note that births are very high. Mortality is very high during the first few months -->
+      <option name="patent hosts" value="true"/>
+      <option name="human infectiousness" value="true"/>
+      <option name="human age availability" value="false"/>
+      <option name="immunity h" value="true"/>
+      <option name="immunity Y" value="true"/>
+      <option name="median immunity Y" value="true"/>
+      <option name="new infections" value="true"/>
+      <option name="num transmitting humans" value="true"/>
+      <option name="nets owned" value="true"/>
+      <option name="mean hole index" value="true"/>
+       <option name="mean insecticide content" value="true"/>
+       <!-- Note that continuous surveys give values for the entire population, and not just the cohort, even if specified -->
+    </continuous>
+    <SurveyOptions>
+      <option name="nHost" value="true"/>
+      <option name="nInfect" value="false"/>
+      <option name="nExpectd" value="false"/>
+      <option name="nPatent" value="true"/>
+      <option name="sumLogPyrogenThres" value="false"/>
+      <option name="sumlogDens" value="false"/>
+      <option name="totalInfs" value="false"/>
+      <option name="nTransmit" value="false"/>
+      <option name="totalPatentInf" value="false"/>
+      <option name="sumPyrogenThresh" value="false"/>
+      <option name="nTreatments1" value="false"/>
+      <option name="nTreatments2" value="false"/>
+      <option name="nTreatments3" value="false"/>
+      <option name="nUncomp" value="true"/>
+      <option name="nSevere" value="true"/>
+      <option name="nSeq" value="false"/>
+      <option name="nHospitalDeaths" value="false"/>
+      <option name="nIndDeaths" value="true"/>
+      <option name="nDirDeaths" value="true"/>
+      <option name="nEPIVaccinations" value="false"/>
+      <option name="allCauseIMR" value="false"/>
+      <option name="nMassVaccinations" value="false"/>
+      <option name="nHospitalRecovs" value="false"/>
+      <option name="nHospitalSeqs" value="false"/>
+      <option name="nIPTDoses" value="false"/>
+      <option name="annAvgK" value="false"/>
+      <option name="nNMFever" value="false"/>
+      <option name="innoculationsPerAgeGroup" value="true"/>
+      <option name="Vector_Nv0" value="false"/>      <!-- Monitored continously  -->
+      <option name="Vector_Nv" value="false"/>      <!-- Monitored continously  -->
+      <option name="Vector_Ov" value="false"/>      <!-- Monitored continously  -->
+      <option name="Vector_Sv" value="false"/>      <!-- Monitored continously  -->
+      <option name="Vector_EIR_Input" value="false"/>
+      <!-- Monitored continously. For Schema 30 replace with "inputEIR"  -->
+      <option name="Vector_EIR_Simulated" value="true"/>
+      <!-- Monitored continously. For Schema 30 replace with "simulatedEIR" -->
+      <option name="Clinical_RDTs" value="false"/>
+      <option name="Clinical_DrugUsage" value="false"/>
+      <option name="Clinical_FirstDayDeaths" value="false"/>
+      <option name="Clinical_HospitalFirstDayDeaths" value="false"/>
+      <option name="nNewInfections" value="false"/>
+      <option name="nMassITNs" value="true"/>
+      <!-- These are all ITNs distributed through timed deployment -->
+      <option name="nEPI_ITNs" value="true"/>
+      <!-- These are all ITNs distributed through continuous deployment -->
+      <option name="nMassIRS" value="false"/>
+      <option name="nMassVA" value="false"/>
+      <option name="Clinical_Microscopy" value="false"/>
+      <option name="Clinical_DrugUsageIV" value="false"/>
+      <option name="nAddedToCohort" value="true"/>
+      <option name="nRemovedFromCohort" value="true"/>
+      <option name="nMDAs" value="false"/>
+      <option name="nNmfDeaths" value="false"/>
+      <option name="nAntibioticTreatments" value="false"/>
+    </SurveyOptions>
+    <surveys detectionLimit="40">
+      <!-- detectionLimit describes the minimum parasite density (parasites per micro liter) at which a human is counted as having a patent infection -->
+      <!-- Surveys only report events which happened from the beginning of the time-step of the last survey  until the end of the time-step before the current survey time-step, and measures of the current state  (such as the number of patent hosts) from the beginning of the survey time-step. -->
+      <!-- The first valid time-point for a survey is time-step 0; however, any events happening before time-step 0 are not reported, so measures of events (such as infectious bites received) will be zero -->
+      <!-- Time step 0 will always correspond to the first of January (up to 5th Jan with a 5-day time step) -->
+      <!-- Years are always modeled as 365 days long. With daily time steps, the first year (year 0) corresponds to 0-364, and all events happened during that year are counted with a survey at time=365. A survey at time=0 can be scheduled too. -->
+      <!-- Quarterly surveys are approximately even (365/4=91.25) at survey times 91, 183, 274 and 365 -->
+      <!-- For 5 day time steps: A year is 365/5=73 periods long, and the first year (year 0) corresponds to 0-72, all events happened during that year are counted with a survey at time=73 -->
+      <!-- Quarterly surveys are approximately even (73/4=18.25) at survey times 18, 37, 55 and 73 -->
+      <!-- If cohortOnly="true", and the cohort is set at time=0, some quantities like "noHost" (outputs 0 to 6, and possibly others) will be 0 for a survey at time=0, and only be visible in a survey at time=1  -->
+      <!-- Similarly, if an intervention is done at time=0 (e.g. ITNs are distributed), these will only be counted in the survey at time=1 (thus the next time step). Since it is not possible to start a cohort or intervention at time=-1, it might be desirable to include a survey at time=1 -->
+      <!-- When this is done, it should be noted that events that happen (though rare) from the beginning of time step 0 to the end of time step 0 are counted in the survey at time=1 and NOT in the next survey -->
+      <surveyTime>73</surveyTime>        <!-- after 1 full year  -->
+      <surveyTime>146</surveyTime>      <!-- after 2 full years  -->
+      <surveyTime>219</surveyTime>      <!-- after 3 full years  -->
+      <surveyTime>292</surveyTime>      <!-- after 4 full years  -->
+      <surveyTime>365</surveyTime>      <!-- after 5 full years, ITNs are distributed at time step 364, thus should be visible but no impact on this figure  -->
+      <surveyTime>438</surveyTime>      <!-- after 6 full years, 1 full year of implementation  -->
+      <surveyTime>511</surveyTime>      <!-- 7,2 -->
+      <surveyTime>584</surveyTime>      <!-- 8,3 -->
+      <surveyTime>657</surveyTime>      <!-- 9,4 -->
+      <surveyTime>730</surveyTime>      <!-- 10,5 -->
+      <surveyTime>803</surveyTime>      <!-- 11,6 -->
+      <surveyTime>876</surveyTime>      <!-- 12,7 -->
+      <surveyTime>949</surveyTime>      <!-- 13,8 -->
+      <surveyTime>1022</surveyTime>      <!-- 14,9 -->
+      <surveyTime>1095</surveyTime>      <!-- 15,10 -->
+      <surveyTime>1168</surveyTime>      <!-- 16,11 -->
+      <surveyTime>1241</surveyTime>      <!-- 17,12 -->
+      <surveyTime>1314</surveyTime>      <!-- 18,13 -->
+      <surveyTime>1387</surveyTime>      <!-- 19,14 -->
+      <surveyTime>1460</surveyTime>      <!-- 20,15 -->
+      <surveyTime>1533</surveyTime>      <!-- 21,16 -->
+      <surveyTime>1606</surveyTime>      <!-- 22,17 -->
+      <surveyTime>1679</surveyTime>      <!-- 23,18 -->
+      <surveyTime>1752</surveyTime>      <!-- 24,19 -->
+      <surveyTime>1825</surveyTime>      <!-- 25,20 -->
+      <surveyTime>1898</surveyTime>      <!-- 26,21 -->
+      <surveyTime>1971</surveyTime>      <!-- 27,22 -->
+      <surveyTime>2044</surveyTime>      <!-- 28,23 -->
+      <surveyTime>2117</surveyTime>      <!-- 29,24 -->
+      <surveyTime>2190</surveyTime>      <!-- 30,25 -->
+      <!-- the simulation will run as long as the last surveyTime specified, and stop thereafter -->
+      <!-- In the output, survey 1 corresponds to the first survey done (even at time 0) -->
+    </surveys>
+    <ageGroup lowerbound="0">
+      <group upperbound="0.1"/>
+      <group upperbound="0.2"/>
+      <group upperbound="0.3"/>
+      <group upperbound="0.4"/>
+      <group upperbound="0.5"/>
+      <group upperbound="0.6"/>
+      <group upperbound="0.7"/>
+      <group upperbound="0.8"/>
+      <group upperbound="0.9"/>
+      <group upperbound="1"/>
+      <group upperbound="2"/>
+      <group upperbound="3"/>
+      <group upperbound="4"/>
+      <group upperbound="5"/>
+      <group upperbound="6"/>
+      <group upperbound="7"/>
+      <group upperbound="8"/>
+      <group upperbound="9"/>
+      <group upperbound="10"/>
+      <group upperbound="15"/>
+      <group upperbound="20"/>
+      <group upperbound="25"/>
+      <group upperbound="30"/>
+      <group upperbound="35"/>
+      <group upperbound="40"/>
+      <group upperbound="45"/>
+      <group upperbound="50"/>
+      <group upperbound="55"/>
+      <group upperbound="60"/>
+      <group upperbound="65"/>
+      <group upperbound="70"/>
+      <group upperbound="75"/>
+      <group upperbound="80"/>
+      <group upperbound="85"/>
+      <group upperbound="90"/>
+      <!-- note that no individuals with age=maximumAgeYrs (e.g.90) or above exist because of the demography specification. -->
+      <!-- In the output, agegroup 1 corresponds to the first age group (as specified by it's upperbound) -->
+    </ageGroup>
+  </monitoring>
+  <interventions name="Full Set">
+    <!-- Note that with any intervention providing a coverage, the proportion of the population covered decreases over time due to outmigration and population renewal. The annual rate of decline is thus equal to the proportion of the 0-1 year age group. -->
+    <!-- E.g., N[t]=N[t=0]*exp(-0.0347*t) with t in years -->
+    <!-- New population is only covered if the intervention is applied as "continuous" -->
+    <ITN name="Extended ITNs">
+      <!-- The ITN physical state (measured through a hole index) and chemical state (measured through insecticide concentration) decay with time. -->
+      <!-- The hole index through formation of holes, the insecticide concentration through wear and ageing -->
+      <!-- The effects of the net, depending on its state, are calculated using functions describing the relationship between effect and state.  -->
+      <description>
+        <usage value="0.75"/>
+        <!-- "value" Type: proportion; Unit: none; Min: 0; Max:1; Explanation: Usage represents the proportion of time during the night that a net is used by the person. Because in the current model all mosquito species bite homogenously throughout the night, usage value can also be seen as the proportion of encounters with mosquitoes that happen while under an ITN. In the current model, nets are assigned to individuals. For future implementation, it is best to make "usage" an attribute of the person rather than of the net (if there is a choice). In future implementation, it should be possible to vary the value seasonally according to an input table (data values may need to be interpolated), and be age group specific. -->
+        <holeRate mean="1.80" sigma="0.80"/>
+        <!-- "mean" Type: real; Unit: number per annum; Min: 0; Max: +Inf; 
+Explanation: Each new net is assigned a fixed rate of hole formation. Holes are formed according to a Poisson process with this rate as (only) parameter.  -->
+        <!-- "sigma" Type: real; Unit: none; Min: 0; Max: +Inf;
+Explanation: The value of the rate of hole formation is varied among nets by multiplying with a distribution factor which is log normally distributed. For the distribution factor, a sample is taken from a normal distribution with mean=0 and var=1. The sample is multiplied by sigma and summed with mu=-0.5sigma^2, prior to exponentiation. Note that with mu=-0.5sigma^2, then the mean of the lognormal distribution =1 -->
+        <ripRate mean="1.80" sigma="0.80"/>
+        <!-- "mean" Type: real; Unit: none; Min: 0; Max: +Inf; 
+Explanation: Each existing hole has a probability of being ripped bigger according to a Poisson process with this rate as (only) parameter. -->
+        <!-- "sigma" Type: real; Unit: none; Min: 0; Max: +Inf;
+Explanation: See first under holeRate "sigma". The normal sample is the same as for holeRate distribution factor, sigma of the lognormal can be varied. -->
+        <ripFactor value="0.3"/>
+        <!-- "value" Type: real; Unit: none; Min: 0; Max: +Inf;
+Explanation: This factor expresses how important rips are in increasing the hole. The hole index of a net is the count of holes plus the "ripFactor" multiplied with the cumulative number of rips. -->
+        <initialInsecticide mu="68.4" sigma="14"/>
+        <!-- The insecticide concentration of new nets is Gaussian distributed. Negative sampled values are set to 0. 
+The insecticideScalingFactor under anophelesParams should be adjusted depending on the size of mu The deltamethrin declared content is 1.8 g/kg corresponding to 68.4 mg/msq for long-lasting (incorporated into filaments) insecticidal nets according to WHO interim specification 333/LN/3 (August 2010*) -->
+        <insecticideDecay L="1.5" function="exponential" mu="-0.32" sigma="0.8"/>
+        <!-- L = rate, k=shape, function (exponential is suggested), and mu and sigma are parameters of the distribution factor for the rate (same sample as for holeRate distribution factor) -->
+        <attritionOfNets L="20.7725" function="smooth-compact" k="18"/>
+        <!-- attritionOfNets describes how nets disappear from the population ON TOP OF disappearance due to outmigration and population renewal (see comment directly under "interventions"). Currently, this is independent of net state, and the time till disappearence is predefined according to the decay function when a nets is first implemented -->
+        <anophelesParams mosquito="gambiae_ss">
+          <deterrency holeFactor="0.5" holeScalingFactor="0.10" insecticideFactor="0.67" insecticideScalingFactor="0.05" interactionFactor="1.492537"/>
+          <!-- RelativeAttractiveness=exp(log(holeFactor)*exp(-HoleIndex*holeScalingFactor)
+  +log(insecticideFactor)*(1-exp(-InsecticideConcentration* insecticideScalingFactor))
+  +log(interactionFactor)*exp(-HoleIndex*holeScalingFactor)*(1-exp(-InsecticideConcentration*insecticideScalingFactor))) 
+          NOTE: The exponential function prevents the RelativeAttractiveness from becoming negative. 
+  The interactionFactor can be calculated from data: observed RelativeAttractiveness value for intact treated divided by the product of the observed RelativeAttractiveness values for intact untreated (holeFactor) and holed treated (insecticideFactor). 
+  If the holeFactor=1 insecticideFactor=1 and interactionFactor=1, the RelativeAttractiveness=1 and there is 0 effect of the net -->
+          <preprandialKillingEffect baseFactor="0.09" holeFactor="0.57" holeScalingFactor="0.10" insecticideFactor="0.604" insecticideScalingFactor="0.05" interactionFactor="-0.424"/>
+          <!-- Relative pre-prandial survival=(1-(baseFactor+insecticideFactor*(1-exp(-InsecticideConcentration*insecticideScalingFactor))
+  +holeFactor*exp(-HoleIndex*holeScalingFactor)
+  +interactionFactor*exp(-HoleIndex*holeScalingFactor)*(1-exp(-InsecticideConcentration*insecticideScalingFactor))))/(1-baseFactor)
+  Note: The factors can be calculated from data as follows: baseFactor = proportion killed by a badly holed untreated net; 
+  holeFactor = proportion killed by an intact untreated net - baseFactor, 
+  insecticideFactor = proportion killed by a badly holed treated net - baseFactor; 
+  interactionFactor = proportion killed by an intact treated net - baseFactor - holeFactor- insecticideFactor.
+  If the holeFactor=0 insecticideFactor=0 and interactionFactor=0, the relative pre-prandial survival=1 and there is 0 effect of the net -->
+          <postprandialKillingEffect baseFactor="0.10" holeFactor="0" holeScalingFactor="0.10" insecticideFactor="0.55" insecticideScalingFactor="0.10" interactionFactor="0"/>
+          <!-- The relative post-prandial survival is calculated similarly to the pre-prandial survival -->
+        </anophelesParams>
+        <anophelesParams mosquito="funestus">
+          <deterrency holeFactor="0.5" holeScalingFactor="0.10" insecticideFactor="0.67" insecticideScalingFactor="0.05" interactionFactor="1.492537"/>
+          <preprandialKillingEffect baseFactor="0.09" holeFactor="0.57" holeScalingFactor="0.10" insecticideFactor="0.604" insecticideScalingFactor="0.10" interactionFactor="-0.424"/>
+          <postprandialKillingEffect baseFactor="0.10" holeFactor="0" holeScalingFactor="0.10" insecticideFactor="0.55" insecticideScalingFactor="0.10" interactionFactor="0"/>
+        </anophelesParams>
+        <anophelesParams mosquito="arabiensis">
+          <deterrency holeFactor="0.5" holeScalingFactor="0.10" insecticideFactor="0.67" insecticideScalingFactor="0.10" interactionFactor="1.492537"/>
+          <preprandialKillingEffect baseFactor="0.09" holeFactor="0.57" holeScalingFactor="0.10" insecticideFactor="0.604" insecticideScalingFactor="0.10" interactionFactor="-0.424"/>
+          <postprandialKillingEffect baseFactor="0.10" holeFactor="0" holeScalingFactor="0.10" insecticideFactor="0.55" insecticideScalingFactor="0.10" interactionFactor="0"/>
+        </anophelesParams>
+      </description>
+      <!-- Note that at a very young age (under 1 year), the current models may force unrealistically high outmigration (see also comment in demographics section). -->
+      <!-- If the amount if net allocated is relevant (e.g. for costing), this has to be taken into consideration, especially when nets are distributed continuously at a very young age. -->
+      <!-- Time="364"= the last time step of year 4 (counting year 0 as the first year, this is thus after nearly 5 years) The nets will be recorded in a survey at time=365. Agebounds are met if minAge smaller or equal to age smaller to maxAge. -->
+       <timed coverage="0.785258112" maxAge="5" minAge="0" time="364"/>
+	  <timed coverage="0.672276915" maxAge="10" minAge="5" time="364"/>
+	  <timed coverage="0.587980813" maxAge="15" minAge="10" time="364"/>
+	  <timed coverage="0.584494394" maxAge="20" minAge="15" time="364"/>
+	  <timed coverage="0.696434743" maxAge="25" minAge="20" time="364"/>
+	  <timed coverage="0.774183149" maxAge="45" minAge="25" time="364"/>
+	  <timed coverage="0.734880687" maxAge="60" minAge="45" time="364"/>
+	  <timed coverage="0.665160649" maxAge="90" minAge="60" time="364"/>
+    </ITN>
+    <importedInfections>
+      <timed>
+        <rate time="0" value="10"/>
+        <!-- As of schema 28, for importedInfections, one entry of timed gets recycled indefinitely, or until the next entry of timed -->
+        <!-- "time" indicates the timestep for which the rate indicated by value is first valid -->
+        <!-- "value" is expressed in number of importedInfections per thousand per year -->
+      </timed>
+    </importedInfections>
+  </interventions>
+  <healthSystem>
+    <ImmediateOutcomes name="Tanzania ACT">
+      <drugRegimen firstLine="ACT" inpatient="QN" secondLine="ACT"/>
+      <initialACR>
+        <ACT value="0.85"/>
+        <QN value="0.998"/>
+        <!-- Value 0.998 used in Tediosi et al., 2006 -->
+        <selfTreatment value="0.63"/>
+        <!-- Value 0.63 used in Tediosi et al., 2006 -->
+      </initialACR>
+      <compliance>
+        <ACT value="0.9"/>
+        <!-- Value 0.9 for SP used in Tediosi et al., 2006 -->
+        <selfTreatment value="0.85"/>
+        <!-- Value 0.85 for SP used in Tediosi et al., 2006 -->
+      </compliance>
+      <nonCompliersEffective>
+        <ACT value="0"/>
+        <selfTreatment value="0"/>
+      </nonCompliersEffective>
+      <pSeekOfficialCareUncomplicated1 value="0.04"/>
+      <!-- 1: at first instance, Value 0.04 used in Tediosi et al., 2006 for reference scenario -->
+      <pSelfTreatUncomplicated value="0.01"/>
+      <!-- Value 0.01 used in Tediosi et al., 2006 for reference scenario -->
+      <pSeekOfficialCareUncomplicated2 value="0.04"/>
+      <!-- 2: in case of treatmentfailure, Value 0.04 used in Tediosi et al., 2006 for reference scenario -->
+      <pSeekOfficialCareSevere value="0.48"/>
+      <!-- Value 0.48 used in Tediosi et al., 2006 for reference scenario -->
+    </ImmediateOutcomes>
+    <CFR>
+      <group lowerbound="0" value="0.09189"/>
+      <group lowerbound="0.25" value="0.0810811"/>
+      <group lowerbound="0.75" value="0.0648649"/>
+      <group lowerbound="1.5" value="0.0689189"/>
+      <group lowerbound="2.5" value="0.0675676"/>
+      <group lowerbound="3.5" value="0.0297297"/>
+      <group lowerbound="4.5" value="0.0459459"/>
+      <group lowerbound="7.5" value="0.0945946"/>
+      <group lowerbound="12.5" value="0.1243243"/>
+      <group lowerbound="15" value="0.1378378"/>
+    </CFR>
+    <pSequelaeInpatient interpolation="none">
+      <group lowerbound="0.0" value="0.0132"/>
+      <group lowerbound="5.0" value="0.005"/>
+    </pSequelaeInpatient>
+  </healthSystem>
+  <entomology annualEIR="16" mode="4" name="Namawala">
+    <vector>
+      <anopheles mosquito="gambiae_ss" propInfected="0.078" propInfectious="0.021">
+        <EIR EIRRotateAngle="0" a0="-5.940360516" a1="0.8968" a2="-0.4551" b1="2.678" b2="2.599"/>
+        <!-- a0 -5.835 orig -->
+        <mosq extrinsicIncubationPeriod="11" minInfectedThreshold="0.001" mosqHumanBloodIndex="0.939" mosqLaidEggsSameDayProportion="0.313" mosqProbBiting="0.95" mosqProbFindRestSite="0.95" mosqProbOvipositing="0.88" mosqProbResting="0.99" mosqRestDuration="3" mosqSeekingDuration="0.33" mosqSurvivalFeedingCycleProbability="0.623"/>
+        <nonHumanHosts mosqProbBiting="0.95" mosqProbFindRestSite="0.95" mosqProbResting="0.99" mosqRelativeEntoAvailability="1.0" name="unprotectedAnimals"/>
+      </anopheles>
+      <anopheles mosquito="funestus" propInfected="0.078" propInfectious="0.021">
+        <EIR EIRRotateAngle="0" a0="-4.957360516" a1="-4.546" a2="-0.2198" b1="2.252" b2="-0.00743"/>
+        <!-- a0 -4.852 orig -->
+        <mosq extrinsicIncubationPeriod="11" minInfectedThreshold="0.001" mosqHumanBloodIndex="0.98" mosqLaidEggsSameDayProportion="0.616" mosqProbBiting="0.95" mosqProbFindRestSite="0.95" mosqProbOvipositing="0.88" mosqProbResting="0.99" mosqRestDuration="3" mosqSeekingDuration="0.33" mosqSurvivalFeedingCycleProbability="0.611"/>
+        <nonHumanHosts mosqProbBiting="0.95" mosqProbFindRestSite="0.95" mosqProbResting="0.99" mosqRelativeEntoAvailability="1.0" name="unprotectedAnimals"/>
+      </anopheles>
+      <anopheles mosquito="arabiensis" propInfected="0.078" propInfectious="0.021">
+        <EIR EIRRotateAngle="0" a0="-3.743360516" a1="0.8968" a2="-0.4551" b1="2.678" b2="2.599"/>
+        <!-- a0 -3.638 orig -->
+        <mosq extrinsicIncubationPeriod="11" minInfectedThreshold="0.001" mosqHumanBloodIndex="0.871" mosqLaidEggsSameDayProportion="0.313" mosqProbBiting="0.95" mosqProbFindRestSite="0.95" mosqProbOvipositing="0.88" mosqProbResting="0.99" mosqRestDuration="3" mosqSeekingDuration="0.33" mosqSurvivalFeedingCycleProbability="0.623"/>
+        <nonHumanHosts mosqProbBiting="0.95" mosqProbFindRestSite="0.95" mosqProbResting="0.99" mosqRelativeEntoAvailability="1.0" name="unprotectedAnimals"/>
+      </anopheles>
+      <nonHumanHosts name="unprotectedAnimals" number="1.0"/>
+    </vector>
+  </entomology>
+  <model>
+    <ModelOptions/>
+    <clinical healthSystemMemory="6"/>
+    <human>
+      <availabilityToMosquitoes>
+        <group lowerbound="0.0" value="0.225940909648"/>
+        <group lowerbound="1.0" value="0.286173633441"/>
+        <group lowerbound="2.0" value="0.336898395722"/>
+        <group lowerbound="3.0" value="0.370989854675"/>
+        <group lowerbound="4.0" value="0.403114915112"/>
+        <group lowerbound="5.0" value="0.442585112522"/>
+        <group lowerbound="6.0" value="0.473839351511"/>
+        <group lowerbound="7.0" value="0.512630464378"/>
+        <group lowerbound="8.0" value="0.54487872702"/>
+        <group lowerbound="9.0" value="0.581527755812"/>
+        <group lowerbound="10.0" value="0.630257580698"/>
+        <group lowerbound="11.0" value="0.663063362714"/>
+        <group lowerbound="12.0" value="0.702417432755"/>
+        <group lowerbound="13.0" value="0.734605377277"/>
+        <group lowerbound="14.0" value="0.788908765653"/>
+        <group lowerbound="15.0" value="0.839587932303"/>
+        <group lowerbound="20.0" value="1.0"/>
+        <group lowerbound="20.0" value="1.0"/>
+      </availabilityToMosquitoes>
+    </human>
+    <parameters interval="5" iseed="3" latentp="3">
+      <parameter include="false" name="'-ln(1-Sinf)'" number="1" value="0.050736"/>
+      <parameter include="false" name="Estar" number="2" value="0.03247"/>
+      <parameter include="false" name="Simm" number="3" value="0.138161050830301"/>
+      <parameter include="false" name="Xstar_p" number="4" value="1514.385853233699891"/>
+      <parameter include="false" name="gamma_p" number="5" value="2.03692533424484"/>
+      <parameter include="false" name="sigma2i" number="6" value="10.173598698525799"/>
+      <parameter include="false" name="CumulativeYstar" number="7" value="35158523.31132510304451"/>
+      <parameter include="false" name="CumulativeHstar" number="8" value="97.334652723897705"/>
+      <parameter include="false" name="'-ln(1-alpha_m)'" number="9" value="2.33031045876193"/>
+      <parameter include="false" name="decay_m" number="10" value="2.53106547375805"/>
+      <parameter include="false" name="sigma2_0" number="11" value="0.655747311168152"/>
+      <parameter include="false" name="Xstar_v" number="12" value="0.916181104713054"/>
+      <parameter include="false" name="Ystar2" number="13" value="6502.26335600001039"/>
+      <parameter include="false" name="alpha" number="14" value="142601.912520000012591"/>
+      <parameter include="false" name="Density bias (non Garki)" number="15" value="0.177378570987455"/>
+      <parameter include="false" name="        sigma2        " number="16" value="0.05"/>
+      <parameter include="false" name="log oddsr CF community" number="17" value="0.736202"/>
+      <parameter include="false" name="Indirect risk cofactor" number="18" value="0.018777338"/>
+      <parameter include="false" name="Non-malaria infant mortality" number="19" value="49.539046599999999"/>
+      <parameter include="false" name="Density bias (Garki)" number="20" value="4.79610772546704"/>
+      <parameter include="false" name="Severe Malaria Threshhold" number="21" value="784455.599999999976717"/>
+      <parameter include="false" name="Immunity Penalty" number="22" value="1"/>
+      <parameter include="false" name="Immune effector decay" number="23" value="0"/>
+      <parameter include="false" name="comorbidity intercept" number="24" value="0.0968"/>
+      <parameter include="false" name="Ystar half life" number="25" value="0.275437402"/>
+      <parameter include="false" name="Ystar1" number="26" value="0.596539864"/>
+      <parameter include="false" name="Asexual immunity decay" number="27" value="0"/>
+      <parameter include="false" name="Ystar0" number="28" value="296.302437899999973"/>
+      <parameter include="false" name="Idete multiplier" number="29" value="2.797523626"/>
+      <parameter include="false" name="critical age for comorbidity" number="30" value="0.117383"/>
+    </parameters>
+  </model>
+</scenario>

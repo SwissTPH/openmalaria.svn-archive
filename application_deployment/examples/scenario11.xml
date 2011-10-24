@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="90" assimMode="0" name="triple correlated heterogeneity" schemaVersion="23" wuID="0" xsi:noNamespaceSchemaLocation="scenario.xsd">
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="90" name="triple correlated heterogeneity" schemaVersion="29" wuID="0" xsi:noNamespaceSchemaLocation="scenario_29.xsd">
   <demography maximumAgeYrs="90" name="Ifakara" popSize="200">
     <ageGroup lowerbound="0.0">
       <group poppercent="3.474714994" upperbound="1"/>
@@ -43,9 +43,7 @@
       <group upperbound="99"/>
     </ageGroup>
   </monitoring>
-  <interventions name="No Intervention">
-    <descriptions/>
-  </interventions>
+  <interventions name="No Intervention"/>
   <!-- entoData did have attribute firstDay="18" which is obsolete.
        But has this been accounted for in EIRDaily data? -->
   <healthSystem>
@@ -83,12 +81,12 @@
     <CFR>
       <group lowerbound="0" value="0"/>
     </CFR>
-    <pSequelaeInpatient>
+    <pSequelaeInpatient interpolation="none">
       <group lowerbound="0.0" value="0.0132"/>
       <group lowerbound="5.0" value="0.005"/>
     </pSequelaeInpatient>
   </healthSystem>
-  <entoData mode="4" name="Sugungum Preintervention">
+  <entomology mode="4" name="Sugungum Preintervention">
     <nonVector eipDuration="10">
       <EIRDaily origin="regression">0.3669507722007722</EIRDaily>
       <EIRDaily origin="interpolate">0.35685255791505793</EIRDaily>
@@ -599,7 +597,7 @@
       <EIRDaily origin="interpolate">0.007382963320463321</EIRDaily>
       <EIRDaily origin="interpolate">0.007564913127413127</EIRDaily>
     </nonVector>
-  </entoData>
+  </entomology>
   <!-- parameters 31052007 -->
   <model>
     <ModelOptions>
@@ -608,6 +606,28 @@
       <option name="INNATE_MAX_DENS" value="true"/>
     </ModelOptions>
     <clinical healthSystemMemory="6"/>
+    <human>
+      <availabilityToMosquitoes>
+        <group lowerbound="0.0" value="0.225940909648"/>
+        <group lowerbound="1.0" value="0.286173633441"/>
+        <group lowerbound="2.0" value="0.336898395722"/>
+        <group lowerbound="3.0" value="0.370989854675"/>
+        <group lowerbound="4.0" value="0.403114915112"/>
+        <group lowerbound="5.0" value="0.442585112522"/>
+        <group lowerbound="6.0" value="0.473839351511"/>
+        <group lowerbound="7.0" value="0.512630464378"/>
+        <group lowerbound="8.0" value="0.54487872702"/>
+        <group lowerbound="9.0" value="0.581527755812"/>
+        <group lowerbound="10.0" value="0.630257580698"/>
+        <group lowerbound="11.0" value="0.663063362714"/>
+        <group lowerbound="12.0" value="0.702417432755"/>
+        <group lowerbound="13.0" value="0.734605377277"/>
+        <group lowerbound="14.0" value="0.788908765653"/>
+        <group lowerbound="15.0" value="0.839587932303"/>
+        <group lowerbound="20.0" value="1.0"/>
+        <group lowerbound="20.0" value="1.0"/>
+      </availabilityToMosquitoes>
+    </human>
     <parameters interval="5" iseed="10" latentp="3">
       <parameter include="0" name="'-ln(1-Sinf)'" number="1" value="0.050736"/>
       <parameter include="0" name="Estar" number="2" value="0.03247"/>

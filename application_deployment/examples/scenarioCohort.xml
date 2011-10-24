@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="233" name="Do" schemaVersion="26" wuID="536305339" xsi:noNamespaceSchemaLocation="scenario_26.xsd">
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="233" name="Do" schemaVersion="29" wuID="536305339" xsi:noNamespaceSchemaLocation="scenario_29.xsd">
   <demography maximumAgeYrs="90" name="Ifakara" popSize="100">
     <ageGroup lowerbound="0.0">
       <group poppercent="3.474714994" upperbound="1"/>
@@ -78,8 +78,8 @@
     </ageGroup>
   </monitoring>
   <interventions name="cohort selection">
-    <descriptions>
-      <MDADescription>
+    <MDA>
+      <description>
         <decisions>
           <decision depends="" name="treatment" values="1">1</decision>
           <decision depends="" name="test" values="none,microscopy,RDT">none</decision>
@@ -91,19 +91,13 @@
             </schedule>
           </treatment>
         </treatments>
-      </MDADescription>
-    </descriptions>
-    <continuous>
-      <cohort coverage="0.05" targetAgeYrs="1.0"/>
-    </continuous>
-    <timed>
-      <intervention time="0">
-        <cohort coverage="0.4"/>
-      </intervention>
-      <intervention time="730">
-        <MDA coverage="0.6"/>
-      </intervention>
-    </timed>
+      </description>
+      <timed coverage="0.6" time="730"/>
+    </MDA>
+    <cohort>
+      <continuous coverage="0.05" targetAgeYrs="1.0"/>
+      <timed coverage="0.4" time="0"/>
+    </cohort>
   </interventions>
   <healthSystem>
     <EventScheduler>
@@ -225,7 +219,7 @@
       <group lowerbound="5.0" value="0.005"/>
     </pSequelaeInpatient>
   </healthSystem>
-  <entoData mode="4" name="Do">
+  <entomology mode="4" name="Do">
     <!-- starts 1st Mar-->
     <nonVector eipDuration="10">
       <EIRDaily origin="monthly">0.0738</EIRDaily>
@@ -1082,8 +1076,8 @@
       <EIRDaily origin="monthly">0.1291</EIRDaily>
       <EIRDaily origin="monthly">0.1291</EIRDaily>
     </nonVector>
-  </entoData>
-  <drugDescription>
+  </entomology>
+  <pharmacology>
     <drug abbrev="AR">
       <PD>
         <allele name="sensitive">
@@ -1159,7 +1153,7 @@
         <vol_dist>20.8</vol_dist>
       </PK>
     </drug>
-  </drugDescription>
+  </pharmacology>
   <model>
     <ModelOptions>
       <option name="MAX_DENS_CORRECTION" value="true"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="99" assimMode="0" name="Vacc with EIRDaily factor=1.0 with halfLifeYrs value=0.5" schemaVersion="23" wuID="53630539" xsi:noNamespaceSchemaLocation="scenario.xsd">
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="99" name="Vacc with EIRDaily factor=1.0 with halfLifeYrs value=0.5" schemaVersion="29" wuID="53630539" xsi:noNamespaceSchemaLocation="scenario_29.xsd">
   <demography maximumAgeYrs="90" name="Ifakara" popSize="100">
     <ageGroup lowerbound="0.0">
       <group poppercent="3.474714994" upperbound="1"/>
@@ -42,17 +42,12 @@
       <option name="nUncomp" value="true"/>
       <option name="nSevere" value="true"/>
       <option name="nSeq" value="true"/>
-      <option name="nHospitalDeaths" value="true"/>
       <option name="nIndDeaths" value="true"/>
       <option name="nDirDeaths" value="true"/>
       <option name="nEPIVaccinations" value="true"/>
       <option name="allCauseIMR" value="true"/>
       <option name="nMassVaccinations" value="true"/>
-      <option name="nHospitalRecovs" value="true"/>
-      <option name="nHospitalSeqs" value="true"/>
-      <option name="nIPTDoses" value="true"/>
       <option name="annAvgK" value="true"/>
-      <option name="nNMFever" value="true"/>
     </SurveyOptions>
     <surveys detectionLimit="40">
       <surveyTime>1</surveyTime>
@@ -171,38 +166,36 @@
     </ageGroup>
   </monitoring>
   <interventions name="BSVPEVTBV Ref EPI modified modified">
-    <descriptions>
-      <vaccineDescription vaccineType="3">
-        <halfLifeYrs value="0.5"/>
+    <vaccine>
+      <description vaccineType="TBV">
+        <decay L="0.5" function="exponential"/>
         <efficacyB value="10"/>
         <initialEfficacy value="0.4"/>
         <initialEfficacy value="0.46"/>
         <initialEfficacy value="0.52"/>
-      </vaccineDescription>
-      <vaccineDescription vaccineType="2">
-        <halfLifeYrs value="0.5"/>
+      </description>
+      <description vaccineType="BSV">
+        <decay L="0.5" function="exponential"/>
         <efficacyB value="10"/>
         <initialEfficacy value="0.4"/>
         <initialEfficacy value="0.46"/>
         <initialEfficacy value="0.52"/>
-      </vaccineDescription>
-      <vaccineDescription vaccineType="1">
-        <halfLifeYrs value="0.5"/>
+      </description>
+      <description vaccineType="PEV">
+        <decay L="0.5" function="exponential"/>
         <efficacyB value="10"/>
         <initialEfficacy value="0.4"/>
         <initialEfficacy value="0.46"/>
         <initialEfficacy value="0.52"/>
-      </vaccineDescription>
-    </descriptions>
-    <continuous>
-      <vaccine coverage="0.95" targetAgeYrs="0.0833"/>
-      <vaccine coverage="0.95" targetAgeYrs="0.17"/>
-      <vaccine coverage="0.99" targetAgeYrs="0.25"/>
-      <vaccine coverage="0.99" targetAgeYrs="1.25"/>
-      <vaccine coverage="0.99" targetAgeYrs="2.25"/>
-      <vaccine coverage="0.99" targetAgeYrs="3.25"/>
-      <vaccine coverage="0.99" targetAgeYrs="4.25"/>
-    </continuous>
+      </description>
+      <continuous coverage="0.95" targetAgeYrs="0.0833"/>
+      <continuous coverage="0.95" targetAgeYrs="0.17"/>
+      <continuous coverage="0.99" targetAgeYrs="0.25"/>
+      <continuous coverage="0.99" targetAgeYrs="1.25"/>
+      <continuous coverage="0.99" targetAgeYrs="2.25"/>
+      <continuous coverage="0.99" targetAgeYrs="3.25"/>
+      <continuous coverage="0.99" targetAgeYrs="4.25"/>
+    </vaccine>
   </interventions>
   <healthSystem>
     <ImmediateOutcomes name="Tanzania ACT">
@@ -239,12 +232,12 @@
       <group lowerbound="12.5" value="0.1243243"/>
       <group lowerbound="15" value="0.1378378"/>
     </CFR>
-    <pSequelaeInpatient>
+    <pSequelaeInpatient interpolation="none">
       <group lowerbound="0.0" value="0.0132"/>
       <group lowerbound="5.0" value="0.005"/>
     </pSequelaeInpatient>
   </healthSystem>
-  <entoData mode="4" name="Namawala1_16*1.0">
+  <entomology mode="4" name="Namawala1_16*1.0">
     <nonVector eipDuration="10">
       <EIRDaily origin="Namawala Pre">0.011646449</EIRDaily>
       <EIRDaily origin="Namawala Pre">0.012176484</EIRDaily>
@@ -612,12 +605,34 @@
       <EIRDaily origin="Namawala Pre">0.0053461925</EIRDaily>
       <EIRDaily origin="Namawala Pre">0.0042975824</EIRDaily>
     </nonVector>
-  </entoData>
+  </entomology>
   <model>
     <ModelOptions>
       <option name="MAX_DENS_CORRECTION" value="false"/>
     </ModelOptions>
     <clinical healthSystemMemory="6"/>
+    <human>
+      <availabilityToMosquitoes>
+        <group lowerbound="0.0" value="0.225940909648"/>
+        <group lowerbound="1.0" value="0.286173633441"/>
+        <group lowerbound="2.0" value="0.336898395722"/>
+        <group lowerbound="3.0" value="0.370989854675"/>
+        <group lowerbound="4.0" value="0.403114915112"/>
+        <group lowerbound="5.0" value="0.442585112522"/>
+        <group lowerbound="6.0" value="0.473839351511"/>
+        <group lowerbound="7.0" value="0.512630464378"/>
+        <group lowerbound="8.0" value="0.54487872702"/>
+        <group lowerbound="9.0" value="0.581527755812"/>
+        <group lowerbound="10.0" value="0.630257580698"/>
+        <group lowerbound="11.0" value="0.663063362714"/>
+        <group lowerbound="12.0" value="0.702417432755"/>
+        <group lowerbound="13.0" value="0.734605377277"/>
+        <group lowerbound="14.0" value="0.788908765653"/>
+        <group lowerbound="15.0" value="0.839587932303"/>
+        <group lowerbound="20.0" value="1.0"/>
+        <group lowerbound="20.0" value="1.0"/>
+      </availabilityToMosquitoes>
+    </human>
     <parameters interval="5" iseed="0" latentp="3">
       <parameter include="false" name="        '-ln(1-Sinf)'   " number="1" value="0.050736"/>
       <parameter include="false" name="        Estar   " number="2" value="0.03247"/>

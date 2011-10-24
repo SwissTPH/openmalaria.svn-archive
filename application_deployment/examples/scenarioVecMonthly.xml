@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="233" name="simple test of EIR input as monthly values" schemaVersion="26" wuID="0" xsi:noNamespaceSchemaLocation="scenario.xsd">
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="233" name="simple test of EIR input as monthly values" schemaVersion="29" wuID="0" xsi:noNamespaceSchemaLocation="scenario_29.xsd">
   <demography maximumAgeYrs="90" name="test" popSize="100">
     <ageGroup lowerbound="0">
       <group poppercent="3.474714994" upperbound="1"/>
@@ -76,9 +76,7 @@
       <group upperbound="99"/>
     </ageGroup>
   </monitoring>
-  <interventions name="No interventions">
-    <descriptions/>
-  </interventions>
+  <interventions name="No interventions"/>
   <healthSystem>
     <ImmediateOutcomes name="TanzaniaSP 04">
       <drugRegimen firstLine="SP" inpatient="QN" secondLine="SP"/>
@@ -128,10 +126,10 @@
       <group lowerbound="5.0" value="0.0"/>
     </pSequelaeInpatient>
   </healthSystem>
-  <entoData mode="4" name="Vector Test">
+  <entomology mode="4" name="Vector Test">
     <vector>
       <anopheles mosquito="gambiae_ss" propInfected="0.078" propInfectious="0.021">
-        <monthlyEir annualEIR="20">
+        <monthlyEIR annualEIR="20">
           <item>10</item>
           <item>1</item>
           <item>1</item>
@@ -144,11 +142,11 @@
           <item>1</item>
           <item>1</item>
           <item>1</item>
-        </monthlyEir>
+        </monthlyEIR>
         <mosq extrinsicIncubationPeriod="11" minInfectedThreshold="0.1" mosqHumanBloodIndex="1.0" mosqLaidEggsSameDayProportion="0.313" mosqProbBiting="0.95" mosqProbFindRestSite="0.95" mosqProbOvipositing="0.88" mosqProbResting="0.99" mosqRestDuration="3" mosqSeekingDuration="0.33" mosqSurvivalFeedingCycleProbability="0.623"/>
       </anopheles>
     </vector>
-  </entoData>
+  </entomology>
   <model>
     <ModelOptions>
       <option name="LOGNORMAL_MASS_ACTION" value="true"/>

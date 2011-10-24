@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="802" assimMode="0" name="Namawala1_16" schemaVersion="23" wuID="56305339" xsi:noNamespaceSchemaLocation="scenario.xsd">
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="802" name="Namawala1_16" schemaVersion="29" wuID="56305339" xsi:noNamespaceSchemaLocation="scenario_29.xsd">
   <demography maximumAgeYrs="90" name="Ifakara" popSize="500">
     <ageGroup lowerbound="0.0">
       <group poppercent="3.474714994" upperbound="1"/>
@@ -60,18 +60,16 @@
     </ageGroup>
   </monitoring>
   <interventions name="IPTi">
-    <descriptions>
-      <iptiDescription iptiEffect="12">
+    <IPT>
+      <description iptiEffect="12">
         <infGenotype ACR="1.0" atten="1" freq="0.8" name="wt" proph="9" tolPeriod="4"/>
         <infGenotype ACR="1.0" atten="1" freq="0.1" name="108" proph="2" tolPeriod="4"/>
         <infGenotype ACR="0.5" atten="1" freq="0.1" name="triples" proph="0" tolPeriod="4"/>
-      </iptiDescription>
-    </descriptions>
-    <continuous>
-      <ipti coverage="0.99" targetAgeYrs="0.274"/>
-      <ipti coverage="0.95" targetAgeYrs="0.36987"/>
-      <ipti coverage="0.95" targetAgeYrs="0.79453"/>
-    </continuous>
+      </description>
+      <continuous coverage="0.99" targetAgeYrs="0.274"/>
+      <continuous coverage="0.95" targetAgeYrs="0.36987"/>
+      <continuous coverage="0.95" targetAgeYrs="0.79453"/>
+    </IPT>
   </interventions>
   <!-- Namawala 1_16 -->
   <healthSystem>
@@ -118,12 +116,12 @@
       <group lowerbound="12.5" value="0.1243243"/>
       <group lowerbound="15" value="0.1378378"/>
     </CFR>
-    <pSequelaeInpatient>
+    <pSequelaeInpatient interpolation="none">
       <group lowerbound="0.0" value="0.0"/>
       <group lowerbound="5.0" value="0.0"/>
     </pSequelaeInpatient>
   </healthSystem>
-  <entoData mode="2" name="Namawala">
+  <entomology mode="2" name="Namawala">
     <nonVector eipDuration="10">
       <EIRDaily origin="Namawala Pre">0.01164644875</EIRDaily>
       <EIRDaily origin="Namawala Pre">0.0121764839375</EIRDaily>
@@ -491,7 +489,7 @@
       <EIRDaily origin="Namawala Pre">0.0053461926875</EIRDaily>
       <EIRDaily origin="Namawala Pre">0.0042975825625</EIRDaily>
     </nonVector>
-  </entoData>
+  </entomology>
   <!-- parameters 31052007 -->
   <model>
     <ModelOptions>
@@ -500,6 +498,28 @@
       <option name="REPORT_ONLY_AT_RISK" value="true"/>
     </ModelOptions>
     <clinical healthSystemMemory="6"/>
+    <human>
+      <availabilityToMosquitoes>
+        <group lowerbound="0.0" value="0.225940909648"/>
+        <group lowerbound="1.0" value="0.286173633441"/>
+        <group lowerbound="2.0" value="0.336898395722"/>
+        <group lowerbound="3.0" value="0.370989854675"/>
+        <group lowerbound="4.0" value="0.403114915112"/>
+        <group lowerbound="5.0" value="0.442585112522"/>
+        <group lowerbound="6.0" value="0.473839351511"/>
+        <group lowerbound="7.0" value="0.512630464378"/>
+        <group lowerbound="8.0" value="0.54487872702"/>
+        <group lowerbound="9.0" value="0.581527755812"/>
+        <group lowerbound="10.0" value="0.630257580698"/>
+        <group lowerbound="11.0" value="0.663063362714"/>
+        <group lowerbound="12.0" value="0.702417432755"/>
+        <group lowerbound="13.0" value="0.734605377277"/>
+        <group lowerbound="14.0" value="0.788908765653"/>
+        <group lowerbound="15.0" value="0.839587932303"/>
+        <group lowerbound="20.0" value="1.0"/>
+        <group lowerbound="20.0" value="1.0"/>
+      </availabilityToMosquitoes>
+    </human>
     <parameters interval="5" iseed="5" latentp="3">
       <parameter include="0" name="'-ln(1-Sinf)'" number="1" value="0.050736"/>
       <parameter include="0" name="Estar" number="2" value="0.03247"/>
