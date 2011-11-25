@@ -28,7 +28,72 @@ Since OpenMalaria simulations are stochastic, we usually use a number of random 
 
 == Experiment creator ==
 
-In order to facilitate the creation of a set of scenarios from an experiment description we developed a tool called "experiment creator" (at the moment it's fairly minimalist). This takes a description of sweeps and arms from a bunch of files and folders, described below.
+In order to facilitate the creation of a set of scenarios from an experiment description we developed a tool called "experiment creator" (at the moment it's fairly minimalist). It's a tool that helps you to combine scenarios creating a full factorial experiment design. This takes a description of sweeps and arms from a bunch of files and folders, described below.
+
+For instance, if you want to test two levels of IRSdeterrency, 2 levels of ITN coverage (distributed in two mass campaigns), and 14 different models, for a full factorial design you need 2*2*14=56 scenarios, thus 56 unique .xml files, one for each possible combination of all factors. If you also want to run them with 10 different seeds each, you need 560 xml files.
+A manual way of creating these 56 files would be to create a base.xml file with the baseline values for each parameter, copy this file 55 times, give it unique names, and adjust the values (and models) manually in each .xml file.
+With experiment creator, this can be done in an automated way.
+
+=== Experiment Design ===
+
+As describe before the experiment creator takes a description of sweeps and arms from a bunch of files and folders. The folders and files has to be structured as follow :
+
+_Figure 1 : Experiment Folder strucutre_
+
+[http://openmalaria.googlecode.com/svn/wiki/images/expc_fs_structi.png]
+
+The "description" sub-directory should contain:
+
+ * `base.xml`, a complete scenario describing all interventions, etc., with a parameter for each factor (preferably a reference parameter)
+ * `scenario_VV.xsd`, a schema description
+ * a sub-directory for each sweep
+ * a sub-directory for the models/parameterizations
+
+The `base.xml` must have the same model parameters as one of the model parameterizations — it may be sensible to use one of these as a template for the design of the base scenario. All scenario files must use the same schema version, and this schema file is required for validity checking. Each sweep should consist of a directory containing XML or TXT files, a file is considered as an arm. A directory should contains either XML files or TXT files but could not contains both XML and TXT files.
+
+==== XML Sweep ====
+
+Each XML sweep should consist of a directory containing one XML file for each arm; each of these files should itself be a complete and valid OpenMalaria scenario. If, for example, an experiment has two sweeps, A and B, and each sweep has two arms, A1 and A2, and B1 and B2, and the parameters of A1 and B1 are used in the `base.xml` scenario, then the description should contain directories `A` and `B`. `A` should contain `A1.xml` and `A2.xml` files, where `A1.xml` is identical to `base.xml` (except that you may wish to give it a name by changing the `name` attribute of the `scenario` element), and `A2.xml` differs from `A1.xml` only in the changed parameters of this sweep. Similarly `B` should contain `B1.xml` and `B2.xml`, each of which would use the A1 parameters of the first sweep together with the B1 or B2 parameters for the second sweep. If you wish to specify which arm is the reference rather than let the experiment creator choose any of them, rename one arm (in each sweep) to `reference.xml`. None of the arms should be named `base.xml` (see below).
+
+==== Example ====
+
+A simple example experiment description: [http://code.google.com/p/openmalaria/source/browse/download/experiments/EC-example-schema-28.7z EC-example-schema-28.7z]
+
+(This is a [http://7-zip.org/ 7-zip] archive. Right-click on "View raw file" and choose "save as ...".)
+
+==== TXT Sweep ====
+
+It happens that's for a sweep only one value of a xml parameter has to vary. In this case, it will me most appropriate to use TXT sweep instead of XML Sweep. This type of sweep avoids the need to copy/paste the xml file for each arm. The value which has to vary in the basel.xml file is replaced by a variable name and the sweep directory contains txt files. The variable name in the base.xml must be defined using the following naming convention @[variable_name]@ ( e.g. @IIR@), each variable is unique. Each TXT file in the sweep represents an arm and contains the variable name and value for the given arms. In the file, the syntax for the declaration is : @[variable_name]@:[variable_value] ( e.g. @IIR@:7.2 ).
+
+==== Example ====
+
+In the xml, propInfected must take different values. A sweep named _infected_ is created with two different arms.
+
+base.xml:
+{{{
+....
+    <vector>
+      <anopheles mosquito="gambiae_ss" propInfected="@population_infect@" propInfectious="0.015">
+        <monthlyEir annualEIR="0.32">
+          <item>0.076</item>
+...
+}}}
+
+In the _infected_ sweep :
+
+infected_low.txt:
+{{{
+@population_infect@:0.061
+}}}
+infected_high.txt:
+{{{
+@population_infect@:0.18
+}}}
+
+=== Models ===
+
+The models/parameterizations are added in a similar way to sweeps. Download files for the appropriate time-step and schema version from [http://code.google.com/p/openmalaria/source/browse/#svn%2Fdownload%2Fexperiments the repository] and extract (requires [http://7-zip.org/ 7-zip]). Rename the extracted folder "models" if you like and put it in the experiment description directory. Now find out which of these models most resembles your `base.xml` file (the parameters at the end must be identical), and rename this to `base.xml` (still within the `models` directory). This last step is important: it tells the experiment creator that it shouldn't carry over all the differences between these model arm XML files and your `base.xml` file (in the above directory) — which would remove all the interventions, etc., that you added into your `base.xml` file — but, instead, only carry over the differences between the model arm (`models/R0000.xml`, etc.) and the base model (the `base.xml` file within the `models` directory).
+
 
 === Installing ===
 
@@ -96,58 +161,7 @@ Usually I create a directory for the experiment and put the description of sweep
 java -jar ExperimentCreator.jar --stddirs path/to/experiment --seeds 10 --name exp-name
 }}}
 
-(Note: we prefer not to have underscores (`_`) in the experiment name, and it must not have spaces.) The "description" sub-directory should contain:
-
- * `base.xml`, a complete scenario describing all interventions, etc., with a parameter for each factor (preferably a reference parameter)
- * `scenario_VV.xsd`, a schema description
- * a sub-directory for each sweep
- * a sub-directory for the models/parameterizations
-
-The `base.xml` must have the same model parameters as one of the model parameterizations — it may be sensible to use one of these as a template for the design of the base scenario. All scenario files must use the same schema version, and this schema file is required for validity checking.
-
-==== XML Sweep ====
-
-Each sweep should consist of a directory containing one XML file for each arm; each of these files should itself be a complete and valid OpenMalaria scenario. If, for example, an experiment has two sweeps, A and B, and each sweep has two arms, A1 and A2, and B1 and B2, and the parameters of A1 and B1 are used in the `base.xml` scenario, then the description should contain directories `A` and `B`. `A` should contain `A1.xml` and `A2.xml` files, where `A1.xml` is identical to `base.xml` (except that you may wish to give it a name by changing the `name` attribute of the `scenario` element), and `A2.xml` differs from `A1.xml` only in the changed parameters of this sweep. Similarly `B` should contain `B1.xml` and `B2.xml`, each of which would use the A1 parameters of the first sweep together with the B1 or B2 parameters for the second sweep. If you wish to specify which arm is the reference rather than let the experiment creator choose any of them, rename one arm (in each sweep) to `reference.xml`. None of the arms should be named `base.xml` (see below).
-
-==== Example ====
-
-A simple example experiment description: [http://code.google.com/p/openmalaria/source/browse/download/experiments/EC-example-schema-28.7z EC-example-schema-28.7z]
-
-(This is a [http://7-zip.org/ 7-zip] archive. Right-click on "View raw file" and choose "save as ...".)
-
-==== TXT Sweep ====
-
-It happens that's for a sweep only one value of a xml parameter has to vary. In this case, it will me most appropriate to use TXT sweep instead of XML Sweep. This type of sweep avoids the need to copy/paste the xml file for each arm. The value which has to vary in the basel.xml file is replaced by a variable name and the sweep directory contains txt files. The variable name in the base.xml must be defined using the following naming convention @[variable_name]@ ( e.g. @IIR@), each variable is unique. Each TXT file in the sweep represents an arm and contains the variable name and value for the given arms. In the file, the syntax for the declaration is : @[variable_name]@:[variable_value] ( e.g. @IIR@:7.2 ).
-
-==== Example ====
-
-In the xml, propInfected must take different values. A sweep named _infected_ is created with two different arms.
-
-base.xml:
-{{{
-....
-    <vector>
-      <anopheles mosquito="gambiae_ss" propInfected="@population_infect@" propInfectious="0.015">
-        <monthlyEir annualEIR="0.32">
-          <item>0.076</item>
-...
-}}}
-
-In the _infected_ sweep :
-
-infected_low.txt:
-{{{
-@population_infect@:0.061
-}}}
-infected_high.txt:
-{{{
-@population_infect@:0.18
-}}}
-
-=== Models ===
-
-The models/parameterizations are added in a similar way to sweeps. Download files for the appropriate time-step and schema version from [http://code.google.com/p/openmalaria/source/browse/#svn%2Fdownload%2Fexperiments the repository] and extract (requires [http://7-zip.org/ 7-zip]). Rename the extracted folder "models" if you like and put it in the experiment description directory. Now find out which of these models most resembles your `base.xml` file (the parameters at the end must be identical), and rename this to `base.xml` (still within the `models` directory). This last step is important: it tells the experiment creator that it shouldn't carry over all the differences between these model arm XML files and your `base.xml` file (in the above directory) — which would remove all the interventions, etc., that you added into your `base.xml` file — but, instead, only carry over the differences between the model arm (`models/R0000.xml`, etc.) and the base model (the `base.xml` file within the `models` directory).
-
+(Note: we prefer not to have underscores (`_`) in the experiment name, and it must not have spaces.) 
 === Testing ===
 
 You're now set to generate your experiment scenarios, using the experiment creator from a command line as above.
