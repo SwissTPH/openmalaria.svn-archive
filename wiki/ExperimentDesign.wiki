@@ -98,7 +98,7 @@ The models/parameterizations are added in a similar way to sweeps. Download file
 
 After successfully running the experiment creator, the experiment's folder will contain a new folder *scenarios* and a new csv file *scenarios.csv*.
 
-The folder scenario contains xml scenarios resulting from the full factorial generation and name `wu_[experiment_name]_[scenario_id].xml` . `[experiment_name]` is the name of the experiment you defined before executing experiment creator and `[scenario_id]` is a unique id automatically generated during the experiment creator which give to the experiment a unique name.
+The folder scenarios contains xml scenarios resulting from the full factorial generation and named `wu_[experiment_name]_[scenario_id].xml` . `[experiment_name]` is the name of the experiment you defined before executing experiment creator and `[scenario_id]` is a unique id automatically generated during the experiment creator which give to the experiment a unique name.
 
 In the scenarios.csv file you'll find a description of the sweep combination for each scenarios. The first column is the name of the xml scenario, the last column is the seed number and in between you'll find a column per sweep with the arm name applied to the scenario. 
 Exemple :
