@@ -94,6 +94,24 @@ infected_high.txt:
 
 The models/parameterizations are added in a similar way to sweeps. Download files for the appropriate time-step and schema version from [http://code.google.com/p/openmalaria/source/browse/#svn%2Fdownload%2Fexperiments the repository] and extract (requires [http://7-zip.org/ 7-zip]). Rename the extracted folder "models" if you like and put it in the experiment description directory. Now find out which of these models most resembles your `base.xml` file (the parameters at the end must be identical), and rename this to `base.xml` (still within the `models` directory). This last step is important: it tells the experiment creator that it shouldn't carry over all the differences between these model arm XML files and your `base.xml` file (in the above directory) — which would remove all the interventions, etc., that you added into your `base.xml` file — but, instead, only carry over the differences between the model arm (`models/R0000.xml`, etc.) and the base model (the `base.xml` file within the `models` directory).
 
+=== Results ===
+
+After successfully running the experiment creator, the experiment's folder will contain a new folder *scenarios* and a new csv file *scenarios.csv*.
+
+The folder scenario contains xml scenarios resulting from the full factorial generation and name `wu_[experiment_name]_[scenario_id].xml` . `[experiment_name]` is the name of the experiment you defined before executing experiment creator and `[scenario_id]` is a unique id automatically generated during the experiment creator which give to the experiment a unique name.
+
+In the scenarios.csv file you'll find a description of the sweep combination for each scenarios. The first column is the name of the xml scenario, the last column is the seed number and in between you'll find a column per sweep with the arm name applied to the scenario. 
+Exemple :
+{{{
+file,Sweep A,Sweep B,Sweep C,seed
+wuExperiment_0.xml,A1,B1,C1,1
+wuExperiment_1.xml,A1,B1,C2,1
+wuExperiment_2.xml,A1,B2,C1,1
+wuExperiment_3.xml,A1,B2,C2,1
+wuExperiment_4.xml,A2,B1,C1,1
+wuExperiment_5.xml,A2,B1,C2,1
+....
+}}}
 
 === Installing ===
 
