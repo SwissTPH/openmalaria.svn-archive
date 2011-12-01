@@ -63,7 +63,7 @@ From schema 29 onwards, the ITN physical state (measured through a hole index) a
         <usage value="0.75"/>
 }}}
 "value" Type: proportion; Unit: none; Min: 0; Max:1; 
-Explanation: Usage represents the proportion of time during the night that a net is used by the person. Because in the current model all mosquito species bite homogeneously throughout the night, usage value can also be seen as the "pii" value, the proportion of encounters out of all encounters with mosquitoes that an unprotected subject has during the time he would be under an ITN if he used one. If this value differs between mosquito species because of different preferential biting times and location (indoors vs outdoors), instead of through the `usage value` the "pii" has to be factored into the `holeFactor`, the `insecticideFactor` and the `interactionFactor` for each effect and each species (see below).
+Explanation: Usage represents the proportion of time during the night that a net is used by the person. Because in the current model all mosquito species bite homogeneously throughout the night, usage value can also be seen as the πi value, the proportion of encounters out of all encounters with mosquitoes that an unprotected subject has during the time he would be under an ITN if he used one. If this value differs between mosquito species because of different preferential biting times and location (indoors vs outdoors), instead of through the `usage value` the πi has to be factored into the `holeFactor`, the `insecticideFactor` and the `interactionFactor` for each effect and each species (see below).
 {{{
         <holeRate mean="1.80" sigma="0.80"/>
 }}}
@@ -102,47 +102,42 @@ attritionOfNets describes how nets disappear from the population ON TOP OF disap
         <anophelesParams mosquito="gambiae_ss">
           <deterrency holeFactor="0.5" holeScalingFactor="0.10" insecticideFactor="0.67" insecticideScalingFactor="0.10" interactionFactor="1.492537"/>
 }}}
-RelativeAttractiveness=exp(log(holeFactor).exp(-HoleIndex.holeScalingFactor)
+`RelativeAttractiveness=exp(log(holeFactor)*exp(-HoleIndex*holeScalingFactor)+log(insecticideFactor)*1-exp(-InsecticideConcentration*insecticideScalingFactor))+log(interactionFactor)*exp(-HoleIndex*holeScalingFactor)*1-exp(-InsecticideConcentration*insecticideScalingFactor)))`
 
-+log(insecticideFactor).1-exp(-InsecticideConcentration.insecticideScalingFactor))
+NOTE: The exponential function prevents the RelativeAttractiveness from becoming negative. The `interactionFactor` can be calculated from experimental hut data: observed RelativeAttractiveness value for intact treated divided by the product of the observed RelativeAttractiveness values for intact untreated (`holeFactor`) and holed treated (`insecticideFactor`). If the `holeFactor`=1 `insecticideFactor`=1 and `interactionFactor`=1, the RelativeAttractiveness=1 and there is 0 effect of the net.
 
-+log(interactionFactor).exp(-HoleIndex.holeScalingFactor).1-exp(-InsecticideConcentration.insecticideScalingFactor)))
+If the experimental hut data had subjects under ITNs during the whole biting period, and if the the πi value is to be factored in for each mosquito species (thus not via the `usage value`), the factors for `deterrency` change as follows:
 
-NOTE: The exponential function prevents the RelativeAttractiveness from becoming negative. The interactionFactor can be calculated from experimental hut data: observed RelativeAttractiveness value for intact treated divided by the product of the observed RelativeAttractiveness values for intact untreated (holeFactor) and holed treated (insecticideFactor). If the holeFactor=1 insecticideFactor=1 and interactionFactor=1, the RelativeAttractiveness=1 and there is 0 effect of the net.
+`holeFactor=1-πi * (1-RelativeAttractiveness values for intact untreated nets)`
 
-If the experimental hut data had subjects under ITNs during the whole biting period, and if the the "pii" value is to be factored in for each mosquito species (thus not via the `usage value`), the factors for `deterrency` change as follows:
+`insecticideFactor=1-πi * (1-RelativeAttractiveness values for holed treated nets)`
 
-`holeFactor`=1-pii.(1-RelativeAttractiveness values for intact untreated nets)
-
-`insecticideFactor`=1-pii.(1-RelativeAttractiveness values for holed treated nets)
-
-`interactionFactor`=(1-pii.(1-RelativeAttractiveness values for intact treated nets))/`holeFactor`.`insecticideFactor`
+`interactionFactor=(1-πi * (1-RelativeAttractiveness values for intact treated nets))/holeFactor * insecticideFactor`
 
 {{{
           <preprandialKillingEffect baseFactor="0.09" holeFactor="0.57" holeScalingFactor="0.10" insecticideFactor="0.604" insecticideScalingFactor="0.10" interactionFactor="-0.424"/>
 }}}
-Relative pre-prandial survival=(1-(baseFactor+insecticideFactor.(1-exp(-InsecticideConcentration.insecticideScalingFactor))
-		  +holeFactor.exp(-HoleIndex.holeScalingFactor)
-		  +interactionFactor.exp(-HoleIndex.holeScalingFactor).(1-exp(-InsecticideConcentration.insecticideScalingFactor))))/(1-baseFactor)
+`Relative pre-prandial survival=(1-(baseFactor+insecticideFactor * (1-exp(-InsecticideConcentration * insecticideScalingFactor))	  +holeFactor * exp(-HoleIndex.holeScalingFactor)+interactionFactor * exp(-HoleIndex * holeScalingFactor) * (1-exp(-InsecticideConcentration * insecticideScalingFactor))))/(1-baseFactor)`
+
 Note: The factors can be calculated from data as follows: 
 
-`baseFactor` = proportion killed by a badly holed untreated net; 
+`baseFactor = proportion killed by a badly holed untreated net` 
 
-`holeFactor` = proportion killed by an intact untreated net - `baseFactor`, 
+`holeFactor = proportion killed by an intact untreated net - baseFactor` 
 
-`insecticideFactor` = proportion killed by a badly holed treated net - `baseFactor`; 
+`insecticideFactor = proportion killed by a badly holed treated net - baseFactor` 
 
-`interactionFactor` = proportion killed by an intact treated net - `baseFactor` - `holeFactor` - `insecticideFactor`
+`interactionFactor = proportion killed by an intact treated net - baseFactor - holeFactor - insecticideFactor`
 
 If the `holeFactor`=0 `insecticideFactor`=0 and `interactionFactor`=0, the relative pre-prandial survival=1 and there is 0 effect of the net.
 
-If the experimental hut data had subjects under ITNs during the whole biting period, and if the the "pii" value is to be factored in for each mosquito species (thus not via the `usage value`), the factors for `preprandialKillingEffect` change as follows:
+If the experimental hut data had subjects under ITNs during the whole biting period, and if the the πi value is to be factored in for each mosquito species (thus not via the `usage value`), the factors for `preprandialKillingEffect` change as follows:
 
-`holeFactor`=pii.(`preprandialKillingEffect` proportion killed by intact untreated nets -`baseFactor`)
+`holeFactor=πi * (proportion killed by intact untreated nets -baseFactor)`
 
-`insecticideFactor`=pii.(`preprandialKillingEffect` proportion killed by badly holed treated nets -`baseFactor`)
+`insecticideFactor=πi * (proportion killed by badly holed treated nets -baseFactor)`
 
-`interactionFactor`=pii.(`preprandialKillingEffect` proportion killed by intact treated nets)-`baseFactor`-`holeFactor`-`insecticideFactor`)
+`interactionFactor=πi * (proportion killed by intact treated nets)-baseFactor-holeFactor-insecticideFactor)`
 
 
 {{{
