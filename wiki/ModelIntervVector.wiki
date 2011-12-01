@@ -41,9 +41,7 @@ Description of all effects uses the generic [ModelDecayFunctions decay functions
 
 === Insecticide Treated Nets ===
 
-NOTE: ITN model will be changed in the next release
-
-ITNs affect the availability of hosts to mosquitoes, and the chance of a mosquito successfully biting and fleeing an ITN-protected human. These properties are described per mosquito species, in the `interventions` `descriptions` section. For example:
+ITNs affect the availability of hosts to mosquitoes, and the chance of a mosquito successfully biting and fleeing an ITN-protected human. These properties are described per mosquito species, in the `interventions` `descriptions` section. For example, in schema 28 and older versions, this looked like:
 
 {{{
 <anopheles mosquito="gambiae_ss">
@@ -55,7 +53,94 @@ ITNs affect the availability of hosts to mosquitoes, and the chance of a mosquit
 </anopheles>
 }}}
 
-Uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] deployment.
+ITN uses standard [ModelInterventions#Continuous_descriptions continuous] and [ModelInterventions#Timed_descriptions timed] deployment.
+
+
+From schema 29 onwards, the ITN physical state (measured through a hole index) and chemical state (measured through insecticide concentration) decay with time. The hole index does this through formation of holes, the insecticide concentration through wear and aging. The effects of the net, depending on its state, are calculated using functions describing the relationship between effect and state.
+{{{    
+<ITN name="Extended ITNs">
+      <description>
+        <usage value="0.75"/>
+}}}
+"value" Type: proportion; Unit: none; Min: 0; Max:1; 
+Explanation: Usage represents the proportion of time during the night that a net is used by the person. Because in the current model all mosquito species bite homogenously throughout the night, usage value can also be seen as the proportion of encounters with mosquitoes that happen while under an ITN. In the current model, nets are assigned to individuals. For future implementation, it is best to make "usage" an attribute of the person rather than of the net (if there is a choice).
+In future implementation, it should be possible to vary the value seasonally according to an input table (data values may need to be interpolated), and be age group specific.
+{{{
+        <holeRate mean="1.80" sigma="0.80"/>
+}}}
+"mean" Type: real; Unit: number per annum; Min: 0; Max: +Inf; 
+Explanation: Each new net is assigned a fixed rate of hole formation. Holes are formed according to a Poisson process with this rate as (only) parameter.
+
+"sigma" Type: real; Unit: none; Min: 0; Max: +Inf;
+Explanation: The value of the rate of hole formation is varied among nets by multiplying with a distribution factor which is log normally distributed. For the distribution factor, a sample is taken from a normal distribution with mean=0 and var=1. The sample is multiplied by sigma and summed with mu=-0.5sigma^2^, prior to exponentiation. Note that with mu=-0.5sigma^2^, then the mean of the lognormal distribution =1.
+{{{
+        <ripRate mean="1.80" sigma="0.80"/>
+}}}
+"mean" Type: real; Unit: none; Min: 0; Max: +Inf;
+Explanation: Each existing hole has a probability of being ripped bigger according to a Poisson process with this rate as (only)parameter.
+
+"sigma" Type: real; Unit: none; Min: 0; Max: +Inf;
+Explanation: See first under holeRate "sigma". The normal sample is the same as for holeRate distribution factor, sigma of the lognormal can be varied.
+{{{
+        <ripFactor value="0.3"/>
+}}}
+"value" Type: real; Unit: none; Min: 0; Max: +Inf;
+Explanation: This factor expresses how important rips are in increasing the hole. The hole index of a net is the count of holes plus the "ripFactor" multiplied with the cumulative number of rips.
+{{{
+        <initialInsecticide mu="68.4" sigma="14"/>
+}}}
+The insecticide concentration of new nets is Gaussian distributed. Negative sampled values are set to 0. The insecticideScalingFactor under anophelesParams should be adjusted depending on the size of mu. The deltamethrin declared content is 1.8 g/kg corresponding to 68.4 mg/msq for long-lasting (incorporated into filaments) insecticidal nets according to WHO interim specification 333/LN/3 (August 2010)
+(http://www.who.int/whopes/quality/Deltamethrin_LN_incorporated_into_filaments_WHO_spec_eval_Aug_2010.pdf)
+{{{
+        <insecticideDecay L="1.5" function="exponential" mu="-0.32" sigma="0.8"/>
+}}}
+L = rate, k=shape, function (exponential is suggested), and mu and sigma are parameters of the distribution factor for the rate (same sample as for holeRate distribution factor).
+{{{
+        <attritionOfNets L="20.7725" function="smooth-compact" k="18"/>
+}}}
+attritionOfNets describes how nets disappear from the population ON TOP OF disappearance due to outmigration and population renewal (see comment directly under "interventions"). Currently, this is independent of net state, and the time till disappearence is predefined according to the decay function when a nets is first implemented.
+{{{
+        <anophelesParams mosquito="gambiae_ss">
+          <deterrency holeFactor="0.5" holeScalingFactor="0.10" insecticideFactor="0.67" insecticideScalingFactor="0.10" interactionFactor="1.492537"/>
+}}}
+RelativeAttractiveness=exp(log(holeFactor).exp(-HoleIndex.holeScalingFactor)
+
++log(insecticideFactor).1-exp(-InsecticideConcentration.insecticideScalingFactor))
+
++log(interactionFactor).exp(-HoleIndex.holeScalingFactor).1-exp(-InsecticideConcentration.insecticideScalingFactor)))
+
+NOTE: The exponential function prevents the RelativeAttractiveness from becoming negative. The interactionFactor can be calculated from data: observed RelativeAttractiveness value for intact treated divided by the product of the observed RelativeAttractiveness values for intact untreated (holeFactor) and holed treated (insecticideFactor). If the holeFactor=1 insecticideFactor=1 and interactionFactor=1, the RelativeAttractiveness=1 and there is 0 effect of the net.
+{{{
+          <preprandialKillingEffect baseFactor="0.09" holeFactor="0.57" holeScalingFactor="0.10" insecticideFactor="0.604" insecticideScalingFactor="0.10" interactionFactor="-0.424"/>
+}}}
+Relative pre-prandial survival=(1-(baseFactor+insecticideFactor.(1-exp(-InsecticideConcentration.insecticideScalingFactor))
+		  +holeFactor.exp(-HoleIndex.holeScalingFactor)
+		  +interactionFactor.exp(-HoleIndex.holeScalingFactor).(1-exp(-InsecticideConcentration.insecticideScalingFactor))))/(1-baseFactor)
+Note: The factors can be calculated from data as follows: baseFactor = proportion killed by a badly holed untreated net; 
+
+holeFactor = proportion killed by an intact untreated net - baseFactor, 
+
+insecticideFactor = proportion killed by a badly holed treated net - baseFactor; 
+
+interactionFactor = proportion killed by an intact treated net - baseFactor - holeFactor - insecticideFactor.
+
+If the holeFactor=0 insecticideFactor=0 and interactionFactor=0, the relative pre-prandial survival=1 and there is 0 effect of the net.
+{{{
+          <postprandialKillingEffect baseFactor="0.10" holeFactor="0" holeScalingFactor="0.10" insecticideFactor="0.55" insecticideScalingFactor="0.10" interactionFactor="0"/>
+}}}
+The relative post-prandial survival is calculated similarly to the pre-prandial survival.
+{{{
+        </anophelesParams>
+      </description>
+        <continuous coverage="0.95" targetAgeYrs="0.0833"/>
+}}}
+Note that at a very young age (under 1 year), the current models may force unrealistically high outmigration (see also comment in demographics section). If the amount of nets allocated is relevant (e.g. for costing), this has to be taken into consideration, especially when nets are distributed continuously at a very young age.
+The minimum targetAgeYrs has to be > timestep/365 in order to correspond to timestep=1, because timestep=0 is not allowed for continuous interventions. 
+{{{
+      <timed coverage="0.785258112" maxAge="5" minAge="0" time="364"/>
+     </ITN>
+}}}
+
 
 === Indoor Residual Spraying ===
 
