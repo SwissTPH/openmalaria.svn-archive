@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="create_run_jar" name="Create Runnable Jar for Project experiment_creator with Jar-in-Jar Loader">
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
-    <!--ANT 1.7 is required                                        -->
-    <target name="create_run_jar">
+    <!--ANT 1.7 is required -->
+	
+	  <target name="destination">
+	    <mkdir dir="bin" />
+	  </target>  
+	
+	<target name="compil" depends="destination" description="Compilation">
+	    <javac srcdir="./src" destdir="./bin">
+	    </javac>
+    </target>
+	
+	<target name="create_run_jar" depends="compil">
         <jar destfile="./build/experiment_creator.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
