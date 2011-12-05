@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: ExperimentCreator
+Class-path: . lib/mysql-connector.jar
+
