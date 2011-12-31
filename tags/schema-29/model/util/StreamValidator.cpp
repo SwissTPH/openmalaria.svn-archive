@@ -49,7 +49,7 @@ namespace checkpoint {
     void operator& (deque<T>& x, istream& stream) {
 	size_t l;
 	l & stream;
-	validateListSize (l, 1e8);
+	validateListSize (l, 100000000L);
 	x.resize( l );
 	BOOST_FOREACH (T& y, x) {
 	    y & stream;
