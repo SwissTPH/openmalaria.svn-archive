@@ -95,7 +95,7 @@ void StreamValidatorType::loadStream( const string& path ){
     readIt = stream.begin();
 }
 
-void StreamValidatorType::handle( size_t value ){
+void StreamValidatorType::handle( SVType value ){
     if( storeMode ){
 	stream.push_back( value );
     }else{
@@ -123,6 +123,25 @@ void StreamValidatorType::checkpoint ( ostream& cp_str ) const{
 }
 
 StreamValidatorType StreamValidator;
+
+// ———  Our cross-platform consistent-result hasing functions  ——
+namespace CPCH {
+    // SVType and anything implicitly convertible to it
+    SVType toSVType(SVType x){
+        return x;
+    }
+    SVType toSVType(int x){
+        return x;
+    }
+    //NOTE: hashing of floats and doubles isn't very good or fast:
+    SVType toSVType(float x){
+        return x*1e4f;
+    }
+    SVType toSVType(double x){
+        return x*1e4;
+    }
+}
+
 
 } }
 #endif
