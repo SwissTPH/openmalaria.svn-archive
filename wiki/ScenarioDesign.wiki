@@ -67,7 +67,9 @@ After selecting the within-host model to use, an appropriate `<model>...</model>
 
 The `model` element also includes data for some [ModelHumanMisc small human-related models].
 
-Our set of 14 parameterisations can be downloaded here: [http://code.google.com/p/openmalaria/source/browse/#svn%2Fdownload%2Fexperiments%2Fmodels-5-day http://code.google.com/p/openmalaria/source/browse/#svn/download/experiments/models-5-day]
+Our standard set of 14 parameterisations for the 5-day timestep can be downloaded from the link below (models-VER-5-day.7z where VER is the [Changelog schema version]). There are some example experiments listed alongside. You will need a [http://7-zip.org/ 7-zip archive program].
+
+[http://code.google.com/p/openmalaria/source/browse/#svn%2Fdownload%2Fexperimentshttp://code.google.com/p/openmalaria/source/browse/#svn/download/experiments]
 
 The `pharmacology` element is only required when a 1-day time-step is used, and is essentially a library of parameters for the drug model. It should therefore not need to be edited (just copied from a source).
 
