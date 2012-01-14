@@ -6,7 +6,7 @@ Below is a list of the most significant changes in each release, together with t
 
 == Schema Version 30 ==
 
-Yet to be released. Planned changes:
+To be released soon. Current changes:
 
   * Renamed Vector_EIR_Input and Vector_EIR_Simulated to inputEIR and simulatedEIR respectively.
   * Increased delay in human infectiousness model from the perspective of the non-vector model and several summaries: it appears it was one time-step short.
@@ -20,6 +20,9 @@ Yet to be released. Planned changes:
   * SchemaTranslator is now compiled by cmake (output is _build_/util/SchemaTranslator/SchemaTranslator.jar)
   * Seasonality parameterisation of per-vector transmission is now input differently to allow other data sources to be used as seasonality inputs in the future.
   * Added an output: `nMassScreenings` (number of diagnostics used by MSAT, or number of recipients of MDA if no diagnostic is used)
+  * New IRS model & parameterisation (to be documented)
+  * Old IRS model can also have a preprandial effect
+  * Heterogeneity of decay in the ITN model has been made per-human rather than per net (mistake in previous release)
 
 
 == Schema Version 29 ==
