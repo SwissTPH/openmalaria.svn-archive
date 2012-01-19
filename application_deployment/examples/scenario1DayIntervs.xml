@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="233" name="examples of some interventions on 1-day TS" schemaVersion="29" wuID="0" xsi:noNamespaceSchemaLocation="scenario_29.xsd">
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="233" name="examples of some interventions on 1-day TS" schemaVersion="30" wuID="0" xsi:noNamespaceSchemaLocation="scenario_30.xsd">
   <demography maximumAgeYrs="90" name="Ifakara" popSize="500">
     <ageGroup lowerbound="0.0">
       <group poppercent="3.474714994" upperbound="1"/>
@@ -107,12 +107,14 @@
           </treatment>
         </treatments>
       </description>
-      <timed coverage="0.6" time="160"/>
-      <timed coverage="0.6" time="860"/>
-      <timed coverage="0.6" time="870"/>
-      <timed coverage="0.6" time="1580"/>
-      <timed coverage="0.6" time="1595"/>
-      <timed coverage="0.6" time="1610"/>
+      <timed>
+        <deploy coverage="0.6" time="160"/>
+        <deploy coverage="0.6" time="860"/>
+        <deploy coverage="0.6" time="870"/>
+        <deploy coverage="0.6" time="1580"/>
+        <deploy coverage="0.6" time="1595"/>
+        <deploy coverage="0.6" time="1610"/>
+      </timed>
     </MDA>
     <vaccine>
       <description vaccineType="PEV">
@@ -122,11 +124,13 @@
         <initialEfficacy value="0.64"/>
         <initialEfficacy value="0.8"/>
       </description>
-      <continuous coverage="0.95" targetAgeYrs="0.0833"/>
-      <continuous coverage="0.95" targetAgeYrs="0.17"/>
-      <continuous coverage="0.99" targetAgeYrs="0.25"/>
-      <continuous coverage="0.99" targetAgeYrs="2"/>
-      <continuous coverage="0.99" targetAgeYrs="5"/>
+      <continuous>
+        <deploy coverage="0.95" targetAgeYrs="0.0833"/>
+        <deploy coverage="0.95" targetAgeYrs="0.17"/>
+        <deploy coverage="0.99" targetAgeYrs="0.25"/>
+        <deploy coverage="0.99" targetAgeYrs="2"/>
+        <deploy coverage="0.99" targetAgeYrs="5"/>
+      </continuous>
     </vaccine>
   </interventions>
   <healthSystem>
@@ -250,7 +254,7 @@
       <group lowerbound="5.0" value="0.005"/>
     </pSequelaeInpatient>
   </healthSystem>
-  <entomology annualEIR="52" mode="4" name="Do">
+  <entomology mode="dynamic" name="Do" scaledAnnualEIR="52">
     <!-- starts 1st Mar-->
     <nonVector eipDuration="10">
       <EIRDaily origin="monthly">0.0738</EIRDaily>

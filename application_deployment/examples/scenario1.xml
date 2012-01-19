@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="233" name="test D94" schemaVersion="29" wuID="536305339" xsi:noNamespaceSchemaLocation="scenario_29.xsd">
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="233" name="test D94" schemaVersion="30" wuID="536305339" xsi:noNamespaceSchemaLocation="scenario_30.xsd">
   <demography maximumAgeYrs="80" name="test" popSize="100">
     <ageGroup lowerbound="0.0">
       <group poppercent="3.474714994" upperbound="1"/>
@@ -73,7 +73,7 @@
   </monitoring>
   <interventions name="Change to monitoring HS">
     <changeHS>
-      <timed time="0">
+      <timedDeployment time="0">
         <ImmediateOutcomes name="Test HS">
           <drugRegimen firstLine="CQ" inpatient="AQ" secondLine="AQ"/>
           <initialACR>
@@ -118,7 +118,7 @@
           <group lowerbound="0.0" value="0.0132"/>
           <group lowerbound="5.0" value="0.005"/>
         </pSequelaeInpatient>
-      </timed>
+      </timedDeployment>
     </changeHS>
   </interventions>
   <healthSystem>
@@ -161,7 +161,7 @@
       <group lowerbound="5.0" value="0.005"/>
     </pSequelaeInpatient>
   </healthSystem>
-  <entomology mode="4" name="Test">
+  <entomology mode="dynamic" name="Test">
     <nonVector eipDuration="10">
       <EIRDaily origin="monthly">0.738</EIRDaily>
       <EIRDaily origin="monthly">0.738</EIRDaily>

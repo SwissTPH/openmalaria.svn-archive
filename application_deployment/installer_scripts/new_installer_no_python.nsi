@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "openmalariaTools"
-!define PRODUCT_VERSION "00.08"
+!define PRODUCT_VERSION "00.09"
 !define PRODUCT_PUBLISHER "SwissTPH"
 !define PRODUCT_WEB_SITE "www.swisstph.ch"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\openMalaria.exe"
@@ -38,7 +38,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "openMalariaTools_installer_v00.08.exe"
+OutFile "openMalariaTools_installer_v00.09.exe"
 InstallDir "$PROGRAMFILES\openmalariaTools"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -70,6 +70,10 @@ Section "openMalariaTools" SEC01
   File "..\examples\scenarioVecFullTest.xml"
   File "..\examples\scenarioVecMonthly.xml"
   File "..\examples\scenarioVecTest.xml"
+  File "..\examples\scenarioIRS30.xml"
+	File "..\examples\scenarioLarviciding.xml"
+	File "..\examples\scenarioNoInterv.xml"
+	File "..\examples\scenarioRach5IC.xml"
   SetOutPath "$INSTDIR\etc\fonts"
   File "..\etc\fonts\fonts.conf"
   File "..\etc\fonts\fonts.dtd"
@@ -259,6 +263,7 @@ Section "openMalariaTools" SEC01
   File "..\application\common\scenario_27.xsd"
   File "..\application\common\scenario_28.xsd"
   File "..\application\common\scenario_29.xsd"
+  File "..\application\common\scenario_30.xsd"
   File "..\application\common\scenario_3.xsd"
   File "..\application\common\scenario_4.xsd"
   File "..\application\common\scenario_5.xsd"
@@ -442,6 +447,15 @@ Section Uninstall
   Delete "$INSTDIR\application\common\scenario_5.xsd"
   Delete "$INSTDIR\application\common\scenario_4.xsd"
   Delete "$INSTDIR\application\common\scenario_3.xsd"
+  Delete "$INSTDIR\application\common\scenario_30.xsd"
+  Delete "$INSTDIR\application\common\scenario_29.xsd"
+  Delete "$INSTDIR\application\common\scenario_28.xsd"
+  Delete "$INSTDIR\application\common\scenario_27.xsd"
+  Delete "$INSTDIR\application\common\scenario_26.xsd"
+  Delete "$INSTDIR\application\common\scenario_25.xsd"
+  Delete "$INSTDIR\application\common\scenario_24.xsd"
+  Delete "$INSTDIR\application\common\scenario_23.xsd"
+  Delete "$INSTDIR\application\common\scenario_22.xsd"
   Delete "$INSTDIR\application\common\scenario_21.xsd"
   Delete "$INSTDIR\application\common\scenario_20.xsd"
   Delete "$INSTDIR\application\common\scenario_2.xsd"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="233" name="simple test of EIR input as monthly values" schemaVersion="29" wuID="0" xsi:noNamespaceSchemaLocation="scenario_29.xsd">
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="233" name="simple test of EIR input as monthly values" schemaVersion="30" wuID="0" xsi:noNamespaceSchemaLocation="scenario_30.xsd">
   <demography maximumAgeYrs="90" name="test" popSize="100">
     <ageGroup lowerbound="0">
       <group poppercent="3.474714994" upperbound="1"/>
@@ -43,8 +43,8 @@
       <option name="Vector_Nv" value="true"/>
       <option name="Vector_Ov" value="true"/>
       <option name="Vector_Sv" value="true"/>
-      <option name="Vector_EIR_Input" value="true"/>
-      <option name="Vector_EIR_Simulated" value="true"/>
+      <option name="inputEIR" value="true"/>
+      <option name="simulatedEIR" value="true"/>
     </SurveyOptions>
     <surveys detectionLimit="2.5">
       <surveyTime>1</surveyTime>
@@ -126,24 +126,38 @@
       <group lowerbound="5.0" value="0.0"/>
     </pSequelaeInpatient>
   </healthSystem>
-  <entomology mode="4" name="Vector Test">
+  <entomology mode="dynamic" name="Vector Test">
     <vector>
       <anopheles mosquito="gambiae_ss" propInfected="0.078" propInfectious="0.021">
-        <monthlyEIR annualEIR="20">
-          <item>10</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-          <item>1</item>
-        </monthlyEIR>
-        <mosq extrinsicIncubationPeriod="11" minInfectedThreshold="0.1" mosqHumanBloodIndex="1.0" mosqLaidEggsSameDayProportion="0.313" mosqProbBiting="0.95" mosqProbFindRestSite="0.95" mosqProbOvipositing="0.88" mosqProbResting="0.99" mosqRestDuration="3" mosqSeekingDuration="0.33" mosqSurvivalFeedingCycleProbability="0.623"/>
+        <seasonality annualEIR="20" input="EIR">
+          <monthlyValues smoothing="fourier">
+            <value>10</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+          </monthlyValues>
+        </seasonality>
+        <mosq minInfectedThreshold="0.1">
+          <mosqRestDuration value="3"/>
+          <extrinsicIncubationPeriod value="11"/>
+          <mosqLaidEggsSameDayProportion value="0.313"/>
+          <mosqSeekingDuration value="0.33"/>
+          <mosqSurvivalFeedingCycleProbability value="0.623"/>
+          <availabilityVariance value="0"/>
+          <mosqProbBiting mean="0.95" variance="0"/>
+          <mosqProbFindRestSite mean="0.95" variance="0"/>
+          <mosqProbResting mean="0.99" variance="0"/>
+          <mosqProbOvipositing value="0.88"/>
+          <mosqHumanBloodIndex value="1.0"/>
+        </mosq>
       </anopheles>
     </vector>
   </entomology>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="99" name="Vacc with EIRDaily factor=1.0 with halfLifeYrs value=0.5" schemaVersion="29" wuID="53630539" xsi:noNamespaceSchemaLocation="scenario_29.xsd">
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" analysisNo="99" name="Vacc with EIRDaily factor=1.0 with halfLifeYrs value=0.5" schemaVersion="30" wuID="53630539" xsi:noNamespaceSchemaLocation="scenario_30.xsd">
   <demography maximumAgeYrs="90" name="Ifakara" popSize="100">
     <ageGroup lowerbound="0.0">
       <group poppercent="3.474714994" upperbound="1"/>
@@ -188,13 +188,15 @@
         <initialEfficacy value="0.46"/>
         <initialEfficacy value="0.52"/>
       </description>
-      <continuous coverage="0.95" targetAgeYrs="0.0833"/>
-      <continuous coverage="0.95" targetAgeYrs="0.17"/>
-      <continuous coverage="0.99" targetAgeYrs="0.25"/>
-      <continuous coverage="0.99" targetAgeYrs="1.25"/>
-      <continuous coverage="0.99" targetAgeYrs="2.25"/>
-      <continuous coverage="0.99" targetAgeYrs="3.25"/>
-      <continuous coverage="0.99" targetAgeYrs="4.25"/>
+      <continuous>
+        <deploy coverage="0.95" targetAgeYrs="0.0833"/>
+        <deploy coverage="0.95" targetAgeYrs="0.17"/>
+        <deploy coverage="0.99" targetAgeYrs="0.25"/>
+        <deploy coverage="0.99" targetAgeYrs="1.25"/>
+        <deploy coverage="0.99" targetAgeYrs="2.25"/>
+        <deploy coverage="0.99" targetAgeYrs="3.25"/>
+        <deploy coverage="0.99" targetAgeYrs="4.25"/>
+      </continuous>
     </vaccine>
   </interventions>
   <healthSystem>
@@ -237,7 +239,7 @@
       <group lowerbound="5.0" value="0.005"/>
     </pSequelaeInpatient>
   </healthSystem>
-  <entomology mode="4" name="Namawala1_16*1.0">
+  <entomology mode="dynamic" name="Namawala1_16*1.0">
     <nonVector eipDuration="10">
       <EIRDaily origin="Namawala Pre">0.011646449</EIRDaily>
       <EIRDaily origin="Namawala Pre">0.012176484</EIRDaily>
