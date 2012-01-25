@@ -200,22 +200,31 @@ Uses standard [ModelInterventions#Timed_descriptions timed deployment].
 
 == Larviciding ==
 
-NOTE: Old larviciding implementation was removed in schema 28. New implementation due to be added soonish, probably in version 30.
-
 A larviciding intervention is currently also available, but very simple in that there is no feedback effect of reduction in the number of adult mosquitoes on the number of larvae, nor any concept of saturation. The implementation will likely be improved in the future.
 
 Example timed-deployment description:
 {{{
-<intervention time="173">
-  <larviciding>
-    <anopheles duration="12" effectiveness="0.75" mosquito="gambiae_ss"/>
-    <anopheles duration="12" effectiveness="0.75" mosquito="funestus"/>
-    <anopheles duration="12" effectiveness="0.75" mosquito="arabiensis"/>
-  </larviciding>
-</intervention>
+<larviciding>
+        <anopheles mosquito="gambiae_ss">
+                <duration value="25"/>
+                <effectiveness value="0.75"/>
+        </anopheles>
+        <anopheles mosquito="funestus">
+                <duration value="25"/>
+                <effectiveness value="0.75"/>
+        </anopheles>
+        <anopheles mosquito="arabiensis">
+                <duration value="25"/>
+                <effectiveness value="0.75"/>
+        </anopheles>
+        <timed>
+            <deploy time="1"/>
+            <deploy time="100"/>
+        </timed>
+</larviciding>
 }}}
 
-Here, the `duration` parameter specifies how long the larviciding is effective for. `effectiveness` gives the proportion of larvae killed by the larviciding. The `mosquito` parameter specifies which species is affected — this must be described for all species (it will have no effect on species not explicitly listed).
+Here, the `duration` parameter specifies how long the larviciding is effective for (unit:timestep). `effectiveness` gives the proportion of larvae killed by the larviciding. The `mosquito` parameter specifies which species is affected — this must be described for all species (it will have no effect on species not explicitly listed).
 
 == Uninfect Vectors ==
 
