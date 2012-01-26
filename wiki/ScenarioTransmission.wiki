@@ -24,7 +24,7 @@ Entomological data are described by the `entomology` element, containing either 
 Attributes of the `entomology` element:
 || name || type || description ||
 || name || text || A user-friendly name for the transmission settings ||
-|| mode || integer || Can be 2 (static — EIR humans are exposed to is fixed to the annual cycle given) or 4 (dynamic — transmission is affected by human infectiousness) ||
+|| mode || integer || Can be 2 (static — EIR humans are exposed to is fixed to the annual cycle given) or 4 (dynamic — transmission is affected by human infectiousness). From schema 30 onwards this element will be of type 'text' with "forced" for static transmission (previously "2") and "dynamic" for dynamic transmission (previously "4")  ||
 || annualEIR || number, optional || If provided, the EIR description provided is scaled such that the total number of infectious bites per adult is this number. (Added in schema version 22.) ||
 
 Note that prior to schema 24, the vector model used EIR in units of infectious bites per person per time-period, averaged across the population, while the non-vector model used units of infectious bites per adult per time-period. From schema version 24 both will use units of infectious bites per adult per day/timestep/month/year. (The difference being that children receive fewer bites than adults.)
