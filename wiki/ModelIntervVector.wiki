@@ -159,28 +159,67 @@ The minimum targetAgeYrs has to be > timestep/365 in order to correspond to time
 
 === Indoor Residual Spraying ===
 
-IRS affects the availability of hosts to mosquitoes, and the chance of a mosquito surviving resting (egg incubation) after having fed on an IRS-protected human. Its effects should be described in the intervention `descriptions` element, for example:
+IRS affects the availability of hosts to mosquitoes, and the chance of a mosquito surviving resting (egg incubation) after having fed on an IRS-protected human.
 
+Two models are available, each with its own description. Only one should be used at once. Both use standard [ModelInterventions#Timed_descriptions timed deployment].
+
+The older, simpler model has the following description:
 {{{
     <IRS name="DDT test">
-      <decay L="0.5" function="exponential"/>
-      <anophelesParams mosquito="gambiae_ss">
-        <deterrency value="0.56"/>
-        <killingEffect value="0.24"/>
-      </anophelesParams>
-      <anophelesParams mosquito="funestus">
-        <deterrency value="0.56"/>
-        <killingEffect value="0.24"/>
-      </anophelesParams>
-      <anophelesParams mosquito="arabiensis">
-        <deterrency value="0.56"/>
-        <killingEffect value="0.24"/>
-      </anophelesParams>
-      <timed coverage="0.95" time="7"/>
+      <simpleDescription>
+        <decay L="0.5" function="exponential"/>
+        <anophelesParams mosquito="gambiae_ss" propActive="1">
+          <deterrency value="0.56"/>
+          <preprandialKillingEffect value="0"/>
+          <postprandialKillingEffect value="0.24"/>
+        </anophelesParams>
+        <anophelesParams mosquito="funestus" propActive="1">
+          <deterrency value="0.56"/>
+          <preprandialKillingEffect value="0"/>
+          <postprandialKillingEffect value="0.24"/>
+        </anophelesParams>
+        <anophelesParams mosquito="arabiensis" propActive="1">
+          <deterrency value="0.56"/>
+          <preprandialKillingEffect value="0"/>
+          <postprandialKillingEffect value="0.24"/>
+        </anophelesParams>
+      </simpleDescription>
+      <timed>
+        <deploy coverage="0.95" time="7"/>
+      </timed>
     </IRS>
 }}}
+Three effects are available. The preprandialKillingEffect is only available as of schema 30, the other two previously (but XML has slightly different structure).
 
-Uses standard [ModelInterventions#Timed_descriptions timed deployment].
+All effects decay based on the decay function described (in this case, exponential decay with a half-life of 0.5 years; see [ModelDecayFunctions] for more options).
+
+The newer model is similar to the ITN model above (without the hole factors). Description is as follows:
+{{{
+    <IRS name="new param">
+      <description>
+        <!-- Initial insecticide: units are μg/cm²; no variance here -->
+        <initialInsecticide mu="118" sigma="0"/>
+        <insecticideDecay L="0.15" function="exponential"/>
+        <anophelesParams mosquito="gambiae_ss">
+          <deterrency insecticideFactor="0.12" insecticideScalingFactor="0.05"/>
+          <preprandialKillingEffect baseFactor="0.01" insecticideFactor="0.25" insecticideScalingFactor="0.008"/>
+          <postprandialKillingEffect baseFactor="0.01" insecticideFactor="0.5" insecticideScalingFactor="0.006"/>
+        </anophelesParams>
+      </description>
+      <timed>
+        <deploy coverage="0.05775" cumulativeWithMaxAge="36" time="18"/>
+        <deploy coverage="0.1155" cumulativeWithMaxAge="36" time="19"/>
+        <deploy coverage="0.17325" cumulativeWithMaxAge="36" time="20"/>
+        ...
+      </timed>
+    </IRS>
+}}}
+Insecticide content decays according to the decay function given. Effects are a function of the remaining insecticide content:
+  * relative availability = exp( log(insecticideFactor) × [1-exp(-insecticideContent × insecticideScalingFactor)] )
+  * killing effect = baseFactor + insecticideFactor × [1-exp(-insecticideContent × insecticideScalingFactor)]
+  * survival factor = (1 - killing effect) / (1 - baseFactor)
+
+Deployment has the same options as with the other model.
 
 === Vector Availability ===
 
