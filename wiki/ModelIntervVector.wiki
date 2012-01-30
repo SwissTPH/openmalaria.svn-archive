@@ -163,7 +163,7 @@ IRS affects the availability of hosts to mosquitoes, and the chance of a mosquit
 
 Two models are available, each with its own description. Only one should be used at once. Both use standard [ModelInterventions#Timed_descriptions timed deployment].
 
-The older, simpler model has the following description:
+==== Older/simpler model ====
 {{{
     <IRS name="DDT test">
       <simpleDescription>
@@ -193,6 +193,7 @@ Three effects are available. The preprandialKillingEffect is only available as o
 
 All effects decay based on the decay function described (in this case, exponential decay with a half-life of 0.5 years; see [ModelDecayFunctions] for more options).
 
+==== Newer model ====
 The newer model is similar to the ITN model above (without the hole factors). Description is as follows:
 {{{
     <IRS name="new param">
