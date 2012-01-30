@@ -8,7 +8,7 @@ OpenMalaria currently supports two distinct sets of algorithms for transmission 
 
 The "vector transmission" model used by OpenMalaria is required for modeling interventions that have effects on mosquitoes, and hence change the vectorial capacity.  
 
-Simulations that include non-periodic changes in the vectorial capacity use a seasonally forced version of the difference equation model for vector dynamics of [http://www.tandfonline.com/doi/abs/10.1080/17513750701769857=all Chitnis et al (2008)Journal of Biological Dynamics Vol. 2, No. 3, July 2008, 259–285], further described in [http://www.ajtmh.org/cgi/content/full/83/2/230 Chitnis et al (2010) American Journal of Tropical Medicine and Hygiene Vol. 83, No. 2, 230--240].
+Simulations that include non-periodic changes in the vectorial capacity use a seasonally forced version of the difference equation model for vector dynamics of [http://dx.doi.org/10.1080/17513750701769857=all Chitnis et al (2008)Journal of Biological Dynamics Vol. 2, No. 3, July 2008, 259–285], further described in [http://www.ajtmh.org/cgi/content/full/83/2/230 Chitnis et al (2010) American Journal of Tropical Medicine and Hygiene Vol. 83, No. 2, 230--240].
 
 XML parameters for specifying this sub-model are described [XmlEntoVector here].
 
