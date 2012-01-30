@@ -41,6 +41,9 @@ All options not otherwise specified are point-time outputs.
 || N_v || The total number of host seeking mosquitoes ||
 || O_v || The number of infected host seeking mosquitoes ||
 || S_v || The number of infectious host seeking mosquitoes ||
+|| P_A || The probability that a mosquito doesn't find a host and doesn't die on given night ||
+|| P_df || The probablity that a mosquito finds a host on a given night, feeds and survives to return to the host-seeking population ||
+|| P_dif || The probability that a mosquito finds a host on a given night, feeds, gets infected with _P. falciparum_ and survives to return to the host-seeking population ||
 || input EIR || Requested entomological infection rate. This is a fixed periodic value, for comparison with simulated EIR. Units (from schema version 24): inoculations per adult per timestep. ||
 || simulated EIR || EIR acting on simulated humans. Units: from schema version 26, inoculations per adult per timestep, previously inoculations per person per timestep. ||
 || hosts || Total number of human hosts (fixed) ||
@@ -57,8 +60,8 @@ All options not otherwise specified are point-time outputs.
 || nets owned || Number of nets currently owned by the population ||
 || mean hole index || Average hole-index of all nets (will be not-a-number when no nets are owned) ||
 || mean insecticide content || Average insecticide content of all nets in mg/m² (will be not-a-number when no nets are owned) ||
-|| IRS insecticide content || Average insecticide content of all IRS sprayings in mg/m² (will be not-a-number when no spraying has been done or when the "simpleDescription" (old model) is used); added in schema 30 ||
-|| IRS effects || Average effect of IRS on the following three factors: availablity to mosquitoes, preprandial killing, postprandial killing; mean across protected humans; both "simpleDescription" and full "description" IRS models; added in schema 30 ||
+|| IRS insecticide content || Average insecticide content of hut walls over all huts (new IRS model only); added in schema 30 ||
+|| IRS effects || Average effect of IRS on the following three factors: availablity to mosquitoes, preprandial killing, postprandial killing; mean across all humans; both IRS models; added in schema 30 ||
 
 == Survey measures ==
 
