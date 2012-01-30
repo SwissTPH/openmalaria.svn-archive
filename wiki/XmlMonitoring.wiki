@@ -57,6 +57,8 @@ All options not otherwise specified are point-time outputs.
 || nets owned || Number of nets currently owned by the population ||
 || mean hole index || Average hole-index of all nets (will be not-a-number when no nets are owned) ||
 || mean insecticide content || Average insecticide content of all nets in mg/m² (will be not-a-number when no nets are owned) ||
+|| IRS insecticide content || Average insecticide content of all IRS sprayings in mg/m² (will be not-a-number when no spraying has been done or when the "simpleDescription" (old model) is used); added in schema 30 ||
+|| IRS effects || Average effect of IRS on the following three factors: availablity to mosquitoes, preprandial killing, postprandial killing; mean across protected humans; both "simpleDescription" and full "description" IRS models; added in schema 30 ||
 
 == Survey measures ==
 
