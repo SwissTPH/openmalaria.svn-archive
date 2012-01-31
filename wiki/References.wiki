@@ -2,13 +2,17 @@
 
 = Selected Publications =
 
-== Descriptions of the original models for malaria in humans ==
+== Descriptions of models for malaria in humans ==
 [http://www.ajtmh.org/content/75/2_suppl AJTMH 75 supplement 2, 2006]
+
+[http://www.plosmedicine.org/article/info%3Adoi%2F10.1371%2Fjournal.pmed.1001157 Ensemble modeling of the likely public health impact of a pre-erythrocytic malaria vaccine]
 
 == Descriptions of the models for malaria in mosquitoes ==
 [http://tandfprod.literatumonline.com/doi/abs/10.1080/17513750701769857 A mathematical model for the dynamics of malaria in mosquitoes feeding on a heterogeneous host population]
 
 [http://www.ajtmh.org/content/83/2/230.long Comparing the Effectiveness of Malaria Vector-Control Interventions Through a Mathematical Model]
+
+[http://www.springerlink.com/content/80n87323r7450183/ A Periodically-Forced Mathematical Model for the Seasonal Dynamics of Malaria in Mosquitoes]
 
 == Overall summary of the project ==
 [http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=2657312 Parasitology (2008), 135: 1507-1516 ]
