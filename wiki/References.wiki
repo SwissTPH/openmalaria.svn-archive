@@ -28,7 +28,7 @@
 
 [http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0018391 Determinants of the Cost-Effectiveness of Intermittent Preventive Treatment for Malaria in Infants and Children]
 
-[http://openmalaria.googlecode.com/svn/download/VIHpaper.pdf Cost-Effectiveness of the Introduction of a Pre-Erythrocytic Malaria
+[http://www.sciencedirect.com/science/article/pii/S1098301511015269 Cost-Effectiveness of the Introduction of a Pre-Erythrocytic Malaria
 Vaccine into the Expanded Program on Immunization in Sub-Saharan
 Africa: Analysis of Uncertainties Using a Stochastic Individual-Based
 Simulation Model of Plasmodium falciparum Malaria]
