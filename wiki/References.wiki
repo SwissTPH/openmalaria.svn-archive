@@ -31,6 +31,8 @@ Simulation Model of Plasmodium falciparum Malaria]
 
 [http://www.plosmedicine.org/article/info%3Adoi%2F10.1371%2Fjournal.pmed.1001157 Ensemble modeling of the likely public health impact of a pre-erythrocytic malaria vaccine]
 
+[http://www.malariajournal.com/content/11/1/20/abstract Importance of factors determining the effective lifetime of a mass, long-lasting, insecticidal net distribution: a sensitivity analysis]
+
 = Offline Documentation =
 
 In case you wish to have access to the documentation on this wiki without an internet connection, you can download and extract the following:
