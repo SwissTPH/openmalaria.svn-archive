@@ -15,7 +15,7 @@
 [http://www.springerlink.com/content/80n87323r7450183/ A Periodically-Forced Mathematical Model for the Seasonal Dynamics of Malaria in Mosquitoes]
 
 == Overall summary of the project ==
-[http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=2657312 Parasitology (2008), 135: 1507-1516 ]
+[http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=2657312 Towards a comprehensive simulation model of malaria epidemiology and control]
 
 == Applications ==
 [http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0003193 What Should Vaccine Developers Ask? Simulation of the Effectiveness of Malaria Vaccines]
