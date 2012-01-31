@@ -166,7 +166,7 @@ Two models are available, each with its own description. Only one should be used
 ==== Older/simpler model ====
 {{{
     <IRS name="DDT test">
-      <simpleDescription>
+      <description>
         <decay L="0.5" function="exponential"/>
         <anophelesParams mosquito="gambiae_ss" propActive="1">
           <deterrency value="0.56"/>
@@ -183,7 +183,7 @@ Two models are available, each with its own description. Only one should be used
           <preprandialKillingEffect value="0"/>
           <postprandialKillingEffect value="0.24"/>
         </anophelesParams>
-      </simpleDescription>
+      </description>
       <timed>
         <deploy coverage="0.95" time="7"/>
       </timed>
@@ -193,11 +193,11 @@ Three effects are available. The preprandialKillingEffect is only available as o
 
 All effects decay based on the decay function described (in this case, exponential decay with a half-life of 0.5 years; see [ModelDecayFunctions] for more options).
 
-==== Newer model ====
-The newer model is similar to the ITN model above (without the hole factors). Description is as follows:
+==== IRS model version 2 ====
+The revised model is similar to the ITN model above (without the hole factors). The description is as follows:
 {{{
-    <IRS name="new param">
-      <description>
+    <IRS name="DDT test v2">
+      <description_v2>
         <!-- Initial insecticide: units are μg/cm²; no variance here -->
         <initialInsecticide mu="118" sigma="0"/>
         <insecticideDecay L="0.15" function="exponential"/>
@@ -206,7 +206,7 @@ The newer model is similar to the ITN model above (without the hole factors). De
           <preprandialKillingEffect baseFactor="0.01" insecticideFactor="0.25" insecticideScalingFactor="0.008"/>
           <postprandialKillingEffect baseFactor="0.01" insecticideFactor="0.5" insecticideScalingFactor="0.006"/>
         </anophelesParams>
-      </description>
+      </description_v2>
       <timed>
         <deploy coverage="0.05775" cumulativeWithMaxAge="36" time="18"/>
         <deploy coverage="0.1155" cumulativeWithMaxAge="36" time="19"/>
