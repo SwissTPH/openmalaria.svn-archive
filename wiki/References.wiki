@@ -31,7 +31,7 @@
 [http://www.sciencedirect.com/science/article/pii/S1098301511015269 Cost Effectiveness of the Introduction of a Pre Erythrocytic Malaria]
 Vaccine into the Expanded Program on Immunization in Sub Saharan
 Africa Analysis of Uncertainties Using a Stochastic Individual Based
-Simulation Model of Plasmodium falciparum Malaria]
+Simulation Model of Plasmodium falciparum Malaria
 
 [http://www.plosmedicine.org/article/info%3Adoi%2F10.1371%2Fjournal.pmed.1001157 Ensemble modeling of the likely public health impact of a pre-erythrocytic malaria vaccine]
 
