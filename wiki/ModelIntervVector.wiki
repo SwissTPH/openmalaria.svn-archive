@@ -163,7 +163,7 @@ IRS affects the availability of hosts to mosquitoes, and the chance of a mosquit
 
 Two models are available, each with its own description. Only one should be used at once. Both use standard [ModelInterventions#Timed_descriptions timed deployment].
 
-==== Older/simpler model ====
+==== Original model (version 1) ====
 {{{
     <IRS name="DDT test">
       <description>
