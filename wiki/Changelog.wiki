@@ -23,6 +23,7 @@ To be released soon. Current changes:
   * New IRS model & parameterisation (to be documented)
   * Old IRS model can also have a preprandial effect
   * Heterogeneity of decay in the ITN model has been made per-human rather than per net (mistake in previous release)
+  * New continuous output options
 
 
 == Schema Version 29 ==
