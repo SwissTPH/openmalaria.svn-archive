@@ -10,7 +10,6 @@
 == Descriptions of the models for malaria in mosquitoes ==
 [http://tandfprod.literatumonline.com/doi/abs/10.1080/17513750701769857 A mathematical model for the dynamics of malaria in mosquitoes feeding on a heterogeneous host population]
 
-[http://www.ajtmh.org/content/83/2/230.long Comparing the Effectiveness of Malaria Vector-Control Interventions Through a Mathematical Model]
 
 [http://www.springerlink.com/content/80n87323r7450183/ A Periodically-Forced Mathematical Model for the Seasonal Dynamics of Malaria in Mosquitoes]
 
@@ -22,16 +21,15 @@
 
 [http://www.malariajournal.com/content/8/1/127 Simulation of the cost-effectiveness of malaria vaccines]
 
+[http://www.ajtmh.org/content/83/2/230.long Comparing the Effectiveness of Malaria Vector-Control Interventions Through a Mathematical Model]
+
 [http://www.sciencedirect.com/science/article/pii/S147149221100002X Uses of mosquito-stage transmission-blocking vaccines against Plasmodium falciparum]
 
 [http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0002661 Modelling the Epidemiological Impact of Intermittent Preventive Treatment against Malaria in Infants]
 
 [http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0018391 Determinants of the Cost-Effectiveness of Intermittent Preventive Treatment for Malaria in Infants and Children]
 
-[http://www.sciencedirect.com/science/article/pii/S1098301511015269 Cost Effectiveness of the Introduction of a Pre Erythrocytic Malaria]
-Vaccine into the Expanded Program on Immunization in Sub Saharan
-Africa Analysis of Uncertainties Using a Stochastic Individual Based
-Simulation Model of Plasmodium falciparum Malaria
+[http://www.sciencedirect.com/science/article/pii/S1098301511015269 Cost Effectiveness of the Introduction of a Pre Erythrocytic Malaria Vaccine into the Expanded Program on Immunization in Sub Saharan Africa Analysis of Uncertainties Using a Stochastic Individual Based Simulation Model of Plasmodium falciparum Malaria]
 
 [http://www.plosmedicine.org/article/info%3Adoi%2F10.1371%2Fjournal.pmed.1001157 Ensemble modeling of the likely public health impact of a pre-erythrocytic malaria vaccine]
 
