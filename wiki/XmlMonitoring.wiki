@@ -12,8 +12,8 @@ The monitoring system is described [Monitoring here] and within the [XmlScenario
 
 === Special output values ===
 
-Some outputs are the result of averaging some measure across individual somethings. If there are no individuals there is no valid value to give, so an output value of "nan" (or "-nan" or similar, short for Not A Number) is given.
-However, to make detection of computation errors easier, we try to avoid outputting nan values in survey outputs. (The same is not true for continuous outputs: several of these may output nan values at the beginning of the simulation or other times.)
+Some outputs are the result of averaging some measure over simulated individuals for a specified period or time point. If the denominator number of individuals is zero there is no valid value, so an output value of "nan" (or "-nan" or similar, short for Not A Number) is given.
+To make detection of computation errors easier, we try to avoid outputting nan values in survey outputs. (The same is not true for continuous outputs: several of these may output nan values at the beginning of the simulation or other times.)
 
 For the drug costing measures no value is listed at all for drugs never prescribed since the last survey.
 
