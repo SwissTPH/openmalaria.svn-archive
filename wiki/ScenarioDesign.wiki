@@ -148,4 +148,4 @@ Scenarios running on a 1-day timestep require PK and PD parameters for each drug
 </pharmacology>
 }}}
 
-Our collaborators at the Liverpool School of Tropical Medicine are developing a library of drug parameters; one can copy their `pharmacology` element from [http://code.google.com/p/openmalaria/source/browse/trunk/test/valerieCM/scenarioBase.xml?r=1545 this XML file] (near the end).
+The `pharmacology` element can be copied from the library of drug parameters in [http://code.google.com/p/openmalaria/source/browse/trunk/test/valerieCM/scenarioBase.xml?r=1545 this XML file] (near the end).
