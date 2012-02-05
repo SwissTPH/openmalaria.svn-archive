@@ -1,10 +1,12 @@
-#summary Other human models
+#summary Other properties of humans
 
-= Miscelaneous human models =
+= Miscellaneous properties of humans =
 
-== weight and availability to mosquitoes ==
+== host-weight and availability to mosquitoes ==
 
-Before schema 24, these models were hard coded; since then, the data for them has been placed in the scenario file. Standard values are as follows:
+From the perspective of the mosquito, human hosts can be thought of as a resource, different amounts of which are offered by different humans.
+The simulations allow the availability of individual humans to mosquitoes to depend on the host-age, with the intention of capturing observations that larger humans are bitten more by mosquitoes.
+Before schema 24, this function was hard coded; since then, the data for them have been included in the scenario file. Standard values (based on a dataset describing ponderal growth in rural Tanzania) are as follows:
 {{{
 <human>
   <availabilityToMosquitoes>
