@@ -50,9 +50,9 @@ Within a simulation of a single setting (a _scenario_), there are a number of ch
 
 This may be used as a template, adapting if necessary to the latest schema version.
 
-== Model ==
+== Model of Natural History ==
 
-The first decision to make is which models to use. You may have noticed above that the `parameters` element has an `interval="5"` attribute; this specifies the length (in days) of the fundamental time-step of the simulator. Some models work on a 5-day time-step, and some on a 1-day time-step (which has extra capabilities but results in a more complex and slower model). Note that several other parts of the configuration are entered using units of the length of a time-step.
+The `model` element of he scenario file defines the model of the natural history of an individual malaria infection. A critical element here is the `parameters` element which has an `interval="5"` attribute; this specifies the length (in days) of the fundamental time-step of the simulator. Some models of natural history work on a 5-day time-step, and some on a 1-day time-step (which has extra capabilities but results in a more complex and slower model). Note that several other parts of the configuration are entered using units of the length of a time-step.
 
 The main choices to make with regards to the model to use is the [ModelWithinHost#Asexual_infection_models within-host / infection model]:
   * "Descriptive" model: 5-day time-step; several parameterizations have been fit for this model
@@ -80,12 +80,13 @@ The `pharmacology` element is only required when a 1-day time-step is used, and 
 == Transmission model ==
 
 [ScenarioTransmission Transmission model configuration.] Two transmission models are available, independent of the length of the time-step ([ModelTransmission descriptions]):
-  * a simple model, termed "non vector" (model allows response to human infectiousness and using a forced infection rate from mosquitoes)
-  * a more detailed model of vector transmission; allows modelling of vector stage interventions
+  * simple "non vector": this assumes the values of the vectorial capacity, which force the simulations, to follow a fixed seasonal pattern, i.e. it treats the mosquito vector as a delay between human infectiousness and infection of humans, and does not allow interventions that modify vectorial capacity.  
+  * an explicit population model of malaria in the vector.  This allows modelling of vector stage interventions
 
 == Demography ==
 
-OpenMalaria uses a simple [ModelDemography demography model], enforcing a particular age distribution. Our standard set of demography data comes from Ifakara, Tanzania:
+OpenMalaria uses a [ModelDemography demography model], enforcing a particular age distribution. 
+Our standard set of demography data comes from Ifakara, Tanzania:
 
 {{{
   <demography maximumAgeYrs="90" name="Ifakara" popSize="1000">
