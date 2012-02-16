@@ -35,6 +35,8 @@
 
 [http://www.malariajournal.com/content/11/1/20/abstract Importance of factors determining the effective lifetime of a mass, long-lasting, insecticidal net distribution: a sensitivity analysis]
 
+[http://www.sciencedirect.com/science/article/pii/S1755436511000442 Can we depend on case management to prevent re-establishment of P. falciparum malaria, after local interruption of transmission?]
+
 = Offline Documentation =
 
 In case you wish to have access to the documentation on this wiki without an internet connection, you can download and extract the following:
