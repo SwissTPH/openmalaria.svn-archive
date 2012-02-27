@@ -37,6 +37,8 @@
 
 [http://www.sciencedirect.com/science/article/pii/S1755436511000442 Can we depend on case management to prevent re-establishment of P. falciparum malaria, after local interruption of transmission?]
 
+[http://openmalaria.googlecode.com/svn/download/reports/ALMA_report.pdf  Estimated malaria epidemiologically effective lifetime of mass LLIN distributions depending on transmission in African countries]
+
 = Offline Documentation =
 
 In case you wish to have access to the documentation on this wiki without an internet connection, you can download and extract the following:
