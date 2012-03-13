@@ -39,6 +39,8 @@
 
 [http://openmalaria.googlecode.com/svn/download/reports/ALMA_report.pdf  Estimated malaria epidemiologically effective lifetime of mass LLIN distributions depending on transmission in African countries]
 
+[http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0032587 Simulated Impact of RTS,S/AS01 Vaccination Programs in the Context of Changing Malaria Transmission]
+
 = Offline Documentation =
 
 In case you wish to have access to the documentation on this wiki without an internet connection, you can download and extract the following:
