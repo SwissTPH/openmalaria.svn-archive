@@ -1,4 +1,4 @@
-#summary Terminology used within the project
+#summary A glossary of project terminology.
 
 = Introduction =
 
