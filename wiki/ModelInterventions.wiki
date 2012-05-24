@@ -2,7 +2,7 @@
 
 = Interventions =
 
-An intervention is a method used to bring about a _change_ in the state of the simulation (eg to reduce transmission). Some of these are realistic strategies (e.g. vaccine treatment), some of these unrealistic (e.g. "uninfect vectors"), and some don't concern themselves with transmission (e.g. cohort selection). Note that existing malaria-control measures such as the initial state of the health-system are not considered an intervention since they form the initial state rather than change it.
+An intervention is a method used to bring about a _change_ in the state of the simulation (eg to reduce transmission). Some of these are realistic strategies (e.g. vaccine treatment), some of these unrealistic (e.g. "uninfect vectors"), and some don't concern themselves with transmission (e.g. cohort selection). Note that existing malaria-control measures such as the initial state of the health-system are not considered interventions. They are a descriptoin of the initial state that will be altered by the proposed intervention.
 
 
 == Descriptions ==
