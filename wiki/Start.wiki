@@ -3,9 +3,9 @@
 Welcome to the !OpenMalaria wiki on google-code.
 
 !OpenMalaria is an open source C++ program for simulating malaria epidemiology and interventions against malaria.  It is based on microsimulations of _Plasmodium falciparum_ malaria in humans, originally developed for simulating malaria vaccines and described  
-[http://www.ajtmh.org/content/75/2_suppl here]. These models simulate the dynamics of malaria parasitaemia in the course of an infection, of transmission, of immunity, and of the processes leading to illness and death. The system is set up to simulate malaria in village, or district size human populations. The original models have been extended to include simulation of the dynamics of malaria in the mosquito vector, and by including alternative model structures for many of the components of the human models. The models allow for variations between humans in their exposure to mosquitoes, and in their responses to the parasite, but do not consider  
+[http://www.ajtmh.org/content/75/2_suppl here]. These models simulate the dynamics of malaria parasitaemia in the course of an infection, of transmission, of immunity, and of the processes leading to illness and death. The system is set up to simulate malaria in village, or district size human populations. The original models have been extended to include simulation of the dynamics of malaria in the mosquito vector, and by including alternative model structures for many of the components of the human models. The models allow for variations among humans in their exposure to mosquitoes, and in their responses to the parasite.
 
-!OpenMalaria can be used to simulate interventions against malaria (both interventions against the mosquito vector, and interventions that acting against malaria in humans (e.g. by chemotherapy, or vaccines).   
+!OpenMalaria can be used to simulate interventions against the mosquito vector and interventions that act against malaria in humans (for example, chemotherapy, or vaccines).   
 
 !OpenMalaria is a general platform for comparing, fitting, and evaluating different malaria models, to ensure that the models reproduce patterns of infection and disease observed in the field in malaria endemic areas. 
 
@@ -13,7 +13,7 @@ Welcome to the !OpenMalaria wiki on google-code.
 
 The main applications of !OpenMalaria are:
 
-== Simulation of current malariological situations ==
+== Simulation of current malarialogical situations ==
 
 Simulations of _status quo_ malaria situations can be used for estimating parameters that have not been measured from field data.  For instance, the models can be used to predict mortality rates from entomological data. Such simulations are also useful for validating models.
 
