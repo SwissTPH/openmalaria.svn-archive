@@ -2,7 +2,7 @@
 
 = Interventions =
 
-An intervention is a method used to bring about a _change_ in the state of the simulation (eg to reduce transmission). Some of these are realistic strategies (e.g. vaccine treatment), some of these unrealistic (e.g. "uninfect vectors"), and some don't concern themselves with transmission (e.g. cohort selection). Note that existing malaria-control measures such as the initial state of the health-system are not considered interventions. They are a descriptoin of the initial state that will be altered by the proposed intervention.
+An intervention is a method used to bring about a _change_ in the state of the simulation (eg to reduce transmission). Some of these are realistic strategies (e.g. vaccine treatment), some of these unrealistic (e.g. "uninfect vectors"), and some don't concern themselves with transmission (e.g. cohort selection). Note that existing malaria-control measures such as the initial state of the health-system are not considered interventions. They are a description of the initial state that will be altered by the proposed intervention.
 
 
 == Descriptions ==
@@ -18,12 +18,12 @@ Documentation of interventions can be found on these pages:
 
 There are two generic methods of intervention deployment in openmalaria:
 
- * *Timed* mass-deployment campaigns. At a particular time point, this deployment method targets either the whole population or at a restricted age-range. They also have a coverage parameter. ([http://code.google.com/p/openmalaria/wiki/XmlScenario?ts=1277108255&updated=XmlScenario#Timed:_timed Configuration])
- * Age-based *continuous* deployment. Within the simulation's intervention period, these deploy interventions to individuals reaching a target age, given that they are determined to be within the coverage. ([XmlScenario#Continuous:_continuous Configuration])
+ * *Timed* mass-deployment campaigns. At a particular time point, this deployment method targets either the whole population or a subset of the population restricted by age. Timed deployment campaigns are described by a coverage parameter. ([http://code.google.com/p/openmalaria/wiki/XmlScenario?ts=1277108255&updated=XmlScenario#Timed:_timed Configuration])
+ * Age-based *continuous* deployment. Within the simulation's intervention period, interventions are deployed as individuals reach a target age, given that the individuals are within the coverage. ([XmlScenario#Continuous:_continuous Configuration])
 
-In both cases, the coverage parameter describes the probability of each individual with the required age receiving the intervention, independently of interventions received previously by that individual.
+In both deployment situations, the coverage parameter describes the probability of each individual with the required age receiving the intervention, independently of interventions received previously by that individual.
 
-Deployment of vaccines uses these basic methods, but is a special case. Each human "remembers" how many vaccine doses they have received (through continuous and campaign deployment combined). Given a continuous vaccination schedule for vaccinating at ages `a_0`, `a_1`, ..., each individual, at age `a_n` is vaccinated (through the continuous vaccination program) if and only if they are included within the vaccine coverage, and they have had `n - 1` previous vaccinations. This is intended to account for individuals dropping out of the vaccination program and not returning, and those vaccinated through a mass campaign not also getting an age-based vaccination at (roughly) the same time.
+Deployment of vaccines to a population is a special case. Each human "remembers" how many vaccine doses they have received (through continuous and campaign deployment combined). Given a continuous vaccination schedule for vaccinating at ages `a_0`, `a_1`, ..., each individual, at age `a_n` is vaccinated (through the continuous vaccination program) if and only if they are included within the vaccine coverage, and they have had `n - 1` previous vaccinations. Thus, account is taken of individuals that may dropout of the continuous vaccination program never to return, and those vaccinated through a mass campaign who would likely skip an age-based vaccination at (roughly) the same time.
 
 
 == Configuration ==
@@ -89,7 +89,7 @@ Attributes this can include:
 || `begin` || integer || The time-step of the intervention period at which this intervention becomes active (default: 0) ||
 || `end` || integer || The time-step of the intervention period at which this intervention becomes inactive (default: 2147483647) ||
 
-Note that before schema 30, the youngest age at which continuous interventions can be deployed is 1 time-step old (1 over time-steps-per-year), though they are still efficacious on the first update. From schema 30 interventions can be deployed from age 0, but have their first effect on the following time-step (since it is inappropriate to let interventions have an instant effect).
+Note that before schema 30, the youngest age at which continuous interventions can be deployed is 1 time-step old (1 over time-steps-per-year), though they are still efficacious on the first update. Since schema 30 interventions can be deployed from age 0, but have their first effect on the following time-step (since it is inappropriate to let interventions have an instant effect).
 
 
 === Timed descriptions ===
@@ -114,10 +114,10 @@ To clarify age based constraints, they are met if minAge ≤ age < maxAge.
 
 ==== Cumulative coverage deployment ====
 
-Without the `cumulativeWithMaxAge` option, the intervention deployment simply targets the proportion of eligible humans described by the coverage parameter. With it, the number of protected humans are first counted and unprotected humans targeted such that the total number of eligible humans reaches the proportion described by coverage.
+Without the `cumulativeWithMaxAge` option, the intervention deployment simply targets the proportion of eligible humans described by the coverage parameter. With the option, the number of protected humans are first counted and unprotected humans targeted such that the total number of eligible humans reaches the proportion described by coverage.
 
-Humans are considered protected by an intervention when the last time they received this intervention was less than "max intervention age" (cumulativeWithMaxAge attribute) timesteps ago. Those considered protected retain their original intervention (bed net/vaccination/...).
+Humans are considered protected by an intervention if the last time step they received the intervention is less than the "max intervention age" (cumulativeWithMaxAge attribute).    Those considered protected retain their original intervention (bed net/vaccination/...).
 
-When the existing proportion of humans protected, _p_, is less than the desired coverage level _c_, unprotected humans have chance [http://openmalaria.googlecode.com/svn/wiki/eqns/cum_deploy_cov.png] of receiving a new instance of the intervention (net/vaccine dose/house spraying etc.). This applies across all humans eligible for coverage (those within the given age range and within the cohort if applicable).
+When the existing proportion of humans protected, _p_, is less than the desired coverage level _c_, unprotected humans have chance [http://openmalaria.googlecode.com/svn/wiki/eqns/cum_deploy_cov.png] of receiving a new instance of the intervention (net/vaccine dose/house spraying etc.). This rule applies across all humans eligible for coverage (those within the given age range and within the cohort if applicable).
 
-This option was added in r1595 (to be released as version 25). It is available for the vaccine, IPTi, ITN, IRS and VA interventions, and additionally cohort selection (special case where the "max intervention age" parameter doesn't do anything since humans are clearly either in the cohort or not).
+Cumulative coverage deployment was added in r1595 (released as version 25), and is available for the vaccine, IPTi, ITN, IRS and VA interventions, and for interventions applied to specific cohorts, where grouping is identified by cohort membership, not age.
