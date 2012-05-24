@@ -7,7 +7,7 @@ Welcome to the !OpenMalaria wiki on google-code.
 
 !OpenMalaria can be used to simulate interventions against the mosquito vector and interventions that act against malaria in humans (for example, chemotherapy, or vaccines).   
 
-!OpenMalaria is a general platform for comparing, fitting, and evaluating different malaria models, to ensure that the models reproduce patterns of infection and disease observed in the field in malaria endemic areas. 
+!OpenMalaria is a general platform for comparing, fitting, and evaluating different malaria models, to ensure that the models reproduce patterns of infection and disease observed in the field in malaria-endemic areas. 
 
 = Applications =
 
@@ -15,37 +15,38 @@ The main applications of !OpenMalaria are:
 
 == Simulation of current malarialogical situations ==
 
-Simulations of _status quo_ malaria situations can be used for estimating parameters that have not been measured from field data.  For instance, the models can be used to predict mortality rates from entomological data. Such simulations are also useful for validating models.
+Simulations of _status quo_ malaria situations can be used to estimate parameters that have not been measured from field data.  For instance, models can be used to predict mortality rates from entomological data. Such simulations are also useful for validating models.
 
-An overview of how to set up and use !OpenMalaria to simulate malaria in a particular field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
+An overview of how to use !OpenMalaria to simulate malaria in a particular field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
 
 == Prediction of epidemiological impacts of interventions ==
 
-Prediction of epidemiological impacts of interventions has two main uses:
-- analysis of novel interventions to inform the development of target product profiles
-- analysis of the effects of different deployment strategies for existing interventions, to help in planning malaria control programs. 
+Prediction of epidemiological impacts of interventions is used to 
 
-There are several methods of carrying out predictive simulations:
+- analyze novel interventions to inform the development of target product profiles
+- analyze the effects of different deployment strategies for existing interventions, to help in planning malaria control programs. 
+
+There are several methods for carrying out predictive simulations:
 
  * as a [SetupOverview stand-alone program], capable of simulating a few hand-crafted scenarios and producing results analyzable with spread-sheets or simple scripts
- * via the [http://boinc.berkeley.edu/ BOINC] volunteer computing platform [http://www.malariacontrol.net/] and a semi-automated experiment design and analysis platform (under development), capable of handling entire experiments of 10000-100000 scenarios
+ * via the [http://boinc.berkeley.edu/ BOINC] volunteer computing platform [http://www.malariacontrol.net/] and a semi-automated experiment design and analysis platform, capable of handling entire experiments of 10000-100000 scenarios
  * via a GUI-driven job submission system (under development), capable of deploying simulations on different computer resources.
 
 == Economic (cost-effectiveness) analyses ==
 
-The outputs from predictive simulations can be linked to cost data from endemic countries to analyse the economics of malaria interventions.  
+The outputs from predictive simulations can be linked to cost data from endemic countries to analyze the economics of malaria interventions.  
 
 == Uncertainty analysis ==
 
-The project also analyzes different components of uncertainty associated with sets of model predictions, considering stochastic uncertainty, parameter uncertainty, model uncertainty. 
+The value of a point estimate is greatly enhanced when the variability associated with that point estimate is also available. The project analyzes different components of uncertainty associated with sets of model predictions, considering stochastic uncertainty, parameter uncertainty, and model uncertainty. 
 
 = Software =
 
 == [Code] ==
 
-The core program is now entirely written in C++ with a [http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU GPL 2 licence]. 
+The core program is written in C++ with a [http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU GPL 2 licence]. 
 
-The source code can be found [http://code.google.com/p/openmalaria/source/browse/ here] and there is an overview of the state of !OpenMalaria software development [https://www.ohloh.net/p/openmalaria here].  
+The source code can be found [http://code.google.com/p/openmalaria/source/browse/ here].  There is an overview of the state of !OpenMalaria software development [https://www.ohloh.net/p/openmalaria here].  
 
 Instructions for compiling the code can be found [BuildSystem here].
 
