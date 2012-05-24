@@ -6,6 +6,6 @@ OpenMalaria is a simulator designed to model the cost and effectiveness of inter
 
 Documented here:
 
- * [SetupOverview Installing] OpenMalari using it to run some example scenarios
+ * [SetupOverview Installing] OpenMalaria using it to run some example scenarios
  * How to [ScenarioDesign design and configure] scenarios
  * Some information how to analyze results
