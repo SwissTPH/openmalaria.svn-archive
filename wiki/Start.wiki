@@ -23,8 +23,11 @@ An overview of how to use !OpenMalaria to simulate malaria in a particular field
 
 Prediction of epidemiological impacts of interventions is used to 
 
-- analyze novel interventions to inform the development of target product profiles
-- analyze the effects of different deployment strategies for existing interventions, to help in planning malaria control programs. 
+ * analyze novel interventions to inform the development of target product profiles
+
+ * analyze the effects of different deployment strategies for existing interventions
+
+ * analysis the potential effects for new interventions or planned malaria control programs. 
 
 There are several methods for carrying out predictive simulations:
 
