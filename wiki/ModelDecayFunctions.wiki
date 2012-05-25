@@ -19,7 +19,7 @@ added into schema version 25. The following set of functions are available:
 where `L` is a description of the rate of decay, either the time until half decay or the time until full decay (see above) in years, and `k` is a shape
 parameter (no dimension).
 
-The smooth compact and linear decay functions reach zero at time L, whereas the
+The smooth-compact, step, and linear decay functions reach zero at time L, whereas the
 Weibull, Hill and exponential functions never reach zero and have half their
 original efficacies at time L.
 
