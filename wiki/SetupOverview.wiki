@@ -2,19 +2,19 @@
 
 = Participation in the volunteer computing effort
 
-If you want to help the project by offering down-time on your computer to run simulations, you can join up at: [http://www.malariacontrol.net malariacontrol.net]
+If you want to help the project by offering down-time on your computer to run simulations, join our project at: [http://www.malariacontrol.net malariacontrol.net]
 
 = Installing =
 
 See also the [Binaries] page for information on installing OpenMalaria.
 
 If you want to run your own simulations, you have the following options:
-  * install [openmalariaTools] (recommended)
-  * [BuildSystem build the executables from source]
+  * install the compiled tool with GUI [OpenMalariaTools]  
+  * build the openmalaria program from [BuildSystem source]
 
 = Running =
 
-[openmalariaTools OpenMalariaTools] includes facilities for updating and running scenarios. Alternatively, they can be run directly from the command line (or using some other tool) as described on the [UtilsRunning] page.
+[openmalariaTools OpenMalariaTools] includes facilities for updating and running scenarios. Alternatively, they can be run directly from the command line as described on the [UtilsRunning] page.
 
 = Tools =
 
