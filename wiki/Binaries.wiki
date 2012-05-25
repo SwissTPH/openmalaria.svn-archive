@@ -2,8 +2,9 @@
 
 = OpenMalaria simulator =
 
-The simulator itself can be:
+The simulator can be:
 
+  * installed and used with a graphical user interface [openmalariaTools  - OpenMalariaTools] 
   * [openmalariaTools installed and used with a graphical user interface - OpenMalariaTools] 
   * [BuildSystem compiled from source and run via command line on individual pc's]
   * run over BOINC ([http://malariacontrol.net/ join our volunteer computing effort])
