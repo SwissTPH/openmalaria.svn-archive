@@ -20,10 +20,10 @@ Still have problems? We want to know! Send us an e-mail, or, better yet open an 
 
 = Experiment creator =
 
-The experiment creator tool is designed to produce a full set of XML files for an experiment from a set of sweeps (factors) each with one or more arms (values). [ExperimentDesign More ...]
+The experiment creator tool is designed to produce a full set of XML files for an experiment from a set of sweeps (factors) each with one or more arms (values). [ExperimentDesign more ... ]
 
 
 
 = Schema translator =
 
-The scenario updater tool, SchemaTranslator, is integrated into OpenMalariaTools and used automatically when running old scenario files. [XmlUpdateScenario More ...]
+The scenario updater tool, SchemaTranslator, is integrated into OpenMalariaTools and used automatically when running old scenario files. [XmlUpdateScenario more ... ]
