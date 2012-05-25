@@ -8,23 +8,21 @@ The simulator itself can be:
   * [BuildSystem compiled from source and run via command line on individual pc's]
   * run over BOINC ([http://malariacontrol.net/ join our volunteer computing effort])
 
-We can, upon request, create packages with just the OpenMalaria simulator and few examples available for win32/OS X/linux 32/64-bit platforms. Please ask if none of the links above provide what you need (because you're using a Mac or need a newer version).
+We can, upon request, create packages with just the OpenMalaria simulator and a few examples for win32/OS X/linux 32/64-bit platforms. Please ask if none of the links above provide what you need.
 
 == Troubleshooting ==
 
 Note that, for windows, you may well have to install the .net framework (if trying to run OpenMalaria as above gives you an error message such as "reinstall the application", try this). Microsoft .net can be downloaded from the [http://www.microsoft.com/net/ Microsoft website].
 
-Still have problems?, send us an e-mail, or open an [http://code.google.com/p/openmalaria/issues/list issue]) containing the error message.
+Still have problems? We want to know! Send us an e-mail, or open an [http://code.google.com/p/openmalaria/issues/list issue]) containing the error message.
 
 
 = Experiment creator =
 
 The experiment creator tool is designed to produce a full set of XML files for an experiment from a set of sweeps (factors) each with one or more arms (values). [ExperimentDesign More ...]
 
-It is: integrated into OpenMalariaTools? Usable as a stand-alone download?
+
 
 = Schema translator =
 
 The scenario updater tool, SchemaTranslator, is integrated into OpenMalariaTools and used automatically when running old scenario files. [XmlUpdateScenario More ...]
-
-Can it also be used manually from OpenMalariaTools? Can it also be used stand-alone?
