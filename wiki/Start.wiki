@@ -52,9 +52,7 @@ Instructions for compiling the code can be found [BuildSystem here].
 
 == [ModelsOverview Models] ==
 
-Each simulation requires implementation of various components, from transmission to within-host parasite dynamics to drug action.
-
-There is an overview of these model components [ModelsOverview here]. 
+Each simulation requires implementation of various components, from transmission to within-host parasite dynamics to drug action. These model components are described in more detail [ModelsOverview here]. 
 
 = Team =
 
