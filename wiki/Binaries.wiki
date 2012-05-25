@@ -4,7 +4,7 @@
 
 The simulator can be:
 
-  * installed and used with a graphical user interface, see [openmalariaTools  - OpenMalariaTools]  
+  * installed and used with a graphical user interface, see [openmalariaTools  OpenMalariaTools]  
   * complied from source and run via command line, see [BuildSystem BuildSystem]
   * run over the BOINC volunteer computing network, see [http://malariacontrol.net/  malariacontrol.net ] 
  
