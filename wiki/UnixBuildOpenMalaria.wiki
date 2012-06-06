@@ -18,24 +18,21 @@ Openmalaria has the usual, and a few not-so-usual dependences. Most of these pac
 
 * python 2.6
 * c and c++ libraries (these are contained within the ubuntu package *buildessential*)
- * gsl − If not included in your linux distribution, Install the [http://packages.debian.org/search?keywords=libgsl0-dev libgsl0-dev] package. For older linux distributions, please check that you are using gsl version >= 13, otherwise some black box tests might fail.
+* gsl − If not included in your linux distribution, Install the [http://packages.debian.org/search?keywords=libgsl0-dev libgsl0-dev] package. For older linux distributions, please check that you are using gsl version >= 13, otherwise some black box tests might fail.
 * libboost1.42
 * [UnixBuildXercesC] [http://packages.debian.org/search?keywords=libxerces-c2-dev libxerces-c2-dev]
- * xsdcxx − Install the [http://packages.debian.org/search?keywords=xsdcxx xsdcxx] package or manually install from: http://codesynthesis.com/products/xsd/download.xhtml
-
+* xsdcxx − Install the [http://packages.debian.org/search?keywords=xsdcxx xsdcxx] package or manually compile and install from: http://codesynthesis.com/products/xsd/download.xhtml
 *[Zliblg-dev] [http://packages.debian.org/search?keywords=Zliblg-dev Zliblg-dev]
 
-If you want to contribute otherwise dormant cpu to the project via BOINC, also add
+If you would like to contribute your otherwise dormant cpu cycles to the project via BOINC, also add
 
- * [UnixBuildBoinc] [http://packages.debian.org/search?keywords=boinc-dev boinc-dev] (optional; unless you want to deploy a boinc version you don't need this)
+ * [UnixBuildBoinc] [http://packages.debian.org/search?keywords=boinc-dev boinc-dev] 
 
-The openmalaria source code is stored in a source-safed repository that is managed with [subversion] [http://subversion.apache.org/packages.html subversion]. Thus you'll also need to have subversion installed when you check out the source code. The source safed repository can be access via the command line or GUI or IDE tools.
+The openmalaria source code is stored in a source-safed repository that is managed with [subversion] [http://subversion.apache.org/packages.html subversion]. Thus, you'll also need to have subversion installed when you check out the source code. The source safed repository can be access via the command line or GUI or IDE tools.
 
 == Download the openmalaria source code and compile it==
 
-The openmalaria source code is stored in a source-safed repository that is managed with [subversion] [http://subversion.apache.org/packages.html subversion]. Thus you'll also need to have subversion installed when you check out the source code.
-
-First, [http://code.google.com/p/openmalaria/source/checkout check out the repository] and {{{cd}}} to that directory.
+First, [http://code.google.com/p/openmalaria/source/checkout check out the repository] and {{{cd}}} to that checkout directory - this should be /malariacontrol/openmalaria/
 
 Again, it's much neater to build code from a separate directory, so all the generated files are kept out of the way:
 {{{
@@ -43,7 +40,7 @@ mkdir build
 cd build
 }}}
 
-The build directory will be empty - the next task is to *configure* the Makefiles that will be used to compile and link the source code and libraries. This task is best approached using the command line, or gui versions of the Cmake program.
+The build directory (/malariacontrol/openmalaria/build/ ) will initially be empty - the next task is to *configure* the Makefiles that will be used to compile and link the source code and libraries. The configured makefiles will appear in the build directory. This task can be approached using the command line, or gui versions of the cmake program
 
 Run cmake, passing the path of the openMalaria directory you checked out:
 {{{
@@ -61,9 +58,10 @@ Now you should be ready to build. Depending on which build-tool you selected (cm
 
 === Static build ===
 
-Be aware that checking the *STATICALLY_LINK option doesn't ensure you that the gsl and xerces static libs will be used*. The system will automatically take the dynamic libraries although this option is checked. You should then ensure that the system will use the static libraries by  giving the paths (in most cases /usr/local/lib or /usr/lib) to the static libraries.
+There are a few hiccups with the static build. First,  you'll need to compile the static Xerces library from source on your machine in order to avoid mutex errors. When compiling Xerces, you'll need to inform the linker to build the static version with the *-static-libgcc* argument.
 
-To avoid problems using static Xerces libraries (mutex errors) you'll need to compile xerces from on your own system. You will need to give the linker the *-static-libgcc* argument.
+Be aware that checking the *STATICALLY_LINK* option doesn't ensure you that the gsl and xerces static libs will be used. The system will automatically take the dynamic libraries although this option is checked. You'll have to force the system to use the static libraries by explicitly giving the paths (in most cases /usr/local/lib or /usr/lib) to the static version of these libraries. 
+
 
 The configure command would be similar to these two examples:
 
@@ -73,14 +71,13 @@ Building Xerces-c 2.8:
 Building Xerces-c 3.1.1:	
 ./configure --disable-shared --disable-network LDFLAGS=-static-libgcc
 
-After this step you should be able to build a proper static openMalaria build. You still have to make sure that
-the openMalaria building process will use the static libstdc++. To ensure that, please pass the arguments *-static-libgcc -Wl,-Bstatic -lstdc++* to the linker. 
+Once these configuration issues are sorted, you should be able to build a proper static openMalaria build. Again, during the openMalaria building process  pass the arguments *-static-libgcc -Wl,-Bstatic -lstdc++* to the linker, to ensure that the correct, static version of these libraries is used.
 
 After having compiled the binaries, you can check that the correct dependencies have been installed  with *ldd*.  
 
 == Running the included tests ==
 
-Several unit tests have been built for openmalaria and these should be run after every build, to confirm that nothing has gone amiss in the build process.
+Several unit tests have been built for openmalaria. These should be run after every build, to confirm that nothing has gone amiss in the build process.
 From the build directory, run ctest (can pass the `-j 2` option to speed up):
 {{{
 $ ctest
