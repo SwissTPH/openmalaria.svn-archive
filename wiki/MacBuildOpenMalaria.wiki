@@ -34,4 +34,4 @@ Whether you use Xcode or Makefiles, for the static build, xerces needs to be lin
   * Build the xsdcxx target (select libxsdcxx.a as the active target; build).
   * Then build the rest with the ALL_BUILD target.
   * Run the tests by building the RUN_TESTS target.
- * If cmake regenerates the project for some reason, you need to reload it in Xcode. Sometimes it will ask you, but sometimes it *won't* (and you need to manually reload the project in xcode).
+ Should cmake regenerate the project for some reason, you'll need to reload it in Xcode. 
