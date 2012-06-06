@@ -2,55 +2,70 @@
 
 = Building OpenMalaria =
 
-This page gives a brief idea of how to compile OpenMalaria.
+This page gives a brief idea of how to compile OpenMalaria on a unix or linux machine.
 
-Normally we create a parent directory and put all dependencies and code there:
+As a matter of housekeeping, normally we create a central location for all dependencies and code for the project, in honor of our code-crunching colleagues at BOINC, we'll call this directory malariacontrol 
 {{{
 cd ~
 mkdir malariacontrol
 cd malariacontrol
 }}}
-You can also create a malariacontrol/lib dir and put dependency libraries there. But it is recommended that you install them (make install) in which case you won't need to do this.
+You could at this time also create a malariacontrol/lib dir and install there libraries upon which opemmalaria depends. But our recommendation is to install dependencies globally into your system (for example, using make install).
 
 == Dependencies ==
 
- * [UnixBuildBoinc] [http://packages.debian.org/search?keywords=boinc-dev boinc-dev] (optional; unless you want to deploy a boinc version you don't need this)
- * [UnixBuildXercesC] [http://packages.debian.org/search?keywords=libxerces-c2-dev libxerces-c2-dev]
- * xsd − Install the [http://packages.debian.org/search?keywords=xsdcxx xsdcxx] package or manually install from: http://codesynthesis.com/products/xsd/download.xhtml
- * gsl − Install the [http://packages.debian.org/search?keywords=libgsl0-dev libgsl0-dev] package or manually install... For older linux distributions, please check that you are using gsl version >= 13, otherwise you will have some failing black box tests.
- * TODO: some boost libraries
+Openmalaria has the usual, and a few not-so-usual dependences. Most of these packages are distributed with your linux distribution and only need to be installed:
 
-== Compiling ==
+* python 2.6
+* c and c++ libraries (these are contained within the ubuntu package *buildessential*)
+ * gsl − If not included in your linux distribution, Install the [http://packages.debian.org/search?keywords=libgsl0-dev libgsl0-dev] package. For older linux distributions, please check that you are using gsl version >= 13, otherwise some black box tests might fail.
+* libboost1.42
+* [UnixBuildXercesC] [http://packages.debian.org/search?keywords=libxerces-c2-dev libxerces-c2-dev]
+ * xsdcxx − Install the [http://packages.debian.org/search?keywords=xsdcxx xsdcxx] package or manually install from: http://codesynthesis.com/products/xsd/download.xhtml
+
+*[Zliblg-dev] [http://packages.debian.org/search?keywords=Zliblg-dev Zliblg-dev]
+
+If you want to contribute otherwise dormant cpu to the project via BOINC, also add
+
+ * [UnixBuildBoinc] [http://packages.debian.org/search?keywords=boinc-dev boinc-dev] (optional; unless you want to deploy a boinc version you don't need this)
+
+The openmalaria source code is stored in a source-safed repository that is managed with [subversion] [http://subversion.apache.org/packages.html subversion]. Thus you'll also need to have subversion installed when you check out the source code. The source safed repository can be access via the command line or GUI or IDE tools.
+
+== Download the openmalaria source code and compile it==
+
+The openmalaria source code is stored in a source-safed repository that is managed with [subversion] [http://subversion.apache.org/packages.html subversion]. Thus you'll also need to have subversion installed when you check out the source code.
 
 First, [http://code.google.com/p/openmalaria/source/checkout check out the repository] and {{{cd}}} to that directory.
 
-It's much neater to build code from a separate directory, so all the generated files are kept out of the way:
+Again, it's much neater to build code from a separate directory, so all the generated files are kept out of the way:
 {{{
 mkdir build
 cd build
 }}}
 
-Now run cmake, passing the path of the openMalaria directory you checked out:
+The build directory will be empty - the next task is to *configure* the Makefiles that will be used to compile and link the source code and libraries. This task is best approached using the command line, or gui versions of the Cmake program.
+
+Run cmake, passing the path of the openMalaria directory you checked out:
 {{{
 cmake-gui ..
 # You can use ccmake or just cmake instead of cmake-gui
 }}}
-cmake-gui and ccmake are interactive; you first *configure*, then optionally change some options, then *configure* again and finally *generate*. Options you may want to change (e.g. to create a version to deploy to as a boinc binary):
+Note that, cmake-gui and ccmake are interactive; you first *configure*, then select or adjust options, rerun the configuration step , and finally *generate* the executable binary. Options you may want to change (e.g. to create a version to deploy as a boinc binary):
 || option || ||
-|| CMAKE_BUILD_TYPE || You probably should change this; I'd suggest using RelWithDebInfo. ||
+|| CMAKE_BUILD_TYPE || You probably should change this;  RelWithDebInfo works well ||
 || BOINC_INTEGRATION || Enables BOINC. Defaults to off. ||
 || STATICALLY_LINK || Try linking everything statically instead of dynamically. Don't use unless you know you want it. ||
-|| CMAKE_VERBOSE_MAKEFILE || If you're having trouble building and want to tweak the linker command... ||
+|| CMAKE_VERBOSE_MAKEFILE || If you're having trouble building and want to tweak the linker command, you'll need more detail in the makefile ||
 
 Now you should be ready to build. Depending on which build-tool you selected (cmake will ask when configuring on an empty build directory), you can run `make`, or you can open the project/solution file generated by cmake in the build dir.
 
 === Static build ===
 
-Checking the *STATICALLY_LINK option doesn't ensure you that the gsl and xerces static libs will be used*. The system will automatically take the dynamic libraries although this option is checked. You should then ensure that the system will use the static libraries by  giving the paths (in most cases /usr/local/lib or /usr/lib) to the static libraries.
+Be aware that checking the *STATICALLY_LINK option doesn't ensure you that the gsl and xerces static libs will be used*. The system will automatically take the dynamic libraries although this option is checked. You should then ensure that the system will use the static libraries by  giving the paths (in most cases /usr/local/lib or /usr/lib) to the static libraries.
 
-To avoid problems using static Xerces libraries (mutex errors) you should use xerces sources and compile them on your own system. You will have to give the linker the *-static-libgcc* argument.
+To avoid problems using static Xerces libraries (mutex errors) you'll need to compile xerces from on your own system. You will need to give the linker the *-static-libgcc* argument.
 
-The configure command would be pretty much identical to those two examples:
+The configure command would be similar to these two examples:
 
 Building Xerces-c 2.8:
 ./runConfigure -plinux -cgcc -xg++ -minmem -nsocket -tnative -rpthread -s -l-static-libgcc
@@ -61,10 +76,11 @@ Building Xerces-c 3.1.1:
 After this step you should be able to build a proper static openMalaria build. You still have to make sure that
 the openMalaria building process will use the static libstdc++. To ensure that, please pass the arguments *-static-libgcc -Wl,-Bstatic -lstdc++* to the linker. 
 
-After having compiled the binaries, you can check the dependencies with ldd.  
+After having compiled the binaries, you can check that the correct dependencies have been installed  with *ldd*.  
 
 == Running the included tests ==
 
+Several unit tests have been built for openmalaria and these should be run after every build, to confirm that nothing has gone amiss in the build process.
 From the build directory, run ctest (can pass the `-j 2` option to speed up):
 {{{
 $ ctest
