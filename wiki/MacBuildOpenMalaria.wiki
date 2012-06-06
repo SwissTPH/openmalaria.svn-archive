@@ -1,21 +1,21 @@
-#summary Brief build instructions for the mac.
+#summary Brief build instructions for MAC OSX.
 
 = Dependencies =
 
-This is similar to [UnixBuildOpenMalaria unix].
+Dependencies are  similar to those required for the unix build [UnixBuildOpenMalaria unix]. However, be aware that several libraries and toolkits haven't yet been ported over to Mac snow leopard, and in particular, for Xcode 4.3 does not support the gcc compilers. 
 
-Additionally, you should install [http://python.org/download/ python 2.6] (just download and run the mac installer). Python 3.0 doesn't work at the moment.
+For instance, you will need to build python GTK, which  is required to build the openTools front end.  If you insist, be prepared to roll up you sleeves and get a cup of coffee before diving in ... or, save yourself some trouble, and run openmalaria under ubuntu on a linux virtual machine.
+
+
 
 = Backward compatibility =
 
-In CMake you have to specify the older SDK version you would like to use to ensure backward compatibility.
-Please beware of the fact that boinc won't be usable with SKDs < 10.3.9.
-
-You have to use the flag CMAKE_OSX_SYSROOT to specify which SDK you would like to use.
+In cmake you have to specify the older SDK version you would like to use to ensure backward compatibility.
+Please beware of the fact that boinc won't be usable with SKDs < 10.3.9. Use the flag CMAKE_OSX_SYSROOT to specify which SDK you would like to use.
 
 = Building =
 
-After checking out the sources, you have two options to build openmalaria (at least, two that have been tested):
+After checking out the source, code, and building all the dependencies that haven't yet been ported to MAC OSX,  you have two options to build openmalaria:
  * Use Xcode (see below)
  * Use Makefiles (see the [UnixBuildOpenMalaria unix] page)
 
