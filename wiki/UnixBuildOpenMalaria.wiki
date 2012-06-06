@@ -16,8 +16,11 @@ You could at this time also create a malariacontrol/lib dir and install there li
 
 Openmalaria has the usual, and a few not-so-usual, dependencies. Most of these packages are distributed with your linux distribution and only need to be installed:
 
-  * python 2.6
-  * c and c++ libraries (these are contained within the ubuntu package *buildessential*)
+  * python 2.6 or 2.7 [http://python.org/download/ python 2.6 or 2.7]. Python 3.0 isn't compatible with the python code we've written - you must have python 2.6 or 2.7 on your system in order to run the gui and some of the utility scripts
+  
+  * jdk - you'll  need java to run the experiment builder tool
+
+  * c and c++ libraries (these and their dependencies are contained within the package *buildessential*)
 
   * gsl − If not included in your linux distribution, install the [http://packages.debian.org/search?keywords=libgsl0-dev libgsl0-dev] package. For older linux distributions, please check that you are using gsl version >= 13, otherwise some black box tests might fail.
 
