@@ -4,8 +4,7 @@
 
 Dependencies are  similar to those required for the unix build [UnixBuildOpenMalaria unix]. However, be aware that several libraries and toolkits haven't yet been ported over to Mac snow leopard, and in particular, for Xcode 4.3 does not support the gcc compilers. 
 
-For instance, you will need to build python GTK, which  is required to build the openTools front end.  If you insist, be prepared to roll up you sleeves and get a cup of coffee before diving in ... or, save yourself some trouble, and run openmalaria under ubuntu on a linux virtual machine.
-
+For instance, you will need to build python GTK, which  is required to build the openmalariaTools front end.  If you insist, be prepared to roll up your sleeves and get a cup of coffee before diving in. Better yet,  save yourself some trouble, and run openmalaria and openmalariaTools  under ubuntu on a linux virtual machine.
 
 
 = Backward compatibility =
@@ -21,21 +20,18 @@ After checking out the source, code, and building all the dependencies that have
 
 = Building static binaries =
 
-For the static build, xerces needs to be linked with the Carbon Framework.
-In CMake you can add extra Linker parameters using CMAKE_EXE_LINKER_FLAGS and adding *-framework Carbon*
-
-You should have now properly compiling sources 
+Whether you use Xcode or Makefiles, for the static build, xerces needs to be linked with the Carbon Framework. In cmake you can add extra Linker parameters using CMAKE_EXE_LINKER_FLAGS and adding *-framework Carbon*
 
 
 == Xcode ==
 
  * Run cmake-gui
-  * set the source dir, and the build dir (suggested: SOURCE_DIR/build; if this doesn't exist cmake will ask if you want to create it)
+  * set the source dir, and the build dir (suggested: SOURCE_DIR/build; if this doesn't exist cmake will invite  you to create it)
   * Run configure. Set the build system to Xcode.
-  * You either need to disable OM_CXXTEST_ENABLE or install [http://code.google.com/p/yaml-cpp/ yaml-cpp] for now (this may change)
-  * Configure, and generate
+  * Either disable OM_CXXTEST_ENABLE or install [http://code.google.com/p/yaml-cpp/ yaml-cpp] 
+  * Configure as described in the linux/unix instructions, and generate
  * From the build dir, open openmalaria.xcodeproj
-  * First you need to build the xsdcxx target (select libxsdcxx.a as the active target; build).
-  * Then you can build the rest with the ALL_BUILD target.
-  * You can run the tests by building the RUN_TESTS target (currently doesn't appear to work).
- * If cmake regenerates the project for some reason, you need to reload it in Xcode. Sometimes it will ask you, *but sometimes it won't* (and you need to manually reload the project in xcode).
+  * Build the xsdcxx target (select libxsdcxx.a as the active target; build).
+  * Then build the rest with the ALL_BUILD target.
+  * Run the tests by building the RUN_TESTS target.
+ * If cmake regenerates the project for some reason, you need to reload it in Xcode. Sometimes it will ask you, but sometimes it *won't* (and you need to manually reload the project in xcode).
