@@ -2,36 +2,36 @@
 
 = Dependencies =
 
-Dependencies are  similar to those required for the unix build [UnixBuildOpenMalaria unix]. However, be aware that several libraries and toolkits haven't yet been ported over to Mac snow leopard, and in particular, for Xcode 4.3 does not support the gcc compilers. 
+Dependencies for the mac build are  similar to those required for the [UnixBuildOpenMalaria unix build]. However, be aware that several libraries and toolkits haven't yet been ported over to Snow Leopard, and in particular, for Xcode 4.3 does not support the gcc compilers.  For that specific reason, we suggest you use Xcode 4.2.
 
-For instance, you will need to build python GTK, which  is required to build the openmalariaTools front end.  If you insist, be prepared to roll up your sleeves and get a cup of coffee before diving in. Better yet,  save yourself some trouble, and run openmalaria and openmalariaTools  under ubuntu on a linux virtual machine.
+For instance, you will need to build python GTK, which  is required to build the openmalariaTools front end.  If you insist, be prepared to roll up your sleeves and get a cup of coffee before diving in. Better yet,  save yourself some trouble, and run openmalaria and openmalariaTools under ubuntu on a linux virtual machine. Do send us a note to let us know how you come on.
 
 
 = Backward compatibility =
 
-In cmake you have to specify the older SDK version you would like to use to ensure backward compatibility.
-Please beware of the fact that boinc won't be usable with SKDs < 10.3.9. Use the flag CMAKE_OSX_SYSROOT to specify which SDK you would like to use.
+To ensure backward compatibility, specify the older SDK version you'd like to use in cmake.  In particular,  boinc requires SKD < 10.3.9. Use the flag CMAKE_OSX_SYSROOT to specify your SDK of choice.
 
 = Building =
 
-After checking out the source, code, and building all the dependencies that haven't yet been ported to MAC OSX,  you have two options to build openmalaria:
+After checking out the source code, and building all the dependencies that haven't yet been ported to MAC OSX,  you have two options to build openmalaria:
+
  * Use Xcode (see below)
- * Use Makefiles (see the [UnixBuildOpenMalaria unix] page)
+ * Use Makefiles (well described on the [UnixBuildOpenMalaria unix] page - in this case, recall that you must specify the use of the gcc complier and linker)
 
 = Building static binaries =
 
-Whether you use Xcode or Makefiles, for the static build, xerces needs to be linked with the Carbon Framework. In cmake you can add extra Linker parameters using CMAKE_EXE_LINKER_FLAGS and adding *-framework Carbon*
-
+Whether you use Xcode or Makefiles, for a static build, xerces must be linked with the Carbon Framework. In cmake, add the required link parameter using CMAKE_EXE_LINKER_FLAGS and adding *-framework Carbon*
 
 == Xcode ==
 
  * Run cmake-gui
-  * set the source dir, and the build dir (suggested: SOURCE_DIR/build; if this doesn't exist cmake will invite  you to create it)
-  * Run configure. Set the build system to Xcode.
-  * Either disable OM_CXXTEST_ENABLE or install [http://code.google.com/p/yaml-cpp/ yaml-cpp] 
-  * Configure as described in the linux/unix instructions, and generate
+ * set the source dir, and the build dir (suggested: SOURCE_DIR/build; if this doesn't exist cmake will invite  you to create it)
+ * Run configure. Set the build system to Xcode.
+ * Either disable OM_CXXTEST_ENABLE or install [http://code.google.com/p/yaml-cpp/ yaml-cpp] 
+ * Configure as described in the linux/unix instructions, and generate
  * From the build dir, open openmalaria.xcodeproj
-  * Build the xsdcxx target (select libxsdcxx.a as the active target; build).
-  * Then build the rest with the ALL_BUILD target.
-  * Run the tests by building the RUN_TESTS target.
- Should cmake regenerate the project for some reason, you'll need to reload it in Xcode. 
+ * Build the xsdcxx target (select libxsdcxx.a as the active target; build)
+ * Then build the rest with the ALL_BUILD target
+ * Run the tests by building the RUN_TESTS target
+
+ Should cmake regenerate the project for some reason, as is known to happen, you'll need to manually reload the project into Xcode. 
