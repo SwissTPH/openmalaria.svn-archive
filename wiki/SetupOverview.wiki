@@ -6,7 +6,7 @@ If you want to help the project by offering down-time on your computer to run si
 
 = Installing =
 
-See also the [Binaries] page for information on installing OpenMalaria.
+See also the [Binaries] page for information on how and where to install pre-built executables of *openmalaria*.
 
 If you want to run your own simulations, you have the following options:
   * install the compiled tool with GUI [openmalariaTools OpenMalariaTools]  
@@ -14,11 +14,11 @@ If you want to run your own simulations, you have the following options:
 
 = Running =
 
-[openmalariaTools OpenMalariaTools] includes facilities for updating and running scenarios. Alternatively, they can be run directly from the command line as described on the [UtilsRunning] page.
+[openmalariaTools openmalariaTools] includes facilities for updating and running scenarios. Alternatively, they can be run directly from the command line as described on the [UtilsRunning] page.
 
 = Tools =
 
-You may also want to install some extra programs, particularly on Windows, to aid editing input and output files.
+It can also be helpful to have a good text editor on hand, especially one that can edit xml files easily. 
 
   * [UtilsWindows Windows] — a convenient text editor, and archive tool
   * MacOSX — handles archives fine but not necessarily XML files; dashcode (presumably part of [http://developer.apple.com/tools/xcode/ xcode]) can edit XML files but struggles with scripts, or you can [http://www.google.com/search?q=macosx+text+editor search for one]
