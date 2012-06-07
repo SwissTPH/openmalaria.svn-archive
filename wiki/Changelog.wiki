@@ -6,7 +6,7 @@ Below is a list of the most significant changes in each release, together with t
 
 == Schema Version 30 ==
 
-released April 12, 2012 r2230
+released April 12, 2012 r2258
 
   * Renamed Vector_EIR_Input and Vector_EIR_Simulated to inputEIR and simulatedEIR respectively.
   * Increased delay in human infectiousness model from the perspective of the non-vector model and several summaries: it appears it was one time-step short.
