@@ -1,20 +1,20 @@
 #summary brief instructions for building openmalaria
 
-= Building OpenMalaria =
+= Building openmalaria =
 
-This page gives a brief idea of how to compile OpenMalaria on a unix or linux machine.
+This page gives a brief idea of how to compile *openalaria* on a unix or linux machine.
 
-As a matter of housekeeping, normally we create a central location for all dependencies and code for the project, in honor of our code-crunching colleagues at BOINC, we'll call this directory malariacontrol 
+As a matter of housekeeping, create a central location for all dependencies and code for the project. In honor of our code-crunching colleagues at BOINC, we'll call this directory malariacontrol 
 {{{
 cd ~
 mkdir malariacontrol
 cd malariacontrol
 }}}
-You could at this time also create a malariacontrol/lib dir and install there libraries upon which opemmalaria depends. But our recommendation is to install dependencies globally into your system (for example, using make install).
+You could at this time also create a malariacontrol/lib dir and install there the libraries upon which *opemmalaria* depends. But our recommendation is to install dependencies globally into your system (for example, using {{{make install}}}).
 
 == Dependencies ==
 
-Openmalaria has the usual, and a few not-so-usual, dependencies. Most of these packages are distributed with your linux distribution and only need to be installed:
+*openmalaria* has the usual, and a few not-so-usual, dependencies. Most of these packages are distributed with your linux distribution and only need to be installed.
 
   * python 2.6 or 2.7 [http://python.org/download/ python 2.6 or 2.7]. Python 3.0 isn't compatible with the python code we've written - you must have python 2.6 or 2.7 on your system in order to run the gui and some of the utility scripts
   
@@ -22,7 +22,7 @@ Openmalaria has the usual, and a few not-so-usual, dependencies. Most of these p
 
   * c and c++ libraries (these and their dependencies are contained within the package *buildessential*)
 
-  * gsl − If not included in your linux distribution, install the [http://packages.debian.org/search?keywords=libgsl0-dev libgsl0-dev] package. For older linux distributions, please check that you are using gsl version >= 13, otherwise some black box tests might fail.
+  * gsl − If not included in your linux distribution, install from [http://packages.debian.org/search?keywords=libgsl0-dev libgsl0-dev]. For older linux distributions, please check that you are using gsl version >= 13, otherwise some black box tests might fail.
 
   * libboost1.42
 
@@ -32,17 +32,17 @@ Openmalaria has the usual, and a few not-so-usual, dependencies. Most of these p
 
   *[Zliblg-dev] [http://packages.debian.org/search?keywords=Zliblg-dev Zliblg-dev]
 
-If you would like to contribute your otherwise dormant cpu cycles to the project via BOINC, also add
+If you would like to donate your otherwise dormant cpu cycles to the project via BOINC, also add
 
  * [UnixBuildBoinc] [http://packages.debian.org/search?keywords=boinc-dev boinc-dev] 
 
-The openmalaria source code is stored in a source-safed repository that is managed with [subversion] [http://subversion.apache.org/packages.html subversion]. Thus, you'll also need to have subversion installed when you check out the source code. The source-safed repository can be access via the command line or GUI or IDE tools.
+The openmalaria source code is stored in a source-safed repository that is managed with [subversion] [http://subversion.apache.org/packages.html subversion]. Technically, you don't need to have subversion installed to check out the source code, but it makes things simpler if you do. In any case, the code repository can be access via the command line or GUI or IDE tools.
 
-== Download the openmalaria source code and compile it==
+== Download  and compile the openmalaria source code==
 
 First, [http://code.google.com/p/openmalaria/source/checkout check out the repository] and {{{cd}}} to that checkout directory, which should be /malariacontrol/openmalaria/
 
-Again, it's much neater to build code from a separate directory, so all the generated files are kept out of the way:
+Again, it's much neater to build code from a separate directory, so all the generated files are kept out of the way from the code source:
 {{{
 mkdir build
 cd build
@@ -50,28 +50,28 @@ cd build
 
 The build directory (/malariacontrol/openmalaria/build/ ) will initially be empty - the next task is to *configure* the makefiles that will be used to compile and link the source code and libraries. The configured makefiles will appear in the build directory. This task can be approached using the command line, or gui versions of the cmake program
 
-Run cmake, passing the path of the openMalaria directory you checked out:
+Run cmake, passing the path of the *openmalaria* directory you checked out:
 {{{
 cmake-gui ..
 # You can use ccmake or just cmake instead of cmake-gui
 }}}
-Note that, cmake-gui and ccmake are interactive; you first *configure*, then select or adjust options, rerun the configuration step , and finally *generate* the executable binary. Options you may want to change (e.g. to create a version to deploy as a boinc binary):
+Note that, cmake-gui and ccmake are interactive; you first *configure*, then select or adjust options, rerun the configuration step , and finally *generate* the executable binary. Options you may want to change (e.g. to create a version to deploy as a BOINC binary):
 || option || ||
 || CMAKE_BUILD_TYPE || You probably should change this;  RelWithDebInfo works well ||
 || BOINC_INTEGRATION || Enables BOINC. Defaults to off. ||
 || STATICALLY_LINK || Try linking everything statically instead of dynamically. Don't use unless you know you want it. ||
 || CMAKE_VERBOSE_MAKEFILE || If you're having trouble building and want to tweak the linker command, you'll need more detail in the makefile ||
 
-Now you should be ready to build. Depending on which build-tool you selected (cmake will ask when configuring on an empty build directory), you can run `make`, or you can open the project/solution file generated by cmake in the build dir.
+Now you should be ready to build. Depending on which build-tool you've selected (cmake will ask which tool when configuring on an empty build directory), you can run `make`, or you can open the project/solution file generated by cmake in the build dir.
 
 === Static build ===
 
-There are a few hiccups with the static build. First,  you'll need to compile the static Xerces library from source on your machine in order to avoid mutex errors. When compiling Xerces, you'll need to inform the linker to build the static version with the *-static-libgcc* argument.
+There are a few subtleties with the static build. First,  you'll need to compile the static Xerces library from source on your machine in order to avoid mutex errors. When compiling Xerces, you'll need to inform the linker to build the static version with the *-static-libgcc* argument.
 
-Be aware that checking the *STATICALLY_LINK* option doesn't ensure you that the gsl and xerces static libs will be used. The system will automatically take the dynamic libraries in despite that this option is checked. You'll have to force the system to use the static libraries by explicitly giving the paths (in most cases /usr/local/lib or /usr/lib) to the static version of these libraries. 
+Be aware that checking the *STATICALLY_LINK* option doesn't ensure you that the gsl and xerces static libraries will be used. The system cheerfully ignore your selection of this option and automatically take the dynamic library version. You'll have to force the system to use the static libraries by explicitly giving their paths (in most cases /usr/local/lib or /usr/lib) . 
 
 
-The configure command would be similar to these two examples:
+The configure command for xerces for instance,  would be similar to  either of these two examples:
 
 Building Xerces-c 2.8:
 ./runConfigure -plinux -cgcc -xg++ -minmem -nsocket -tnative -rpthread -s -l-static-libgcc
@@ -79,7 +79,7 @@ Building Xerces-c 2.8:
 Building Xerces-c 3.1.1:	
 ./configure --disable-shared --disable-network LDFLAGS=-static-libgcc
 
-Once these configuration issues are sorted, you should be able to build a proper static openMalaria build. Again, during the openMalaria building process  pass the arguments *-static-libgcc -Wl,-Bstatic -lstdc++*  to ensure that the correct, static version of these libraries is linked. After having compiled the binaries, you can check that the correct dependencies have been installed  with *ldd*.  
+Once these configuration issues are sorted, you should be able to build a proper static  version of *openmalaria*. Again, during the *openmalaria* building process  pass the arguments *-static-libgcc -Wl,-Bstatic -lstdc++*  to ensure that the correct, static version of these libraries is linked. After having compiled the binaries, you can check that the correct dependencies have been installed  with {{{ldd}}}.  
 
 == Running the included tests ==
 
