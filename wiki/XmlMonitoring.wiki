@@ -12,7 +12,7 @@ The monitoring system is described [Monitoring here] and within the [XmlScenario
 
 === Special output values ===
 
-Some outputs are the result of averaging a measure over simulated individuals for a specified duration. If the denominator number of individuals in this average is zero, the resulting value isn't valid, so an output value of *nan* (or "-nan" - short for Not A Number) is reported.
+Some outputs are the result of averaging a measure over the number of simulated individuals for a specified duration. If the denominator number of individuals in this average is zero, the resulting value isn't valid, so an output value of *nan* (or "-nan" - short for Not A Number) is reported.
 To make detection of computation errors easier, we try to avoid outputting *nan* values in discrete survey outputs. The same is not true for continuous outputs: several of these may output *nan* values at the beginning of the simulation or other times.
 
 For the drug costing measures no value is listed at all for drugs never prescribed since the last survey.
@@ -21,7 +21,7 @@ For the drug costing measures no value is listed at all for drugs never prescrib
 
 The units we generally use for EIR are _entomological inoculations per time period as measured in adults_ where the time period may be days, years, or the model's time step (currently 1 or 5 days).
 
-Since children are smaller than adults our model assumes they are less likely to be bitten by mosquitoes. However, most information we have on EIR tends to be measured in adults. We try to make our units equivalent, either by only considering bites in adults or by scaling the mean availability of all people in the population compared to an adult (this mean relative availability is the "human availability" output available in continuous-reporting mode).
+Since children are smaller than adults our model assumes they are less likely to be bitten by mosquitoes. However, most information we have on EIR tends to be measured in adults. We try to make our units equivalent, either by only considering bites in adults or by scaling the mean availability of all people in the population (children and adults) compared to a population composed only of adults (this mean relative availability is the "human availability" output available in continuous-reporting mode).
 
 == Continuous measures ==
 
@@ -81,7 +81,7 @@ These tables come from
 in the code. The "second column" column indicates the meaning of the contents
 of the second column of [OutputFiles output files]. The "cohort" column
 indicates whether, when cohort mode is enabled, this output is restricted to
-the cohort; if false, it is unaffected by the cohort mode. A number means that from this schema version output is restricted to the cohort.
+the cohort; if false, it is unaffected by the cohort mode. A number entry means that output from this schema version is restricted to the cohort. 
 
 || id || measure || second column || cohort || description ||
 ||  0 || nHost  || age group || y || Total number of humans. *Note*: when using the `IPTI_SP_MODEL` option, humans not at risk of a further episode due to having had a recent episode within the health-system-memory period are subtracted from this and several other outputs (only applies to the `IPTI_SP_MODEL`). ||
