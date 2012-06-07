@@ -2,9 +2,9 @@
 
 = Monitoring =
 
-When designing simulations, one also needs to think about which outputs are desired. A lot of data is generated during simulations: mosquito-to-human transmission intensity, parasite density per infection per human together with human infectiousness to mosquitoes, bouts of sickness and treatments affecting each human, etc. In order to reduce to more manageable amounts of information, summaries need to be made.
+Part of the simulation design process is also deciding which results of the simulation should be captured with a monitoring statement. Not all the data produced by the simulation is needed to interpret the results: mosquito-to-human transmission intensity, parasite density per infection per human together with human infectiousness to mosquitoes, bouts of sickness and treatments affecting each human, etc.  A summary of those events over all the simulated population will be more telling than the detailed experience of each simulated individual. 
 
-Monitoring is described by an XML element of the form below. The `continuous` element is optional and describes continuous reporting, while the other three elements are required and describe surveys.
+The monitoring method is described by an XML element of the form below. The `continuous` element is optional and describes continuous reporting, while the other three elements are required and describe surveys.
 
 {{{
   <monitoring name="(some description or name)">
@@ -17,7 +17,7 @@ Monitoring is described by an XML element of the form below. The `continuous` el
 
 == Surveys ==
 
-Simulating surveys allows trials to be simulated. In a survey taken at some particular time point, information is recorded about either the current state of some measurable quantity or a measure of events which have taken place since the last survey. Where this data concerns humans, it can be segregated into age groups, and can be sampled either across all simulated individuals or from a selected cohort.
+Surveys are periodic summaries at predefined time-steps.  At those time-steps, information is saved about the quantity of interest,  this could be a measurable quantity such as the EIR, or number of events since the last survey time point.  Where this data concerns humans, it can be segregated into age groups, and can be sampled either across all simulated individuals or from a selected cohort.
 
 === Survey measures ===
 
