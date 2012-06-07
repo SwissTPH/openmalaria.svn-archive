@@ -39,9 +39,9 @@ The following interventions all work by multiplying [XmlEntoVector vector model]
 
 Description of all effects use the generic [ModelDecayFunctions decay functions framework] — see [ModelDecayFunctions#Configuration configuration] (`DecayFunctionValue` elements).
 
-=== Insecticide treated nets [ITNs] ===
+=== Insecticide treated nets ===
 
-ITNs affect the availability of hosts to mosquitoes, and the chance of a mosquito successfully biting and fleeing an ITN-protected human. These properties are described per mosquito species, in the `interventions` `descriptions` section. For example, in schema 28 and older versions, this looked like:
+Insecticide treated nets [ITN] affect the availability of hosts to mosquitoes, and the chance of a mosquito successfully biting and fleeing an ITN-protected human. These properties are described per mosquito species, in the `interventions` `descriptions` section. For example, in schema 28 and older versions, this looked like:
 
 {{{
 <anopheles mosquito="gambiae_ss">
@@ -157,9 +157,9 @@ The minimum targetAgeYrs has to be > timestep/365 in order to correspond to time
 }}}
 
 
-=== Indoor residual spraying [IRS} ===
+=== Indoor residual spraying ===
 
-IRS affects the availability of hosts to mosquitoes, and the chance of a mosquito surviving resting (egg incubation) after having fed on an IRS-protected human.
+Indoor residual spraying [IRS] affects the availability of hosts to mosquitoes, and the chance of a mosquito surviving resting (egg incubation) after having fed on an IRS-protected human.
 
 Two models are available, each with its own description. Only one should be used at once. Both use standard [ModelInterventions#Timed_descriptions timed deployment].
 
