@@ -27,9 +27,7 @@ http://openmalaria.googlecode.com/svn/wiki/graphs/decay-functions.png
 
 == Configuration ==
 
-For certain interventions, the decay of efficacy is described by an XML element of type `DecayFunction`, or by an element of type `DecayFunctionValue` which includes an initial value. These are of the form:
-
-Examples for "eltName":
+For certain interventions, the decay of efficacy is described by an XML element of type `DecayFunction`, or by an element of type `DecayFunctionValue` which includes an initial value.  An example of this element type for "eltName":
 
 {{{
 <eltName L="10.0" function="exponential"/>
