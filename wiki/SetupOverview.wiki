@@ -9,7 +9,7 @@ If you would like to help the project by offering down-time on your computer to 
 See also the [Binaries] page for information on how and where to install pre-built executables of *openmalaria*.
 
 If you want to run your own simulations, you have the following options:
-  * install the compiled tool with GUI [openmalariaTools OpenMalariaTools]  
+  * install the compiled tool with GUI [openmalariaTools openmalariaTools]  
   * build the openmalaria executable from [BuildSystem source]
 
 = Running =
