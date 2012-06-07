@@ -25,7 +25,7 @@ Syntax:
   <dt>Component</dt>
   <dd>The simulator is divided up into several *components*: e.g. within-host, transmission, health-system. From a computing perspective these may be called _interfaces_.</dd>
   <dt>Demography</dt>
-  <dd>A description of the ages and gender ratio of the human population from which individuals will be drawn</dd>
+  <dd>A description of the ages and gender ratio of the simulated human population from which simulated individuals will be drawn.</dd>
   <dt>Episode</dt>
   <dd>The health-system's reporting unit; only one malaria *episode* is possible in a 30-day period. Therefore, each bout is either considered the start of a new episode, or, if it occurs within 30 days of a previous bout, part of the same episode. Thus, at least in low transmission settings, an episode should roughly correspond to one malaria infection (which can cause multiple bouts). An episode's severity (non-malarial, malarial or severe) is considered to be that of its worst bout.</dd>
   <dt>Event</dt> 
