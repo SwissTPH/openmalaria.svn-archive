@@ -39,7 +39,7 @@ The following interventions all work by multiplying [XmlEntoVector vector model]
 
 Description of all effects use the generic [ModelDecayFunctions decay functions framework] — see [ModelDecayFunctions#Configuration configuration] (`DecayFunctionValue` elements).
 
-=== Insecticide Treated Nets ===
+=== Insecticide treated nets [ITNs] ===
 
 ITNs affect the availability of hosts to mosquitoes, and the chance of a mosquito successfully biting and fleeing an ITN-protected human. These properties are described per mosquito species, in the `interventions` `descriptions` section. For example, in schema 28 and older versions, this looked like:
 
@@ -157,13 +157,13 @@ The minimum targetAgeYrs has to be > timestep/365 in order to correspond to time
 }}}
 
 
-=== Indoor Residual Spraying ===
+=== Indoor residual spraying [IRS} ===
 
 IRS affects the availability of hosts to mosquitoes, and the chance of a mosquito surviving resting (egg incubation) after having fed on an IRS-protected human.
 
 Two models are available, each with its own description. Only one should be used at once. Both use standard [ModelInterventions#Timed_descriptions timed deployment].
 
-==== Original model (version 1) ====
+==== IRS model version 1 ====
 {{{
     <IRS name="DDT test">
       <description>
@@ -222,7 +222,7 @@ Insecticide content decays according to the decay function given. Effects are a 
 
 Deployment has the same options as with the other model.
 
-=== Vector Availability ===
+=== Vector availability ===
 
 A vector deterrent intervention functions similarly to ITN/IRS interventions, but affecting only the availability of humans to mosquitoes. Example:
 
@@ -266,7 +266,7 @@ Example timed-deployment description:
 
 Here, the `duration` parameter specifies how long the larviciding is effective for (unit:timestep). `effectiveness` gives the proportion of larvae killed by the larviciding. The `mosquito` parameter specifies which species is affected — this must be described for all species (it will have no effect on species not explicitly listed).
 
-== Uninfect Vectors ==
+== Uninfect vectors ==
 
 A special intervention which instantly uninfects all mosquitoes of malarial parasites (though doesn't prevent reinfection). If combining with mass drug administration to eliminate malaria from a scenario, note that humans can harbour gametocytes up to 20 days following "parasite clearance", hence vectors will need to be uninfected multiple times.
 
