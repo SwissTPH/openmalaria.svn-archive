@@ -2,12 +2,12 @@
 
 = Introduction =
 
-The main input to the simulator is an [http://www.w3schools.com/xml/default.asp XML] file generally called `scenario.xml` (though it may be named something different if the `--scenario FILE` command-line option is passed to openmalaria). The XML files has several sections, described here.   If you are new to XML, there is a nice tutorial of the XSD schema  [http://www.w3schools.com/schema/default.asp here] and [http://code.google.com/p/openmalaria/source/browse/trunk/schema/scenario.xsd file].
+The main input to the simulator is an [http://www.w3schools.com/xml/default.asp XML] file generally called `scenario.xml` (though it may be named something different if the `--scenario FILE` command-line option is passed to openmalaria). The XML file has several sections corresponding to specific model blocks.   If you are new to XML, there is a nice tutorial of the XSD schema  [http://www.w3schools.com/schema/default.asp here]. You can view our base scenario [http://code.google.com/p/openmalaria/source/browse/trunk/schema/scenario.xsd here].
 
 
 == Scope of documentation ==
 
-This documentation is intended to aid individuals editing scenario files, either by hand or with the scenario editor currently under development, by serving as a rough reference manual. It omits several details, which may be covered by the editor, but for use by hand it is recommended to refer to existing scenarios as guides.
+This documentation is intended to aid individuals modifying existing scenario files, either by hand or with the scenario editor currently under development.  
 
 == Contents ==
 
