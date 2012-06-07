@@ -80,7 +80,7 @@ All continuous deployments are described by elements of type `ageSpecific`; for 
     </vaccine>
 }}}
 
-Attributes this can include:
+Attributes that can be included:
 
 || name || type || description ||
 || `coverage` || floating-point || Proportion of eligible candidates actually receiving the intervention (range [0-1]) ||
@@ -89,7 +89,7 @@ Attributes this can include:
 || `begin` || integer || The time-step of the intervention period at which this intervention becomes active (default: 0) ||
 || `end` || integer || The time-step of the intervention period at which this intervention becomes inactive (default: 2147483647) ||
 
-Note that before schema 30, the youngest age at which continuous interventions can be deployed is 1 time-step old (1 over time-steps-per-year), though they are still efficacious on the first update. Since schema 30 interventions can be deployed from age 0, but have their first effect on the following time-step (since it is inappropriate to let interventions have an instant effect).
+Note that before schema 30, the youngest age at which continuous interventions can be deployed was 1 time-step old (1 over time-steps-per-year), though they are still efficacious on the first update. Since schema 30 interventions can be deployed from age 0, but have their first effect on the following time-step (since it is inappropriate to let interventions have an instant effect).
 
 
 === Timed descriptions ===
