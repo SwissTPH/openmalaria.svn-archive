@@ -1,8 +1,8 @@
 #summary Overview of building and installation methods
 
-= Participation in the volunteer computing effort =
+= Participate in the volunteer computing effort! =
 
-If you want to help the project by offering down-time on your computer to run simulations, join our project at [http://www.malariacontrol.net malariacontrol.net]
+If you would like to help the project by offering down-time on your computer to run simulations, join us at [http://www.malariacontrol.net malariacontrol.net]
 
 = Installing =
 
