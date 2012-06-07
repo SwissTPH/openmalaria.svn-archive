@@ -2,7 +2,7 @@
 
 = Introduction =
 
-We provide here a glossary of terms used in the project, sometimes with special meanings.
+The terminology we use for *openmalaria* project is very specific. A quick browse through the glossary below is recommended.
 
 
 = Glossary =
