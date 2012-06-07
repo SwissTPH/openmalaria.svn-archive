@@ -6,6 +6,6 @@
 
 Documented here:
 
- * [SetupOverview Installing] *openmalaria* using it to run some example scenarios
- * How to [ScenarioDesign design and configure] scenarios
- * Some guidance on results might be analyzed
+ * [SetupOverview Installing] *openmalaria* and using it to run some example scenarios
+ * How to [ScenarioDesign design and configure] experimental scenarios
+ * Some guidance on how simulator results might be analyzed
