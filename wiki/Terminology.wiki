@@ -24,6 +24,8 @@ Syntax:
   <dd>In our 1 day time-step clinical model, a *bout* of sickness is considered to be a fever or severe illness that usually lasts no more than 5 days. When an individual recovers (or dies), that bout is considered over. </dd>
   <dt>Component</dt>
   <dd>The simulator is divided up into several *components*: e.g. within-host, transmission, health-system. From a computing perspective these may be called _interfaces_.</dd>
+  <dt>Demography</dt>
+  <dd>A description of the ages and gender ratio of the human population from which individuals will be drawn</dd>
   <dt>Episode</dt>
   <dd>The health-system's reporting unit; only one malaria *episode* is possible in a 30-day period. Therefore, each bout is either considered the start of a new episode, or, if it occurs within 30 days of a previous bout, part of the same episode. Thus, at least in low transmission settings, an episode should roughly correspond to one malaria infection (which can cause multiple bouts). An episode's severity (non-malarial, malarial or severe) is considered to be that of its worst bout.</dd>
   <dt>Event</dt> 
@@ -49,7 +51,7 @@ Syntax:
   <dt>Parameterization</dt>
   <dd>Each _model_ has several parameters. A choice of values for each of these parameters leads to a *parameterization* of a _model_. We usually use a fitting process involving several _scenarios_ modelling field trials in order to find an optimal parameterizations.</dd>
   <dt>Scenario</dt>
-  <dd>*openmalaria* takes as its input a *scenario* file describing what it should simulate. Encoded in XML, the scenario file includes a description of the _model_ and  its _parameterization_, as well as the _demographic_setting, _interventions_ applied, and information about the healthsystem, if relevant to the _study_.</dd>
+  <dd>A scenario is a single simulation run by the model.  Encoded in XML, the *scenario* file includes a description of what exactly *openmalaria* should the simulate: the _model_ and  its _parameterization_,the _demographic_setting, _interventions_ applied, and information about the healthsystem, if relevant to the _study_.</dd>
   <dt>Seed</dt>
   <dd>In stochastic modeling, we have a bit of conundrum, we need to be able to generate a random sequence but we also need to be able to reproduce our results in order to test them.  In order to achieve both goals simultaneously, we must declare the starting point for the (pseudo-) random number generator when it is called. This starting point, or *seed* is generally a positive integer. If no seed is given, the simulator will take the initial value from the computer's cpu clock - the simulation would run, but we would not be able to repeat it. Additionally, when we say that an experiment was run with 5 *seeds*, we mean that each scenario was run 5 times, each time with a different random seed.</dd>
   <dt>Severe malaria</dt>
