@@ -27,8 +27,7 @@ http://openmalaria.googlecode.com/svn/wiki/graphs/decay-functions.png
 
 == Configuration ==
 
-In some 
-Certain interventions have their efficacy decay described by an XML element of type `DecayFunction`, or by an element of type `DecayFunctionValue` which includes the initial value. These are of the form:
+For certain interventions, the decay of efficacy is described by an XML element of type `DecayFunction`, or by an element of type `DecayFunctionValue` which includes an initial value. These are of the form:
 
 Examples for "eltName":
 
@@ -43,6 +42,6 @@ The `function`, `L` and `k` attributes act as described above, with `k` optional
 
 == Heterogeneity ==
 
-Starting with version 26 of OpenMalaria, variations can be introduced into decay rate: a random variate x is sampled from the log-normal distribution, and t in the above formulas is replaced by t/x.
+Starting with version 26 of *openmalaria*, variations can be introduced into decay rate: a random variate x is sampled from the log-normal distribution, and t in the above formulas is replaced by t/x.
 
 The attribute `sigma` can be specified as part of the decay-function description element: if this is non-zero, x is sampled as: `x ~ lnN(0,sigma²)`.
