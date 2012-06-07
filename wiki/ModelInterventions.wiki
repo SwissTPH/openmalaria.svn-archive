@@ -89,8 +89,7 @@ Attributes that can be included:
 || `begin` || integer || The time-step of the intervention period at which this intervention becomes active (default: 0) ||
 || `end` || integer || The time-step of the intervention period at which this intervention becomes inactive (default: 2147483647) ||
 
-Note that before schema 30, the youngest age at which continuous interventions can be deployed was 1 time-step old (1 over time-steps-per-year), though they are still efficacious on the first update. Since schema 30 interventions can be deployed from age 0, but have their first effect on the following time-step (since it is inappropriate to let interventions have an instant effect).
-
+Note that before schema 30, the youngest age at which continuous interventions could be deployed was 1 time-step old (1 over time-steps-per-year), though they are still efficacious on the first update. Since schema 30 interventions can be deployed from age 0, but have their first effect on the following time-step (since it is inappropriate to let interventions have an instant effect).
 
 === Timed descriptions ===
 
@@ -110,13 +109,13 @@ Attributes:
 || cohort || boolean || Restrict distribution to the current [Monitoring#Cohort-mode cohort] if true (defaults to false) ||
 || cumulativeWithMaxAge || int (optional) || If given, activates an optional deployment mode (see below). ||
 
-To clarify age based constraints, they are met if minAge ≤ age < maxAge.
+Age-based constraints are met if the age at a given time step is minAge ≤ age < maxAge.
 
 ==== Cumulative coverage deployment ====
 
-Without the `cumulativeWithMaxAge` option, the intervention deployment simply targets the proportion of eligible humans described by the coverage parameter. With the option, the number of protected humans are first counted and unprotected humans targeted such that the total number of eligible humans reaches the proportion described by coverage.
+Without the `cumulativeWithMaxAge` option, the intervention deployment simply targets the proportion of eligible humans described by the coverage parameter.  With the option, the number of protected humans are first counted and unprotected humans targeted such that the total number of eligible humans reaches the proportion described by coverage.
 
-Humans are considered protected by an intervention if the last time step they received the intervention is less than the "max intervention age" (cumulativeWithMaxAge attribute).    Those considered protected retain their original intervention (bed net/vaccination/...).
+Humans are considered protected by an intervention if the last time step they received the intervention is less than the "max intervention age" (cumulativeWithMaxAge attribute).  Those considered protected retain their original intervention (bed net/vaccination/...).
 
 When the existing proportion of humans protected, _p_, is less than the desired coverage level _c_, unprotected humans have chance [http://openmalaria.googlecode.com/svn/wiki/eqns/cum_deploy_cov.png] of receiving a new instance of the intervention (net/vaccine dose/house spraying etc.). This rule applies across all humans eligible for coverage (those within the given age range and within the cohort if applicable).
 
