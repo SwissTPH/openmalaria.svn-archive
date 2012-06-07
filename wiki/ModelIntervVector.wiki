@@ -2,9 +2,9 @@
 
 = Mosquito-stage interventions =
 
-The following table lists interventions which have been implemented in OpenMalaria, and which deployment methods are available:
+The following table lists interventions which have been implemented in OpenMalaria, and which deployment method(s) are available for it:
 
-|| intervention || mass-deployment || continuous-deployment ||
+|| Intervention || Mass-deployment || Continuous-deployment ||
 || [ModelIntervVector#Change_EIR changeEIR] || yes || no ||
 || [ModelIntervVector#Insecticide_Treated_Nets ITN] || yes || yes ||
 || [ModelIntervVector#Indoor_Residual_Spraying IRS] || yes || no ||
@@ -16,9 +16,9 @@ Note: all but the changeEIR intervention depend on the vector transmission model
 
 == Change EIR ==
 
-This intervention is used to replace transmission settings. It can be used, for example, to switch to EIR settings recorded during a trial. It can only be used with the non-vector transmission model.
+The entomological innoculation rate (EIR)  intervention is used to override the default transmission settings. It can be used, for example, to switch to EIR settings recorded during a trial. It can only be used with the non-vector transmission model.
 
-The `changeEIR` element has the same type as the [http://code.google.com/p/openmalaria/wiki/XmlScenario#Non-vector_parameters:_nonVector nonVector] element.
+The `changeEIR` element has the same XML type as the [http://code.google.com/p/openmalaria/wiki/XmlScenario#Non-vector_parameters:_nonVector nonVector] element.
 
 {{{
     <changeEIR>
@@ -31,13 +31,13 @@ The `changeEIR` element has the same type as the [http://code.google.com/p/openm
     </changeEIR>
 }}}
 
-The new EIR is always applied from the _beginning_ of the intervention period, _not_ the step of deployment. It must thus always contain enough daily entries for the entire intervention period.
+The new EIR is always applied from the _beginning_ of the intervention period, _not_ the step of deployment. It must thus always contain sufficient daily entries for the entire intervention period.
 
 == Net / indoor spraying interventions ==
 
 The following interventions all work by multiplying [XmlEntoVector vector model] parameters affecting individual humans.
 
-Description of all effects uses the generic [ModelDecayFunctions decay functions framework] — see [ModelDecayFunctions#Configuration configuration] (`DecayFunctionValue` elements).
+Description of all effects use the generic [ModelDecayFunctions decay functions framework] — see [ModelDecayFunctions#Configuration configuration] (`DecayFunctionValue` elements).
 
 === Insecticide Treated Nets ===
 
