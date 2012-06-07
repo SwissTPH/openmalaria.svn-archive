@@ -4,7 +4,7 @@
 
 This page gives a brief idea of how to compile *openalaria* on a unix or linux machine.
 
-As a matter of housekeeping, create a central location for all dependencies and code for the project. In honor of our code-crunching colleagues at BOINC, we'll call this directory malariacontrol 
+As a matter of housekeeping, create a central location for all dependencies and code for the project. In honor of our code-crunching colleagues at BOINC, we'll call this directory malariacontrol.
 {{{
 cd ~
 mkdir malariacontrol
@@ -40,9 +40,10 @@ The openmalaria source code is stored in a source-safed repository that is manag
 
 == Download  and compile the openmalaria source code==
 
-First, [http://code.google.com/p/openmalaria/source/checkout check out the repository] and {{{cd}}} to that checkout directory, which should be /malariacontrol/openmalaria/
+First, [http://code.google.com/p/openmalaria/source/checkout check out the repository] and {{{cd}}} to the checkout directory, which should be /malariacontrol/openmalaria/.
 
-Again, it's much neater to build code from a separate directory, so all the generated files are kept out of the way from the code source:
+To keep the generated files out of the way of the source code, its best to create a separate build directory under the source code directory:
+
 {{{
 mkdir build
 cd build
@@ -96,12 +97,12 @@ Test project /home/gouigoui/workspace/OpenMalaria_readOnly/build
   5/ 13 Testing 5                                Passed
   6/ 13 Testing 6                                Passed
   7/ 13 Testing 9                                Passed
-  8/ 13 Testing 11                               Passed
-  9/ 13 Testing 12                               Passed
- 10/ 13 Testing IPT                              Passed
- 11/ 13 Testing VecTest                          Passed
- 12/ 13 Testing VecFullTest                      Passed
- 13/ 13 Testing unittest                         Passed
+  8/ 13 Testing 11                              Passed
+  9/ 13 Testing 12                              Passed
+ 10/ 13 Testing IPT                            Passed
+ 11/ 13 Testing VecTest                     Passed
+ 12/ 13 Testing VecFullTest                Passed
+ 13/ 13 Testing unittest                      Passed
 100% tests passed, 0 tests failed out of 13
 }}}
 
