@@ -1,4 +1,4 @@
-#summary Brief instructions for building *openmalaria*
+#summary Brief instructions for building openmalaria
 
 = Building openmalaria =
 
