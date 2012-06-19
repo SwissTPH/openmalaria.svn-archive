@@ -13,7 +13,7 @@ Welcome to the *openmalaria* wiki on google-code.
 
 The main applications of *openmalaria* are:
 
-== Simulation of current malarialogical situations ==
+== Simulation of current malariological situations ==
 
 Simulations of _status quo_ malaria situations can be used to estimate parameters that have not been measured from field data.  For instance, models can be used to predict mortality rates from entomological data. Such simulations are also useful for validating models.
 
@@ -59,8 +59,8 @@ Each simulation requires implementation of various components, from transmission
 
 = Team =
 
-The *openmalaria* development team includes personell from the [http://www.swisstph.ch/en/about-us/departments/epidemiology-and-public-health-eph/health-systems-research-and-dynamical-modelling/dynamical-modelling.html Swiss Tropical and Public Health Institute (Swiss TPH)], the [http://ndssl.vbi.vt.edu/index.php Network Dynamics and Simulation Science Laboratory at Virginia Bioinformatics Institute] 
-and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine] with financial support from the [http://www.gatesfoundation.org/Pages/home.aspx Bill & Melinda Gates Foundation]
+The *openmalaria* development team includes staff of the [http://www.swisstph.ch/en/about-us/departments/epidemiology-and-public-health-eph/health-systems-research-and-dynamical-modelling/dynamical-modelling.html Swiss Tropical and Public Health Institute (Swiss TPH)], the [http://ndssl.vbi.vt.edu/index.php Network Dynamics and Simulation Science Laboratory at Virginia Bioinformatics Institute] 
+and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine].  Financial support is from the [http://www.gatesfoundation.org/Pages/home.aspx Bill & Melinda Gates Foundation]
 
 For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.
 
