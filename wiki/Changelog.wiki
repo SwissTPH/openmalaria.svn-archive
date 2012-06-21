@@ -4,6 +4,12 @@
 
 Below is a list of the most significant changes in each release, together with the date and revision number of initial release. Releases are available as tags in the subversion repository: [http://code.google.com/p/openmalaria/source/browse/#svn%2Ftags http://openmalaria.googlecode.com/svn/tags]
 
+== Schema Version 31 ==
+
+New features under development/awaiting release:
+
+  * Mosquito population dynamics model: model allowing reduced numbers of adult mosquitoes to reduce the numbers of eggs laid.
+
 == Schema Version 30 ==
 
 released April 12, 2012 r2258
