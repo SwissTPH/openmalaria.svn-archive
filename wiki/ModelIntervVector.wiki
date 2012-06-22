@@ -240,7 +240,9 @@ Uses standard [ModelInterventions#Timed_descriptions timed deployment].
 
 == Larviciding ==
 
-A larviciding intervention is currently also available, but very simple in that there is no feedback effect of reduction in the number of adult mosquitoes on the number of larvae, nor any concept of saturation. The implementation will likely be improved in the future.
+Larviciding interventions can be specified as follows. Duration is the number of time-steps for which emergence is reduced (e.g. specifying a duration of six 5-day time-steps is roughly equivalent to weekly deployment for a month). Effectiveness is parameterised as the proportion of larvae which do not emerge as a result (i.e. the proportion of breeding grounds weighted by size which are covered, assuming 100% killing rate in treated water bodies). These two parameters are assumed to be the same each time a larviciding intervention is started. Time of deployment is then the time at which larviciding is done. It should be noted that deployment at time t means emergence on time-step t is unaffected, with time t+1 being the first for which emergence counts are affected.
+
+Feedback effects of reduced numbers of adults on the numbers of eggs laid and therefore future emergence depend on model. _In the default model, there is no feedback_ (emergence is independent of the number of adults). See [ModelMosqPopDynamics Mosquito Population Dynamics] for other models.
 
 Example timed-deployment description:
 {{{
@@ -258,13 +260,11 @@ Example timed-deployment description:
                 <effectiveness value="0.75"/>
         </anopheles>
         <timed>
-            <deploy time="1"/>
+            <deploy time="0"/>
             <deploy time="100"/>
         </timed>
 </larviciding>
 }}}
-
-Here, the `duration` parameter specifies how long the larviciding is effective for (unit:timestep). `effectiveness` gives the proportion of larvae killed by the larviciding. The `mosquito` parameter specifies which species is affected — this must be described for all species (it will have no effect on species not explicitly listed).
 
 == Uninfect vectors ==
 
