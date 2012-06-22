@@ -2,12 +2,16 @@
 
 = Mosquito Population Dynamics =
 
-In the default vector model, emergence of adult vectors from breeding sites is fixed (other than the direct effects of larviciding). The models described here are alternatives and must be explicitly activated.
+In the default vector model, emergence of nulliparous vectors from breeding sites follows a periodic orbit (seasonal pattern) that is calculated from that of the EIR used to drive the simulations.  This seasonal pattern may be varied by simulating larviciding, (which acts by explicitly reducing the emergence rate, proportionately to the coverage). 
+
+The Mosquito Population Dynamics Models described here are alternatives, that allow for feedback from the densities of ovipositing female mosquitoes on subsequent emergence.  This allows the user to specify varying degrees of density-dependent regulation of populations immature mosquitoes, so that adulticiding interventions may reduce emergence rates.  In these models, larviciding interventions that reduce emergence are effectively acting by reducing the carrying capacity of the breeding sites.
+
+The Mosquito Population Dynamics Models must be explicitly activated.
 
 
 == Simple Mosquito Population Dynamics Model ==
 
-This model relates emergence to the number of egg-laying mosquitoes, limiting the population via the use of a Beverton-Holt model. For a full description of this model, see A Simple Periodically-Forced Difference Equation Model for Mosquito Population Dynamics, Nakul Chitnis, 2012.
+This model relates emergence to the number of ovipositing mosquitoes, limiting the population via the use of a Beverton-Holt model. For a full description of this model, see A Simple Periodically-Forced Difference Equation Model for Mosquito Population Dynamics, Nakul Chitnis, 2012.
 
 This model is activated with the `VECTOR_SIMPLE_MPD_MODEL` model switch:
 {{{
