@@ -10,7 +10,7 @@ The Mosquito Population Dynamics Models must be explicitly activated.
 
 == Simple Mosquito Population Dynamics Model ==
 
-This model relates emergence to the number of ovipositing mosquitoes, limiting the population via the use of a Beverton-Holt model. For a full description of this model, see A Simple Periodically-Forced Difference Equation Model for Mosquito Population Dynamics, Nakul Chitnis, 2012.
+This model relates emergence to the number of ovipositing mosquitoes, limiting the population via the use of a Beverton-Holt model. For a full description of this model, see [http://code.google.com/p/openmalaria/source/browse/download/articles/MosquitoLifeCycleSimplePer.pdf A Simple Periodically-Forced Difference Equation Model for Mosquito Population Dynamics, Nakul Chitnis, 2012].
 
 This model is activated with the `VECTOR_SIMPLE_MPD_MODEL` model switch:
 {{{
