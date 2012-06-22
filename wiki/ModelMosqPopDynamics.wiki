@@ -1,0 +1,38 @@
+#summary Description of models of MPD
+
+= Mosquito Population Dynamics =
+
+In the default vector model, emergence of adult vectors from breeding sites is fixed (other than the direct effects of larviciding). The models described here are alternatives and must be explicitly activated.
+
+
+== Simple Mosquito Population Dynamics Model ==
+
+This model relates emergence to the number of egg-laying mosquitoes, limiting the population via the use of a Beverton-Holt model. For a full description of this model, see A Simple Periodically-Forced Difference Equation Model for Mosquito Population Dynamics, Nakul Chitnis, 2012.
+
+This model is activated with the `VECTOR_SIMPLE_MPD_MODEL` model switch:
+{{{
+    <ModelOptions>
+      ...
+      <option name="VECTOR_SIMPLE_MPD_MODEL" value="true"/>
+      ...
+    </ModelOptions>
+}}}
+
+The following parameters must be specified for each vector species:
+{{{
+      <anopheles mosquito=...>
+        <seasonality ... >
+        <mosq ... >
+        <simpleMPD>
+          <!-- These are made-up values! Parameterisations needed! -->
+          <developmentDuration value="11"/>
+          <developmentSurvival value="0.6"/>
+          <femaleEggsLaidByOviposit value="50"/>
+        </simpleMPD>
+        <nonHumanHosts ... >
+      </anopheles>
+}}}
+
+ * `developmentDuration` is the duration from egg-laying to emergence as an adult, and must be constant. It is _θj_ in the model description.
+ * `developmentSurvival`, or _ρ_, is the probability of an egg surviving to emerge as an adult in the absense of density/resource restrictions.
+ * `femaleEggsLaidByOviposit`, or _b_, is the mean number of female eggs laid by an adult per feeding-ovipositing-cycle.
