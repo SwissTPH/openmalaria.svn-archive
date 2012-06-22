@@ -12,6 +12,10 @@ Simulations that include non-periodic changes in the vectorial capacity use a se
 
 XML parameters for specifying this sub-model are described [XmlEntoVector here].
 
+=== Mosquito Population Dynamics ===
+
+Extensions to the vector model, described [ModelMosqPopDynamics here].
+
 == Non-vector transmission ==
 
 When the non-vector model is used, there is no explicit modeling of the mosquito population. Initial exposure of humans to infectious mosquito bits is input and any intervention effects on transmission to the mosquito translate into proportionate effects on transmission back to the human.   The 'Non-vector transmission' sub-model can be used only when there are no interventions affecting the vectorial capacity and is described in:
