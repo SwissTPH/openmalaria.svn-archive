@@ -57,7 +57,7 @@ Each XML sweep should consist of a directory containing one XML file for each ar
 
 ==== Example ====
 
-A simple example experiment description: [http://code.google.com/p/openmalaria/source/browse/download/experiments/EC-example-schema-28.7z EC-example-schema-28.7z]
+A simple example experiment description: [http://code.google.com/p/openmalaria/source/browse/download/experiments/example-28-5-day.7z example-28-5-day.7z]
 
 (This is a [http://7-zip.org/ 7-zip] archive. Right-click on "View raw file" and choose "save as ...".)
 
