@@ -102,7 +102,7 @@ attritionOfNets describes how nets disappear from the population ON TOP OF disap
         <anophelesParams mosquito="gambiae_ss">
           <deterrency holeFactor="0.5" holeScalingFactor="0.10" insecticideFactor="0.67" insecticideScalingFactor="0.10" interactionFactor="1.492537"/>
 }}}
-`RelativeAttractiveness=exp(log(holeFactor)*exp(-HoleIndex*holeScalingFactor)+log(insecticideFactor)*1-exp(-InsecticideConcentration*insecticideScalingFactor))+log(interactionFactor)*exp(-HoleIndex*holeScalingFactor)*1-exp(-InsecticideConcentration*insecticideScalingFactor)))`
+`RelativeAttractiveness=exp(log(holeFactor)*exp(-HoleIndex*holeScalingFactor)+log(insecticideFactor)*(1-exp(-InsecticideConcentration*insecticideScalingFactor)))+log(interactionFactor)*exp(-HoleIndex*holeScalingFactor)*(1-exp(-InsecticideConcentration*insecticideScalingFactor))))`
 
 NOTE: The exponential function prevents the RelativeAttractiveness from becoming negative. The `interactionFactor` can be calculated from experimental hut data: observed RelativeAttractiveness value for intact treated divided by the product of the observed RelativeAttractiveness values for intact untreated (`holeFactor`) and holed treated (`insecticideFactor`). If the `holeFactor`=1 `insecticideFactor`=1 and `interactionFactor`=1, the RelativeAttractiveness=1 and there is 0 effect of the net.
 
