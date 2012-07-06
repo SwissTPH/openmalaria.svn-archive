@@ -4,7 +4,7 @@
 
 == Simulation phases ==
 
-Prior to simulating the outcomes of an intervention or steady-state scenario in what we term the *intervention phase*, our code runs through a warm-up phase. See [ModelTimeUpdates] for details.
+Prior to simulating the outcomes of an intervention or steady-state scenario in what we term the *intervention phase*, the code runs through a warm-up phase. See [ModelTimeUpdates] for details.
 
 == Diagrams ==
 
