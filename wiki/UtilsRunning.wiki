@@ -2,7 +2,7 @@
 
 = Introduction =
 
-OpenMalaria comes with several [http://code.google.com/p/openmalaria/source/browse/#svn/trunk/test test scenarios] which can be used both as template scenarios and to check that OpenMalaria is working as usual. This page describes how one can run these tests and run other scenarios.
+OpenMalaria comes with several [http://code.google.com/p/openmalaria/source/browse/#svn/trunk/test test scenarios] which can be used both as template scenarios and to check that OpenMalaria is working as usual. This page describes how one can run these tests and run other scenarios.  *Note that the test scenarios include many non-default options which will mostly need to be removed if the XML is used a template for simulating malaria in the real world*
 
 == Schema versions ==
 
@@ -40,7 +40,7 @@ openMalaria.exe --scenario scenario.xml
 pause
 }}}
 
-On Linux, the following might work (although personally I find running from a command-line as below easier). Create a file called `runOpenMalaria.sh` (name isn't important), change the properties to make it executable, and add the following content:
+On Linux, the following might work (although running from a command-line as below might be easier). Create a file called `runOpenMalaria.sh` (name isn't important), change the properties to make it executable, and add the following content:
 {{{
 #!/bin/sh
 rm -f output.txt
