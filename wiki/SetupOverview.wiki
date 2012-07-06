@@ -12,7 +12,7 @@ If you would like to run your own simulations you have the following options:
 
   * install the compiled tool with GUI [openmalariaTools openmalariaTools].  This includes facilities for updating configuration files and running small simulation experiments comprising multiple scenarios.  
 
-  * The [Binaries] page gives general information on how and where to install pre-built executables of *openmalaria*.
+The [Binaries] page gives general information on how and where to install pre-built executables of *openmalaria*.
 
 = Contributing to *openmalaria* development =
 
