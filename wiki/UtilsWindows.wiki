@@ -23,20 +23,15 @@ The file types you're likely to encounter with openmalaria are:
 
 == Text editors ==
 
-Windows comes with 2: notepad and wordpad. However neither are very good for editing code (XML or other types) and notepad cannot understand unix line-endings.
-
-The text editor I would recommend on windows is [http://notepad-plus.sourceforge.net Notepad++] (there are many more available if you want to look). Download the installer ([http://sourceforge.net/projects/notepad-plus/files/ here]) and run it.
+Windows comes with 2: notepad and wordpad. However neither are very good for editing code (XML or other types) and notepad cannot understand unix line-endings.  A better text editor on windows is [http://notepad-plus.sourceforge.net Notepad++] which can be installed from ([http://sourceforge.net/projects/notepad-plus/files/ here]) and run it.
 
 By default Notepad++ won't register itself with any files (meaning if you double-click on XML, txt, files, etc., they will open in some other program, not notepad++). Instead, you can right-click on a file and choose "open with Notepad++" (or "edit with ..."). (It may be necessary to close and re-open file browsers or restart to see this; don't remember exactly.) If you also want to make some types of file open in notepad++ when double-clicked on, you can do so by going to notepad++'s settings menu and adjusting the "associate/register with file types" item, for whichever file types you want (e.g. .txt and .xml).
 
-Now when editing 
-
-
-== Archives ==
+== Archive programs ==
 
 Windows has built-in support for .zip files, but not the .gz files we sometimes use as output. (Hopefully you won't need to decompress the output files yourself, but being able to read various other archive formats is generally quite useful so I'll describe this anyway.)
 
-I recommend a program called [http://7-zip.org/ 7-zip] for this (another common program is winzip). Download the installer on the site (the 32-bit, non-beta version is probably your best choice) and run it. Like with notepad++, it doesn't associate itself with files automatically but provides right-click menus; I would recommend doing so by running it, going to the settings menu and "associate with file types", selecting everything except .zip (since windows can deal with these anyway), and pressing OK/whatever.
+[http://7-zip.org/ 7-zip] is recommended for this (another common program is winzip). Download the installer on the site (the 32-bit, non-beta version is probably your best choice) and run it. As with notepad++, it doesn't associate itself with files automatically but provides right-click menus.  It is recommended to do so by running it, going to the settings menu and "associate with file types", selecting everything except .zip (since windows can deal with these anyway), and pressing OK/whatever.
 
 To decompress something you can do one of the following:
   * right click on it and use one of the "extract..." options
