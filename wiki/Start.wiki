@@ -9,6 +9,8 @@ Welcome to the *openmalaria* wiki on google-code.
 
 *openmalaria* is a general platform for comparing, fitting, and evaluating different malaria models, to ensure that the models reproduce patterns of infection and disease observed in the field in malaria-endemic areas. 
 
+For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.   A glossary of useful terms related to !OpenMalaria can be found [http://code.google.com/p/openmalaria/wiki/Terminology here]
+
 = Applications =
 
 The main applications of *openmalaria* are:
@@ -61,9 +63,6 @@ Each simulation requires implementation of various components, from transmission
 
 The *openmalaria* development team includes staff of the [http://www.swisstph.ch/en/about-us/departments/epidemiology-and-public-health-eph/health-systems-research-and-dynamical-modelling/dynamical-modelling.html Swiss Tropical and Public Health Institute (Swiss TPH)], the [http://ndssl.vbi.vt.edu/index.php Network Dynamics and Simulation Science Laboratory at Virginia Bioinformatics Institute] 
 and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine].  Financial support is from the [http://www.gatesfoundation.org/Pages/home.aspx Bill & Melinda Gates Foundation]
-
-For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.   A glossary of useful terms related to !OpenMalaria can be found [http://code.google.com/p/openmalaria/wiki/Terminology here].
-
 
 = References =
 
