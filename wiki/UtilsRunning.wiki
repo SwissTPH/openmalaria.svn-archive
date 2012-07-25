@@ -2,7 +2,8 @@
 
 = Introduction =
 
-OpenMalaria comes with several [http://code.google.com/p/openmalaria/source/browse/#svn/trunk/test test scenarios] which can be used both as template scenarios and to check that OpenMalaria is working as usual. This page describes how one can run these tests and run other scenarios.  *Note that the test scenarios include many non-default options which will mostly need to be removed if the XML is used a template for simulating malaria in the real world*
+OpenMalaria comes with several [http://code.google.com/p/openmalaria/source/browse/#svn/trunk/test test scenarios] which can be used both as template scenarios and to check that OpenMalaria is working as usual. This page describes how one can run these tests and run other scenarios.  *Note that the test scenarios include many non-default options which will mostly need to be removed if the XML is used a template for simulating malaria in the real world*. Some further
+[http://openmalaria.googlecode.com/svn/application_deployment/examples/ examples] can be used. The [http://openmalaria.googlecode.com/svn/application_deployment/examples/centre_scenario.xml centre scenario] from [http://www.malariajournal.com/content/11/1/20 Briët et al., 2012] is a good starting point. 
 
 == Schema versions ==
 
