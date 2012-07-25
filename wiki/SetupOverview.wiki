@@ -8,9 +8,11 @@ If you would like to help the project by offering down-time on your computer to 
 
 If you would like to run your own simulations you have the following options:
 
-  * run your own simulation scenarios directly from the command line as described on the [UtilsRunning] page.  This is a good way to learn about the capabilities of *openmalaria* and to test small numbers of scenarios.  
+  * run your own simulation scenarios directly from the command line as described on the [UtilsRunning] page.
 
   * install the compiled tool with GUI [openmalariaTools openmalariaTools].  This includes facilities for updating configuration files and running small simulation experiments comprising multiple scenarios.  
+
+The [UtilsRunning] page also explains how to continue once you have installed *openmalaria* and to test small numbers of scenarios.  
 
 The [Binaries] page gives general information on how and where to install pre-built executables of *openmalaria*.
 
