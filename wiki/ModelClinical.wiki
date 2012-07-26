@@ -2,7 +2,7 @@
 
 = Clinical models =
 
-In openmalaria, the [ModelPathogenesis Pathogenesis models] determine if an individual becomes sick, and whether the sickness is uncomplicated or severe. The clinical models determine whether, when and how the sickness is treated and how long it lasts. There are two implementations of the clinical models, described below. The first model uses a five-day time step, the second a one-day time step. In the former, clinical and parasitological outcomes are predicted within the model, whereas the latter works together with the models for [ModelDrug Drug Action], severe outcomes, and [ModelWithinHost Within-Host Dynamics] to predict these outcomes.
+In *openmalaria*, the [ModelPathogenesis pathogenesis models] determine whether an individual becomes sick, and whether the sickness is uncomplicated or severe. The clinical models determine whether, when and how the sickness is treated and how long the sickness lasts. There are two implementations of the clinical models. The first model uses a five-day time step, the second a one-day time step. In the former, clinical and parasitological outcomes are predicted within the model, whereas the latter works together with the models for [ModelDrug drug Action], severe outcomes, and [ModelWithinHost within-host dynamics] to predict these outcomes.
 
 === Notation ===
 Due to confusion of terms while adapting the clinical model for a one-day timestep, we have developed the following notation:
@@ -34,7 +34,7 @@ Table 1:
 
 http://openmalaria.googlecode.com/svn/wiki/eqns/P_of_positive_test.png
 
-and thus the diagnostic test’s output can be modelled as Bernoulli (f(Y)).
+and thus the diagnostic test’s output can be modeled as Bernoulli (f(Y)).
 
 
 *Parameters* We use the parameters in Table 2 to model RDT and microscopy diagnostics.
@@ -65,7 +65,7 @@ Predictions are made across a range of different transmission intensities, by va
 
 == One-day timestep ==
 
-The Crowell et al model (paper not yet published; implemented by the ClinicalEventScheduler class) is an adaptation of the above [http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al model] to a one-day time step. We break the model down into two components: clinical scheduler and clinical decisions. 
+The Crowell _et al._ model (paper not yet published; implemented by the ClinicalEventScheduler class) is an adaptation of the above [http://www.ncbi.nlm.nih.gov/pubmed/16931820 Tediosi et al model] to a one-day time step. We break the model down into two components: clinical scheduler and clinical decisions. 
 
 Moving to a one-day time step implied the need for a clinical scheduler to mediate between the [ModelPathogenesis Pathogenesis], clinical decisions and severe outcomes models. The clinical scheduler decides and tracks the clinical state of the individual, based on the state as determined by the pathogenesis model and recent treatment history, allocates individuals to the clinical decisions and severe outcomes models as necessary, and determines final clinical outcomes.
 
