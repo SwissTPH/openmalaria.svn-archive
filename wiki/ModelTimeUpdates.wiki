@@ -13,52 +13,52 @@ At time *'t = 0'*, the human and (if using the vector model) mosquito population
 
 == Warm-up ==
 
-The simulation is run with enforced transmission until *'t = tWL'* (that is, the simulation's state at times *'t = 1'* through to *'t = tWL'* are calculated).
+The simulation is run with enforced transmission until *`t = tWL`* (that is, the simulation's state at times *`t = 1`* through to *`t = tWL`* are calculated).
 
-*'tWL'* is calculated to be:
+*`tWL`* is calculated to be:
 
  * at least as long as the human life span (`maximumAgeYrs` attribute of the scenario's `<demography>` element)
  * at least as long as the warmup length requested by the transmission model
  * a whole number of years
 
-== Transmission initialisation iteration ==
+== Transmission initialization iteration ==
 
 At this point, the transmission model's *`initIterate()`* method is called. This either specifies that the transmission model is sufficiently well initialised (in which case the next phase is immediately started) or gives a length of time to continue the simulation for before this method is called again.
 
 In the [ModelTransmission#Non-vector_transmission non-vector model], this prepares the model to switch to dynamic transmission mode (if enabled) and indicates the next phase should be started.
 
-In the [XmlEntoVector vector transmission model], `initIterate()` checks whether or not the simulated EIR could significantly better reproduce the EIR requested in the scenario file or not. If so, it makes some adjustments and indicates the simulation should continue for six years before calling *`initIterate`* again (unless this has already been tried 10 times, in which case it halts the simulation with an error). Once the model is satisfied the simulated EIR sufficiently well approximates the requested EIR, it indicates the simulation should be run for another year (to let mosquito parameters stabilise after their final tweaks) before switching on dynamic transmission and indicating that the next phase may begin.
+In the [XmlEntoVector vector transmission model], *`initIterate()`* checks whether or not the simulated EIR could significantly better reproduce the EIR requested in the scenario file or not. If so, it makes some adjustments and indicates the simulation should continue for six years before calling *`initIterate`* again (unless this has already been tried 10 times, in which case it halts the simulation with an error). Once the model is satisfied the simulated EIR sufficiently well approximates the requested EIR, it indicates the simulation should be run for another year (to let mosquito parameters stabilise after their final tweaks) before switching on dynamic transmission and indicating that the next phase may begin.
 
 == Intervention period ==
 
 Finally, the so called "intervention period" starts: the period during which interventions may be deployed and measurements of the simulation may be taken.
 
-Only once this starts are the values of *'tI₀'* and *'tEnd'* known for certain. At this point the *'tI'* time measure starts being useful.
+Only once this starts are the values of *`tI₀`* and *`tEnd`* known for certain. At this point the *`tI`* time measure starts being useful.
 
 = Timestep updates =
 
-The state of the simulation is of course calculated iteratively: the state at time *'t'* depends on the state before time *'t'*.
+The state of the simulation is of course calculated iteratively: the state at time *`t`* depends on the state before time *`t`*.
 
-To calculate the state at time *'t'*, first the variables *`TimeStep::simulation`* and *`TimeStep::interventionPeriod`* are updated (to *'t'* and *'tI'*). If *'t = tI₀'*, *'tI'* is set to 0 (note: this is described differently to what happens in the code, but is be equivalent since *'tI'* has no effect in Population::update1() when its value is less than 1).
+To calculate the state at time *`t`*, first the variables *`TimeStep::simulation`* and *`TimeStep::interventionPeriod`* are updated (to *`t`* and *`tI`*). If *`t = tI₀`*, *`tI`* is set to 0 (note: this is described differently to what happens in the code, but is be equivalent since *`tI`* has no effect in Population::update1() when its value is less than 1).
 
-Next `Population::update1` is called to calculate the new state.
+Next *`Population::update1`* is called to calculate the new state.
 
-Any continuous and survey-based monitoring configured to happen at this *'tI'* happens next.
+Any continuous and survey-based monitoring configured to happen at this *`tI`* happens next.
 
-Finally, any interventions configured for deployment at time *'tI'* (both timed and continuous for humans at their current age) are deployed.
+Finally, any interventions configured for deployment at time *`tI`* (both timed and continuous for humans at their current age) are deployed.
 
 == `Population::update1` ==
 
  * neonatal mortality is updated based on the previous time-step's patent hosts
  * the transmission model is updated based on previous infectiousness of humans
  * *`Human::update`* is called for each human
- * population age structure is maintained by outmigrating some humans
- * population size is maintained by adding new-borns
+ * population age structure is maintained by out migration as needed
+ * population size is maintained by adding newborns
  * transmission-specific summary statistics are updated
 
 == `Human::update` ==
 
- * those humans older than the human life span (see calculation of *'tWL'* above) are killed
+ * Humans who reach the end older than the human life span (see calculation of *`tWL`* above) die spontaneously
  * number of _P.f._ inoculations is calculated and new infections are started
  * infections' parasite densities are updated: this is when drugs from the 1-day time-step model have their effect
  * indirect deaths (neonatal and otherwise) occur
@@ -72,8 +72,8 @@ Note that effects of disease, diagnosis, and medication all occur based on the p
 = Terminology =
 
 || variable || name in code || description ||
-|| *'t'* || TimeStep::simulation || Timestep being updated or last complete (see [#Timestep_updates]) ||
-|| *'tI'*|| TimeStep::interventionPeriod || Before the intervention period, *'tI'*<0; during this period *'tI = t + tI0'* ||
-|| *'tWL'* || humanWarmupLength || Length of first phase and time of its end ||
-|| *'tI₀'* || (none) || *'t'* at the start of the intervention period (only known when *'t  ≥ tI₀ '* ||
-|| *'tEnd'* || (totalSimDuration) || Time at which the simulation ends (only known when *'t ≥ tI₀'* ||
+|| *`t`* || TimeStep::simulation || Timestep being updated or last complete (see [#Timestep_updates]) ||
+|| *`tI`*|| TimeStep::interventionPeriod || Before the intervention period, *`tI`*<0; during this period *`tI = t + tI0`* ||
+|| *`tWL`* || humanWarmupLength || Length of first phase and time of its end ||
+|| *`tI₀`* || (none) || *`t`* at the start of the intervention period (only known when *`t  ≥ tI₀ `* ||
+|| *`tEnd`* || (totalSimDuration) || Time at which the simulation ends (only known when *`t ≥ tI₀`* ||
