@@ -36,7 +36,7 @@ openmalariaTools features:
   * Experiment creator
   * Basic scenario editor 
   * Batch mode 
-  * Live graph integration
+  * [http://www.live-graph.org/ LiveGraph{{{©}}}] integration
   * Automatic schema translation
   * Custom population size setting (for test batches)
 
@@ -46,9 +46,9 @@ To run some scenarios:
 
   # Open the application
   # Click on the load button
-  # Select some scenario files. If the files' schema version is older than the system supported one, then the tool will whether it should attempt to automatically update the scenario files. It could happen that an automatic translation isn't possible, in which case you will  need to update the scenario manually.
+  # Select some scenario files. If the input scenario files were written to suit a legacy schema version, the tool will enquire whether it should attempt to automatically update the scenario files to the current schema. It could happen that an automatic translation isn't possible, in which case you will need to update the outdated scenario manually.
   # Add  options to a model run or select a specific output folder.
-    * Use [http://www.live-graph.org/ LiveGraph]. The LiveGraph option  will only be enabled once a scenario is selected. It allows you to start a third party software called LiveGraph to plot the data produced from the *openmalaria* simulator. Be aware that LiveGraph will look for requires specific parameters in the scenario file's monitoring section.
+    * Once a scenario is selected, the LiveGraph{{{©}}} option is enabled. Thius option allows you to start a third party software that will plot the data as it is produced by the *openmalaria* simulator. Be aware that LiveGraph{{{©}}} will look for specific parameters in the scenario file's monitoring section.
     * Single output folder. Instead of having one output folder per scenario file, you may opt to have one output folder for all the selected scenarios. This is useful if you're running many scenarios (_e.g._, in batch mode).
     * Custom population size. The population size can be customized for all selected scenarios. This feature is particularly useful if you want to test a scenario with a smaller population size before committing computer resources for a longer simulation.
     * If you are running *openmalaria* on a Windows 7 or Vista platform, the operating systems' security settings may prevent you from writing data to the default output folder.   You should then select another path (_e.g._, your home folder).
