@@ -30,7 +30,7 @@
   * *[ModelsOverview Model descriptions]*
     * [ModelTimeUpdates Sequencing and time steps]
     * [ModelDemography Human demography]
-    * [ModelHumanMisc Miscelaneous human models]
+    * [ModelHumanMisc Miscellaneous human models]
     * [ModelTransmission Transmission models]
     * [ModelWithinHost Within-host models]
       * [ModelDrug Drug (PKPD) action & resistance models]
