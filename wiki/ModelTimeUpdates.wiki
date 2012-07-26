@@ -33,7 +33,7 @@ In the [XmlEntoVector vector transmission model], `initIterate()` checks whether
 
 Finally, the so called "intervention period" starts: the period during which interventions may be deployed and measurements of the simulation may be taken.
 
-Only once this starts are the values of _tI₀_ and _tEnd_ known for certain. At this point the _tI_ time measure starts being useful.
+Only once this starts are the values of *_tI₀_* and *_tEnd_* known for certain. At this point the *_tI_* time measure starts being useful.
 
 = Timestep updates =
 
