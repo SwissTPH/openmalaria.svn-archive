@@ -13,7 +13,7 @@ We can, upon request, create packages with binaries of the *openmalaria* simulat
 
 == Troubleshooting ==
 
-Note that, for Windows, the Microsoft .net framework is a prerequisite. You can you download .net from [http://www.microsoft.com/net/ Microsoft].
+Note that, for Windows,  in addition to the other [Dependencies], the Microsoft .net framework is a prerequisite. You can you download .net from [http://www.microsoft.com/net/ Microsoft].
 
 Still have problems? We want to know! Send us an e-mail, or, better yet open an [http://code.google.com/p/openmalaria/issues/list issue]. However you contact us, please include a copy of the error message that is generated. 
 
