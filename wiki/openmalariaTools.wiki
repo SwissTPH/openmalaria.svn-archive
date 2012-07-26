@@ -2,13 +2,13 @@ A GUI frontend for managing, creating and running local experiments.
 
 = Introduction =
 
-openmalariaTools is a GUI created for an easier interaction with the openmalaria scientific application. Instead of putting different commands in a terminal the user just chooses his options in the GUI.
+*openmalariaTools* is a graphical user interface created for an easier interaction with the *openmalaria* scientific application. 
 
-OpenmalariaTools is developed as a cross-platform application using [http://www.python.org Python] and [http://pygtk.org PyGTK]. For some of its features, openmalariaTools requires a Java run-time environment.
+*openmalariaTools* is developed as a cross-platform application using [http://www.python.org Python] and [http://pygtk.org PyGTK]. For some of its features, *openmalariaTools* requires a Java run-time environment.
 
 = Downloads =
 
-OpenmalariaTools is currently in beta stage 6. It runs on both Linux and Windows, but currently not on the Mac OS due to the unavailability of PyGTK natively on the Mac.
+*openmalariaTools* is currently in beta stage 6. It runs on both Linux and Windows, but currently not on the Mac OS due to the unavailability of PyGTK natively on the Mac.
 
 The beta 6 release uses schema version 28 and has been packaged with an installer for windows and debian packages for linux. To use:
 
@@ -42,7 +42,7 @@ openmalariaTools features:
 
 = Usage =
 
-Run some scenarios:
+To run some scenarios:
 
   # Open the application
   # Click on the load button
