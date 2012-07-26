@@ -46,13 +46,13 @@ Run some scenarios:
 
   # Open the application
   # Click on the load button
-  # Select some scenario files. If the files' schema version is older than the system supported one, then the tool will ask if you want that it updates the scenario files for you (It could happen that an automatic translation isn't possible. In this case you will need to update the scenario yourself).
-  # Add some options or select a specific output folder.
-    * Use Livegraph (is enabled only if one scenario is selected). This option allows you to start a third party software called livegraph which is real-time plotting the data outputted from openmalaria scientific application (This needs some specific parameters in the scenario file's monitoring section).
-    * Single Output folder. Instead of having an output folder per scenario file, you will have only one output folder for all the selected scenarios. This is useful if you're running a large amount of scenarios (batch).
-    * Custom population size. You can set a custom population size for all the selected scenarios. This is useful if you want to test your scenarios (a small population size is less demanding in term of computing power and time).
-    * Please be aware that for security reasons, you could not be able on windows seven or vista to write output data in the default output folder. You should then select another path (eg. your home folder).
-  # Finally click on the start button under the "terminal" screen and wait. You can either follow your scenarios' progression on the "terminal" or have a situation summary in scenarios' list where you can see the outcomes (success, failure or not yet started).
+  # Select some scenario files. If the files' schema version is older than the system supported one, then the tool will whether it should attempt to automatically update the scenario files. It could happen that an automatic translation isn't possible, in which case you will  need to update the scenario manually.
+  # Add  options to a model run or select a specific output folder.
+    * Use [http://www.live-graph.org/ LiveGraph]. The LiveGraph option  will only be enabled once a scenario is selected. It allows you to start a third party software called LiveGraph to plot the data produced from the *openmalaria* simulator. Be aware that LiveGraph will look for requires specific parameters in the scenario file's monitoring section.
+    * Single output folder. Instead of having one output folder per scenario file, you may opt to have one output folder for all the selected scenarios. This is useful if you're running many scenarios (_e.g._, in batch mode).
+    * Custom population size. The population size can be customized for all selected scenarios. This feature is particularly useful if you want to test a scenario with a smaller population size before committing computer resources for a longer simulation.
+    * If you are running *openmalaria* on a Windows 7 or Vista platform, the operating systems' security settings may prevent you from writing data to the default output folder.   You should then select another path (_e.g._, your home folder).
+  # When you have completed the simulations set up, click on the start button under the *terminal* screen and wait. You may follow your scenarios' progression on the *terminal* or review the situation summary in scenarios' list where you can see the status of each simulation (success, failure, or not yet started).
 
 = Screenshots =
 
