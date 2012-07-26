@@ -8,8 +8,7 @@ Prior to simulating the outcomes of an intervention or steady-state scenario in 
 
 == Diagrams ==
 
-The diagrams here are overviews of models' processes. They don't go into much detail,
-and all model-specific behaviour is abstracted under one block. More detailed graphs restricted to
+The diagram below gives a high-level view of the processes abstracted into a model. All model-specific behaviour is abstracted into one block, or model component. More detailed graphs restricted to
 the components of interest are available on some of the sub-model pages.
 
 Color key: green arrows increase a quantity, red arrows decrease a quantity. Shape key: oval
@@ -23,6 +22,6 @@ Some perspectives for looking at model processes are those of [ModelDemography h
 === Infection cycle ===
 
 A common perspective is that of the malarial infection cycle. The following graph shows the cycle assumed by the model. Blood-stage parasite densities are
-one of the most important aspects here. Intervention effects are not shown.
+one of the most important aspects here. The effects of interventions are not shown.
 
 http://openmalaria.googlecode.com/svn/wiki/graphs/infection-cycle.png
