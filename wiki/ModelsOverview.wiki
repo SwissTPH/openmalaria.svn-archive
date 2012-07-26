@@ -4,9 +4,9 @@
 
 == Simulation phases ==
 
-Prior to simulating the outcomes of an intervention or steady-state scenario in what we term the *intervention phase*, the code runs through a warm-up phase. See [ModelTimeUpdates] for details.
+Prior to simulating the outcomes of an intervention or steady-state scenario in what we term the *intervention phase*, the code runs through a *warm-up phase*. See [ModelTimeUpdates] for details.
 
-== Diagrams ==
+== Model diagrams ==
 
 The diagram below gives a high-level view of the processes abstracted into a model. All model-specific behaviour is abstracted into one block, or model component. More detailed graphs restricted to
 the components of interest are available on some of the sub-model pages.
