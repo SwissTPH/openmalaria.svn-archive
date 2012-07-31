@@ -2,17 +2,17 @@
 
 = Introduction =
 
-Normally, you can probably just install from packages:
+Xerces should be included with your ubuntu release, so you should be able to install xerces-c using your package manager of choice:
 {{{
 apt-get install libxerces-c2-dev
 }}}
-If you don't want to...
+If you would rather build the library from source, read on.
 
 = Details =
 Both versions 2.8.x and 3.0.x should work, but both have given me plenty of problems, either while compiling or while linking (creating the openmalaria executable) using the resultant library. I don't know if older versions would work.
 
 === Install from mac ports ===
-Note that installing a library multiple times from different sources isn't a good idea. If you already have xerces includes available on your system, they could get used along with a library from elsewhere, causing problems if the library is built from a different version of the source code.
+Note that installing multiple copies of libraries isn't a good idea. In particular, if you already have xerces include files available on your system, they might be used along with a library from elsewhere, creating conflicts if the library is built from a different version of the source code.
 
 Download and install macports from [http://www.macports.org/] or [http://darwinports.com/download/ darwinports].
 
@@ -28,14 +28,14 @@ install xercesc
 quit
 }}}
 
-Macports installs  into /opt/local without making libraries or includes here generally available - so you need to make them explicitly available.
+Macports installs xerces into /opt/local without making libraries or include files here generally available - so you need to make those locations explicitly available.
 
- * make the library accessible
+ * make the library accessible:
 {{{
 cd openMalaria/lib
 ln -s /opt/local/lib/libxerces-c.a ./
 }}}
- * make the includes accessible
+ * make the includes accessible:
 {{{
 cd ../include
 ln -s /opt/local/include/xercesc ./
