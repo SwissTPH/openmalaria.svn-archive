@@ -9,7 +9,7 @@ Welcome to the *openmalaria* wiki on google-code.
 
 *openmalaria* is a general platform for comparing, fitting, and evaluating different malaria models, to ensure that the models reproduce patterns of infection and disease observed in the field in malaria-endemic areas. 
 
-For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.   A glossary of useful terms related to !OpenMalaria can be found [http://code.google.com/p/openmalaria/wiki/Terminology here]
+For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.   A glossary of useful terms related to openmalaria can be found [http://code.google.com/p/openmalaria/wiki/Terminology here]
 
 = Applications =
 
