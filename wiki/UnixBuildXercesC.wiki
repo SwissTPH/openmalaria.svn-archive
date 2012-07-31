@@ -9,7 +9,7 @@ apt-get install libxerces-c2-dev
 If you don't want to...
 
 = Details =
-Both versions 2.8.x and 3.0.x should work, but both have given me plenty of problems, either while compiling or while linking (creating the openMalaria executable) using the resultant library. I don't know if older versions would work.
+Both versions 2.8.x and 3.0.x should work, but both have given me plenty of problems, either while compiling or while linking (creating the openmalaria executable) using the resultant library. I don't know if older versions would work.
 
 === Install from mac ports ===
 Note that installing a library multiple times from different sources isn't a good idea. If you already have xerces includes available on your system, they could get used along with a library from elsewhere, causing problems if the library is built from a different version of the source code.
@@ -28,7 +28,8 @@ install xercesc
 quit
 }}}
 
-For some reason macports seems to install into /opt/local without making libraries or includes here generally available.
+Macports installs  into /opt/local without making libraries or includes here generally available - so you need to make them explicitly available.
+
  * make the library accessible
 {{{
 cd openMalaria/lib
@@ -42,7 +43,7 @@ ln -s /opt/local/include/xercesc ./
 
 === Compile from source ===
 
-As noted above, you don't have to use version 2.8.
+As noted above, you don't have to use version 2.8., but if you did, the command to retrieve the source code would be:
 {{{
 wget http://mirror.switch.ch/mirror/apache/dist/xerces/c/2/sources/xerces-c-src_2_8_0.tar.gz
 tar -xvzf xerces-c-src_2_8_0.tar.gz
@@ -58,7 +59,7 @@ cd src/xercesc
 {{{
  ./runConfigure -pmacosx -cgcc -xg++ -minmem -nsocket -tnative -rpthread -s
 }}}
-Then build and install (should install static libraries in /usr/local/lib):
+Then build and install. If you are installing static libraries, put them in /usr/local/lib:
 {{{
 make
 sudo make install
