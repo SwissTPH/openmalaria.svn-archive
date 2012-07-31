@@ -51,7 +51,7 @@ The value of a point estimate is greatly enhanced when the variability associate
 
 The core program is written in C++ with a [http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU GPL 2 licence]. 
 
-An overview of the status of *openmalaria* software development appears on ohlo.net  [https://www.ohloh.net/p/openmalaria here].  The source code is stored as part of the google code repository [http://code.google.com/p/openmalaria/source/browse/ here]. Instructions for compiling the code from source can be found on this website [BuildSystem here]. 
+The status of *openmalaria* software development is summarized on [https://www.ohloh.net/p/openmalaria ohlo.net].  The source code is stored as part of the google code repository [http://code.google.com/p/openmalaria/source/browse/ repository]. Instructions for compiling the code from source can be found on this wiki [BuildSystem site]. 
 
 == Models ==
 
