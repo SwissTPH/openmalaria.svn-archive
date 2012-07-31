@@ -2,14 +2,14 @@
 
 = Introduction =
 
-The following instructions are  _only_ necessary for building a release for malariacontrol.net. For development of openmalaria itself,  boinc-integration can be disabled. For participating in the volunteer computing, goto [malariacontrol.net] or install boinc from your distribution's packages.
+The following instructions are  _only_ necessary for building a release for malariacontrol.net. For development of openmalaria itself,  boinc-integration can be disabled. For participating in the volunteer computing, go to [malariacontrol.net] or install [http://boinc.berkeley.edu/wiki/System_requirements boinc] from your distribution's packages.
 
 You may just be able to use the [http://packages.debian.org/search?keywords=boinc-dev boinc-dev] package. Otherwise, read on...
 
 
 = Details =
 
-Check out a copy of boinc. Normally you can use the latest stable:
+Check out a copy of boinc. Normally you can use the latest stable version:
 {{{
 svn co http://boinc.berkeley.edu/svn/branches/server_stable boinc
 cd boinc
