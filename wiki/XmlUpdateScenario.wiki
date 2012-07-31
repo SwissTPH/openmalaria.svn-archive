@@ -1,10 +1,9 @@
-automatic schema translator
 
 = Automatic schema version update =
 
-If you use some scenarios working with an older schema version, you can update those with the schema translator. The translation may not work for some scenarios (if it detects an ambiguous situation, it will ask you to run again specifying the value of a certain flag, or deal with something manually).
+If you use some scenarios working with an older schema version, these can be updated with the schema translator. The translation may not work for all scenarios, but it will point out the area where it detects an  ambiguous situation, by either asking you to specify the value of a certain flag and then rerun the translator, or by pointing out where a manual edit in the scenario is required.
 
-The schema translator may be usable within [openmalariaTools]; alternatively it can be used as below.
+The schema translator can be used within [openmalariaTools] or as a stand-alone tool.
 
 == Build and Install ==
   
