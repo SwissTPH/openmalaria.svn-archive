@@ -19,7 +19,7 @@ The main applications of *openmalaria* are:
 
 Simulations of _status quo_ malaria situations can be used to estimate parameters that have not been measured from field data.  For instance, models can be used to predict mortality rates from entomological data. Such simulations are also useful for validating models.
 
-An overview of how to use *openmalaria* to simulate malaria in a particular field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
+Guidance on how to apply *openmalaria* to simulate malaria at a field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
 
 == Prediction of epidemiological impacts of interventions ==
 
