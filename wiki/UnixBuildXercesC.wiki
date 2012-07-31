@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Xerces should be included with your ubuntu release, so you should be able to install xerces-c using your package manager of choice:
+Xerces should be included into the ubuntu release, so you should be able to install xerces-c using your package manager of choice:
 {{{
 apt-get install libxerces-c2-dev
 }}}
