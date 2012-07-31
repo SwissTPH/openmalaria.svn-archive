@@ -9,11 +9,11 @@ The simulator can be:
   * run over the BOINC volunteer computing network, see [http://malariacontrol.net/  malariacontrol.net ] 
  
 
-We can, upon request, create packages with binaries of the *openmalaria* simulator and a few examples for win32/OS X/linux 32/64-bit platforms. Mac users are invited to follow the build instructions for their OS. Please ask us for more information if none of the links above provide what you need.
+We can, upon request, create packages with binaries of the *openmalaria* simulator and a few examples for win32/OS X/linux 32/64-bit platforms. Mac users are invited to follow the build instructions for their operating system. Please ask us for more information if none of the links above provide what you need.
 
 == Troubleshooting ==
 
-Note that, for Windows,  in addition to the other [Dependencies], the Microsoft .net framework is a prerequisite. You can you download .net from [http://www.microsoft.com/net/ Microsoft].
+Note that, for Windows, in addition to the other [Dependencies], the Microsoft .net framework is a prerequisite. If you don't have .net, it can be downloaded from [http://www.microsoft.com/net/ Microsoft].
 
 Still have problems? We want to know! Send us an e-mail, or, better yet open an [http://code.google.com/p/openmalaria/issues/list issue]. However you contact us, please include a copy of the error message that is generated. 
 
