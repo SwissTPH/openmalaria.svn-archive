@@ -25,7 +25,7 @@ Alternatively, one can install from source (familiarity with [http://subversion.
     {{{
 svn checkout http://openmalaria.googlecode.com/svn/application_deployment OpenmalariaTools
 }}}
-  * Potentially replace the `application/openMalaria[.exe]` binary.
+  * If needed, replace (update) the `application/openMalaria[.exe]` binary.
 
 = Features =
 
