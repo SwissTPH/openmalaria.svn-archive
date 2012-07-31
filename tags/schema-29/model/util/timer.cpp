@@ -25,6 +25,7 @@
 #else
 #include <cstdio>	// perror
 #include <pthread.h>
+#include <unistd.h>     // needed on newer systems for sleep()
 #endif
 
 #include "util/timer.h"

@@ -79,10 +79,11 @@ namespace OM { namespace Clinical {
 	    list_grammar() : list_grammar::base_type(list, "value list") {
 		using qi::alnum;
 		using qi::lexeme;
+                using qi::char_;
 		using phoenix::val;
 		using namespace qi::labels;
 		
-		symbol %= lexeme[ +( alnum | '.' | '_' ) ];
+		symbol %= lexeme[ +( alnum | char_('.') | char_('_') ) ];
 		list %= symbol % ',';
 		
 		symbol.name( "symbol" );
@@ -99,6 +100,7 @@ namespace OM { namespace Clinical {
 	    DR_grammar() : DR_grammar::base_type(tree, "decision tree")
 	    {
 		using qi::alnum;
+                using qi::char_;
 		using qi::lexeme;
 		using qi::lit;
 		using qi::double_;
@@ -109,7 +111,7 @@ namespace OM { namespace Clinical {
 		using phoenix::construct;
 		using namespace qi::labels;
 		
-		symbol %= lexeme[ +( alnum | '.' | '_' ) ] ;	// symbol token
+		symbol %= lexeme[ +( alnum | char_('.') | char_('_') ) ] ;	// symbol token
 		value_symbol = symbol[ _val = _1 ];
 		value_double = double_[ _val = _1 ];
 		value_range = range[ _val = _1 ];
@@ -178,6 +180,7 @@ namespace OM { namespace Clinical {
 	struct SymbolValueMap_grammar : qi::grammar<Iterator, SymbolValueMap(), ascii::space_type> {
 	    SymbolValueMap_grammar() : SymbolValueMap_grammar::base_type(map, "key-value map") {
 		using qi::alnum;
+                using qi::char_;
 		using qi::lexeme;
 		using qi::double_;
 		using qi::_val;
@@ -186,7 +189,7 @@ namespace OM { namespace Clinical {
 		using namespace phoenix;
 		using namespace qi::labels;
 		
-		symbol %= lexeme[ +( alnum | '.' | '_' ) ];
+		symbol %= lexeme[ +( alnum | char_('.') | char_('_') ) ];
 		// conveniently enters stuff into a map, but doesn't seem to work when value-type is not fundamental:
 		map = (symbol > '(' > double_ > ')')[_val[_1] = _2] % ',';
 		
@@ -202,6 +205,7 @@ namespace OM { namespace Clinical {
 	struct SymbolRangeList_grammar : qi::grammar<Iterator, SymbolRangeList(), ascii::space_type> {
 	    SymbolRangeList_grammar() : SymbolRangeList_grammar::base_type(map, "key-range map") {
 		using qi::alnum;
+                using qi::char_;
 		using qi::digit;
 		using qi::lexeme;
 		using qi::double_;
@@ -211,7 +215,7 @@ namespace OM { namespace Clinical {
 		using phoenix::val;
 		using namespace qi::labels;
 		
-		symbol %= lexeme[ +( alnum | '.' | '_' ) ];
+		symbol %= lexeme[ +( alnum | char_('.') | char_('_') ) ];
 		range %= double_ > '-' > double_;
 		pair %= symbol > '(' > range > ')';
 		map %= pair % ',';
