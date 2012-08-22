@@ -1,6 +1,6 @@
-#summary Brief instructions for building openmalaria
+#summary Brief instructions for building OpenMalaria
 
-= Building openmalaria =
+= Building OpenMalaria =
 
 This page gives a brief idea of how to compile *openalaria* on a unix or linux machine.
 
@@ -14,7 +14,7 @@ You could at this time also create a malariacontrol/lib dir and install there th
 
 == Dependencies ==
 
-*openmalaria* has the usual, and a few not-so-usual, dependencies. Most of these packages are distributed with your linux distribution and only need to be installed.
+*OpenMalaria* has the usual, and a few not-so-usual, dependencies. Most of these packages are distributed with your linux distribution and only need to be installed.
 
   * python 2.6 or 2.7 [http://python.org/download/ python 2.6 or 2.7]. Python 3.0 isn't compatible with the python code we've written - you must have python 2.6 or 2.7 on your system in order to run the gui and some of the utility scripts
   
@@ -36,9 +36,9 @@ If you would like to donate your otherwise dormant cpu cycles to the project via
 
  * [UnixBuildBoinc] [http://packages.debian.org/search?keywords=boinc-dev boinc-dev] 
 
-The openmalaria source code is stored in a source-safed repository that is managed with [subversion] [http://subversion.apache.org/packages.html subversion]. Technically, you don't need to have subversion installed to check out the source code, but it makes things simpler if you do. In any case, the code repository can be access via the command line or GUI or IDE tools.
+The OpenMalaria source code is stored in a source-safed repository that is managed with [subversion] [http://subversion.apache.org/packages.html subversion]. Technically, you don't need to have subversion installed to check out the source code, but it makes things simpler if you do. In any case, the code repository can be access via the command line or GUI or IDE tools.
 
-== Download  and compile the openmalaria source code==
+== Download  and compile the OpenMalaria source code==
 
 First, [http://code.google.com/p/openmalaria/source/checkout check out the repository] and {{{cd}}} to the checkout directory, which should be /malariacontrol/openmalaria/.
 
@@ -51,7 +51,7 @@ cd build
 
 The build directory (/malariacontrol/openmalaria/build/ ) will initially be empty - the next task is to *configure* the makefiles that will be used to compile and link the source code and libraries. The configured makefiles will appear in the build directory. This task can be approached using the command line, or gui versions of the cmake program
 
-Run cmake, passing the path of the *openmalaria* directory you checked out:
+Run cmake, passing the path of the *OpenMalaria* directory you checked out:
 {{{
 cmake-gui ..
 # You can use ccmake or just cmake instead of cmake-gui
@@ -80,11 +80,11 @@ Building Xerces-c 2.8:
 Building Xerces-c 3.1.1:	
 ./configure --disable-shared --disable-network LDFLAGS=-static-libgcc
 
-Once these configuration issues are sorted, you should be able to build a proper static  version of *openmalaria*. Again, during the *openmalaria* building process  pass the arguments *-static-libgcc -Wl,-Bstatic -lstdc++*  to ensure that the correct, static version of these libraries is linked. After having compiled the binaries, you can check that the correct dependencies have been installed  with {{{ldd}}}.  
+Once these configuration issues are sorted, you should be able to build a proper static  version of *OpenMalaria*. Again, during the *OpenMalaria* building process  pass the arguments *-static-libgcc -Wl,-Bstatic -lstdc++*  to ensure that the correct, static version of these libraries is linked. After having compiled the binaries, you can check that the correct dependencies have been installed  with {{{ldd}}}.  
 
 == Running the included tests ==
 
-Several unit tests have been built for openmalaria. These should be run after every build, to confirm that nothing has gone amiss in the build process.
+Several unit tests have been built for OpenMalaria. These should be run after every build, to confirm that nothing has gone amiss in the build process.
 From the build directory, run ctest (can pass the `-j 2` option to speed up):
 {{{
 $ ctest

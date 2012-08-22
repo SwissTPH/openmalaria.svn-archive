@@ -40,6 +40,6 @@ The `function`, `L` and `k` attributes act as described above, with `k` optional
 
 == Heterogeneity ==
 
-Starting with version 26 of *openmalaria*, variations can be introduced into decay rate: a random variate x is sampled from the log-normal distribution, and t in the above formulas is replaced by t/x.
+Starting with version 26 of *OpenMalaria*, variations can be introduced into decay rate: a random variate x is sampled from the log-normal distribution, and t in the above formulas is replaced by t/x.
 
 The attribute `sigma` can be specified as part of the decay-function description element: if this is non-zero, x is sampled as: `x ~ lnN(0,sigma²)`.

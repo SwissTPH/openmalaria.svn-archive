@@ -34,14 +34,14 @@ test/run.py VecTest -- --print-EIR
 test/run.py 1 -- --checkpoint
 }}}
 
-In the last case, openMalaria exits after each checkpoint is written, and run.py starts openMalaria again (until either output.txt is written or no new checkpoints appear to have been written).
+In the last case, OpenMalaria exits after each checkpoint is written, and run.py starts OpenMalaria again (until either output.txt is written or no new checkpoints appear to have been written).
 
 Various options can also be given to run.py:
 
 {{{
   -h, --help            show this help message and exit
   -q, --quiet           Turn off console output from this script
-  -n, --dry-run         Don't actually run openMalaria, just output the
+  -n, --dry-run         Don't actually run OpenMalaria, just output the
                         commandline.
   -c, --dont-cleanup    Don't clean up expected files from the temparary dir
                         (checkpoint files, schema, etc.)
@@ -49,18 +49,18 @@ Various options can also be given to run.py:
                         validation fails
   --valid, --validate   Validate the XML file(s) using xmllint and the latest
                         schema.
-  -g, --gdb             Run openMalaria through gdb.
-  --valgrind            Run openMalaria through valgrind (using memcheck
+  -g, --gdb             Run OpenMalaria through gdb.
+  --valgrind            Run OpenMalaria through valgrind (using memcheck
                         tool).
   --valgrind-track-origins
                         As --valgrind, but pass --track-origins=yes option
                         (1/2 performance).
-  --callgrind           Run openMalaria through valgrind using callgrind tool.
-  --cachegrind          Run openMalaria through valgrind using cachegrind
+  --callgrind           Run OpenMalaria through valgrind using callgrind tool.
+  --cachegrind          Run OpenMalaria through valgrind using cachegrind
                         tool.
 }}}
 
-As an example, `test/run.py Cohort -c` runs the Cohort scenario, but doesn't delete expected temporary files from the output directory so you can inspect what's there (or run openMalaria directly from there). Note that any unexpected files and output files which are different from expectation are not deleted in any case.
+As an example, `test/run.py Cohort -c` runs the Cohort scenario, but doesn't delete expected temporary files from the output directory so you can inspect what's there (or run OpenMalaria directly from there). Note that any unexpected files and output files which are different from expectation are not deleted in any case.
 
 After running scenarios, the generated output ([http://code.google.com/p/openmalaria/wiki/OutputFiles#Surveys output.txt] and [http://code.google.com/p/openmalaria/wiki/OutputFiles#Continuous_monitoring ctsout.txt]) is compared against that in [http://code.google.com/p/openmalaria/source/browse/#svn%2Ftrunk%2Ftest%2Fexpected `OMROOT/test/expected`] using the compareOutput.py and compareCtsout.py scripts in `OMROOT/util`. See below for how to interpret their output.
 

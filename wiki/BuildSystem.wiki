@@ -37,7 +37,7 @@ The instructions above list some of the configuration options available, but don
  * `OM_BOXTEST_ENABLE`
  Enables what I refer to as OpenMalaria's "black-box" tests in ctest: full scenarios which are run and who's output is checked. These are the primary tests that everything is working, though when they fail it is not always clear why. Can be run with and without checkpointing to also test the checkpointing system (ctest normally runs them with checkpointing). Sometimes during development these get broken, so if they fail it is not necessarily your build that is at fault.
  * `OM_CXXTEST_ENABLE`
- Enables OpenMalaria's (few) unit tests. These should test individual components of openmalaria, however not that many have been written.
+ Enables OpenMalaria's (few) unit tests. These should test individual components of OpenMalaria, however not that many have been written.
  * `OM_CXXTEST_GUI`
  A GUI progress bar is shown while the unit tests are run. Not that useful since the unit tests are pretty quick in comparison to the black box tests.
 

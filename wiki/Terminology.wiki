@@ -2,7 +2,7 @@
 
 = Introduction =
 
-The terminology we use for *openmalaria* project is very specific. A quick browse through the glossary below is recommended.
+The terminology we use for *OpenMalaria* project is very specific. A quick browse through the glossary below is recommended.
 
 
 = Glossary =
@@ -40,18 +40,18 @@ Syntax:
   <dd>Each _component_ needs at least one *implementation*, describing how the relevent processes are simulated. Logically, these can also be called _models_.</dd>
   <dt>Intervention</dt>
   <dd>During the a simulation of a _scenario_, some type of *intervention* may be used, usually with the aim of reducing malaria transmission, prevalence, clinical manifestations or costs. These _interventions_ may be deployed at a point in time (*timed* mode) or whenever humans reach a certain age (*continuous* mode).</dd>
-  <dd>The methods for simulating the deployment of interventions in *openmalaria* have also been used to simulate the effects of other phenomena which are not interventions, therefore termed *pseudo interventions* (see [ModelInterventions#Pseudo_interventions examples]).</dd>
+  <dd>The methods for simulating the deployment of interventions in *OpenMalaria* have also been used to simulate the effects of other phenomena which are not interventions, therefore termed *pseudo interventions* (see [ModelInterventions#Pseudo_interventions examples]).</dd>
   <dt>Model</dt>
-  <dd>The *openmalaria* simulator platform supports several *models*: each is a selection of options (including a choice of _implementations_) defining how _scenarios_ are simulated. </dd>
+  <dd>The *OpenMalaria* simulator platform supports several *models*: each is a selection of options (including a choice of _implementations_) defining how _scenarios_ are simulated. </dd>
   <dd>In the past, both _components_ and _implementations_ have been referred to as *models*.</dd>
   <dt>Non-malarial fever</dt>
   <dd>A febrile illness, accompanied or not by parasites in the blood, which is not caused by malaria parasites.</dd>
   <dt>OpenMalaria</dt>
-  <dd>*openmalaria* is the name of the C++ project and is the implementation of our simulator; i.e. the source code on this website.</dd>
+  <dd>*OpenMalaria* is the name of the C++ project and is the implementation of our simulator; i.e. the source code on this website.</dd>
   <dt>Parameterization</dt>
   <dd>Each _model_ has several parameters. A choice of values for each of these parameters leads to a *parameterization* of a _model_. We usually use a fitting process involving several _scenarios_ modelling field trials in order to find an optimal parameterizations.</dd>
   <dt>Scenario</dt>
-  <dd>A scenario is a single simulation run by the model.  Encoded in XML, the *scenario* file includes a description of what exactly *openmalaria* should the simulate: the _model_ and  its _parameterization_,the _demographic_setting, _interventions_ applied, and information about the healthsystem, if relevant to the _study_.</dd>
+  <dd>A scenario is a single simulation run by the model.  Encoded in XML, the *scenario* file includes a description of what exactly *OpenMalaria* should the simulate: the _model_ and  its _parameterization_,the _demographic_setting, _interventions_ applied, and information about the healthsystem, if relevant to the _study_.</dd>
   <dt>Seed</dt>
   <dd>In stochastic modeling, we have a bit of conundrum, we need to be able to generate a random sequence but we also need to be able to reproduce our results in order to test them.  In order to achieve both goals simultaneously, we must declare the starting point for the (pseudo-) random number generator when it is called. This starting point, or *seed* is generally a positive integer. If no seed is given, the simulator will take the initial value from the computer's cpu clock - the simulation would run, but we would not be able to repeat it. Additionally, when we say that an experiment was run with 5 *seeds*, we mean that each scenario was run 5 times, each time with a different random seed.</dd>
   <dt>Severe malaria</dt>

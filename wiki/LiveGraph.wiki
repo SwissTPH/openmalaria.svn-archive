@@ -1,8 +1,8 @@
-#summary Using live-graph with openmalaria
+#summary Using live-graph with OpenMalaria
 
 = Introduction =
 
-[http://www.live-graph.org/ LiveGraph] is a useful graph-plotting program that can directly plot openmalaria's [Monitoring#Continuous continuous output] files (other than this, it has nothing to do with openmalaria).
+[http://www.live-graph.org/ LiveGraph] is a useful graph-plotting program that can directly plot OpenMalaria's [Monitoring#Continuous continuous output] files (other than this, it has nothing to do with OpenMalaria).
 
 
 == Installing ==

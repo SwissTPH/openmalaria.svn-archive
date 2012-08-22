@@ -1,25 +1,25 @@
-= openmalaria =
+= OpenMalaria =
 
-Welcome to the *openmalaria* wiki on google-code.
+Welcome to the *OpenMalaria* wiki on google-code.
 
-*openmalaria* is an open source C++ program for simulating malaria epidemiology and the impacts on that epidemiology of interventions against malaria.  It is based on microsimulations of _Plasmodium falciparum_ malaria in humans, originally developed for simulating malaria vaccines and described  
+*OpenMalaria* is an open source C++ program for simulating malaria epidemiology and the impacts on that epidemiology of interventions against malaria.  It is based on microsimulations of _Plasmodium falciparum_ malaria in humans, originally developed for simulating malaria vaccines and described  
 [http://www.ajtmh.org/content/75/2_suppl here]. These models simulate the dynamics of malaria parasitaemia in the course of an infection, of transmission, of immunity, and of the processes leading to illness and death. The system is set up to simulate malaria in village, or district size human populations. The original models have been extended to include simulation of the dynamics of malaria in the mosquito vector, and by including alternative model structures for many of the components of the human models. The models allow for variations among humans in their exposure to mosquitoes, and in their responses to the parasite.
 
-*openmalaria* can be used to simulate interventions against the mosquito vector and interventions that act against malaria in humans (for example, chemotherapy, or vaccines).   
+*OpenMalaria* can be used to simulate interventions against the mosquito vector and interventions that act against malaria in humans (for example, chemotherapy, or vaccines).   
 
-*openmalaria* is a general platform for comparing, fitting, and evaluating different malaria models, to ensure that the models reproduce patterns of infection and disease observed in the field in malaria-endemic areas. 
+*OpenMalaria* is a general platform for comparing, fitting, and evaluating different malaria models, to ensure that the models reproduce patterns of infection and disease observed in the field in malaria-endemic areas. 
 
-For public discussion, please use the [http://groups.google.com/group/openmalaria openmalaria] google group.   A glossary of useful terms related to openmalaria can be found [http://code.google.com/p/openmalaria/wiki/Terminology here]
+For public discussion, please use the [http://groups.google.com/group/openmalaria OpenMalaria] google group.   A glossary of useful terms related to OpenMalaria can be found [http://code.google.com/p/openmalaria/wiki/Terminology here]
 
 = Applications =
 
-The main applications of *openmalaria* are:
+The main applications of *OpenMalaria* are:
 
 == Simulation of current malariological situations ==
 
 Simulations of _status quo_ malaria situations can be used to estimate parameters that have not been measured from field data.  For instance, models can be used to predict mortality rates from entomological data. Such simulations are also useful for validating models.
 
-Guidance on how to apply *openmalaria* to simulate malaria at a field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
+Guidance on how to apply *OpenMalaria* to simulate malaria at a field site can be found [http://code.google.com/p/openmalaria/wiki/Instructions here]. 
 
 == Prediction of epidemiological impacts of interventions ==
 
@@ -51,7 +51,7 @@ The value of a point estimate is greatly enhanced when the variability associate
 
 The core program is written in C++ with a [http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU GPL 2 licence]. 
 
-The status of *openmalaria* software development is summarized on [https://www.ohloh.net/p/openmalaria ohlo.net].  The source code is stored as part of the google code repository [http://code.google.com/p/openmalaria/source/browse/ repository]. Instructions for compiling the code from source can be found on this wiki [BuildSystem site]. 
+The status of *OpenMalaria* software development is summarized on [https://www.ohloh.net/p/openmalaria ohlo.net].  The source code is stored as part of the google code repository [http://code.google.com/p/openmalaria/source/browse/ repository]. Instructions for compiling the code from source can be found on this wiki [BuildSystem site]. 
 
 == Models ==
 
@@ -59,7 +59,7 @@ Each simulation requires implementation of various submodels, or model component
 
 = Team =
 
-The *openmalaria* development team includes staff of the [http://www.swisstph.ch/en/about-us/departments/epidemiology-and-public-health-eph/health-systems-research-and-dynamical-modelling/dynamical-modelling.html Swiss Tropical and Public Health Institute (Swiss TPH)], the [http://ndssl.vbi.vt.edu/index.php Network Dynamics and Simulation Science Laboratory at Virginia Bioinformatics Institute] 
+The *OpenMalaria* development team includes staff of the [http://www.swisstph.ch/en/about-us/departments/epidemiology-and-public-health-eph/health-systems-research-and-dynamical-modelling/dynamical-modelling.html Swiss Tropical and Public Health Institute (Swiss TPH)], the [http://ndssl.vbi.vt.edu/index.php Network Dynamics and Simulation Science Laboratory at Virginia Bioinformatics Institute] 
 and the [http://www.lstmliverpool.ac.uk Liverpool School of Tropical Medicine].  Financial support is from the [http://www.gatesfoundation.org/Pages/home.aspx Bill & Melinda Gates Foundation]
 
 = References =

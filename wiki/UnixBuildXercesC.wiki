@@ -9,7 +9,7 @@ apt-get install libxerces-c2-dev
 If you would rather build the library from source, read on.
 
 = Details =
-Both versions 2.8.x and 3.0.x should work, but both have given me plenty of problems, either while compiling or while linking (creating the openmalaria executable) using the resultant library. I don't know if older versions would work.
+Both versions 2.8.x and 3.0.x should work, but both have given me plenty of problems, either while compiling or while linking (creating the OpenMalaria executable) using the resultant library. I don't know if older versions would work.
 
 === Install from mac ports ===
 Note that installing multiple copies of libraries isn't a good idea. In particular, if you already have xerces include files available on your system, they might be used along with a library from elsewhere, creating conflicts if the library is built from a different version of the source code.

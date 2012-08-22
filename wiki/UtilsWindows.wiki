@@ -9,7 +9,7 @@ Windows comes with relatively little software, compared to macs and linux, so in
 
 All (or nearly all) files on windows platforms have an extension (.txt, .doc, .zip, etc.) which identifies which type of file they are. By default, windows hides this for all files it recognizes, but I would recommend you show it so you can be sure what type of file you're using. You can do this by, in a file browser, clicking "Tools", "Folder options", and disabling "Hide extension for known file types".
 
-The file types you're likely to encounter with openmalaria are:
+The file types you're likely to encounter with OpenMalaria are:
 
   * .txt : plain text files (open with a text editor)
   * .xml : XML files, also open with a text editor (note: internet explorer can be used to view them nicely, but cannot edit them)

@@ -16,7 +16,7 @@ Documentation of interventions can be found on these pages:
 
 == Deployment ==
 
-There are two generic methods of intervention deployment in openmalaria:
+There are two generic methods of intervention deployment in OpenMalaria:
 
  * *Timed* mass-deployment campaigns. At a particular time point, this deployment method targets either the whole population or a subset of the population restricted by age. Timed deployment campaigns are described by a coverage parameter. ([http://code.google.com/p/openmalaria/wiki/XmlScenario?ts=1277108255&updated=XmlScenario#Timed:_timed Configuration])
  * Age-based *continuous* deployment. Within the simulation's intervention period, interventions are deployed as individuals reach a target age, given that the individuals are within the coverage. ([XmlScenario#Continuous:_continuous Configuration])

@@ -1,6 +1,6 @@
 #summary Log of most significant changes between releases over time
 
-= openmalaria releases =
+= OpenMalaria releases =
 
 Below is a list of the most significant changes in each release, together with the date and revision number of initial release. Releases are available as tags in the subversion repository: [http://code.google.com/p/openmalaria/source/browse/#svn%2Ftags http://openmalaria.googlecode.com/svn/tags]
 

@@ -49,7 +49,7 @@ rm -f output.txt
 read
 }}}
 
-I should also explain what those scripts do, and how you can edit them. The first line in the .sh file (`#!/bin/sh`) is required to say its a shell script (run by /bin/sh). The next line deletes the old output file using `del`/`rm` (we use the `-f` flag with `rm` to _force_ it to remove the old file, and not prompt "do you really want to delete ..."). Then we run openmalaria: note the name is different, and with unix .sh files we need to prepend it with `./`. We give it one option: `--scenario` which takes one argument, the file name of the input scenario document (you can change the name here; see below for more options). Finally, we use `pause`/`read` to make the terminal window running the script stay open until you press _return_ so that you can read any output. A summary of commands:
+I should also explain what those scripts do, and how you can edit them. The first line in the .sh file (`#!/bin/sh`) is required to say its a shell script (run by /bin/sh). The next line deletes the old output file using `del`/`rm` (we use the `-f` flag with `rm` to _force_ it to remove the old file, and not prompt "do you really want to delete ..."). Then we run OpenMalaria: note the name is different, and with unix .sh files we need to prepend it with `./`. We give it one option: `--scenario` which takes one argument, the file name of the input scenario document (you can change the name here; see below for more options). Finally, we use `pause`/`read` to make the terminal window running the script stay open until you press _return_ so that you can read any output. A summary of commands:
 
 || .sh || .bat || Description ||
 || ls || dir || Prints a list of files & directories in the current directory (useful from a command-line) ||
@@ -57,7 +57,7 @@ I should also explain what those scripts do, and how you can edit them. The firs
 || rm || del || Delete a file ||
 || read || pause || Something to wait for user input ||
 
-You may also want to know what options you can use with openmalaria. The following is what it prints with the --help option (actually, more options have been added recently; run with --help yourself to see):
+You may also want to know what options you can use with OpenMalaria. The following is what it prints with the --help option (actually, more options have been added recently; run with --help yourself to see):
 {{{
 Usage: ./openMalaria [options]
 

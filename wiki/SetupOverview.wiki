@@ -10,20 +10,20 @@ If you would like to run your own simulations you have the following options:
 
   * run your own simulation scenarios directly from the command line as described on the [UtilsRunning] page.
 
-  * install the compiled tool with GUI [openmalariaTools openmalariaTools].  This includes facilities for updating configuration files and running small simulation experiments comprising multiple scenarios.  
+  * install the compiled tool with GUI [openmalariaTools OpenMalariaTools].  This includes facilities for updating configuration files and running small simulation experiments comprising multiple scenarios.  
 
-The [UtilsRunning] page also explains how to continue once you have installed *openmalaria* and to test small numbers of scenarios.  
+The [UtilsRunning] page also explains how to continue once you have installed *OpenMalaria* and to test small numbers of scenarios.  
 
-The [Binaries] page gives general information on how and where to install pre-built executables of *openmalaria*.
+The [Binaries] page gives general information on how and where to install pre-built executables of *OpenMalaria*.
 
-= Contributing to *openmalaria* development =
+= Contributing to *OpenMalaria* development =
 
   * If you want to join the development effort, you can find the source code [Code#Source_code here].
-  * To build the openmalaria executable from source, go [BuildSystem here]
+  * To build the OpenMalaria executable from source, go [BuildSystem here]
 
 = Tools =
 
-The configuration files for *openmalaria* are in XML format, which allows them to be edited by a text editor.  We recommend the following:
+The configuration files for *OpenMalaria* are in XML format, which allows them to be edited by a text editor.  We recommend the following:
 
   * [UtilsWindows Windows] — a convenient text editor, and archive tool
   * For MacOSX — handles archives fine but not necessarily XML files; dashcode (presumably part of [http://developer.apple.com/tools/xcode/ xcode]) can edit XML files but struggles with scripts. There are a number of other MacOSX editors [http://www.google.com/search?q=macosx+text+editor search for one]

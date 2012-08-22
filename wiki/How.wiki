@@ -1,19 +1,19 @@
-#summary How to use openmalaria to simulate malaria in a field site.
+#summary How to use OpenMalaria to simulate malaria in a field site.
 
 = Introduction =
 
-Individuals interested in simulating malaria in a particular field site may find this guide to the process setting up openmalaria, creating scenario files, and analyzing results a useful starting point.
+Individuals interested in simulating malaria in a particular field site may find this guide to the process setting up OpenMalaria, creating scenario files, and analyzing results a useful starting point.
 
 = Details =
 
-A glossary of useful terms related to the openmalaria wiki can be found: [http://code.google.com/p/openmalaria/wiki/Terminology here]
+A glossary of useful terms related to the OpenMalaria wiki can be found: [http://code.google.com/p/openmalaria/wiki/Terminology here]
 
-*1.	Download openmalaria
+*1.	Download OpenMalaria
 
-The model is written in C++ with Fortran roots. In order to run the model you need to download the simulator that contains all the necessary code. As of April 2011 the current version of the openmalaria schema is version 26.  Check back periodically to ensure you have the most up to date version. If you are in doubt contact the openmalaria administrator. To run the openmalaria simulator you need to create an XML file that contains all the data on malaria in your study area (described in later steps).
+The model is written in C++ with Fortran roots. In order to run the model you need to download the simulator that contains all the necessary code. As of April 2011 the current version of the OpenMalaria schema is version 26.  Check back periodically to ensure you have the most up to date version. If you are in doubt contact the OpenMalaria administrator. To run the OpenMalaria simulator you need to create an XML file that contains all the data on malaria in your study area (described in later steps).
 
-A description of how to download openmalaria for a PC can be found 
-[http://code.google.com/p/openmalaria/wiki/openmalariaTools here]. Note: openmalaria is not available yet as an executable for Mac users –contact the administrator if you would like to run openmalaria on a Mac.
+A description of how to download OpenMalaria for a PC can be found 
+[http://code.google.com/p/openmalaria/wiki/openmalariaTools here]. Note: OpenMalaria is not available yet as an executable for Mac users –contact the administrator if you would like to run OpenMalaria on a Mac.
 
 *2.	Decide on what you will be simulating
 
@@ -21,7 +21,7 @@ Before doing anything else, collaborate with the research team and/or control pr
 
 It is important for this step to happen early on because you don’t want to get to the end of running simulations and find out your analysis is not relevant in the field. It will help immensely if everyone is on the same page at the beginning with what you are simulating and why.
 
-The full list of outputs that openmalaria is able to simulate can be found
+The full list of outputs that OpenMalaria is able to simulate can be found
 [http://code.google.com/p/openmalaria/wiki/XmlMonitoring here]
 
 *3.	Choose model(s)

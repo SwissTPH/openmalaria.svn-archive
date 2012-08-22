@@ -2,7 +2,7 @@
 
 = Pathogenesis model =
 
-Openmalaria's pathogenesis models determines the onset of sickness bouts (the start is termed an "event") based on parasite density. Different models are implemented including:
+OpenMalaria's pathogenesis models determines the onset of sickness bouts (the start is termed an "event") based on parasite density. Different models are implemented including:
 
  * *Base pathogenesis model* This is a stochastic model that relates the probability of a clinical attack of malaria to the peripheral parasite densities via a pyrogenic threshold that itself responds dynamically to the parasite load. [http://www.ncbi.nlm.nih.gov/pubmed/16931816 Smith et al, 2006] (this is implemented in the `PyrogenPathogenesis` class): The parameters of the model have been estimated by fitting it to the relationship between incidence of clinical episodes and the entomologic inoculation rate, using age-specific incidence data from two villages in Senegal and one village in Tanzania.
  * *Predetermined bouts pathogenesis model* This is a variant of the base pathogenesis model in which bouts occur deterministically when the parasite density exceeds the pyrogenic threshold (`PredetPathogenesis` class).

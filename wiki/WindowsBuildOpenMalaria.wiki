@@ -1,20 +1,20 @@
-#summary How to set up and build openmalaria on windows
+#summary How to set up and build OpenMalaria on windows
 
 = Set up =
 
-Create a working directory. Checkout openmalaria into a sub-folder (see the [http://code.google.com/p/openmalaria/source/checkout Source] tab). Perhaps use TortoiseSvn for this...
+Create a working directory. Checkout OpenMalaria into a sub-folder (see the [http://code.google.com/p/openmalaria/source/checkout Source] tab). Perhaps use TortoiseSvn for this...
 
 = Dependencies =
 
-Openmalaria requires the following; for many just run the installer:
+OpenMalaria requires the following; for many just run the installer:
  * A build system:
   * Visual Studio (only VS 2005 (version 8.0) tested; older compilers I expect won't work)
   * Code::Blocks, along with some compiler (recommended:  [http://www.codeblocks.org/downloads/5#windows install the version with mingw]) (not actually tested, but should work)
   * GNU make along with some compiler (probably not so easy to set up)
  * gsl (see below)
  * XSD - run the .msi installer from [http://codesynthesis.com/products/xsd/download.xhtml here]. If you already have an old version, delete scenario.cxx, scenario.hxx and scenario.ixx.
- * Xerces-C - versions 2.8 or 3.0 should work; 3.0 is included with the XSD installer for windows. Here we assume you have installed Xerces along with XSD (the default option when installing XSD. Find the xerces-all.sln file in you Xerces install directory (the default location will be something like C:\Program Files\CodeSynthesis XSD 3.2\xerces-c-3.0.1\projects\Win32\VC8\xerces-all for the VS version 8 solution file), and open it with VS. Choose the "Release" build configuration. Build the XercesLib build target. This will create a file C:\Program Files\CodeSynthesis XSD 3.2\xerces-c-3.0.1\Build\Win32\VC8\Static Release\xerces-c_3.lib (Optional: Build using the "Static Release" target to creat a xerces-c_static_3.lib library, then follow the instructions below to create openMalaria with Xerces statically linked).
- * zlib - get the DLL download from [www.zlib.net here], extract to the working directory above the openmalaria sources and rename to "zlib".
+ * Xerces-C - versions 2.8 or 3.0 should work; 3.0 is included with the XSD installer for windows. Here we assume you have installed Xerces along with XSD (the default option when installing XSD. Find the xerces-all.sln file in you Xerces install directory (the default location will be something like C:\Program Files\CodeSynthesis XSD 3.2\xerces-c-3.0.1\projects\Win32\VC8\xerces-all for the VS version 8 solution file), and open it with VS. Choose the "Release" build configuration. Build the XercesLib build target. This will create a file C:\Program Files\CodeSynthesis XSD 3.2\xerces-c-3.0.1\Build\Win32\VC8\Static Release\xerces-c_3.lib (Optional: Build using the "Static Release" target to creat a xerces-c_static_3.lib library, then follow the instructions below to create OpenMalaria with Xerces statically linked).
+ * zlib - get the DLL download from [www.zlib.net here], extract to the working directory above the OpenMalaria source code and rename to "zlib".
  * CMake 2.4 or 2.6 - use the installer from [http://www.cmake.org/cmake/resources/software.html here].
  * Python - download from [http://www.python.org here].
  * [http://www.boost.org/doc/libs/1_41_0/more/getting_started/windows.html Boost].
@@ -25,7 +25,7 @@ NB: The unit tests have a dependency on yaml-cpp (for reading in data for the ve
 
 === gsl ===
 
-Get it from [ftp://sunsite.cnlab-switch.ch/mirror/gnu/gsl here] (oldest supported is 1.13); extract to your working directory above the openmalaria code and rename to "gsl". This should put the sources within WORKSPACE/gsl/gsl/.
+Get it from [ftp://sunsite.cnlab-switch.ch/mirror/gnu/gsl here] (oldest supported is 1.13); extract to your working directory above the OpenMalaria code and rename to "gsl". This should put the sources within WORKSPACE/gsl/gsl/.
 
 Now build the libraries: open the gsl/gsl/gsl.sln file select the "Release MT"/"Debug MT" version you want to use (you'll have to stick with one), and build. Now find the libraries: they should be under gsl/gsl/win32/lib/. Copy/move the lib folder up two directories (so you have WORKSPACE/gsl/lib), go into it and rename the files: remove the "_mt" (release) or "_mtd" (debug) suffix (so you have gs.lib, cblas.lib, etc.). (If you want to change between debug and release later, replace this set of files with the other generated version.)
 
@@ -46,7 +46,7 @@ Note: if you get told that the project has been modified externally, you must re
 
 You can select the Debug/Release/... build mode, but it seems you have to rebuild when changing this (in Visual Studio).
 
-If on Visual Studio 2005 (and maybe others), when inside VS5, open the Properties of the project openMalaria, Check Configuration Properties/Linker/Input. If Ignore Specific Library has LIBCMT, replace with MSVCRT. If you don't do this change, openmalaria will compile but not run.
+If on Visual Studio 2005 (and maybe others), when inside VS5, open the Properties of the project OpenMalaria, Check Configuration Properties/Linker/Input. If Ignore Specific Library has LIBCMT, replace with MSVCRT. If you don't do this change, OpenMalaria will compile but not run.
 
 
 = Compiling without a .net dependency and with Xerces statically linked =
@@ -56,7 +56,7 @@ Please remember that you have to use the xerces static library, which is not giv
 
 Further explanations in chapter [Dependencies]. 
 
-TODO: Add XERCES_STATIC_LIBRARY to openMalaria compile targets.
+TODO: Add XERCES_STATIC_LIBRARY to OpenMalaria compile targets.
 
 In the cmake configuration for OpenMalaria:
  * set OM_USE_LIBCMT to true

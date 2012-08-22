@@ -2,7 +2,7 @@
 
 = Mosquito-stage interventions =
 
-The following table lists interventions which have been implemented in *openmalaria*, and which deployment method(s) are available for them:
+The following table lists interventions which have been implemented in *OpenMalaria*, and which deployment method(s) are available for them:
 
 || Intervention || Mass-deployment || Continuous-deployment ||
 || [ModelIntervVector#Change_EIR changeEIR] || yes || no ||

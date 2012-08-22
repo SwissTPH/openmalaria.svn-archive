@@ -11,7 +11,7 @@ You can find a little more information about organisation of the repository in t
 
 = Doxygen documentation =
 
-The openmalaria code is, to a large extent, documented with [http://www.doxygen.org/ Doxygen]-style comments. (This is used to autonomously generate html documentation of various interfaces in the code, largely aimed at software developers.) The latest build of this documentation (generated daily) is at:
+The OpenMalaria code is, to a large extent, documented with [http://www.doxygen.org/ Doxygen]-style comments. (This is used to autonomously generate html documentation of various interfaces in the code, largely aimed at software developers.) The latest build of this documentation (generated daily) is at:
 
 http://www.malariacontrol.net/openmalaria/html/
 

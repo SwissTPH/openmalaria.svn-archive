@@ -1,8 +1,8 @@
-#summary Cross-compiling openmalaria for windows from linux with mingw.
+#summary Cross-compiling OpenMalaria for windows from linux with mingw.
 
 = Introduction =
 
-This is a as-I-work-out how to do it documentation of my progress in cross-compiling openmalaria.
+This is a as-I-work-out how to do it documentation of my progress in cross-compiling OpenMalaria.
 
 
 = Details =
@@ -12,7 +12,7 @@ This is a as-I-work-out how to do it documentation of my progress in cross-compi
 Obviously you can't use linux libraries here.. I'm not entirely clear whether MSVC-compiled libs will work (there's been some conflicting information), but I'm going for compiling most bits myself with mingw.
 
  # Install [http://packages.debian.org/search?suite=default&section=all&arch=any&searchon=names&keywords=mingw32 mingw]
- # Create a working dir, with a copy of openmalaria sources. Mine looks something like:
+ # Create a working dir, with a copy of OpenMalaria sources. Mine looks something like:
   {{{
   # ls -1 i586-mingw32msvc/
   boinc/
@@ -60,7 +60,7 @@ make install
 }}}
 (Instructions ripped from the [http://clam-project.org/wiki/Devel/Windows_MinGW_cross_compile#Xerces-C clam wiki].)
 
-This should successfully install the library, however I still get some missing xerces symbols when linking openmalaria.
+This should successfully install the library, however I still get some missing xerces symbols when linking OpenMalaria.
 
 == XSD ==
 
@@ -78,7 +78,7 @@ make -j 2
 make install
 }}}
 
-== Compiling openmalaria ==
+== Compiling OpenMalaria ==
 
 You should now have libraries for the above available in /home/USERNAME/i586-mingw32msvc/lib and headers in /home/USERNAME/i586-mingw32msvc/include (or something similar).
 

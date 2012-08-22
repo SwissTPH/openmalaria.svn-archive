@@ -2,10 +2,10 @@
 
 = Introduction =
 
-*openmalaria* is a simulator designed to model the cost and effectiveness of interventions against the _plasmodium falciparum_ malaria parasite. These simulations can be run on both a [http://malariacontrol.net/ large] and small (PC) scale.
+*OpenMalaria* is a simulator designed to model the cost and effectiveness of interventions against the _plasmodium falciparum_ malaria parasite. These simulations can be run on both a [http://malariacontrol.net/ large] and small (PC) scale.
 
 Documented here:
 
- * [SetupOverview Installing] *openmalaria* and using it to run some example scenarios
+ * [SetupOverview Installing] *OpenMalaria* and using it to run some example scenarios
  * How to [ScenarioDesign design and configure] experimental scenarios
  * Some guidance on how simulator results might be analyzed

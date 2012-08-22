@@ -13,7 +13,7 @@ Building the schema translator from sources:
      * If it's not the case, then you can download the installer [http://java.sun.com/javase/downloads/widget/jdk6.jsp, here]. 
      * On Ubuntu linux you can install JDK with apt. Install the `sun-java6-jdk` (or `java-gcj-compat-dev`) package.
   # Find the sources. 
-     * If you are already working with the openmalaria sources, then you can find the schema translator source files in `util/SchemaTranslator`
+     * If you are already working with the OpenMalaria source code, then you can find the schema translator source files in `util/SchemaTranslator`
      * Grab from the repository:
      {{{svn checkout http://openmalaria.googlecode.com/svn/trunk/util/SchemaTranslator SchemaTranslator}}}
   # Build the sources.
