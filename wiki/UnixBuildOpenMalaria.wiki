@@ -2,15 +2,7 @@
 
 = Building OpenMalaria =
 
-This page gives a brief idea of how to compile *openalaria* on a unix or linux machine.
-
-As a matter of housekeeping, create a central location for all dependencies and code for the project. In honor of our code-crunching colleagues at BOINC, we'll call this directory malariacontrol.
-{{{
-cd ~
-mkdir malariacontrol
-cd malariacontrol
-}}}
-You could at this time also create a malariacontrol/lib dir and install there the libraries upon which *opemmalaria* depends. But our recommendation is to install dependencies globally into your system (for example, using {{{make install}}}).
+This page gives a brief idea of how to compile *OpenMalaria* on a Unix or Linux machine. This has been tested on Ubuntu 12.04, you may have to adapt specific steps (e.g. installing dependencies) depending on your distribution.
 
 == Dependencies ==
 
@@ -39,8 +31,9 @@ If you would like to donate your otherwise dormant cpu cycles to the project via
 The OpenMalaria source code is stored in a source-safed repository that is managed with [subversion] [http://subversion.apache.org/packages.html subversion]. Technically, you don't need to have subversion installed to check out the source code, but it makes things simpler if you do. In any case, the code repository can be access via the command line or GUI or IDE tools.
 
 == Download  and compile the OpenMalaria source code==
+For this and the following steps, we assume you have set up a working directory (e.g. /home/yourname/workspace). We will refer to this as WORKSPACE from now.
 
-First, [http://code.google.com/p/openmalaria/source/checkout check out the repository] and {{{cd}}} to the checkout directory, which should be /malariacontrol/openmalaria/.
+First, [http://code.google.com/p/openmalaria/source/checkout check out the source code from the repository] and {{{cd}}} to the checkout directory, which should be WORKSPACE/openmalaria/.
 
 To keep the generated files out of the way of the source code, its best to create a separate build directory under the source code directory:
 
@@ -49,7 +42,7 @@ mkdir build
 cd build
 }}}
 
-The build directory (/malariacontrol/openmalaria/build/ ) will initially be empty - the next task is to *configure* the makefiles that will be used to compile and link the source code and libraries. The configured makefiles will appear in the build directory. This task can be approached using the command line, or gui versions of the cmake program
+The build directory (WORKSPACE/openmalaria/build/ ) will initially be empty - the next task is to *configure* the makefiles that will be used to compile and link the source code and libraries. The configured makefiles will appear in the build directory. This task can be approached using the command line, or gui versions of the cmake program
 
 Run cmake, passing the path of the *OpenMalaria* directory you checked out:
 {{{
@@ -74,9 +67,6 @@ Be aware that checking the *STATICALLY_LINK* option doesn't ensure you that the 
 
 The configure command for xerces for instance,  would be similar to  either of these two examples:
 
-Building Xerces-c 2.8:
-./runConfigure -plinux -cgcc -xg++ -minmem -nsocket -tnative -rpthread -s -l-static-libgcc
-
 Building Xerces-c 3.1.1:	
 ./configure --disable-shared --disable-network LDFLAGS=-static-libgcc
 
@@ -84,7 +74,7 @@ Once these configuration issues are sorted, you should be able to build a proper
 
 == Running the included tests ==
 
-Several unit tests have been built for OpenMalaria. These should be run after every build, to confirm that nothing has gone amiss in the build process.
+Several unit and regression tests have been built for OpenMalaria. These should be run after every build, to confirm that nothing has gone amiss in the build process.
 From the build directory, run ctest (can pass the `-j 2` option to speed up):
 {{{
 $ ctest
