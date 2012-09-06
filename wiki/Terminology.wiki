@@ -60,4 +60,6 @@ Syntax:
   <dd>A simulation *study* comprises a set of scenarios used to make a specific set of comparisons between settings or interventions.  A field *study* is conducted on location with real patients. Results from field studies are used to parameterize models.</dd>
   <dt>Sweep</dt>
   <dd>A *sweep* is one or more covarying factors, and the set of all arms of this sweep.</dd>
+  <dt>Time step</dt>
+  <dd>Sometimes referred to as *timestep* or *time-step*, this refers to the discrete time intervals used in the simulation. Existing models use a time step 1, 2 or 5 days long.</dd>
 </dl>
