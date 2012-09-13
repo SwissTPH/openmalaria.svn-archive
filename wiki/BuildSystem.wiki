@@ -1,30 +1,16 @@
-#summary Building and Testing OpenMalaria
+#summary Building OpenMalaria
 
 == Building OpenMalaria ==
- * [UnixBuildOpenMalaria On Linux] / Unix in general
- * [WindowsBuildOpenMalaria On Windows]
- * [MacBuildOpenMalaria On Mac] (addition to unix instructions)
+Instructions are included for building OpenMalaria on three operating system:
 
-Additionally, there's a [UnixBuildWindows summary] of how I tried (and failed) to cross-compile Windows binaries from linux at one point.
+ * [UnixBuildOpenMalaria On Linux/Unix OS] / Unix in general
+ * [WindowsBuildOpenMalaria On Windows  OS]
+ * [MacBuildOpenMalaria specific to Mac OS]
 
-=== Running the tests ===
-CMake creates a build target which is never actually built, but "building" this target will run any integrated tests which are enabled. You can run this by:
- * _(Makefiles)_ Running *make test*
- * _(IDEs)_ Building the *RUN_TESTS* target
- * _(CTest)_ Running *ctest*
+=== Configuration details ===
+Regardless of operating system, building OpenMalaria requires some configuration of the build tool. Below we give some detail on the most relevant build configuration options. 
 
-CTest (part of [cmake.org CMake]) has the advantage that you can use options like `-R` to select individual tests to run and (CMake 2.8 and later) `-j2` to run 2 or more jobs in parallel.
-
-Unfortunately, none of these methods give you very much information about why tests fail. So to see details of why the last test run failed, look at the `BUILD_DIR/Testing/Temporary/LastTest.log` file, or call [UtilsRunScripts#run.py run.py] directly. Example:
-{{{
-cd build
-test/run.py 2 IPT -- --checkpoint
-}}}
-
-=== Common configuration options ===
-The instructions above list some of the configuration options available, but don't give much detail. The list below should explain what the most relevant options do. These can all be set through cmake (using `cmake-gui` or `ccmake` on the command-line).
-
-==== General settings ====
+==== General configuration settings ====
 
  * `CMAKE_BUILD_TYPE`
  Options:
@@ -41,7 +27,7 @@ The instructions above list some of the configuration options available, but don
  * `OM_CXXTEST_GUI`
  A GUI progress bar is shown while the unit tests are run. Not that useful since the unit tests are pretty quick in comparison to the black box tests.
 
-==== Further settings, needed less often ====
+==== Further configuration settings, needed less often ====
 
  * `XXX_LIB`, `YYY_INCLUDE_DIR`
  Path to library XXX, include file directory for YYY. On windows it is sometimes necessary to set these paths manually, on linux they are usually found automatically when the needed packages are installed.

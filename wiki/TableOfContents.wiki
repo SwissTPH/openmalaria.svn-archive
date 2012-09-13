@@ -50,3 +50,4 @@
       * [WindowsBuildOpenMalaria Windows]
       * [UnixBuildOpenMalaria Linux]
       * [MacBuildOpenMalaria Mac]
+	  [TestSystem Testing your OpenMalaria build]
