@@ -48,6 +48,6 @@
       * [Code#Doxygen_documentation doxygen-generated documentation]
     * [BuildSystem Building and Testing]
       * [WindowsBuildOpenMalaria Building on Windows]
-      * [UnixBuildOpenMalaria  building on Linux]
-      * [MacBuildOpenMalaria builging on Mac]
+      * [UnixBuildOpenMalaria  Building on Linux]
+      * [MacBuildOpenMalaria Building on Mac]
       * [TestSystem Testing your build]
