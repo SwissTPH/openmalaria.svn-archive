@@ -47,7 +47,7 @@
     * [Code#Source_code Source code]
       * [Code#Doxygen_documentation doxygen-generated documentation]
     * [BuildSystem Building and Testing]
-      * [WindowsBuildOpenMalaria Building on Windows]
       * [UnixBuildOpenMalaria  Building on Linux]
       * [MacBuildOpenMalaria Building on Mac]
+      * [WindowsBuildOpenMalaria Building on Windows]
       * [TestSystem Testing your build]
