@@ -41,7 +41,7 @@
 
 [http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0032587 Simulated Impact of RTS,S/AS01 Vaccination Programs in the Context of Changing Malaria Transmission]
 
-[http://www.malariajournal.com/content/11/1/357/abstract Simulation of malaria epidemiology and control in the highlands of western Kenya]
+[http://www.malariajournal.com/content/11/1/357 Simulation of malaria epidemiology and control in the highlands of western Kenya]
 
 = Offline Documentation =
 
